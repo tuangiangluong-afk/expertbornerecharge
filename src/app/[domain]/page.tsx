@@ -6,6 +6,7 @@ import { Vehicles } from "@/components/Vehicles";
 import { Reviews } from "@/components/Reviews";
 import { StructuredData } from "@/components/StructuredData";
 import { GTMScript } from "@/components/GTMScript";
+import { BookingWidget } from "@/components/BookingWidget";
 import { slugify } from "@/lib/slugify";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -264,47 +265,8 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                         </div>
 
                         {/* Booking Form (Glass) */}
-                        <div id="book" className="bg-white p-8 rounded-3xl shadow-xl border border-neutral-100 relative">
-                            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-t-3xl"></div>
-                            <h3 className="text-2xl font-bold mb-2 text-neutral-900">Réservation Prioritaire</h3>
-                            <p className="text-neutral-500 mb-8 text-sm">Recevez une confirmation par SMS en moins de 10 min.</p>
-
-                            <form className="space-y-5" action="#" method="POST">
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Date</label>
-                                        <input type="date" className="w-full rounded-xl bg-neutral-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-0 transition py-3 px-4 font-medium" />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Heure</label>
-                                        <input type="time" className="w-full rounded-xl bg-neutral-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-0 transition py-3 px-4 font-medium" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Départ</label>
-                                    <div className="relative">
-                                        <MapPin className="absolute left-4 top-3.5 text-neutral-400" size={18} />
-                                        <input type="text" placeholder="Adresse précise..." className="w-full rounded-xl bg-neutral-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-0 transition py-3 pl-12 pr-4 font-medium" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Arrivée</label>
-                                    <div className="relative">
-                                        <MapPin className="absolute left-4 top-3.5 text-neutral-400" size={18} />
-                                        <input type="text" placeholder="Destination..." className="w-full rounded-xl bg-neutral-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-0 transition py-3 pl-12 pr-4 font-medium" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Téléphone</label>
-                                    <div className="relative">
-                                        <Phone className="absolute left-4 top-3.5 text-neutral-400" size={18} />
-                                        <input type="tel" placeholder="06 00 00 00 00" className="w-full rounded-xl bg-neutral-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-0 transition py-3 pl-12 pr-4 font-medium" />
-                                    </div>
-                                </div>
-                                <button type="button" className="w-full rounded-xl bg-neutral-900 py-4 font-bold text-white hover:bg-neutral-800 transition shadow-lg transform active:scale-95">
-                                    Valider ma course
-                                </button>
-                            </form>
+                        <div className="relative">
+                            <BookingWidget city={city} />
                         </div>
                     </div>
                 </div>
