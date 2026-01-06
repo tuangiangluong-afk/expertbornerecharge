@@ -41,7 +41,7 @@ export default async function middleware(req: NextRequest) {
     // 2. Tenant Logic
     let domainKey = hostname;
 
-    if (isLocalhost) {
+    if (hostname.includes(".localhost")) {
         domainKey = hostname.split(".localhost")[0];
     } else if (hostname.includes(".nip.io")) {
         // Handle nip.io for local network testing (e.g. taxiaix.192.168.1.144.nip.io)
