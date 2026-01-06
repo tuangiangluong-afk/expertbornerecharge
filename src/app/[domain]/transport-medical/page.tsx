@@ -1,6 +1,7 @@
 import { CITIES } from "@/lib/db";
 import { getSpintaxContent } from "@/lib/spintax";
 import { FAQ } from "@/components/FAQ";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { Ambulance, CheckCircle, Phone, ShieldCheck } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -43,7 +44,7 @@ export default async function MedicalTransportPage({ params }: { params: Promise
             {/* Sticky Nav (Simplified) */}
             <nav className="fixed top-0 z-50 w-full border-b border-neutral-200/80 bg-white/90 px-4 py-3 backdrop-blur-md">
                 <div className="flex items-center justify-between">
-                    <a href="/" className="text-xl font-bold tracking-tight text-neutral-900 hover:text-blue-600">
+                    <a href={`/${city.slug}`} className="text-xl font-bold tracking-tight text-neutral-900 hover:text-blue-600">
                         {city.name}
                     </a>
                     <a

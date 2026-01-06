@@ -29,7 +29,7 @@ export default async function middleware(req: NextRequest) {
     // 1. Main Hub Logic - Redirect / to /home
     if (isMainHub) {
         // Direct access to city pages like /taxiaix should work
-        if (path.startsWith("/taxi") || path.startsWith("/admin") || path.startsWith("/home")) {
+        if (path.startsWith("/taxi") || path.startsWith("/admin") || path.startsWith("/home") || path.startsWith("/login")) {
             return NextResponse.next();
         }
         // Otherwise rewrite to /home

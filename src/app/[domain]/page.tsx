@@ -333,6 +333,71 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
             {/* FAQ Section */}
             <FAQ city={city.city} type="general" faqs={faqs} />
 
+            {/* Internal Linking Sections - SEO Maillage */}
+            <section className="py-16 bg-neutral-50 border-t border-neutral-200">
+                <div className="container mx-auto px-4">
+                    <div className="grid md:grid-cols-2 gap-12">
+                        {/* Quartiers */}
+                        <div>
+                            <h3 className="text-2xl font-bold text-neutral-900 mb-6">
+                                Quartiers desservis à {city.city} <span className="text-yellow-500">.</span>
+                            </h3>
+                            <div className="grid grid-cols-2 gap-3">
+                                {city.neighborhoods.slice(0, 8).map((neighborhood) => (
+                                    <a
+                                        key={neighborhood}
+                                        href={`/${city.slug}/quartier/${neighborhood.toLowerCase().replace(/ /g, "-").replace(/[^a-z0-9-]/g, "")}`}
+                                        className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2"
+                                    >
+                                        <span className="text-yellow-500">→</span>
+                                        Taxi {neighborhood}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Services */}
+                        <div>
+                            <h3 className="text-2xl font-bold text-neutral-900 mb-6">
+                                Nos Services <span className="text-yellow-500">.</span>
+                            </h3>
+                            <div className="grid gap-3">
+                                <a href={`/${city.slug}/transport-medical`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
+                                    <span className="text-yellow-500">→</span>
+                                    Transport Médical & VSL Conventionné
+                                </a>
+                                <a href={`/${city.slug}/gare-aeroport`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
+                                    <span className="text-yellow-500">→</span>
+                                    Transfert Gare TGV & Aéroport
+                                </a>
+                                <a href={`/${city.slug}/longue-distance`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
+                                    <span className="text-yellow-500">→</span>
+                                    Taxi Longue Distance
+                                </a>
+                            </div>
+
+                            {/* Guides links */}
+                            {hotels.length > 0 && (
+                                <div className="mt-6">
+                                    <h4 className="font-semibold text-neutral-800 mb-3">Guides locaux</h4>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {hotels.slice(0, 4).map((hotel: string) => (
+                                            <a
+                                                key={hotel}
+                                                href={`/${city.slug}/guides/${hotel.toLowerCase().replace(/ /g, "-").replace(/[^a-z0-9-]/g, "")}`}
+                                                className="text-xs text-neutral-500 hover:text-neutral-700 hover:underline transition"
+                                            >
+                                                Taxi → {hotel}
+                                            </a>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* SEO Footer */}
             <div className="bg-neutral-900 border-t border-white/10 py-12 text-neutral-400">
                 <div className="container mx-auto px-4 text-center">
