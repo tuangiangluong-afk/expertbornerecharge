@@ -1,19 +1,10 @@
-import { CITIES } from "@/lib/db";
+import { CITIES, getCity } from "@/lib/db";
 import { getSpintaxContent } from "@/lib/spintax";
 import { FAQ } from "@/components/FAQ";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Ambulance, CheckCircle, Phone, ShieldCheck } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-
-function getCity(domain: string) {
-    if (CITIES[domain]) return CITIES[domain];
-    const cityKey = Object.keys(CITIES).find(
-        (key) => CITIES[key].domain === domain
-    );
-    if (cityKey) return CITIES[cityKey];
-    return null;
-}
 
 export async function generateMetadata({
     params,

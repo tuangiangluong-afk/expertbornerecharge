@@ -1,4 +1,4 @@
-import { CITIES } from "@/lib/db";
+import { CITIES, getCity } from "@/lib/db";
 import { getSpintaxContent } from "@/lib/spintax";
 import { slugify } from "@/lib/slugify";
 import { notFound } from "next/navigation";
@@ -6,14 +6,6 @@ import { StructuredData } from "@/components/StructuredData";
 import { Phone, MapPin, Bus, Clock, CheckCircle } from "lucide-react";
 import type { Metadata } from "next";
 import { supabase } from "@/lib/supabase";
-
-// Helper to find city
-function getCity(domain: string) {
-    if (CITIES[domain]) return CITIES[domain];
-    const cityKey = Object.keys(CITIES).find((key) => CITIES[key].domain === domain);
-    if (cityKey) return CITIES[cityKey];
-    return null;
-}
 
 // Helper to find POI (DB + Legacy Fallback)
 async function getPoi(slug: string, tenantId: string) {

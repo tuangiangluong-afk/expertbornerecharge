@@ -1,4 +1,4 @@
-import { CITIES } from "@/lib/db";
+import { CITIES, getCity } from "@/lib/db";
 import { getSpintaxContent } from "@/lib/spintax";
 import { Phone, Calendar, Clock, MapPin, CheckCircle, Star } from "lucide-react";
 import { FAQ } from "@/components/FAQ";
@@ -9,21 +9,6 @@ import { GTMScript } from "@/components/GTMScript";
 import { slugify } from "@/lib/slugify";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-
-// Helper to find city configuration
-function getCity(domain: string) {
-    // Normalize domain matching
-    // 1. Try exact key match (e.g. "taxiaix")
-    if (CITIES[domain]) return CITIES[domain];
-
-    // 2. Try matching the domain property (e.g. "taxiaix.fr" matches CITIES["taxiaix"].domain)
-    const cityKey = Object.keys(CITIES).find(
-        (key) => CITIES[key].domain === domain
-    );
-    if (cityKey) return CITIES[cityKey];
-
-    return null;
-}
 
 export async function generateMetadata({
     params,
