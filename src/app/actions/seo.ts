@@ -7,11 +7,11 @@ export async function getPatterns(tenantId: string) {
     const supabase = await createSupabaseServerClient();
 
     // Fetch global patterns AND tenant-specific patterns
-    const { data, error } = await supabase
-        .from('seo_patterns')
+    const { data, error } = await (supabase
+        .from('seo_patterns' as any)
         .select('*')
         .or(`tenant_id.is.null,tenant_id.eq.${tenantId}`)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false }) as any);
 
     if (error) throw new Error(error.message);
     return data;
@@ -20,11 +20,11 @@ export async function getPatterns(tenantId: string) {
 export async function createPattern(formData: any) {
     const supabase = await createSupabaseServerClient();
 
-    const { data, error } = await supabase
-        .from('seo_patterns')
+    const { data, error } = await (supabase
+        .from('seo_patterns' as any)
         .insert(formData)
         .select()
-        .single();
+        .single() as any);
 
     if (error) throw new Error(error.message);
     return data;
@@ -32,20 +32,20 @@ export async function createPattern(formData: any) {
 
 export async function deletePattern(id: string) {
     const supabase = await createSupabaseServerClient();
-    const { error } = await supabase.from('seo_patterns').delete().eq('id', id);
+    const { error } = await (supabase.from('seo_patterns' as any).delete().eq('id', id) as any);
     if (error) throw new Error(error.message);
 }
 
 export async function getTenantPages(tenantId: string) {
     const supabase = await createSupabaseServerClient();
-    const { data, error } = await supabase
-        .from('seo_landing_pages')
+    const { data, error } = await (supabase
+        .from('seo_landing_pages' as any)
         .select(`
             *,
             seo_patterns ( name )
         `)
         .eq('tenant_id', tenantId)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false }) as any);
 
     if (error) throw new Error(error.message);
     return data;
@@ -67,7 +67,7 @@ export async function generatePagesBatch(
     if (!tenant) throw new Error("Tenant not found");
 
     // 2. Get Pattern
-    const { data: pattern } = await supabase.from('seo_patterns').select('*').eq('id', patternId).single();
+    const { data: pattern } = await (supabase.from('seo_patterns' as any).select('*').eq('id', patternId).single() as any);
     if (!pattern) throw new Error("Pattern not found");
 
     const results = {
@@ -91,12 +91,12 @@ export async function generatePagesBatch(
             const urlPath = `/${pageData.slug}`;
 
             // Check if exists
-            const { data: existing } = await supabase
-                .from('seo_landing_pages')
+            const { data: existing } = await (supabase
+                .from('seo_landing_pages' as any)
                 .select('id')
                 .eq('tenant_id', tenantId)
                 .eq('slug', pageData.slug)
-                .maybeSingle();
+                .maybeSingle() as any);
 
             if (existing) {
                 // Determine if we should update or skip. For now, skip to save resources.
@@ -106,7 +106,7 @@ export async function generatePagesBatch(
             }
 
             // Insert
-            const { error: insertError } = await supabase.from('seo_landing_pages').insert({
+            const { error: insertError } = await (supabase.from('seo_landing_pages' as any).insert({
                 tenant_id: tenantId,
                 pattern_id: patternId,
                 slug: pageData.slug,
@@ -118,7 +118,7 @@ export async function generatePagesBatch(
                 target_city: city,
                 target_service: "Taxi",
                 status: 'published'
-            });
+            }) as any);
 
             if (insertError) {
                 console.error(`Error creating page for ${city}:`, insertError);

@@ -30,12 +30,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (!tenant) return {};
 
     // Step 2: Find Page
-    const { data: page } = await supabase
-        .from('seo_landing_pages')
+    const { data: page } = await (supabase
+        .from('seo_landing_pages' as any)
         .select('meta_title, meta_description')
         .eq('tenant_id', tenant.id)
         .eq('slug', slugPath)
-        .single();
+        .single() as any);
 
     if (!page) return {};
 
@@ -61,13 +61,13 @@ export default async function CatchAllSeoPage({ params }: PageProps) {
     if (!tenant) return notFound();
 
     // 2. Try to find SEO Landing Page
-    const { data: page } = await supabase
-        .from('seo_landing_pages')
+    const { data: page } = await (supabase
+        .from('seo_landing_pages' as any)
         .select('*')
         .eq('tenant_id', tenant.id)
         .eq('slug', slugPath)
         .eq('status', 'published')
-        .maybeSingle();
+        .maybeSingle() as any);
 
     // 3. If found, render the War Machine
     if (page) {
