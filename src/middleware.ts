@@ -12,23 +12,27 @@ export default async function middleware(req: NextRequest) {
     // Get hostname (e.g. taxiaix.fr, taxiaix.localhost:3000)
     const hostname = req.headers.get("host") || "taxifrance.fr";
 
-    // Check if we are on the main main hub
-    // scenarios: "localhost:3000", "taxifrance.fr", "192.168.1.144:3000"
-    const isLocalhost = hostname.includes("localhost");
-    const isIp = hostname.includes("192.168.1.144");
+    // Check if we are on the main hub
+    // scenarios: "localhost:3000", "taxifrance.fr", "taxifrance.vercel.app"
     const isMainHub =
-        hostname === "localhost:3000" ||
+        hostname.includes("localhost") && !hostname.includes(".localhost") ||
         hostname === "taxifrance.fr" ||
         hostname === "www.taxifrance.fr" ||
-        hostname === "192.168.1.144:3000";
+        hostname.includes("taxifrance.vercel.app") ||
+        hostname.includes("192.168.1.144");
 
     // Get the path (e.g. /transport-medical)
     const searchParams = req.nextUrl.searchParams.toString();
     const path = `${url.pathname}${searchParams.length > 0 ? `?${searchParams}` : ""
         }`;
 
-    // 1. Main Hub Logic
+    // 1. Main Hub Logic - Redirect / to /home
     if (isMainHub) {
+        // Direct access to city pages like /taxiaix should work
+        if (path.startsWith("/taxi") || path.startsWith("/admin") || path.startsWith("/home")) {
+            return NextResponse.next();
+        }
+        // Otherwise rewrite to /home
         return NextResponse.rewrite(
             new URL(`/home${path === "/" ? "" : path}`, req.url)
         );
