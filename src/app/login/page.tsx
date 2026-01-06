@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { supabaseBrowser } from "@/lib/supabase-browser";
 import { Lock, Mail, Loader2 } from "lucide-react";
 
 export default function AdminLoginPage() {
@@ -19,7 +19,7 @@ export default function AdminLoginPage() {
 
         console.log("Attempting login for:", email);
 
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabaseBrowser.auth.signInWithPassword({
             email,
             password,
         });

@@ -414,7 +414,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                             <ul className="space-y-2 text-sm">
                                 {hotels.slice(0, 5).map((poi) => (
                                     <li key={poi}>
-                                        <a href={`/guides/${slugify(poi)}`} className="hover:text-yellow-400 transition">
+                                        <a href={`/${city.slug}/guides/${slugify(poi)}`} className="hover:text-yellow-400 transition">
                                             Taxi vers {poi}
                                         </a>
                                     </li>
