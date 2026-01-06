@@ -101,7 +101,7 @@ export function BookingWidget({ city }: BookingWidgetProps) {
     }
 
     return (
-        <div id="book" className="bg-white p-8 rounded-3xl shadow-xl border border-neutral-100 relative">
+        <div id="book" className="bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-neutral-100 relative">
             <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-t-3xl"></div>
 
             <div className="flex justify-between items-start mb-6">

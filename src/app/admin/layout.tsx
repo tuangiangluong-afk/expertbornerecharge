@@ -41,7 +41,11 @@ export default async function AdminLayout({
                     </Link>
                     <Link href="/admin/guides" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-neutral-400 hover:bg-white/5 hover:text-white transition">
                         <MapPin size={18} />
-                        Guides (pSEO)
+                        Guides (POIs)
+                    </Link>
+                    <Link href="/admin/pseo" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-yellow-500 hover:bg-white/5 hover:text-white transition">
+                        <Database size={18} />
+                        Machine SEO
                     </Link>
                     <Link href="/admin/spintax" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-neutral-400 hover:bg-white/5 hover:text-white transition">
                         <Database size={18} />
