@@ -17,15 +17,21 @@ export default function AdminLoginPage() {
         setLoading(true);
         setError(null);
 
-        const { error } = await supabase.auth.signInWithPassword({
+        console.log("Attempting login for:", email);
+
+        const { data, error } = await supabase.auth.signInWithPassword({
             email,
             password,
         });
 
+        console.log("Login result:", { data, error });
+
         if (error) {
+            console.error("Login error:", error);
             setError(error.message);
             setLoading(false);
         } else {
+            console.log("Login success, redirecting...");
             router.push("/admin");
             router.refresh();
         }
