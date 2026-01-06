@@ -107,42 +107,42 @@ export function getSpintaxContent(type: SpintaxType, city: string): string {
         ],
         meta_description: [
             `Besoin d'un taxi à ${city} ? Chauffeur privé ponctuel et courtois. Transferts Gare et Aéroport. 💳 CB Acceptée. 📞 Réservez maintenant !`,
-            `Service de Taxi n°1 à ${city}. Berlines et Vans climatisés. Prix fixes sans surprise. Liaison Gare TGV et Aéroport 24h/24.`,
+            `Service de Taxi n°1 à ${city}. Berlines et Vans climatisés. Prix fixes sans surprise. Liaison Gare TGV et Aéroport 24/24.`,
             `Réservez votre chauffeur taxi à ${city} en 2 clics. Confirmation SMS immédiate. Sièges bébé disponibles. Transport VSL agrée CPAM.`
         ],
 
-        // --- HOME HERO ---
+        // --- HOME HERO (Business First) ---
         hero_title: [
-            `Taxi {officiel|agréé|certifié} à <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span>`,
-            `Votre {Taxi|Chauffeur} {Premium|VTC} sur <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span>`,
-            `L'excellence du transport {privé|de personnes} à <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span>`,
-            `Réservez votre {chauffeur|taxi} à <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span>`
+            `Navette {Aéroport & Gare|Business} à <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span>`,
+            `Votre Chauffeur {Privé|VTC} Premium sur <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span>`,
+            `Transport {Affaires|Premium|VIP} à <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span>`,
+            `Taxi {Aéroport|Longue Distance} à <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span>`
         ],
         hero_subtitle: [
-            `Le service de référence pour {vos déplacements|tous vos trajets}. {Dispo 24/7|Disponible jour et nuit} pour vos transferts {Gare & Aéroport|toutes distances}.`,
-            `Une {qualité de service|prestation} irréprochable au {tarif réglementé|juste prix}. Voyagez en toute {sérénité|tranquillité} avec nos chauffeurs {partenaires|expérimentés}.`,
-            `Oubliez {le stress|les soucis} du transport. {Commandez|Réservez} votre chauffeur en {quelques clics|2 minutes} et profitez du {confort|voyage}.`,
-            `Spécialiste du {transport médical|transfert aéroport} et des {liaisons gares|déplacements longue distance}. La référence à ${city}.`
+            `Ne ratez plus jamais votre {vol|train}. Service de navette {ponctuelle|garantie} vers les aéroports et gares TGV depuis ${city}.`,
+            `Une alternative {confortable|premium} au taxi classique. Prix {fixe|forfaitaire} annoncé à l'avance. Berline {Affaires|Confort} et chauffeur en costume.`,
+            `Spécialiste du transport {Business|d'Affaires} et des {transferts aéroport|liaisons gares}. Facturation simplifiée pour les entreprises.`,
+            `Voyagez l'esprit {léger|libre}. {Wifi|Chargeurs} et bouteilles d'eau à bord. Idéal pour vos {déplacements pro|rendez-vous importants}.`
         ],
+        hero_badge: [
+            `Navette Aéroport ${city}`,
+            `Transfert Gare & Business`,
+            `Prix Fixe Immédiat`,
+            `Service Premium 24/7`
+        ],
+
         // --- GENERIC ---
         about_us: [
             `Nous sommes une compagnie de {taxi|transport} basée à ${city}.`,
             `Votre partenaire mobilité à ${city} depuis 10 ans.`,
             `Service de transport premium sur ${city} et sa région.`
         ],
-        hero_badge: [
-            `Chauffeur disponible à ${city}`,
-            `Taxi libre sur ${city}`,
-            `Service 24/7 à ${city}`,
-            `Réservation immédiate ${city}`
-        ],
 
-        // --- MEDICAL ---
+        // --- MEDICAL (Secondary) ---
         medical_title: [
-            `Taxi Conventionné <span class="text-blue-600">${city}</span>`,
             `Transport Médical <span class="text-blue-600">${city}</span>`,
-            `Votre Taxi VSL à <span class="text-blue-600">${city}</span>`,
-            `Transport Assis TAP <span class="text-blue-600">${city}</span>`
+            `Taxi VSL Conventionné <span class="text-blue-600">${city}</span>`,
+            `Transport de Soins <span class="text-blue-600">${city}</span>`
         ],
         medical_intro: [
             `{Besoin d'un taxi conventionné|Vous recherchez un transport médical} pour vos {soins|rendez-vous} ? Nous sommes {agréés CPAM|habilités VSL} pour assurer vos déplacements sans {avance de frais|tracas administratif} (tiers-payant).`,

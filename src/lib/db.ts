@@ -45,10 +45,10 @@ export function getCity(domain: string): CityConfig | null {
 }
 
 const TEMPLATE_FEATURES = [
-    "Taxi Conventionné VSL",
-    "Gare & Aéroport",
-    "Transport Scolaire",
-    "Longue Distance"
+    "Navette Aéroport",
+    "Gare TGV / RER",
+    "Berline Affaires",
+    "Transport VSL"
 ];
 
 const TEMPLATE_PRICING = {
@@ -67,18 +67,18 @@ export const CITIES: Record<string, CityConfig> = {
         heroImage: "/images/aix-hero.jpg",
         description: "Le service de taxi n°1 à Aix-en-Provence. Disponible 24/7 pour vos transferts gare TGV et aéroport.",
         meta: {
-            title: "Taxi Aix-en-Provence | Réservation 24/7 - Officiel",
-            description: "Réservez votre taxi à Aix-en-Provence. Chauffeurs expérimentés, véhicules confortables. Transferts Gare TGV et Aéroport Marseille Provence."
+            title: "Taxi Aix-en-Provence | Gare TGV & Aéroport - Business",
+            description: "Navette Taxi Aix-en-Provence vers Gare TGV et Aéroport Marseille. Service Affaires & Particuliers. Prix Fixe et Chauffeur Privé."
         },
         features: [
-            "Transfert Gare TGV Aix",
-            "Aéroport Marseille Provence",
-            "Longue distance",
-            "Véhicules Premium"
+            "Gare TGV Aix",
+            "Aéroport Marseille",
+            "Berline Affaires",
+            "Taxi Conventionné"
         ],
         pricing: {
             base: "35€",
-            description: "Course moyenne centre-ville"
+            description: "Course centre-ville"
         },
         hospitals: ["Hôpital Privé de Provence", "Centre Hospitalier du Pays d'Aix", "Clinique Axium"],
         stations: ["Gare Aix-en-Provence TGV", "Gare Routière Aix Centre"],
@@ -100,14 +100,14 @@ export const CITIES: Record<string, CityConfig> = {
         heroImage: "/images/toulon-hero.jpg",
         description: "Votre taxi à Toulon et Hyères. Liaisons portuaire (Corsica Ferries) et aéroport Toulon-Hyères.",
         meta: {
-            title: "Taxi Toulon Hyères | Port & Aéroport - Réservation",
-            description: "Taxi officiel à Toulon. Accès direct Port (Corsica Ferries) et Aéroport de Hyères. Tous trajets Var."
+            title: "Taxi Toulon Hyères | Port & Aéroport - VTC Business",
+            description: "Transfert Taxi Toulon vers Port (Corse) et Aéroport Hyères. Berline Confort pour trajets pro et privés. Réservation immédiate."
         },
         features: [
             "Port Toulon (Corse)",
             "Aéroport Hyères",
             "Gare de Toulon",
-            "Base Navale"
+            "Transport Business"
         ],
         pricing: {
             base: "30€",
@@ -133,10 +133,10 @@ export const CITIES: Record<string, CityConfig> = {
         heroImage: "/images/marseille-hero.jpg",
         description: "Taxis officiels Marseille. Accès priorité Gare Saint-Charles et Aéroport Marignane.",
         meta: {
-            title: "Taxi Marseille | Réservation Centrale 24/7",
-            description: "Réservez votre taxi à Marseille. Liaison Gare St-Charles, Aéroport Marignane, Port de Croisière."
+            title: "Taxi Marseille | Gare St-Charles & Aéroport - Business",
+            description: "Centrale Taxi Marseille. Transfert Gare Saint-Charles et Aéroport Marignane. Service classe Affaires et Tourisme. Prix Fixes."
         },
-        features: ["Gare Saint-Charles", "Aéroport Marignane", "Port Croisière", "Stade Vélodrome"],
+        features: ["Gare St-Charles", "Aéroport Marignane", "Berline Premium", "Circuit Touristique"],
         pricing: { base: "40€", description: "Moyenne ville (jour)" },
         hospitals: ["Hôpital de la Timone", "Hôpital Nord", "Hôpital Européen"],
         stations: ["Gare Saint-Charles", "Gare de la Blancarde"],
