@@ -11,9 +11,10 @@ interface SeoPageProps {
         target_service: string;
     };
     tenant: {
+        id: string;
         name: string;
-        phone_number: string;
-        primary_color: string;
+        phone_number: string | null;
+        primary_color: string | null;
     };
 }
 
