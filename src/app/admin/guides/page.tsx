@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { slugify } from "@/lib/slugify";
 import { Database } from "@/types/database.types";
 import { Trash2, Plus, MapPin, Building, Music } from "lucide-react";
 
@@ -40,7 +41,7 @@ export default function GuidesManager() {
 
     async function handleCreate(e: React.FormEvent) {
         e.preventDefault();
-        const slug = newName.toLowerCase().replace(/ /g, "-").replace(/[^a-z0-9-]/g, "");
+        const slug = slugify(newName);
 
         const { error } = await supabase.from("pois").insert({
             tenant_id: tenantId,

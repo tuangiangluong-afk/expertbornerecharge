@@ -6,6 +6,7 @@ import { Vehicles } from "@/components/Vehicles";
 import { Reviews } from "@/components/Reviews";
 import { StructuredData } from "@/components/StructuredData";
 import { GTMScript } from "@/components/GTMScript";
+import { slugify } from "@/lib/slugify";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -346,7 +347,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                                 {city.neighborhoods.slice(0, 8).map((neighborhood) => (
                                     <a
                                         key={neighborhood}
-                                        href={`/${city.slug}/quartier/${neighborhood.toLowerCase().replace(/ /g, "-").replace(/[^a-z0-9-]/g, "")}`}
+                                        href={`/${city.slug}/quartier/${slugify(neighborhood)}`}
                                         className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2"
                                     >
                                         <span className="text-yellow-500">→</span>
@@ -384,7 +385,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                                         {hotels.slice(0, 4).map((hotel: string) => (
                                             <a
                                                 key={hotel}
-                                                href={`/${city.slug}/guides/${hotel.toLowerCase().replace(/ /g, "-").replace(/[^a-z0-9-]/g, "")}`}
+                                                href={`/${city.slug}/guides/${slugify(hotel)}`}
                                                 className="text-xs text-neutral-500 hover:text-neutral-700 hover:underline transition"
                                             >
                                                 Taxi → {hotel}
@@ -413,7 +414,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                             <ul className="space-y-2 text-sm">
                                 {hotels.slice(0, 5).map((poi) => (
                                     <li key={poi}>
-                                        <a href={`/guides/${poi.toLowerCase().replace(/ /g, "-").replace(/[^a-z0-9-]/g, "")}`} className="hover:text-yellow-400 transition">
+                                        <a href={`/guides/${slugify(poi)}`} className="hover:text-yellow-400 transition">
                                             Taxi vers {poi}
                                         </a>
                                     </li>
@@ -425,7 +426,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                             <ul className="space-y-2 text-sm">
                                 {nightlife.slice(0, 5).map((poi) => (
                                     <li key={poi}>
-                                        <a href={`/guides/${poi.toLowerCase().replace(/ /g, "-").replace(/[^a-z0-9-]/g, "")}`} className="hover:text-yellow-400 transition">
+                                        <a href={`/guides/${slugify(poi)}`} className="hover:text-yellow-400 transition">
                                             Taxi pour {poi}
                                         </a>
                                     </li>

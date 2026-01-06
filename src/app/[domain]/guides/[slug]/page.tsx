@@ -1,5 +1,6 @@
 import { CITIES } from "@/lib/db";
 import { getSpintaxContent } from "@/lib/spintax";
+import { slugify } from "@/lib/slugify";
 import { notFound } from "next/navigation";
 import { StructuredData } from "@/components/StructuredData";
 import { Phone, MapPin, Bus, Clock, CheckCircle } from "lucide-react";
@@ -34,7 +35,7 @@ async function getPoi(slug: string, tenantId: string) {
             ...city.points_of_interest.nightlife,
             ...city.points_of_interest.monuments
         ];
-        const foundName = allPois.find(p => p.toLowerCase().replace(/ /g, "-").replace(/[^a-z0-9-]/g, "") === slug);
+        const foundName = allPois.find(p => slugify(p) === slug);
         if (foundName) {
             return {
                 name: foundName,
@@ -60,7 +61,7 @@ export async function generateStaticParams() {
                 ...city.points_of_interest.monuments
             ];
             for (const poi of pois) {
-                const slug = poi.toLowerCase().replace(/ /g, "-").replace(/[^a-z0-9-]/g, "");
+                const slug = slugify(poi);
                 params.push({ domain: city.slug, slug });
             }
         }
