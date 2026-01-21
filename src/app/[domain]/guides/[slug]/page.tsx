@@ -69,9 +69,29 @@ export async function generateMetadata({ params }: { params: Promise<{ domain: s
     const poi = await getPoi(resolvedParams.slug, city.slug);
     if (!poi) return {};
 
+    const title = `Aller à ${poi.name} taxi ou bus ? Le comparatif complet - ${city.city}`;
+    const description = `Comment aller à ${poi.name} depuis ${city.city} ? Comparatif Bus vs Taxi. Trajet direct depuis Gare/Aéroport. Prix fixe et réservation immédiate.`;
+
     return {
-        title: `Aller à ${poi.name} depuis ${city.city} | Taxi vs Bus`,
-        description: `Comment aller à ${poi.name} ? Comparatif Bus vs Taxi. Trajet direct depuis Gare/Aéroport. Prix fixe et réservation immédiate.`
+        title: title,
+        description: description,
+        alternates: {
+            canonical: `https://${city.domain}/guides/${resolvedParams.slug}`,
+        },
+        openGraph: {
+            title: title,
+            description: description,
+            type: "article",
+            url: `https://${city.domain}/guides/${resolvedParams.slug}`,
+            images: [
+                {
+                    url: `https://${city.domain}${city.heroImage}`, // Fallback to city hero or specific POI image if available
+                    width: 1200,
+                    height: 630,
+                    alt: `Transport vers ${poi.name}`
+                }
+            ]
+        }
     };
 }
 
@@ -179,6 +199,23 @@ export default async function GuidePage({ params }: { params: Promise<{ domain: 
                         Le stationnement y est souvent {poi.parking_difficulty?.toLowerCase() || "difficile"}.
                         Évitez les amendes et le stress du parking en optant pour une dépose minute.
                     </p>
+                </div>
+
+                {/* Internal Linking / Maillage */}
+                <div className="mt-16 pt-12 border-t border-neutral-200">
+                    <h3 className="text-xl font-bold text-neutral-900 mb-6">Autres destinations populaires à {city.city}</h3>
+                    <div className="flex flex-wrap gap-3 mb-8">
+                        {city.points_of_interest?.hotels.slice(0, 5).map(h => (
+                            <a key={h} href={`/${city.slug}/guides/${slugify(h)}`} className="text-sm px-3 py-1.5 rounded-lg bg-neutral-100 text-neutral-600 hover:bg-neutral-200 transition">
+                                {h}
+                            </a>
+                        ))}
+                        {city.points_of_interest?.monuments.slice(0, 5).map(m => (
+                            <a key={m} href={`/${city.slug}/guides/${slugify(m)}`} className="text-sm px-3 py-1.5 rounded-lg bg-neutral-100 text-neutral-600 hover:bg-neutral-200 transition">
+                                {m}
+                            </a>
+                        ))}
+                    </div>
                 </div>
 
             </main>

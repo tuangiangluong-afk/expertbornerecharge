@@ -3,6 +3,8 @@ import { getSpintaxContent } from "@/lib/spintax";
 import { MapPin, Phone, Car } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { StructuredData } from "@/components/StructuredData";
+import { slugify } from "@/lib/slugify";
 
 export async function generateMetadata({
     params,
@@ -13,12 +15,16 @@ export async function generateMetadata({
     const city = getCity(resolvedParams.domain);
     if (!city) return {};
 
-    // Clean up slug text (e.g. "luynes" -> "Luynes")
-    const quartierName = resolvedParams.slug.charAt(0).toUpperCase() + resolvedParams.slug.slice(1);
+    // Restore clean name from DB if possible, else prettify slug
+    const quartierMatch = city.neighborhoods.find(n => slugify(n) === resolvedParams.slug);
+    const quartierName = quartierMatch || resolvedParams.slug.charAt(0).toUpperCase() + resolvedParams.slug.slice(1).replace(/-/g, ' ');
 
     return {
-        title: `Taxi ${quartierName} - ${city.city} | Arrivée en 10 min`,
-        description: `Commander un taxi à ${quartierName} (${city.city}). Chauffeur local disponible immédiatement. Transfert Gare et Aéroport.`
+        title: `Taxi ${quartierName} ${city.city} | Arrivée 10 min - ${city.name}`,
+        description: `Commander un taxi à ${quartierName}, ${city.city}. Chauffeur local disponible immédiatement. Transfert Gare et Aéroport depuis ${quartierName}.`,
+        alternates: {
+            canonical: `https://${city.domain}/quartier/${resolvedParams.slug}`,
+        },
     };
 }
 
@@ -27,20 +33,19 @@ export default async function QuartierPage({ params }: { params: Promise<{ domai
     const city = getCity(resolvedParams.domain);
     if (!city) return notFound();
 
-    // Verify if slug is a valid neighborhood
-    const quartierMatch = city.neighborhoods.find(n => n.toLowerCase().replace(/ /g, "-") === resolvedParams.slug.toLowerCase());
+    const quartierMatch = city.neighborhoods.find(n => slugify(n) === resolvedParams.slug);
 
-    // If strict checking is desired, uncomment below. For SEO "long tail" aiming, maybe lenient? 
-    // Let's be semi-strict to avoid generating infinite spam pages.
+    // Strict Mode for SEO Quality
     if (!quartierMatch) {
-        // return notFound(); // Or fallback to generic city page content
+        return notFound();
     }
 
-    const quartierDisplay = quartierMatch || resolvedParams.slug.charAt(0).toUpperCase() + resolvedParams.slug.slice(1);
+    const quartierDisplay = quartierMatch;
     const introText = getSpintaxContent("intro", city.city);
 
     return (
         <div className="min-h-screen bg-white font-sans text-neutral-900">
+            <StructuredData city={city} />
             <nav className="fixed top-0 z-50 w-full border-b border-neutral-200/80 bg-white/90 px-4 py-3 backdrop-blur-md">
                 <div className="flex items-center justify-between">
                     <a href="/" className="text-xl font-bold tracking-tight text-neutral-900 hover:text-blue-600">
@@ -57,11 +62,13 @@ export default async function QuartierPage({ params }: { params: Promise<{ domai
 
             <main className="pt-24 pb-16 px-4">
                 <div className="container mx-auto max-w-3xl">
-                    <div className="mb-6 flex items-center text-sm text-neutral-500">
-                        <a href="/" className="hover:underline">{city.city}</a>
-                        <span className="mx-2">/</span>
-                        <span className="font-medium text-neutral-900">{quartierDisplay}</span>
-                    </div>
+                    <nav className="mb-6 flex items-center text-sm text-neutral-500" aria-label="Breadcrumb">
+                        <ol className="flex items-center space-x-2">
+                            <li><a href="/" className="hover:underline">{city.city}</a></li>
+                            <li><span className="mx-2">/</span></li>
+                            <li><span className="font-medium text-neutral-900" aria-current="page">{quartierDisplay}</span></li>
+                        </ol>
+                    </nav>
 
                     <h1 className="mb-6 text-3xl font-extrabold tracking-tight sm:text-5xl">
                         Taxi à <span className="text-blue-600">{quartierDisplay}</span>
@@ -99,6 +106,41 @@ export default async function QuartierPage({ params }: { params: Promise<{ domai
                         </a>
                     </div>
                 </div>
+
+                {/* Internal Linking / Maillage */}
+                <div className="mt-24 pt-12 border-t border-gray-100">
+                    <div className="container mx-auto max-w-4xl">
+                        <h3 className="text-xl font-bold text-neutral-900 mb-6">Taxis à proximité de {quartierDisplay}</h3>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                            {city.neighborhoods
+                                .filter(n => n !== quartierMatch)
+                                .slice(0, 8)
+                                .map((neighbor) => (
+                                    <a
+                                        key={neighbor}
+                                        href={`/${city.slug}/quartier/${slugify(neighbor)}`}
+                                        className="text-sm text-neutral-600 hover:text-blue-600 hover:underline transition"
+                                    >
+                                        Taxi {neighbor}
+                                    </a>
+                                ))}
+                        </div>
+
+                        <h3 className="text-xl font-bold text-neutral-900 mb-6">Services fréquents</h3>
+                        <div className="flex flex-wrap gap-4">
+                            <a href={`/${city.slug}/transport-medical`} className="px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-medium hover:bg-blue-100 transition">
+                                Transport Médical
+                            </a>
+                            <a href={`/${city.slug}/gare-aeroport`} className="px-4 py-2 bg-teal-50 text-teal-700 rounded-full text-sm font-medium hover:bg-teal-100 transition">
+                                Gare & Aéroport
+                            </a>
+                            <a href={`/${city.slug}/longue-distance`} className="px-4 py-2 bg-purple-50 text-purple-700 rounded-full text-sm font-medium hover:bg-purple-100 transition">
+                                Longue Distance
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </main>
         </div>
     );

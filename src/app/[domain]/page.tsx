@@ -28,10 +28,50 @@ export async function generateMetadata({
     // Low-Level Spintax for High CTR (Aggressive SEO)
     const title = getSpintaxContent("meta_title", city.city);
     const description = getSpintaxContent("meta_description", city.city);
+    const heroImage = city.heroImage.startsWith('http') ? city.heroImage : `https://${city.domain}${city.heroImage}`;
 
     return {
         title: title,
         description: description,
+        keywords: [
+            `Taxi ${city.city}`,
+            `Taxi gare ${city.city}`,
+            `Navette aéroport ${city.city}`,
+            `Transport médical ${city.city}`,
+            ...city.features,
+            "TaxiConventionné",
+            "VSL"
+        ],
+        alternates: {
+            canonical: `https://${city.domain}`,
+        },
+        openGraph: {
+            title: title,
+            description: description,
+            url: `https://${city.domain}`,
+            siteName: `Taxi ${city.city}`,
+            images: [
+                {
+                    url: heroImage,
+                    width: 1200,
+                    height: 630,
+                    alt: `Taxi à ${city.city}`
+                }
+            ],
+            locale: "fr_FR",
+            type: "website",
+        },
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                "max-video-preview": -1,
+                "max-image-preview": "large",
+                "max-snippet": -1,
+            },
+        },
     };
 }
 

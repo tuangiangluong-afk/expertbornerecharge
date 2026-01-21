@@ -107,6 +107,18 @@ export default async function StationPage({ params }: { params: Promise<{ domain
                     <div className="mt-16 text-left">
                         <FAQ city={city.city} type="airport" />
                     </div>
+
+                    {/* SEO Maillage */}
+                    <div className="mt-20 pt-10 border-t border-neutral-200 text-left">
+                        <h4 className="font-bold text-neutral-900 mb-4">Dessertes principales</h4>
+                        <div className="flex flex-wrap gap-2">
+                            {city.neighborhoods.slice(0, 10).map((n) => (
+                                <span key={n} className="text-xs text-neutral-500 bg-neutral-100 px-2 py-1 rounded">
+                                    Taxi {n}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
