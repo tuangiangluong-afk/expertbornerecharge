@@ -11,6 +11,8 @@ import { BookingWidget } from "@/components/BookingWidget";
 import { slugify } from "@/lib/slugify";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Image from "next/image";
+import { supabase } from "@/lib/supabase";
 
 export async function generateMetadata({
     params,
@@ -76,7 +78,7 @@ export async function generateMetadata({
     };
 }
 
-import { supabase } from "@/lib/supabase";
+
 
 export default async function CityPage({ params }: { params: Promise<{ domain: string }> }) {
     const resolvedParams = await params;
@@ -107,7 +109,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
     // Fetch Tenant for GTM and Admin Overrides
     const { data: tenant } = await supabase
         .from("tenants")
-        .select("name, ga_id, gtm_id")
+        .select("name, ga_id, gtm_id, phone_number")
         .eq("id", city.slug)
         .maybeSingle() as any;
 
@@ -135,6 +137,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
     const effectiveCity = {
         ...city,
         name: tenant?.name || city.name,
+        phoneNumber: tenant?.phone_number || city.phoneNumber,
         ga_id: tenant?.ga_id || city.ga_id, // Admin override triggers here
         gtm_id: tenant?.gtm_id || city.gtm_id,
         // We can extend this to other fields if needed
@@ -150,14 +153,12 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
         <div className="min-h-screen font-sans text-neutral-900 bg-neutral-50 selection:bg-yellow-400 selection:text-neutral-900">
             <StructuredData city={effectiveCity} />
             <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-neutral-900/80 px-4 py-3 backdrop-blur-md">
-
-
                 <div className="flex items-center justify-between">
                     <span className="text-xl font-bold tracking-tight text-white">
                         {effectiveCity.name}<span className="text-yellow-400">.</span>
                     </span>
                     <a
-                        href={`tel:${city.phoneNumber.replace(/ /g, "")}`}
+                        href={`tel:${effectiveCity.phoneNumber.replace(/ /g, "")}`}
                         className="flex items-center gap-2 rounded-full bg-yellow-400 px-4 py-2 text-sm font-bold text-neutral-900 shadow-lg shadow-yellow-400/20 active:scale-95 transition hover:bg-yellow-300"
                     >
                         <Phone size={16} fill="currentColor" />
@@ -167,48 +168,22 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                 </div>
             </nav>
 
-            {/* Hero Section - Nuclear Fix */}
-            <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden" style={{ backgroundColor: '#0f172a' }}>
-                <div
-                    className="absolute inset-0 -z-10"
-                    style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: '#0f172a',
-                        zIndex: -10
-                    }}
-                >
-                    <div
-                        className="absolute inset-0"
-                        style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            background: 'linear-gradient(to bottom, rgba(30, 58, 138, 0.3), rgba(15, 23, 42, 0.95))',
-                            zIndex: 10
-                        }}
+            {/* Hero Section - sales optimized */}
+            <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden bg-neutral-900">
+                {/* Hero Background - Optimized LCP */}
+                <div className="absolute inset-0 -z-10">
+                    <div className="absolute inset-0 z-10 bg-gradient-to-b from-neutral-900/80 via-neutral-900/60 to-neutral-900" />
+                    <Image
+                        src={heroImage}
+                        alt={`Taxi à ${effectiveCity.city}`}
+                        fill
+                        priority
+                        className="object-cover opacity-50"
+                        sizes="100vw"
                     />
-                    <div
-                        className="absolute inset-0 animate-pulse-slow"
-                        style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundImage: `url('${heroImage}')`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            opacity: 0.4
-                        }}
-                    ></div>
                 </div>
 
+                {/* Content Container */}
                 <div className="container mx-auto px-4 text-center relative z-20">
                     <div className="inline-flex items-center rounded-full border border-yellow-400/30 bg-yellow-400/10 px-4 py-1.5 text-sm font-bold text-yellow-400 backdrop-blur-md mb-8 shadow-lg shadow-yellow-400/10">
                         <span className="mr-2 h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
@@ -224,9 +199,9 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                         {heroSubtitle}
                     </p>
 
-                    <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+                    <div className="flex flex-col items-center justify-center gap-4 sm:flex-row mb-12">
                         <a
-                            href={`tel:${city.phoneNumber.replace(/ /g, "")}`}
+                            href={`tel:${effectiveCity.phoneNumber.replace(/ /g, "")}`}
                             className="flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-yellow-400 to-yellow-500 px-8 py-5 text-xl font-bold text-neutral-900 transition transform hover:-translate-y-1 hover:shadow-2xl shadow-yellow-500/30 sm:w-auto"
                         >
                             <Phone fill="currentColor" />
@@ -240,14 +215,37 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                             Réserver pour plus tard
                         </a>
                     </div>
+
+                    {/* Booking Widget */}
+                    <div id="book" className="w-full max-w-md mx-auto scroll-mt-24 relative z-20">
+                        <BookingWidget city={effectiveCity} />
+                    </div>
                 </div>
             </section>
 
-            {/* Quick Services Grid (Iceberg Tip) */}
+            {/* QUICK SERVICES GRID - REORDERED: Business First */}
             <section className="relative z-30 -mt-16 px-4">
                 <div className="container mx-auto max-w-5xl">
                     <div className="grid gap-6 md:grid-cols-3">
-                        {/* Service 1: Medical */}
+                        {/* Service 1: Gare & Aéro */}
+                        <a href="/gare-aeroport" className="group block p-6 rounded-2xl bg-white/95 backdrop-blur shadow-xl border border-white/50 hover:border-teal-500 hover:shadow-2xl hover:shadow-teal-500/10 transition-all transform hover:-translate-y-1">
+                            <div className="h-12 w-12 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                                <MapPin size={24} fill="currentColor" />
+                            </div>
+                            <h3 className="text-lg font-bold text-neutral-900 mb-2">Gare & Aéroport</h3>
+                            <p className="text-sm text-neutral-500">Liaison Orly, Roissy CDG & Gares TGV. Suivi de vol inclus.</p>
+                        </a>
+
+                        {/* Service 2: Longue Distance */}
+                        <a href="/longue-distance" className="group block p-6 rounded-2xl bg-white/95 backdrop-blur shadow-xl border border-white/50 hover:border-purple-500 hover:shadow-2xl hover:shadow-purple-500/10 transition-all transform hover:-translate-y-1">
+                            <div className="h-12 w-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                                <CheckCircle size={24} fill="currentColor" />
+                            </div>
+                            <h3 className="text-lg font-bold text-neutral-900 mb-2">Longue Distance</h3>
+                            <p className="text-sm text-neutral-500">Forfaits toute distance France & Europe sur devis.</p>
+                        </a>
+
+                        {/* Service 3: Medical */}
                         <a href="/transport-medical" className="group block p-6 rounded-2xl bg-white/95 backdrop-blur shadow-xl border border-white/50 hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/10 transition-all transform hover:-translate-y-1">
                             <div className="h-12 w-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition">
                                 <Star size={24} fill="currentColor" />
@@ -255,29 +253,10 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                             <h3 className="text-lg font-bold text-neutral-900 mb-2">Transport Médical</h3>
                             <p className="text-sm text-neutral-500">Agréé CPAM. Tiers payant accepté vers tous les hôpitaux.</p>
                         </a>
-
-                        {/* Service 2: Gare/Aero */}
-                        <a href="/gare-aeroport" className="group block p-6 rounded-2xl bg-white/95 backdrop-blur shadow-xl border border-white/50 hover:border-teal-500 hover:shadow-2xl hover:shadow-teal-500/10 transition-all transform hover:-translate-y-1">
-                            <div className="h-12 w-12 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                                <Clock size={24} />
-                            </div>
-                            <h3 className="text-lg font-bold text-neutral-900 mb-2">Gare & Aéroport</h3>
-                            <p className="text-sm text-neutral-500">Navette ponctuelle. Suivi de vol et attente panneau.</p>
-                        </a>
-
-                        {/* Service 3: Long Distance */}
-                        <a href="/longue-distance" className="group block p-6 rounded-2xl bg-white/95 backdrop-blur shadow-xl border border-white/50 hover:border-purple-500 hover:shadow-2xl hover:shadow-purple-500/10 transition-all transform hover:-translate-y-1">
-                            <div className="h-12 w-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                                <MapPin size={24} />
-                            </div>
-                            <h3 className="text-lg font-bold text-neutral-900 mb-2">Longue Distance</h3>
-                            <p className="text-sm text-neutral-500">Voyagez loin sans compteur. Forfaits prix fixe France/Europe.</p>
-                        </a>
                     </div>
                 </div>
             </section>
 
-            {/* Vehicles Section */}
             <Vehicles city={city.city} />
 
             {/* Main Content */}
@@ -315,7 +294,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
 
                         {/* Booking Form (Glass) */}
                         <div className="relative">
-                            <BookingWidget city={city} />
+                            <BookingWidget city={effectiveCity} />
                         </div>
                     </div>
                 </div>
@@ -340,7 +319,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                                 {city.neighborhoods.slice(0, 8).map((neighborhood) => (
                                     <a
                                         key={neighborhood}
-                                        href={`/${city.slug}/quartier/${slugify(neighborhood)}`}
+                                        href={`/quartier/${slugify(neighborhood)}`}
                                         className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2"
                                     >
                                         <span className="text-yellow-500">→</span>
@@ -356,15 +335,15 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                                 Nos Services <span className="text-yellow-500">.</span>
                             </h3>
                             <div className="grid gap-3">
-                                <a href={`/${city.slug}/transport-medical`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
+                                <a href={`/transport-medical`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
                                     <span className="text-yellow-500">→</span>
                                     Transport Médical & VSL Conventionné
                                 </a>
-                                <a href={`/${city.slug}/gare-aeroport`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
+                                <a href={`/gare-aeroport`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
                                     <span className="text-yellow-500">→</span>
                                     Transfert Gare TGV & Aéroport
                                 </a>
-                                <a href={`/${city.slug}/longue-distance`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
+                                <a href={`/longue-distance`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
                                     <span className="text-yellow-500">→</span>
                                     Taxi Longue Distance
                                 </a>
@@ -394,7 +373,25 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
 
 
             {/* Footer */}
-            <Footer config={city} />
+            <Footer config={effectiveCity} />
+
+            {/* MOBILE CONVERSION BAR - VISIBLE ONLY ON MOBILE */}
+            <div className="fixed bottom-0 left-0 right-0 z-50 flex h-20 items-center gap-2 border-t border-white/10 bg-neutral-900/95 px-4 pb-2 backdrop-blur-lg md:hidden">
+                <a
+                    href={`tel:${effectiveCity.phoneNumber.replace(/ /g, "")}`}
+                    className="flex flex-1 flex-col items-center justify-center rounded-xl bg-neutral-800 py-2 text-white active:scale-95"
+                >
+                    <Phone size={20} className="mb-1 text-yellow-400" />
+                    <span className="text-xs font-bold">Appeler</span>
+                </a>
+                <a
+                    href="#book"
+                    className="flex-[2] flex flex-col items-center justify-center rounded-xl bg-yellow-400 py-2 text-neutral-900 shadow-lg shadow-yellow-400/20 active:scale-95"
+                >
+                    <Calendar size={20} className="mb-1 text-neutral-900" />
+                    <span className="text-xs font-bold uppercase tracking-wide">Commander Taxi</span>
+                </a>
+            </div>
         </div>
     );
 

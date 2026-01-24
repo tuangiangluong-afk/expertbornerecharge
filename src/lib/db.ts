@@ -33,6 +33,9 @@ export interface CityConfig {
 }
 
 export function getCity(domain: string): CityConfig | null {
+    // Normalize: remove www. if present
+    domain = domain.replace(/^www\./, '');
+
     if (CITIES[domain]) return CITIES[domain];
 
     // Fallback for aliases if not explicit (but we are making everything explicit now)
@@ -75,11 +78,11 @@ const clone = (base: CityConfig, domain: string, slug: string, ga_id?: string): 
 
 const _taxiaplaisir: CityConfig = {
     slug: "taxiaplaisir",
-    domain: "taxiaplaisir.fr",
+    domain: "taxiaplaisir.com",
     name: "Taxi Plaisir 78",
     city: "Plaisir",
     phoneNumber: "01 84 60 78 78",
-    email: "contact@taxiaplaisir.fr",
+    email: "contact@taxiaplaisir.com",
     heroImage: "/images/plaisir.jpg",
     description: "Votre taxi à Plaisir (78370). Transport vers gares et aéroports parisiens.",
     meta: {
@@ -101,137 +104,182 @@ const _taxiaplaisir: CityConfig = {
 
 const _taxiasnieres: CityConfig = {
     slug: "taxiasnieres",
-    domain: "taxiasnieres.fr",
+    domain: "taxiasnieres.com",
     name: "Taxi Asnières 92",
     city: "Asnières-sur-Seine",
     phoneNumber: "01 84 60 92 92",
-    email: "contact@taxiasnieres.fr",
+    email: "contact@taxiasnieres.com",
     heroImage: "/images/asnieres.jpg",
     description: "Taxi Asnières-sur-Seine. Déplacements rapides vers Paris et La Défense.",
     meta: { title: "Taxi Asnières-sur-Seine (92) | Moto Taxi & VSL", description: "Réservez un taxi à Asnières-sur-Seine." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Hôpital Beaujon"], stations: ["Gare d'Asnières"], neighborhoods: ["Bécon-les-Bruyères"],
-    points_of_interest: { hotels: [], nightlife: [], monuments: ["Cimetière des Chiens"], parking_difficulty: "Difficile" }
+    points_of_interest: {
+        hotels: ["Ibis Styles Asnières", "Hotel Terminus"],
+        nightlife: ["Théâtre Armande Béjart", "Rosa Bonheur à l'Ouest"],
+        monuments: ["Cimetière des Chiens"],
+        parking_difficulty: "Difficile"
+    }
 };
 
 const _taxiboulogne: CityConfig = {
     slug: "taxiboulogne",
-    domain: "taxiboulogne.fr",
+    domain: "taxiboulogne.com",
     name: "Taxi Boulogne 92",
     city: "Boulogne-Billancourt",
     phoneNumber: "01 84 60 92 00",
-    email: "contact@taxiboulogne.fr",
+    email: "contact@taxiboulogne.com",
     heroImage: "/images/boulogne.jpg",
     description: "Taxi Boulogne-Billancourt. Service premium 92.",
     meta: { title: "Taxi Boulogne-Billancourt (92) | Réservation Taxi", description: "Taxi Boulogne." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Hôpital Ambroise-Paré"], stations: ["Pont de Sèvres"], neighborhoods: ["Billancourt", "Parchamp"],
-    points_of_interest: { hotels: ["Radisson Blu"], nightlife: [], monuments: ["La Seine Musicale"], parking_difficulty: "Enfer" }
+    points_of_interest: {
+        hotels: ["Radisson Blu", "Marriott"],
+        nightlife: ["La Seine Musicale", "Carré Seine"],
+        monuments: ["La Seine Musicale"],
+        parking_difficulty: "Enfer"
+    }
 };
 
 const _taxichambourcy: CityConfig = {
     slug: "taxichambourcy",
-    domain: "taxichambourcy.fr",
+    domain: "taxichambourcy.com",
     name: "Taxi Chambourcy 78",
     city: "Chambourcy",
     phoneNumber: "01 84 60 78 00",
-    email: "contact@taxichambourcy.fr",
+    email: "contact@taxichambourcy.com",
     heroImage: "/images/chambourcy.jpg",
     description: "Taxi Chambourcy.",
     meta: { title: "Taxi Chambourcy (78) | Transport", description: "Taxi Chambourcy." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Hôpital de Poissy"], stations: ["Gare de Poissy"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: ["Désert de Retz"], parking_difficulty: "Facile" }
+    points_of_interest: {
+        hotels: ["Ibis Saint-Germain-en-Laye", "Campanile Chambourcy"],
+        nightlife: ["Bowlcenter Orgeval", "Cinéma CGR Poissy"],
+        monuments: ["Désert de Retz"],
+        parking_difficulty: "Facile"
+    }
 };
 
 const _taxicolombes: CityConfig = {
     slug: "taxicolombes",
-    domain: "taxicolombes.fr",
+    domain: "taxicolombes.com",
     name: "Taxi Colombes 92",
     city: "Colombes",
     phoneNumber: "01 84 60 92 01",
-    email: "contact@taxicolombes.fr",
+    email: "contact@taxicolombes.com",
     heroImage: "/images/colombes.jpg",
     description: "Taxi Colombes.",
     meta: { title: "Taxi Colombes (92) | Transport", description: "Taxi Colombes." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Hôpital Louis-Mourier"], stations: ["Gare de Colombes"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: [], parking_difficulty: "Moyenne" }
+    points_of_interest: {
+        hotels: ["Kyriad Colombes", "Courtyard Marriott"],
+        nightlife: ["L'Avant Seine", "Patinoire de Colombes"],
+        monuments: ["Le Stade Yves-du-Manoir"],
+        parking_difficulty: "Moyenne"
+    }
 };
 
 const _taxicourbevoie: CityConfig = {
     slug: "taxicourbevoie",
-    domain: "taxicourbevoie.fr",
+    domain: "taxicourbevoie.com",
     name: "Taxi Courbevoie 92",
     city: "Courbevoie",
     phoneNumber: "01 84 60 92 02",
-    email: "contact@taxicourbevoie.fr",
+    email: "contact@taxicourbevoie.com",
     heroImage: "/images/courbevoie.jpg",
     description: "Taxi Courbevoie.",
     meta: { title: "Taxi Courbevoie (92) | La Défense", description: "Taxi Courbevoie." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Hôpital Courbevoie"], stations: ["Gare de Courbevoie"], neighborhoods: ["La Défense"],
-    points_of_interest: { hotels: [], nightlife: [], monuments: [], parking_difficulty: "Difficile" }
+    points_of_interest: {
+        hotels: ["Pullman La Défense", "Melia Paris La Défense"],
+        nightlife: ["Paris La Défense Arena", "Rooftop Skyline"],
+        monuments: ["Grande Arche"],
+        parking_difficulty: "Difficile"
+    }
 };
 
 const _taxifeucherolles: CityConfig = {
     slug: "taxifeucherolles",
-    domain: "taxifeucherolles.fr",
+    domain: "taxifeucherolles.com",
     name: "Taxi Feucherolles 78",
     city: "Feucherolles",
     phoneNumber: "01 84 60 78 01",
-    email: "contact@taxifeucherolles.fr",
+    email: "contact@taxifeucherolles.com",
     heroImage: "/images/feucherolles.jpg",
     description: "Taxi Feucherolles.",
     meta: { title: "Taxi Feucherolles (78)", description: "Taxi Feucherolles." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: [], stations: [], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: [], parking_difficulty: "Facile" }
+    points_of_interest: {
+        hotels: ["La Maison de Feucherolles"],
+        nightlife: ["Golf de Feucherolles", "Restaurant du Golf"],
+        monuments: ["Eglise Saint-Denis"],
+        parking_difficulty: "Facile"
+    }
 };
 
 const _taxifourqueux: CityConfig = {
     slug: "taxifourqueux",
-    domain: "taxifourqueux.fr",
+    domain: "taxifourqueux.com",
     name: "Taxi Fourqueux 78",
     city: "Fourqueux",
     phoneNumber: "01 84 60 78 02",
-    email: "contact@taxifourqueux.fr",
+    email: "contact@taxifourqueux.com",
     heroImage: "/images/fourqueux.jpg",
     description: "Taxi Fourqueux.",
     meta: { title: "Taxi Fourqueux (78)", description: "Taxi Fourqueux." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: [], stations: ["Gare St Germain GC"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: [], parking_difficulty: "Facile" }
+    points_of_interest: {
+        hotels: ["Pavillon Henri IV", "Ibis St Germain"],
+        nightlife: ["Golf de Fourqueux", "Théâtre Alexandre Dumas"],
+        monuments: ["Villa Savoye"],
+        parking_difficulty: "Facile"
+    }
 };
 
 const _taxiguyancourt: CityConfig = {
     slug: "taxiguyancourt",
-    domain: "taxiguyancourt.fr",
+    domain: "taxiguyancourt.com",
     name: "Taxi Guyancourt 78",
     city: "Guyancourt",
     phoneNumber: "01 84 60 78 03",
-    email: "contact@taxiguyancourt.fr",
+    email: "contact@taxiguyancourt.com",
     heroImage: "/images/guyancourt.jpg",
     description: "Taxi Guyancourt.",
     meta: { title: "Taxi Guyancourt (78)", description: "Taxi Guyancourt." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: [], stations: ["Gare SQY"], neighborhoods: ["Villaroy"],
-    points_of_interest: { hotels: [], nightlife: [], monuments: ["Technocentre Renault"], parking_difficulty: "Moyenne" }
+    points_of_interest: {
+        hotels: ["Mercure Saint-Quentin", "Best Western The Wish"],
+        nightlife: ["Golf National", "La Batterie"],
+        monuments: ["Technocentre Renault"],
+        parking_difficulty: "Moyenne"
+    }
 };
 
 const _taxiissy: CityConfig = {
     slug: "taxiissy",
-    domain: "taxiissy.fr",
+    domain: "taxiissy.com",
     name: "Taxi Issy 92",
     city: "Issy-les-Moulineaux",
     phoneNumber: "01 84 60 92 03",
-    email: "contact@taxiissy.fr",
+    email: "contact@taxiissy.com",
     heroImage: "/images/issy.jpg",
     description: "Taxi Issy.",
     meta: { title: "Taxi Issy-les-Moulineaux (92)", description: "Taxi Issy." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Hôpital Suisse"], stations: ["Val de Seine"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: [], parking_difficulty: "Difficile" }
+    points_of_interest: {
+        hotels: ["Novotel Cœur d'Orléans", "Ibis Issy Val de Seine"],
+        nightlife: ["Le Réacteur", "Musée de la Carte à Jouer"],
+        monuments: ["Ile Saint-Germain"],
+        parking_difficulty: "Difficile"
+    }
 };
 
 const _taxilepecq: CityConfig = {
@@ -246,82 +294,112 @@ const _taxilepecq: CityConfig = {
     meta: { title: "Taxi Le Pecq (78)", description: "Taxi Le Pecq." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: [], stations: ["RER A Le Vésinet-Le Pecq"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: [], parking_difficulty: "Moyenne" }
+    points_of_interest: {
+        hotels: ["Aparthotel Adagio", "Hotel Paris-Saint-Germain"],
+        nightlife: ["L'Ermitage", "Théâtre du Vésinet"],
+        monuments: ["Parc Corbière"],
+        parking_difficulty: "Moyenne"
+    }
 };
 
 const _taxilevallois: CityConfig = {
     slug: "taxilevallois",
-    domain: "taxilevallois.fr",
+    domain: "taxilevallois.com",
     name: "Taxi Levallois 92",
     city: "Levallois-Perret",
     phoneNumber: "01 84 60 92 04",
-    email: "contact@taxilevallois.fr",
+    email: "contact@taxilevallois.com",
     heroImage: "/images/levallois.jpg",
     description: "Taxi Levallois.",
     meta: { title: "Taxi Levallois-Perret (92)", description: "Taxi Levallois." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Hôpital Franco-Britannique"], stations: ["Gare de Clichy-Levallois"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: [], parking_difficulty: "Difficile" }
+    points_of_interest: {
+        hotels: ["EverGreen Laurel", "Ibis Paris Levallois"],
+        nightlife: ["So Ouest", "Polyclinique de Levallois ( urgence )"],
+        monuments: ["Mairie de Levallois"],
+        parking_difficulty: "Difficile"
+    }
 };
 
 const _taxilevesinet: CityConfig = {
     slug: "taxilevesinet",
-    domain: "taxilevesinet.fr",
+    domain: "taxilevesinet.com",
     name: "Taxi Le Vésinet 78",
     city: "Le Vésinet",
     phoneNumber: "01 84 60 78 05",
-    email: "contact@taxilevesinet.fr",
+    email: "contact@taxilevesinet.com",
     heroImage: "/images/levesinet.jpg",
     description: "Taxi Le Vésinet.",
     meta: { title: "Taxi Le Vésinet (78)", description: "Taxi Le Vésinet." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: [], stations: ["RER Le Vésinet Centre"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: [], parking_difficulty: "Facile" }
+    points_of_interest: {
+        hotels: ["Maison Blanche", "Ibis Chatou"],
+        nightlife: ["Théâtre du Vésinet", "Cinéma Jean Marais"],
+        monuments: ["Les Ibis"],
+        parking_difficulty: "Facile"
+    }
 };
 
 const _taxilouveciennes: CityConfig = {
     slug: "taxilouveciennes",
-    domain: "taxilouveciennes.fr",
+    domain: "taxilouveciennes.com",
     name: "Taxi Louveciennes 78",
     city: "Louveciennes",
     phoneNumber: "01 84 60 78 06",
-    email: "contact@taxilouveciennes.fr",
+    email: "contact@taxilouveciennes.com",
     heroImage: "/images/louveciennes.jpg",
     description: "Taxi Louveciennes.",
     meta: { title: "Taxi Louveciennes (78)", description: "Taxi Louveciennes." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: [], stations: ["Gare de Louveciennes"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: ["Aqueduc"], parking_difficulty: "Facile" }
+    points_of_interest: {
+        hotels: ["B&B Hotel", "Campanile"],
+        nightlife: ["Pavillon de Musique", "Seine Lounge"],
+        monuments: ["Aqueduc de Louveciennes"],
+        parking_difficulty: "Facile"
+    }
 };
 
 const _taximarly: CityConfig = {
     slug: "taximarly",
-    domain: "taximarly.fr",
+    domain: "taximarly.com",
     name: "Taxi Marly 78",
     city: "Marly-le-Roi",
     phoneNumber: "01 84 60 78 07",
-    email: "contact@taximarly.fr",
+    email: "contact@taximarly.com",
     heroImage: "/images/marly.jpg",
     description: "Taxi Marly.",
     meta: { title: "Taxi Marly-le-Roi (78)", description: "Taxi Marly." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: [], stations: ["Gare de Marly-le-Roi"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: ["Parc de Marly"], parking_difficulty: "Facile" }
+    points_of_interest: {
+        hotels: ["L'Ermitage des Loges"],
+        nightlife: ["Centre Culturel Jean Vilar", "Le Fontenoy"],
+        monuments: ["Parc de Marly", "Abreuvoir"],
+        parking_difficulty: "Facile"
+    }
 };
 
 const _taximontreuil: CityConfig = {
     slug: "taximontreuil",
-    domain: "taximontreuil.fr",
+    domain: "taximontreuil.com",
     name: "Taxi Montreuil 93",
     city: "Montreuil",
     phoneNumber: "01 84 60 93 00",
-    email: "contact@taximontreuil.fr",
+    email: "contact@taximontreuil.com",
     heroImage: "/images/montreuil.jpg",
     description: "Taxi Montreuil.",
     meta: { title: "Taxi Montreuil (93)", description: "Taxi Montreuil." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Hôpital André Grégoire"], stations: ["Mairie de Montreuil"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: [], parking_difficulty: "Difficile" }
+    points_of_interest: {
+        hotels: ["Ibis Styles Mairie", "Novotel Montreuil"],
+        nightlife: ["La Parole Errante", "Le Chinois"],
+        monuments: ["Murs à Pêches"],
+        parking_difficulty: "Difficile"
+    }
 };
 
 const _taxinanterre: CityConfig = {
@@ -330,28 +408,38 @@ const _taxinanterre: CityConfig = {
     name: "Taxi Nanterre 92",
     city: "Nanterre",
     phoneNumber: "01 84 60 92 05",
-    email: "contact@taxinanterre.fr",
+    email: "contact@taxinanterre.com",
     heroImage: "/images/nanterre.jpg",
     description: "Taxi Nanterre.",
     meta: { title: "Taxi Nanterre (92)", description: "Taxi Nanterre." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Hôpital Nanterre"], stations: ["Nanterre Université"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: [], parking_difficulty: "Moyenne" }
+    points_of_interest: {
+        hotels: ["CitizenM La Défense", "Arena Hotel"],
+        nightlife: ["Nanterre Amandiers", "Paris La Défense Arena"],
+        monuments: ["Parc André Malraux"],
+        parking_difficulty: "Moyenne"
+    }
 };
 
 const _taxineuilly: CityConfig = {
     slug: "taxineuilly",
-    domain: "taxineuilly.fr",
+    domain: "taxineuilly.com",
     name: "Taxi Neuilly 92",
     city: "Neuilly-sur-Seine",
     phoneNumber: "01 84 60 92 06",
-    email: "contact@taxineuilly.fr",
+    email: "contact@taxineuilly.com",
     heroImage: "/images/neuilly.jpg",
     description: "Taxi Neuilly.",
     meta: { title: "Taxi Neuilly-sur-Seine (92)", description: "Taxi Neuilly." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Hôpital Américain"], stations: ["Pont de Neuilly"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: [], parking_difficulty: "Difficile" }
+    points_of_interest: {
+        hotels: ["Le Neuilly Park Hotel", "Mövenpick"],
+        nightlife: ["Théâtre des Sablons", "Cinéma Le Village"],
+        monuments: ["Fondation Louis Vuitton"],
+        parking_difficulty: "Difficile"
+    }
 };
 
 const _taxipoissy: CityConfig = {
@@ -366,67 +454,92 @@ const _taxipoissy: CityConfig = {
     meta: { title: "Taxi Poissy (78)", description: "Taxi Poissy." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["CHIPS Poissy"], stations: ["Gare de Poissy"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: ["Villa Savoye"], parking_difficulty: "Moyenne" }
+    points_of_interest: {
+        hotels: ["Ibis Poissy", "Novotel Poissy Orgeval"],
+        nightlife: ["Théâtre de Poissy", "Cinéma CGR"],
+        monuments: ["Villa Savoye", "Collégiale Notre-Dame"],
+        parking_difficulty: "Moyenne"
+    }
 };
 
 const _taxirueil: CityConfig = {
     slug: "taxirueil",
-    domain: "taxirueil.fr",
+    domain: "taxirueil.com",
     name: "Taxi Rueil 92",
     city: "Rueil-Malmaison",
     phoneNumber: "01 84 60 92 07",
-    email: "contact@taxirueil.fr",
+    email: "contact@taxirueil.com",
     heroImage: "/images/rueil.jpg",
     description: "Taxi Rueil.",
     meta: { title: "Taxi Rueil-Malmaison (92)", description: "Taxi Rueil." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Clinique des Martinets"], stations: ["RER Rueil"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: ["Château de Malmaison"], parking_difficulty: "Moyenne" }
+    points_of_interest: {
+        hotels: ["Novotel Rueil", "Ibis Saint-Germain"],
+        nightlife: ["Théâtre André Malraux", "Cinéma Ariel"],
+        monuments: ["Château de Malmaison"],
+        parking_difficulty: "Moyenne"
+    }
 };
 
 const _taxisaintcloud: CityConfig = {
     slug: "taxisaintcloud",
-    domain: "taxisaintcloud.fr",
+    domain: "taxisaintcloud.com",
     name: "Taxi Saint-Cloud 92",
     city: "Saint-Cloud",
     phoneNumber: "01 84 60 92 08",
-    email: "contact@taxisaintcloud.fr",
+    email: "contact@taxisaintcloud.com",
     heroImage: "/images/saintcloud.jpg",
     description: "Taxi Saint-Cloud.",
     meta: { title: "Taxi Saint-Cloud (92)", description: "Taxi Saint-Cloud." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Hôpital Huguenin"], stations: ["Gare de Saint-Cloud"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: ["Parc de Saint-Cloud"], parking_difficulty: "Difficile" }
+    points_of_interest: {
+        hotels: ["Hotel Quorum", "Mercure Paris Saint-Cloud"],
+        nightlife: ["Hippodrome de Saint-Cloud", "Domaine National"],
+        monuments: ["Parc de Saint-Cloud"],
+        parking_difficulty: "Difficile"
+    }
 };
 
 const _taxisaintcyr: CityConfig = {
     slug: "taxisaintcyr",
-    domain: "taxisaintcyr.fr",
+    domain: "taxisaintcyr.com",
     name: "Taxi Saint-Cyr 78",
     city: "Saint-Cyr-l'École",
     phoneNumber: "01 84 60 78 09",
-    email: "contact@taxisaintcyr.fr",
+    email: "contact@taxisaintcyr.com",
     heroImage: "/images/saintcyr.jpg",
     description: "Taxi Saint-Cyr.",
     meta: { title: "Taxi Saint-Cyr-l'École (78)", description: "Taxi Saint-Cyr." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: [], stations: ["Gare de Saint-Cyr"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: [], parking_difficulty: "Moyenne" }
+    points_of_interest: {
+        hotels: ["Aerotel", "Kyriad Versailles"],
+        nightlife: ["Théâtre Gérard Philipe"],
+        monuments: ["Ecole Militaire"],
+        parking_difficulty: "Moyenne"
+    }
 };
 
 const _taxisaintdenis: CityConfig = {
     slug: "taxisaintdenis",
-    domain: "taxisaintdenis.fr",
+    domain: "taxisaintdenis.com",
     name: "Taxi Saint-Denis 93",
     city: "Saint-Denis",
     phoneNumber: "01 84 60 93 01",
-    email: "contact@taxisaintdenis.fr",
+    email: "contact@taxisaintdenis.com",
     heroImage: "/images/saintdenis.jpg",
     description: "Taxi Saint-Denis.",
     meta: { title: "Taxi Saint-Denis (93)", description: "Taxi Saint-Denis." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Hôpital Delafontaine"], stations: ["Gare de Saint-Denis"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: ["Stade de France", "Basilique"], parking_difficulty: "Difficile" }
+    points_of_interest: {
+        hotels: ["Novotel Stade de France", "Ibis Saint-Denis"],
+        nightlife: ["Le 6B", "La Ligne 13"],
+        monuments: ["Stade de France", "Basilique"],
+        parking_difficulty: "Difficile"
+    }
 };
 
 const _taxisaintgermain: CityConfig = {
@@ -441,37 +554,52 @@ const _taxisaintgermain: CityConfig = {
     meta: { title: "Taxi Saint-Germain-en-Laye (78)", description: "Taxi Saint-Germain." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Hôpital de Poissy-St-Germain"], stations: ["RER A St Germain"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: ["Château de St Germain"], parking_difficulty: "Moyenne" }
+    points_of_interest: {
+        hotels: ["Pavillon Henri IV", "Ibis Centre"],
+        nightlife: ["Théâtre Alexandre Dumas", "L'Estrella"],
+        monuments: ["Château de St Germain", "Grande Terrasse"],
+        parking_difficulty: "Moyenne"
+    }
 };
 
 const _taxisaintnom: CityConfig = {
     slug: "taxisaintnom",
-    domain: "taxisaintnom.fr",
+    domain: "taxisaintnom.com",
     name: "Taxi Saint-Nom 78",
     city: "Saint-Nom-la-Bretèche",
     phoneNumber: "01 84 60 78 11",
-    email: "contact@taxisaintnom.fr",
+    email: "contact@taxisaintnom.com",
     heroImage: "/images/saintnom.jpg",
     description: "Taxi Saint-Nom.",
     meta: { title: "Taxi Saint-Nom-la-Bretèche (78)", description: "Taxi Saint-Nom." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: [], stations: ["Gare de St Nom"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: [], parking_difficulty: "Facile" }
+    points_of_interest: {
+        hotels: ["Domaine de la Tuilerie"],
+        nightlife: ["Golf de Saint-Nom", "Club House"],
+        monuments: ["Forêt de Marly"],
+        parking_difficulty: "Facile"
+    }
 };
 
 const _taxisaintouen: CityConfig = {
     slug: "taxisaintouen",
-    domain: "taxisaintouen.fr",
+    domain: "taxisaintouen.com",
     name: "Taxi Saint-Ouen 93",
     city: "Saint-Ouen",
     phoneNumber: "01 84 60 93 02",
-    email: "contact@taxisaintouen.fr",
+    email: "contact@taxisaintouen.com",
     heroImage: "/images/saintouen.jpg",
     description: "Taxi Saint-Ouen.",
     meta: { title: "Taxi Saint-Ouen (93)", description: "Taxi Saint-Ouen." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: [], stations: ["Gare de St Ouen"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: ["Puces de St Ouen"], parking_difficulty: "Difficile" }
+    points_of_interest: {
+        hotels: ["Mercure Saint-Ouen", "Mob Hotel"],
+        nightlife: ["La Commune", "Mains d'Œuvres"],
+        monuments: ["Puces de St Ouen", "Château de Saint-Ouen"],
+        parking_difficulty: "Difficile"
+    }
 };
 
 const _taxisaintquentin: CityConfig = {
@@ -485,8 +613,16 @@ const _taxisaintquentin: CityConfig = {
     description: "Taxi SQY.",
     meta: { title: "Taxi Saint-Quentin-en-Yvelines (78)", description: "Taxi SQY." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
-    hospitals: ["Hôpital Privé de l'Ouest Parisien"], stations: ["Gare de SQY"], neighborhoods: [],
-    points_of_interest: { hotels: [], nightlife: [], monuments: ["Vélodrome"], parking_difficulty: "Moyenne" }
+    hospitals: ["Hôpital Privé de l'Ouest Parisien", "Hôpital Mignot"],
+    stations: ["Gare de Saint-Quentin-en-Yvelines", "Gare de Trappes"],
+    neighborhoods: ["Le Pas du Lac", "Sourderie", "Villaroy"],
+    points_of_interest: {
+        hotels: ["Ibis Budget Saint-Quentin", "Campanile Saint-Quentin", "Mercure Maurepas"],
+        nightlife: ["Vélodrome National", "Théâtre de Saint-Quentin", "UGC Ciné Cité SQY Ouest"],
+        monuments: ["Porte des Merogis"],
+        parking_difficulty: "Moyenne"
+    }
+
 };
 
 const _taxisversailles: CityConfig = {
@@ -501,44 +637,20 @@ const _taxisversailles: CityConfig = {
     meta: { title: "Taxi Versailles (78)", description: "Taxi Versailles." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
     hospitals: ["Hôpital Mignot"], stations: ["Gare Versailles Chantiers", "Gare Rive Droite"], neighborhoods: ["Notre-Dame", "Saint-Louis"],
-    points_of_interest: { hotels: ["Trianon Palace"], nightlife: [], monuments: ["Château de Versailles"], parking_difficulty: "Difficile" }
+    points_of_interest: {
+        hotels: ["Trianon Palace", "L'Orangerie", "Ibis Versailles"],
+        nightlife: ["Place du Marché", "Royale Factory"],
+        monuments: ["Château de Versailles", "Jardins"],
+        parking_difficulty: "Difficile"
+    }
 };
 
 export const CITIES: Record<string, CityConfig> = {
-    // --- .FR DOMAINS (Base) ---
-    "taxiaplaisir": _taxiaplaisir,
-    "taxiasnieres": _taxiasnieres,
-    "taxiboulogne": _taxiboulogne,
-    "taxichambourcy": _taxichambourcy,
-    "taxicolombes": _taxicolombes,
-    "taxicourbevoie": _taxicourbevoie,
-    "taxifeucherolles": _taxifeucherolles,
-    "taxifourqueux": _taxifourqueux,
-    "taxiguyancourt": _taxiguyancourt,
-    "taxiissy": _taxiissy,
-    "taxilepecq": _taxilepecq, // Native .com but serves as base here
-    "taxilevallois": _taxilevallois,
-    "taxilevesinet": _taxilevesinet,
-    "taxilouveciennes": _taxilouveciennes,
-    "taximarly": _taximarly,
-    "taximontreuil": _taximontreuil,
-    "taxinanterre": _taxinanterre,
-    "taxineuilly": _taxineuilly,
-    "taxipoissy": _taxipoissy, // Native .com
-    "taxirueil": _taxirueil,
-    "taxisaintcloud": _taxisaintcloud,
-    "taxisaintcyr": _taxisaintcyr,
-    "taxisaintdenis": _taxisaintdenis,
-    "taxisaintgermain": _taxisaintgermain, // Native .com
-    "taxisaintnom": _taxisaintnom,
-    "taxisaintouen": _taxisaintouen,
-    "taxisaintquentin": _taxisaintquentin, // Native .com
-    "taxisversailles": _taxisversailles, // Native .com
-
-    // --- .COM ALIASES & VARIANTS (With optional GA ID support) ---
+    // --- .COM DOMAINS ONLY ---
+    // Each entry uses the clone() helper to set domain and slug correctly
     // Usage: clone(base, "domain.com", "slug_com", "G-ANALYTICS-ID")
 
-    "taxiaplaisir_com": clone(_taxiaplaisir, "taxiaplaisir.com", "taxiaplaisir_com"),
+    "taxiaplaisir_com": clone(_taxiaplaisir, "taxiaplaisir.com", "taxiaplaisir_com", "G-0N4C1PP3YG"),
     "taxiasnieres_com": clone(_taxiasnieres, "taxiasnieres.com", "taxiasnieres_com"),
     "taxiboulogne_com": clone(_taxiboulogne, "taxiboulogne.com", "taxiboulogne_com"),
     "taxichambourcy_com": clone(_taxichambourcy, "taxichambourcy.com", "taxichambourcy_com"),
@@ -548,16 +660,22 @@ export const CITIES: Record<string, CityConfig> = {
     "taxifourqueux_com": clone(_taxifourqueux, "taxifourqueux.com", "taxifourqueux_com"),
     "taxiguyancourt_com": clone(_taxiguyancourt, "taxiguyancourt.com", "taxiguyancourt_com"),
     "taxiissy_com": clone(_taxiissy, "taxiissy.com", "taxiissy_com"),
+    "taxilepecq_com": clone(_taxilepecq, "taxilepecq.com", "taxilepecq_com"),
     "taxilevallois_com": clone(_taxilevallois, "taxilevallois.com", "taxilevallois_com"),
     "taxilevesinet_com": clone(_taxilevesinet, "taxilevesinet.com", "taxilevesinet_com"),
     "taxilouveciennes_com": clone(_taxilouveciennes, "taxilouveciennes.com", "taxilouveciennes_com"),
     "taximarly_com": clone(_taximarly, "taximarly.com", "taximarly_com"),
     "taximontreuil_com": clone(_taximontreuil, "taximontreuil.com", "taximontreuil_com"),
     "taxineuilly_com": clone(_taxineuilly, "taxineuilly.com", "taxineuilly_com"),
+    "taxipoissy_com": clone(_taxipoissy, "taxipoissy.com", "taxipoissy_com"),
     "taxirueil_com": clone(_taxirueil, "taxirueil.com", "taxirueil_com"),
     "taxisaintcloud_com": clone(_taxisaintcloud, "taxisaintcloud.com", "taxisaintcloud_com"),
     "taxisaintcyr_com": clone(_taxisaintcyr, "taxisaintcyr.com", "taxisaintcyr_com"),
     "taxisaintdenis_com": clone(_taxisaintdenis, "taxisaintdenis.com", "taxisaintdenis_com"),
+    "taxisaintgermain_com": clone(_taxisaintgermain, "taxisaintgermain.com", "taxisaintgermain_com"),
     "taxisaintnom_com": clone(_taxisaintnom, "taxisaintnom.com", "taxisaintnom_com"),
     "taxisaintouen_com": clone(_taxisaintouen, "taxisaintouen.com", "taxisaintouen_com"),
+    "taxisaintquentin_com": clone(_taxisaintquentin, "taxisaintquentin.com", "taxisaintquentin_com"),
+    "taxisversailles_com": clone(_taxisversailles, "taxisversailles.com", "taxisversailles_com"),
+    "taxinanterre.fr": clone(_taxinanterre, "taxinanterre.fr", "taxinanterre_fr"),
 };

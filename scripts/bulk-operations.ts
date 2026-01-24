@@ -10,11 +10,11 @@ const CNAME_TARGET = "cname.vercel-dns.com.";
 let shContent = `#!/bin/bash\n# Script de déploiement de masse pour Vercel\n\n`;
 
 Object.values(CITIES).forEach(city => {
-    shContent += `echo "Adding domain: ${city.domain}"\n`;
-    shContent += `vercel domains add ${city.domain} --project ${PROJECT_NAME}\n`;
+    shContent += `echo "Attaching: ${city.domain}"\n`;
+    shContent += `npx -y vercel domains add ${city.domain} --force\n`;
     if (city.aliases) {
         city.aliases.forEach(alias => {
-            shContent += `vercel domains add ${alias} --project ${PROJECT_NAME}\n`;
+            shContent += `npx -y vercel domains add ${alias} --force\n`;
         });
     }
 });

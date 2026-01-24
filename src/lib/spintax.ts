@@ -101,8 +101,8 @@ export function getSpintaxContent(type: SpintaxType, city: string): string {
         // --- SEO METADATA (Aggressive CTR) ---
         meta_title: [
             `Taxi ${city} | Arrive en 10 min | Prix Fixe`,
-            `Taxi Officiel ${city} | Réservation Immédiate | 24/7`,
-            `Votre Chauffeur à ${city} | Prix Connu à l'Avance | CB`,
+            `Taxi ${city} Officiel | Réservation Immédiate | 24/7`,
+            `Taxi ${city} & Chauffeur Privé | Prix Connu à l'Avance`,
             `Taxi ${city} Gare & Aéroport | Devis Gratuit | 0 Attente`
         ],
         meta_description: [
@@ -113,29 +113,29 @@ export function getSpintaxContent(type: SpintaxType, city: string): string {
 
         // --- HOME HERO (Business First) ---
         hero_title: [
-            `Navette {Aéroport & Gare|Business} à <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span>`,
-            `Votre Chauffeur {Privé|VTC} Premium sur <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span>`,
-            `Transport {Affaires|Premium|VIP} à <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span>`,
-            `Taxi {Aéroport|Longue Distance} à <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span>`
+            `Taxi <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span> - Navette {Aéroport & Gare|Business}`,
+            `Taxi <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span> - Votre Chauffeur {Privé|VTC}`,
+            `Taxi <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span> - Transport {Affaires|Premium}`,
+            `Taxi <span class="text-transparent bg-clip-text bg-gradient-to-tr from-yellow-300 to-yellow-600">${city}</span> - {Aéroport|Longue Distance}`
         ],
         hero_subtitle: [
-            `Ne ratez plus jamais votre {vol|train}. Service de navette {ponctuelle|garantie} vers les aéroports et gares TGV depuis ${city}.`,
-            `Une alternative {confortable|premium} au taxi classique. Prix {fixe|forfaitaire} annoncé à l'avance. Berline {Affaires|Confort} et chauffeur en costume.`,
-            `Spécialiste du transport {Business|d'Affaires} et des {transferts aéroport|liaisons gares}. Facturation simplifiée pour les entreprises.`,
-            `Voyagez l'esprit {léger|libre}. {Wifi|Chargeurs} et bouteilles d'eau à bord. Idéal pour vos {déplacements pro|rendez-vous importants}.`
+            `Ne ratez plus jamais votre {vol|train}. Service de Taxi et navette {ponctuelle|garantie} vers les aéroports et gares TGV depuis ${city}.`,
+            `Le meilleur service de Taxi à ${city}. Prix {fixe|forfaitaire} annoncé à l'avance. Berline {Affaires|Confort} et chauffeur expérimenté.`,
+            `Spécialiste du Taxi {Business|d'Affaires} et des {transferts aéroport|liaisons gares}. Facturation simplifiée pour les entreprises.`,
+            `Voyagez l'esprit {léger|libre}. Votre Taxi à ${city} avec {Wifi|Chargeurs} à bord. Idéal pour vos {déplacements pro|rendez-vous importants}.`
         ],
         hero_badge: [
+            `Taxi ${city}`,
             `Navette Aéroport ${city}`,
-            `Transfert Gare & Business`,
-            `Prix Fixe Immédiat`,
-            `Service Premium 24/7`
+            `Taxi Gare & Business`,
+            `Service Taxi 24/7`
         ],
 
         // --- GENERIC ---
         about_us: [
-            `Nous sommes une compagnie de {taxi|transport} basée à ${city}.`,
-            `Votre partenaire mobilité à ${city} depuis 10 ans.`,
-            `Service de transport premium sur ${city} et sa région.`
+            `Nous sommes une compagnie de Taxi basée à ${city}.`,
+            `Votre partenaire Taxi à ${city} pour tous vos trajets.`,
+            `Service de Taxi officiel sur ${city} et sa région.`
         ],
 
         // --- MEDICAL (Secondary) ---

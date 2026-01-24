@@ -53,8 +53,8 @@ export default async function HospitalPage({ params }: { params: Promise<{ domai
             </nav>
 
             <main className="pt-24 pb-12 px-4 container mx-auto max-w-4xl">
-                 <div className="text-sm text-neutral-500 mb-6">
-                    <a href={`/${city.slug}`} className="hover:underline">Accueil</a> &gt; <a href={`/${city.slug}/transport-medical`} className="hover:underline">Transport Médical</a> &gt; <span className="text-neutral-900 font-medium">{hospitalName}</span>
+                <div className="text-sm text-neutral-500 mb-6">
+                    <a href={`/`} className="hover:underline">Accueil</a> &gt; <a href={`/transport-medical`} className="hover:underline">Transport Médical</a> &gt; <span className="text-neutral-900 font-medium">{hospitalName}</span>
                 </div>
 
                 <div className="bg-white rounded-3xl p-8 shadow-sm border border-neutral-200 mb-8">
@@ -62,32 +62,32 @@ export default async function HospitalPage({ params }: { params: Promise<{ domai
                         <Ambulance size={14} className="mr-2" />
                         Destination Conventionnée CPAM
                     </div>
-                    
+
                     <h1 className="text-3xl md:text-5xl font-extrabold text-neutral-900 mb-6 tracking-tight">
                         Taxi VSL pour <span className="text-blue-600">{hospitalName}</span>
                     </h1>
 
                     <p className="text-xl text-neutral-600 mb-8 leading-relaxed">
-                        Vous avez une consultation ou une hospitalisation prévue à <strong>{hospitalName}</strong> ? 
+                        Vous avez une consultation ou une hospitalisation prévue à <strong>{hospitalName}</strong> ?
                         Nos chauffeurs conventionnés vous accompagnent depuis votre domicile jusqu'au service concerné.
                     </p>
 
                     <div className="grid md:grid-cols-2 gap-6 mb-8">
-                         <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                        <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
                             <h3 className="font-bold flex items-center gap-2 mb-2">
-                                <FileText size={18} className="text-blue-500"/> Prise en charge
+                                <FileText size={18} className="text-blue-500" /> Prise en charge
                             </h3>
                             <p className="text-sm text-gray-600">Nous pratiquons le tiers-payant. Vous n'avancez pas les frais (si 100%).</p>
-                         </div>
-                         <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                        </div>
+                        <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
                             <h3 className="font-bold flex items-center gap-2 mb-2">
-                                <CheckCircle size={18} className="text-green-500"/> Accompagnement
+                                <CheckCircle size={18} className="text-green-500" /> Accompagnement
                             </h3>
                             <p className="text-sm text-gray-600">Aide à la marche et aux formalités d'entrée administrative.</p>
-                         </div>
+                        </div>
                     </div>
 
-                     <a href={`tel:${city.phoneNumber.replace(/ /g, "")}`} className="block w-full bg-blue-600 text-white text-center font-bold py-4 rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-600/20">
+                    <a href={`tel:${city.phoneNumber.replace(/ /g, "")}`} className="block w-full bg-blue-600 text-white text-center font-bold py-4 rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-600/20">
                         Commander pour {hospitalName}
                     </a>
                 </div>
@@ -97,7 +97,7 @@ export default async function HospitalPage({ params }: { params: Promise<{ domai
                     <h3 className="text-lg font-bold text-neutral-900 mb-4">Autres centres de soins à {city.city}</h3>
                     <div className="flex flex-wrap gap-3">
                         {city.hospitals.filter(h => h !== hospitalName).map(h => (
-                            <a key={h} href={`/${city.slug}/transport-medical/${slugify(h)}`} className="text-sm px-3 py-1.5 rounded-lg bg-white border border-neutral-200 text-neutral-600 hover:border-blue-300 hover:text-blue-600 transition">
+                            <a key={h} href={`/transport-medical/${slugify(h)}`} className="text-sm px-3 py-1.5 rounded-lg bg-white border border-neutral-200 text-neutral-600 hover:border-blue-300 hover:text-blue-600 transition">
                                 {h}
                             </a>
                         ))}

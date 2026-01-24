@@ -118,7 +118,7 @@ export default async function QuartierPage({ params }: { params: Promise<{ domai
                                 .map((neighbor) => (
                                     <a
                                         key={neighbor}
-                                        href={`/${city.slug}/quartier/${slugify(neighbor)}`}
+                                        href={`/quartier/${slugify(neighbor)}`}
                                         className="text-sm text-neutral-600 hover:text-blue-600 hover:underline transition"
                                     >
                                         Taxi {neighbor}
@@ -128,13 +128,13 @@ export default async function QuartierPage({ params }: { params: Promise<{ domai
 
                         <h3 className="text-xl font-bold text-neutral-900 mb-6">Services fréquents</h3>
                         <div className="flex flex-wrap gap-4">
-                            <a href={`/${city.slug}/transport-medical`} className="px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-medium hover:bg-blue-100 transition">
+                            <a href={`/transport-medical`} className="px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-medium hover:bg-blue-100 transition">
                                 Transport Médical
                             </a>
-                            <a href={`/${city.slug}/gare-aeroport`} className="px-4 py-2 bg-teal-50 text-teal-700 rounded-full text-sm font-medium hover:bg-teal-100 transition">
+                            <a href={`/gare-aeroport`} className="px-4 py-2 bg-teal-50 text-teal-700 rounded-full text-sm font-medium hover:bg-teal-100 transition">
                                 Gare & Aéroport
                             </a>
-                            <a href={`/${city.slug}/longue-distance`} className="px-4 py-2 bg-purple-50 text-purple-700 rounded-full text-sm font-medium hover:bg-purple-100 transition">
+                            <a href={`/longue-distance`} className="px-4 py-2 bg-purple-50 text-purple-700 rounded-full text-sm font-medium hover:bg-purple-100 transition">
                                 Longue Distance
                             </a>
                         </div>

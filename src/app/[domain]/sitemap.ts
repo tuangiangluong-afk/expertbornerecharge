@@ -1,62 +1,65 @@
 import { MetadataRoute } from 'next';
+import { headers } from 'next/headers';
 import { getCity } from "@/lib/db";
-import { slugify } from "@/lib/slugify";
 
-export default async function sitemap({
-    params,
-}: {
-    params: Promise<{ domain: string }>
-}): Promise<MetadataRoute.Sitemap> {
+// Dynamic sitemap using request headers instead of params
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     try {
-        const { domain } = await params;
-        const baseUrl = `https://${domain}`;
+        // Get the domain from the request headers (set by middleware rewrite)
+        const headersList = await headers();
+        const host = headersList.get('host') || 'taxiaplaisir.com';
+        const baseUrl = `https://${host}`;
 
-        // Use static config only for maximum stability
-        const cityConfig = getCity(domain);
+        // Get city config
+        const cityConfig = getCity(host);
 
-        if (!cityConfig) return [];
-
-        // 1. Core Static Routes
-        const routes = [
-            '',
-            '/transport-medical',
-            '/gare-aeroport',
-            '/longue-distance',
-            '/contact',
-        ].map((route) => ({
-            url: `${baseUrl}${route}`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly' as const,
-            priority: route === '' ? 1.0 : 0.8,
-        }));
-
-        // 2. Dynamic Neighbourhood Routes
-        const neighborhoodRoutes = (cityConfig.neighborhoods || []).map((n) => ({
-            url: `${baseUrl}/quartier/${slugify(n)}`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly' as const,
-            priority: 0.6,
-        }));
-
-        // 3. Dynamic POI Routes (Nightlife, Hotels, Monuments)
-        const pois = [
-            ...(cityConfig.points_of_interest?.hotels || []),
-            ...(cityConfig.points_of_interest?.nightlife || []),
-            ...(cityConfig.points_of_interest?.monuments || [])
+        // Always return at least the home page
+        const routes: MetadataRoute.Sitemap = [
+            {
+                url: baseUrl,
+                lastModified: new Date(),
+                changeFrequency: 'daily',
+                priority: 1.0,
+            },
+            {
+                url: `${baseUrl}/transport-medical`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly',
+                priority: 0.8,
+            },
+            {
+                url: `${baseUrl}/gare-aeroport`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly',
+                priority: 0.8,
+            },
+            {
+                url: `${baseUrl}/longue-distance`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly',
+                priority: 0.8,
+            },
         ];
 
-        const poiRoutes = pois.map((poi) => ({
-            url: `${baseUrl}/guides/${slugify(poi)}`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly' as const,
-            priority: 0.5,
-        }));
+        // Add neighborhood pages if available
+        if (cityConfig?.neighborhoods) {
+            for (const neighborhood of cityConfig.neighborhoods) {
+                const slug = neighborhood.toLowerCase()
+                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                    .replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-");
+                routes.push({
+                    url: `${baseUrl}/quartier/${slug}`,
+                    lastModified: new Date(),
+                    changeFrequency: 'monthly',
+                    priority: 0.6,
+                });
+            }
+        }
 
-        return [...routes, ...neighborhoodRoutes, ...poiRoutes];
+        return routes;
 
-    } catch (error) {
-        console.error("Sitemap Generation Error:", error);
-        // Return at least the static home page if it fails
+    } catch (e) {
+        console.error("Sitemap Error:", e);
         return [];
     }
 }

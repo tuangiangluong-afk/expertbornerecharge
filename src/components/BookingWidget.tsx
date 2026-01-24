@@ -1,14 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, Phone, Loader2, CheckCircle, Calculator } from "lucide-react";
+import { Phone, Loader2, CheckCircle, Calendar, Clock } from "lucide-react";
 import { CityConfig } from "@/lib/db";
+import { useLoadScript } from "@react-google-maps/api";
+import { AddressAutocomplete } from "./AddressAutocomplete";
+
+const LIBRARIES: ("places")[] = ["places"];
 
 interface BookingWidgetProps {
     city: CityConfig;
 }
 
 export function BookingWidget({ city }: BookingWidgetProps) {
+    const { isLoaded } = useLoadScript({
+        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY || "",
+        libraries: LIBRARIES,
+    });
+
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [priceEstimate, setPriceEstimate] = useState<string | null>(null);
@@ -21,28 +30,27 @@ export function BookingWidget({ city }: BookingWidgetProps) {
     const [phone, setPhone] = useState("");
 
     // Simple Price Estimator Logic (Psychology)
-    // Triggers when pickup/dropoff changes
     const checkPrice = (start: string, end: string) => {
         const s = start.toLowerCase();
         const e = end.toLowerCase();
 
         // Logic: if Airport or Station involved -> Show fixed price badge
         if (s.includes("aéroport") || e.includes("aéroport") || s.includes("airport") || e.includes("airport") || s.includes("marignane") || e.includes("hyères") || e.includes("orly") || e.includes("roissy")) {
-            setPriceEstimate("~55€ - 75€ (Forfait Aéroport)");
+            setPriceEstimate("~55€ - 85€ (Forfait Aéroport)");
         } else if (s.includes("gare") || e.includes("gare") || s.includes("tgv") || e.includes("train")) {
-            setPriceEstimate("~25€ - 35€ (Forfait Gare)");
+            setPriceEstimate("~25€ - 45€ (Forfait Gare)");
         } else {
             setPriceEstimate(null);
         }
     };
 
-    const handleLocationChange = (type: 'pickup' | 'dropoff', value: string) => {
+    const handleLocationSelect = (type: 'pickup' | 'dropoff', address: string) => {
         if (type === 'pickup') {
-            setPickup(value);
-            checkPrice(value, dropoff);
+            setPickup(address);
+            checkPrice(address, dropoff);
         } else {
-            setDropoff(value);
-            checkPrice(pickup, value);
+            setDropoff(address);
+            checkPrice(pickup, address);
         }
     };
 
@@ -51,12 +59,14 @@ export function BookingWidget({ city }: BookingWidgetProps) {
         setLoading(true);
 
         const payload = {
-            clientName: "Client Web", // We could add a name field if needed
+            clientName: "Client Web",
             phone,
             pickupLocation: pickup,
             dropoffLocation: dropoff,
             pickupTime: `${date}T${time}:00`,
-            price: priceEstimate
+            price: priceEstimate,
+            tenantId: city.slug, // Add tenant ID for DB
+            domain: city.domain // Add domain for context
         };
 
         try {
@@ -101,95 +111,114 @@ export function BookingWidget({ city }: BookingWidgetProps) {
     }
 
     return (
-        <div id="book" className="bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-neutral-100 relative">
-            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-t-3xl"></div>
+        <div id="book" className="bg-white p-6 sm:p-8 rounded-3xl shadow-xl border border-neutral-100 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-t-3xl"></div>
 
-            <div className="flex justify-between items-start mb-6">
-                <div>
-                    <h3 className="text-2xl font-bold text-neutral-900">Réservation Prioritaire</h3>
-                    <p className="text-neutral-500 text-sm">Confirmation SMS en &lt; 10 min.</p>
-                </div>
-                {/* Price Estimator Badge */}
-                {priceEstimate && (
-                    <div className="bg-green-50 border border-green-200 text-green-700 px-3 py-1 rounded-lg text-xs font-bold flex items-center gap-1 animate-pulse">
-                        <Calculator size={12} />
-                        {priceEstimate}
-                    </div>
-                )}
+            <div className="mb-6">
+                <h3 className="text-2xl font-bold text-neutral-900">Réserver un chauffeur</h3>
+                <p className="text-neutral-500 text-sm">Réponse immédiate • Prix fixe</p>
             </div>
 
-            <form className="space-y-5" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Locations */}
+                {isLoaded ? (
+                    <>
+                        <AddressAutocomplete
+                            label="Départ"
+                            placeholder="Adresse, Gare, Aéroport..."
+                            value={pickup}
+                            onChange={(val) => setPickup(val)}
+                            onSelect={(addr) => handleLocationSelect('pickup', addr)}
+                        />
+                        <AddressAutocomplete
+                            label="Arrivée"
+                            placeholder="Destination..."
+                            value={dropoff}
+                            onChange={(val) => setDropoff(val)}
+                            onSelect={(addr) => handleLocationSelect('dropoff', addr)}
+                        />
+                    </>
+                ) : (
+                    <div className="text-center py-4 text-neutral-400 text-sm">Chargement de Google Maps...</div>
+                )}
+
+                {/* Date/Time */}
                 <div className="grid grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Date</label>
-                        <input
-                            required
-                            type="date"
-                            className="w-full rounded-xl bg-neutral-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-0 transition py-3 px-4 font-medium"
-                            value={date}
-                            onChange={(e) => setDate(e.target.value)}
-                        />
+                        <label className="block text-sm font-medium text-neutral-700 mb-1">Date</label>
+                        <div className="relative">
+                            <input
+                                type="date"
+                                required
+                                value={date}
+                                onChange={(e) => setDate(e.target.value)}
+                                className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 pl-10 text-neutral-900 focus:border-yellow-400 focus:ring-yellow-400"
+                            />
+                            <Calendar className="absolute left-3 top-3.5 h-5 w-5 text-neutral-400" />
+                        </div>
                     </div>
                     <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Heure</label>
-                        <input
-                            required
-                            type="time"
-                            className="w-full rounded-xl bg-neutral-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-0 transition py-3 px-4 font-medium"
-                            value={time}
-                            onChange={(e) => setTime(e.target.value)}
-                        />
+                        <label className="block text-sm font-medium text-neutral-700 mb-1">Heure</label>
+                        <div className="relative">
+                            <input
+                                type="time"
+                                required
+                                value={time}
+                                onChange={(e) => setTime(e.target.value)}
+                                className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 pl-10 text-neutral-900 focus:border-yellow-400 focus:ring-yellow-400"
+                            />
+                            <Clock className="absolute left-3 top-3.5 h-5 w-5 text-neutral-400" />
+                        </div>
                     </div>
                 </div>
+
+                {/* Phone */}
                 <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Départ</label>
+                    <label className="block text-sm font-medium text-neutral-700 mb-1">Téléphone</label>
                     <div className="relative">
-                        <MapPin className="absolute left-4 top-3.5 text-neutral-400" size={18} />
                         <input
-                            required
-                            type="text"
-                            placeholder="Adresse, Gare, Aéroport..."
-                            className="w-full rounded-xl bg-neutral-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-0 transition py-3 pl-12 pr-4 font-medium"
-                            value={pickup}
-                            onChange={(e) => handleLocationChange('pickup', e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Arrivée</label>
-                    <div className="relative">
-                        <MapPin className="absolute left-4 top-3.5 text-neutral-400" size={18} />
-                        <input
-                            required
-                            type="text"
-                            placeholder="Destination..."
-                            className="w-full rounded-xl bg-neutral-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-0 transition py-3 pl-12 pr-4 font-medium"
-                            value={dropoff}
-                            onChange={(e) => handleLocationChange('dropoff', e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Téléphone</label>
-                    <div className="relative">
-                        <Phone className="absolute left-4 top-3.5 text-neutral-400" size={18} />
-                        <input
-                            required
                             type="tel"
-                            placeholder="06 00 00 00 00"
-                            className="w-full rounded-xl bg-neutral-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-0 transition py-3 pl-12 pr-4 font-medium"
+                            required
+                            placeholder="06 12 34 56 78"
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
+                            className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 pl-10 text-neutral-900 focus:border-yellow-400 focus:ring-yellow-400"
                         />
+                        <Phone className="absolute left-3 top-3.5 h-5 w-5 text-neutral-400" />
                     </div>
                 </div>
+
+                {/* Estimate */}
+                {priceEstimate && (
+                    <div className="bg-yellow-50 border border-yellow-100 rounded-xl p-3 flex items-start gap-3">
+                        <div className="p-1.5 bg-yellow-100 rounded-full text-yellow-700 mt-0.5">
+                            <CheckCircle size={16} />
+                        </div>
+                        <div>
+                            <p className="text-sm font-bold text-yellow-800">Estimation : {priceEstimate}</p>
+                            <p className="text-xs text-yellow-600">Le prix exact vous sera confirmé par SMS.</p>
+                        </div>
+                    </div>
+                )}
+
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-neutral-900 py-4 font-bold text-white hover:bg-neutral-800 transition shadow-lg transform active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="w-full bg-neutral-900 text-white font-bold py-4 rounded-xl hover:bg-neutral-800 transition transform hover:-translate-y-0.5 shadow-lg flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                    {loading ? <Loader2 size={20} className="animate-spin" /> : "Valider ma course"}
+                    {loading ? (
+                        <>
+                            <Loader2 className="animate-spin" />
+                            Envoi en cours...
+                        </>
+                    ) : (
+                        "Commander mon Chauffeur"
+                    )}
                 </button>
+
+                <p className="text-xs text-center text-neutral-400 mt-4">
+                    Paiement à bord (CB/Espèces). Annulation gratuite.
+                </p>
             </form>
         </div>
     );
