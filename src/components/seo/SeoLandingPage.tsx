@@ -120,7 +120,29 @@ export default function SeoLandingPage({ page, tenant }: SeoPageProps) {
 
 
             {/* Internal Linking Mesh */}
-            <Footer tenantId={tenant.id} city={page.target_city} siteName={tenant.name} />
+            {/* Internal Linking Mesh */}
+            <Footer config={{
+                name: tenant.name,
+                city: page.target_city,
+                domain: tenant.id, // using ID as domain fallback
+                slug: tenant.id,
+                phoneNumber: tenant.phone_number || "",
+                email: "",
+                heroImage: "",
+                description: "",
+                meta: { title: "", description: "" },
+                features: [],
+                pricing: { base: "", description: "" },
+                hospitals: [],
+                stations: [],
+                neighborhoods: [],
+                points_of_interest: {
+                    hotels: [],
+                    nightlife: [],
+                    monuments: [],
+                    parking_difficulty: ""
+                }
+            }} />
         </div >
     );
 }

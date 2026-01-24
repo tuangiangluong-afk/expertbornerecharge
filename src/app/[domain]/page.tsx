@@ -2,6 +2,7 @@ import { CITIES, getCity } from "@/lib/db";
 import { getSpintaxContent } from "@/lib/spintax";
 import { Phone, Calendar, Clock, MapPin, CheckCircle, Star } from "lucide-react";
 import { FAQ } from "@/components/FAQ";
+import { Footer } from "@/components/Footer";
 import { Vehicles } from "@/components/Vehicles";
 import { Reviews } from "@/components/Reviews";
 import { StructuredData } from "@/components/StructuredData";
@@ -103,12 +104,12 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
         .eq("tenant_id", city.slug)
         .order("display_order", { ascending: true });
 
-    // Fetch Tenant for GTM
+    // Fetch Tenant for GTM and Admin Overrides
     const { data: tenant } = await supabase
         .from("tenants")
-        .select("gtm_id")
+        .select("name, ga_id, gtm_id")
         .eq("id", city.slug)
-        .maybeSingle();
+        .maybeSingle() as any;
 
     // Group POIs for Footer (Legacy structure support)
     const poisList = pois || [];
@@ -130,21 +131,30 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
         return override || fallback;
     };
 
-    const heroTitle = getContent("hero_title", getSpintaxContent("hero_title", city.city));
-    const heroSubtitle = getContent("hero_subtitle", getSpintaxContent("hero_subtitle", city.city));
-    const heroBadge = getContent("hero_badge", getSpintaxContent("hero_badge", city.city));
-    const ctaButton = getContent("cta_button", getSpintaxContent("cta_button", city.city));
-    const heroImage = getContent("hero_image", city.heroImage);
+    // Merge Static Config with Dynamic Admin Data (Hybrid Pattern)
+    const effectiveCity = {
+        ...city,
+        name: tenant?.name || city.name,
+        ga_id: tenant?.ga_id || city.ga_id, // Admin override triggers here
+        gtm_id: tenant?.gtm_id || city.gtm_id,
+        // We can extend this to other fields if needed
+    };
+
+    const heroTitle = getContent("hero_title", getSpintaxContent("hero_title", effectiveCity.city));
+    const heroSubtitle = getContent("hero_subtitle", getSpintaxContent("hero_subtitle", effectiveCity.city));
+    const heroBadge = getContent("hero_badge", getSpintaxContent("hero_badge", effectiveCity.city));
+    const ctaButton = getContent("cta_button", getSpintaxContent("cta_button", effectiveCity.city));
+    const heroImage = getContent("hero_image", effectiveCity.heroImage);
 
     return (
         <div className="min-h-screen font-sans text-neutral-900 bg-neutral-50 selection:bg-yellow-400 selection:text-neutral-900">
-            <StructuredData city={city} />
+            <StructuredData city={effectiveCity} />
             <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-neutral-900/80 px-4 py-3 backdrop-blur-md">
 
 
                 <div className="flex items-center justify-between">
                     <span className="text-xl font-bold tracking-tight text-white">
-                        {city.name}<span className="text-yellow-400">.</span>
+                        {effectiveCity.name}<span className="text-yellow-400">.</span>
                     </span>
                     <a
                         href={`tel:${city.phoneNumber.replace(/ /g, "")}`}
@@ -314,9 +324,6 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
             {/* Reviews Section using Deterministic Spintax */}
             <Reviews city={city.city} />
 
-            {/* Reviews Social Proof */}
-            <Reviews city={city.city} />
-
             {/* FAQ Section */}
             <FAQ city={city.city} type="general" faqs={faqs} />
 
@@ -385,47 +392,9 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                 </div>
             </section>
 
-            {/* SEO Footer */}
-            <div className="bg-neutral-900 border-t border-white/10 py-12 text-neutral-400">
-                <div className="container mx-auto px-4 text-center">
-                    <h4 className="text-white font-bold mb-4">À propos de {city.name}</h4>
-                    <p className="max-w-2xl mx-auto text-sm mb-8">
-                        {city.name} est un service de mise en relation avec les meilleurs artisans taxis de {city.city}.
-                        Nous garantissons un service de qualité, une ponctualité exemplaire et des tarifs réglementés.
-                        Partenaire du réseau <a href="http://taxifrance.fr" className="text-white hover:underline">TaxiFrance</a>.
-                    </p>
-                    <div className="grid md:grid-cols-2 gap-8 text-left mb-8 max-w-2xl mx-auto border-t border-white/10 pt-8 mt-8">
-                        <div>
-                            <h5 className="text-white font-bold mb-4">Destinations Populaires</h5>
-                            <ul className="space-y-2 text-sm">
-                                {hotels.slice(0, 5).map((poi) => (
-                                    <li key={poi}>
-                                        <a href={`/${city.slug}/guides/${slugify(poi)}`} className="hover:text-yellow-400 transition">
-                                            Taxi vers {poi}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div>
-                            <h5 className="text-white font-bold mb-4">Sortir à {city.city}</h5>
-                            <ul className="space-y-2 text-sm">
-                                {nightlife.slice(0, 5).map((poi) => (
-                                    <li key={poi}>
-                                        <a href={`/${city.slug}/guides/${slugify(poi)}`} className="hover:text-yellow-400 transition">
-                                            Taxi pour {poi}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
 
-                    <div className="text-xs border-t border-white/10 pt-8">
-                        &copy; {new Date().getFullYear()} {city.name} - Tous droits réservés.
-                    </div>
-                </div>
-            </div>
+            {/* Footer */}
+            <Footer config={city} />
         </div>
     );
 

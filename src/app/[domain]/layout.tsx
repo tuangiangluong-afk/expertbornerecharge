@@ -21,7 +21,7 @@ export default async function DomainLayout({
         .from("tenants")
         .select("ga_id, gtm_id")
         .eq("id", city.slug)
-        .maybeSingle();
+        .maybeSingle() as any;
 
     // Priority: Database > Config File
     const gaId = tenant?.ga_id || city.ga_id;

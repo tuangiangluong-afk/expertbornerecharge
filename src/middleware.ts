@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 export const config = {
     matcher: [
         "/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)",
+        "/sitemap.xml",
+        "/robots.txt"
     ],
 };
 
@@ -41,40 +43,20 @@ export default async function middleware(req: NextRequest) {
     // 2. Tenant Logic
     let domainKey = hostname;
 
-    // Check Alias Redirection (SEO Canonicalization)
-    // We need to parse CITIES to find if hostname is an alias
-    // Note: To be efficient in middleware, ideally we'd have a map, but iterating 50 items is fast enough.
-    // We cannot import CITIES directly if it's not edge compatible, but let's try import locally.
-
-    // Hardcoded redirect logic for aliases (simulated for Edge safety if db.ts is heavy)
-    // Actually, db.ts is pure TS/JSON, so it should be fine.
-
-    // NOTE: In Next.js Middleware, importing large modules can be tricky.
-    // If we assume the file is light (just the CITIES object), we can use it.
-
-    /* 
-       We perform a reverse lookup: 
-       Is this hostname in an 'aliases' array of any city?
-    */
-
-    // For now, let's keep the rewrite logic simple. 
-    // If the user wants stricter redirects (.com -> .fr), we can add it here.
-
-    /*
-    const foundCity = Object.values(CITIES).find(c => c.aliases?.includes(hostname));
-    if (foundCity) {
-        return NextResponse.redirect(new URL(`https://${foundCity.domain}${path}`, req.url), 301);
-    }
-    */
-
+    // Custom Domain Mapping (localhost dev)
     if (hostname.includes(".localhost")) {
-        domainKey = hostname.split(".localhost")[0];
-    } else if (hostname.includes(".nip.io")) {
-        domainKey = hostname.split(".")[0];
+        domainKey = hostname.split(".")[0]; // taxiaix.localhost -> taxiaix
+        if (domainKey === "www") domainKey = hostname.split(".")[1]; // www.taxiaix.localhost -> taxiaix
+    } else {
+        // Production Domain Mapping
+        // Just use the hostname directly. db.ts (getCity) handles exact domain matching (e.g. taxiaplaisir.com)
+        // AND aliases (e.g. taxiaplaisir.fr for taxiaplaisir slug)
     }
 
-    // Rewrite to the [domain] dynamic route folder
-    const response = NextResponse.rewrite(new URL(`/${domainKey}${path}`, req.url));
-    response.headers.set("x-debug-domain-key", domainKey);
-    return response;
+    // Rewrite to our dynamic route /src/app/[domain]/...
+    // We pass the hostname as the 'domain' param.
+    // getCity(domain) will return the correct config.
+    return NextResponse.rewrite(
+        new URL(`/${hostname}${path}`, req.url)
+    );
 }

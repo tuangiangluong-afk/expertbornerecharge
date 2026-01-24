@@ -1,49 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { supabase } from "@/lib/supabase";
-import { Database } from "@/types/database.types";
 import { ChevronDown, MapPin } from "lucide-react";
-
-type Tenant = Database['public']['Tables']['tenants']['Row'];
+import { CITIES } from "@/lib/db";
 
 export function TenantSwitcher() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const currentTenantId = searchParams.get("tenantId") || "taxiaix"; // Default fallback
+    // Default to first city if not found
+    const currentTenantId = searchParams.get("tenantId") || Object.keys(CITIES)[0];
 
-    const [tenants, setTenants] = useState<Tenant[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        async function fetchTenants() {
-            const { data, error } = await supabase
-                .from("tenants")
-                .select("*")
-                .order("name");
-
-            if (data) setTenants(data);
-            setLoading(false);
-        }
-
-        fetchTenants();
-    }, []);
+    // Use static source of truth from code to ensure 100% sync with user edits
+    // We Map CITIES to an array and sort by name
+    const tenants = Object.values(CITIES).sort((a, b) => a.name.localeCompare(b.name));
 
     const handleSwitch = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newTenantId = e.target.value;
-        // Update URL with new tenantId, keeping other params if necessary
         const params = new URLSearchParams(searchParams.toString());
         params.set("tenantId", newTenantId);
-        router.push(`?${params.toString()}`);
-        // Ideally, we might want to push to the *current* path with the new param, 
-        // but Next.js router.push with search params does exactly that if we use the pathname.
-        // However, since this component is inside layout, we want to stay on the same page but change context.
-        // simpler:
-        window.location.search = params.toString(); // Full reload to ensure all data refetches clean
+        // Full reload to ensure Admin context refresh
+        window.location.search = params.toString();
     };
-
-    if (loading) return <span className="text-sm text-gray-400">Loading cities...</span>;
 
     return (
         <div className="flex items-center gap-2">
@@ -57,7 +34,7 @@ export function TenantSwitcher() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-64 pl-10 p-2.5 appearance-none cursor-pointer hover:bg-white transition"
                 >
                     {tenants.map((tenant) => (
-                        <option key={tenant.id} value={tenant.id}>
+                        <option key={tenant.slug} value={tenant.slug}>
                             {tenant.name} ({tenant.domain})
                         </option>
                     ))}

@@ -22,6 +22,7 @@ export default function SettingsPage() {
     const [email, setEmail] = useState("");
     const [primaryColor, setPrimaryColor] = useState("#facc15"); // Yellow default
     const [gtmId, setGtmId] = useState("");
+    const [gaId, setGaId] = useState("");
 
     useEffect(() => {
         fetchTenant();
@@ -36,12 +37,14 @@ export default function SettingsPage() {
             .maybeSingle();
 
         if (data) {
+            const t = data as any;
             setTenant(data);
-            setName(data.name || "");
-            setPhone(data.phone_number || "");
-            setEmail(data.email || "");
-            setPrimaryColor(data.primary_color || "#facc15");
-            setGtmId(data.gtm_id || "");
+            setName(t.name || "");
+            setPhone(t.phone_number || "");
+            setEmail(t.email || "");
+            setPrimaryColor(t.primary_color || "#facc15");
+            setGtmId(t.gtm_id || "");
+            setGaId(t.ga_id || "");
         }
         setLoading(false);
     }
@@ -57,7 +60,8 @@ export default function SettingsPage() {
                 phone_number: phone,
                 email,
                 primary_color: primaryColor,
-                gtm_id: gtmId || null
+                gtm_id: gtmId || null,
+                ga_id: gaId || null
             })
             .eq("id", tenantId);
 
@@ -149,6 +153,15 @@ export default function SettingsPage() {
                             Analytics & Tracking
                         </div>
                         <div className="p-6 space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium mb-1">Google Analytics ID (G-XXXX)</label>
+                                <input
+                                    className="w-full border border-gray-300 rounded-lg p-3 font-mono"
+                                    placeholder="G-XXXXXXXXXX"
+                                    value={gaId}
+                                    onChange={e => setGaId(e.target.value)}
+                                />
+                            </div>
                             <div>
                                 <label className="block text-sm font-medium mb-1">Google Tag Manager ID</label>
                                 <input
