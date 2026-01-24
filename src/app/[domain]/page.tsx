@@ -139,7 +139,6 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
     return (
         <div className="min-h-screen font-sans text-neutral-900 bg-neutral-50 selection:bg-yellow-400 selection:text-neutral-900">
             <StructuredData city={city} />
-            <GTMScript gtmId={(tenant as { gtm_id?: string | null } | null)?.gtm_id} />
             <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-neutral-900/80 px-4 py-3 backdrop-blur-md">
 
 

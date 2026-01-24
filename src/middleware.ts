@@ -41,18 +41,40 @@ export default async function middleware(req: NextRequest) {
     // 2. Tenant Logic
     let domainKey = hostname;
 
+    // Check Alias Redirection (SEO Canonicalization)
+    // We need to parse CITIES to find if hostname is an alias
+    // Note: To be efficient in middleware, ideally we'd have a map, but iterating 50 items is fast enough.
+    // We cannot import CITIES directly if it's not edge compatible, but let's try import locally.
+
+    // Hardcoded redirect logic for aliases (simulated for Edge safety if db.ts is heavy)
+    // Actually, db.ts is pure TS/JSON, so it should be fine.
+
+    // NOTE: In Next.js Middleware, importing large modules can be tricky.
+    // If we assume the file is light (just the CITIES object), we can use it.
+
+    /* 
+       We perform a reverse lookup: 
+       Is this hostname in an 'aliases' array of any city?
+    */
+
+    // For now, let's keep the rewrite logic simple. 
+    // If the user wants stricter redirects (.com -> .fr), we can add it here.
+
+    /*
+    const foundCity = Object.values(CITIES).find(c => c.aliases?.includes(hostname));
+    if (foundCity) {
+        return NextResponse.redirect(new URL(`https://${foundCity.domain}${path}`, req.url), 301);
+    }
+    */
+
     if (hostname.includes(".localhost")) {
         domainKey = hostname.split(".localhost")[0];
     } else if (hostname.includes(".nip.io")) {
-        // Handle nip.io for local network testing (e.g. taxiaix.192.168.1.144.nip.io)
-        // Extracts "taxiaix" from "taxiaix.192.168.1.144.nip.io:3000"
         domainKey = hostname.split(".")[0];
     }
 
     // Rewrite to the [domain] dynamic route folder
-    // e.g. /taxiaix/transport-medical
     const response = NextResponse.rewrite(new URL(`/${domainKey}${path}`, req.url));
     response.headers.set("x-debug-domain-key", domainKey);
-    response.headers.set("x-debug-original-host", hostname);
     return response;
 }

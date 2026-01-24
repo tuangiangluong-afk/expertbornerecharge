@@ -27,6 +27,7 @@ export interface CityConfig {
         monuments: string[];
         parking_difficulty: string;
     };
+    ga_id?: string; // Google Analytics G-XXXXXXXXXX
 }
 
 export function getCity(domain: string): CityConfig | null {
