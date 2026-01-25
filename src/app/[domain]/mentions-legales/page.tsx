@@ -1,4 +1,4 @@
-"use client";
+
 
 import { getCity } from "@/lib/db";
 import { notFound } from "next/navigation";
