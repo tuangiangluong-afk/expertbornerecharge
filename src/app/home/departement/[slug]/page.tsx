@@ -33,8 +33,38 @@ export default async function DepartmentPage({ params }: Props) {
         city.name.includes(` ${dept.code}`)
     );
 
+    // structured data for breadcrumbs
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Accueil",
+                "item": "https://taxifrance.fr/home"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Île-de-France",
+                "item": "https://taxifrance.fr/home/reserver-taxi-ile-de-france"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": dept.name,
+                "item": `https://taxifrance.fr/home/departement/${dept.slug}`
+            }
+        ]
+    };
+
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-neutral-900">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             {/* Navbar simple pour le Hub */}
             <nav className="border-b border-white/10 bg-neutral-900 px-6 py-4 sticky top-0 z-50 shadow-md backdrop-blur-md bg-neutral-900/90 text-white">
                 <div className="mx-auto flex max-w-7xl items-center justify-between">
@@ -111,11 +141,17 @@ export default async function DepartmentPage({ params }: Props) {
                                         rel="dofollow" // EXPLICITE : On transfère le jus SEO
                                         className="group relative flex flex-col overflow-hidden rounded-3xl bg-white shadow-lg shadow-slate-200/50 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-2 border border-slate-100"
                                     >
-                                        {/* Header Image Gradient */}
-                                        <div className={`relative h-40 overflow-hidden`}>
-                                            <div
-                                                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 filter brightness-[0.7] group-hover:brightness-[0.8]"
-                                                style={{ backgroundImage: `url('${city.heroImage.startsWith("/") && !city.heroImage.includes(".") ? "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2940&auto=format&fit=crop" : city.heroImage}')` }}
+                                        {/* Header Image (Semantic & SEO) */}
+                                        <div className="relative h-40 overflow-hidden">
+                                            <img
+                                                src={
+                                                    city.heroImage && !city.heroImage.startsWith("/")
+                                                        ? city.heroImage
+                                                        : "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2940&auto=format&fit=crop"
+                                                }
+                                                alt={`Taxi ${city.city} (${dept.code}) - Réservation VTC & Taxi`}
+                                                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 filter brightness-[0.6]"
+                                                loading="lazy"
                                             />
                                             {/* Gradient Overlay */}
                                             <div className={`absolute inset-0 bg-gradient-to-t ${dept.heroColor} opacity-60 mix-blend-multiply`} />

@@ -47,9 +47,13 @@ export default function RegionPage() {
                                 href={`/home/departement/${dept.slug}`}
                                 className="group relative flex flex-col h-[500px] rounded-[2rem] overflow-hidden bg-slate-900 border border-white/5 shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:shadow-blue-900/20"
                             >
-                                {/* Card Background with Gradient */}
-                                <div className={`absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 filter brightness-[0.4] group-hover:brightness-[0.5]`} style={{ backgroundImage: `url('${dept.image}')` }} />
-                                <div className={`absolute inset-0 bg-gradient-to-t ${dept.heroColor} opacity-60 mix-blend-multiply`} />
+                                {/* Card Background Image (Semantic & SEO) */}
+                                <img
+                                    src={dept.image}
+                                    alt={`Taxi ${dept.name} - Chauffeurs VTC et Taxis dans le ${dept.code}`}
+                                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-[0.5] group-hover:brightness-[0.6]"
+                                />
+                                <div className={`absolute inset-0 bg-gradient-to-t ${dept.heroColor} opacity-50 mix-blend-multiply`} />
 
                                 {/* Content */}
                                 <div className="relative z-10 p-8 flex flex-col h-full">
