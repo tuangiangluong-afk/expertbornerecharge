@@ -93,7 +93,7 @@ const _taxiaplaisir: CityConfig = {
     city: "Plaisir",
     phoneNumber: "01 84 60 78 78",
     email: "contact@taxiaplaisir.com",
-    heroImage: "/images/plaisir.jpg",
+    heroImage: "https://images.unsplash.com/photo-1549247690-3ae8e6a25691?q=80&w=2670&auto=format&fit=crop", // Suburban / Train
     description: "Votre taxi à Plaisir (78370). Transport vers gares et aéroports parisiens.",
     meta: {
         title: "Taxi Plaisir 78370 | Réservation Immédiate & VSL",
@@ -119,7 +119,7 @@ const _taxiasnieres: CityConfig = {
     city: "Asnières-sur-Seine",
     phoneNumber: "01 84 60 92 92",
     email: "contact@taxiasnieres.com",
-    heroImage: "/images/asnieres.jpg",
+    heroImage: "https://images.unsplash.com/photo-1579782522776-9c4749f7ba30?q=80&w=2670&auto=format&fit=crop", // Seine / Bridge
     description: "Taxi Asnières-sur-Seine. Déplacements rapides vers Paris et La Défense.",
     meta: { title: "Taxi Asnières-sur-Seine (92) | Moto Taxi & VSL", description: "Réservez un taxi à Asnières-sur-Seine." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -139,7 +139,7 @@ const _taxiboulogne: CityConfig = {
     city: "Boulogne-Billancourt",
     phoneNumber: "01 84 60 92 00",
     email: "contact@taxiboulogne.com",
-    heroImage: "/images/boulogne.jpg",
+    heroImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2670&auto=format&fit=crop", // Business / Modern
     description: "Taxi Boulogne-Billancourt. Service premium 92.",
     meta: { title: "Taxi Boulogne-Billancourt (92) | Réservation Taxi", description: "Taxi Boulogne." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -159,7 +159,7 @@ const _taxichambourcy: CityConfig = {
     city: "Chambourcy",
     phoneNumber: "01 84 60 78 00",
     email: "contact@taxichambourcy.com",
-    heroImage: "/images/chambourcy.jpg",
+    heroImage: "https://images.unsplash.com/photo-1596726915077-d64e97669d2d?q=80&w=2670&auto=format&fit=crop", // Green / Residential
     description: "Taxi Chambourcy.",
     meta: { title: "Taxi Chambourcy (78) | Transport", description: "Taxi Chambourcy." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -179,7 +179,7 @@ const _taxicolombes: CityConfig = {
     city: "Colombes",
     phoneNumber: "01 84 60 92 01",
     email: "contact@taxicolombes.com",
-    heroImage: "/images/colombes.jpg",
+    heroImage: "https://images.unsplash.com/photo-1517582082645-88547214e21a?q=80&w=2670&auto=format&fit=crop", // Residential / Stadium
     description: "Taxi Colombes.",
     meta: { title: "Taxi Colombes (92) | Transport", description: "Taxi Colombes." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -199,7 +199,7 @@ const _taxicourbevoie: CityConfig = {
     city: "Courbevoie",
     phoneNumber: "01 84 60 92 02",
     email: "contact@taxicourbevoie.com",
-    heroImage: "/images/courbevoie.jpg",
+    heroImage: "https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6?q=80&w=2670&auto=format&fit=crop", // La Défense / Skyscrapers
     description: "Taxi Courbevoie.",
     meta: { title: "Taxi Courbevoie (92) | La Défense", description: "Taxi Courbevoie." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -219,7 +219,7 @@ const _taxifeucherolles: CityConfig = {
     city: "Feucherolles",
     phoneNumber: "01 84 60 78 01",
     email: "contact@taxifeucherolles.com",
-    heroImage: "/images/feucherolles.jpg",
+    heroImage: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2670&auto=format&fit=crop", // Countryside aspect
     description: "Taxi Feucherolles.",
     meta: { title: "Taxi Feucherolles (78)", description: "Taxi Feucherolles." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -239,7 +239,7 @@ const _taxifourqueux: CityConfig = {
     city: "Fourqueux",
     phoneNumber: "01 84 60 78 02",
     email: "contact@taxifourqueux.com",
-    heroImage: "/images/fourqueux.jpg",
+    heroImage: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?q=80&w=2670&auto=format&fit=crop", // Peaceful Residential
     description: "Taxi Fourqueux.",
     meta: { title: "Taxi Fourqueux (78)", description: "Taxi Fourqueux." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -259,7 +259,7 @@ const _taxiguyancourt: CityConfig = {
     city: "Guyancourt",
     phoneNumber: "01 84 60 78 03",
     email: "contact@taxiguyancourt.com",
-    heroImage: "/images/guyancourt.jpg",
+    heroImage: "https://images.unsplash.com/photo-1435686858161-59da32dfd4b4?q=80&w=2674&auto=format&fit=crop", // Technocentre / Modern
     description: "Taxi Guyancourt.",
     meta: { title: "Taxi Guyancourt (78)", description: "Taxi Guyancourt." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -279,7 +279,7 @@ const _taxiissy: CityConfig = {
     city: "Issy-les-Moulineaux",
     phoneNumber: "01 84 60 92 03",
     email: "contact@taxiissy.com",
-    heroImage: "/images/issy.jpg",
+    heroImage: "https://images.unsplash.com/photo-1534353875273-b5887cc17a5a?q=80&w=2670&auto=format&fit=crop", // Media / Modern
     description: "Taxi Issy.",
     meta: { title: "Taxi Issy-les-Moulineaux (92)", description: "Taxi Issy." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -299,7 +299,7 @@ const _taxilepecq: CityConfig = {
     city: "Le Pecq",
     phoneNumber: "01 84 60 78 04",
     email: "contact@taxilepecq.com",
-    heroImage: "/images/lepecq.jpg",
+    heroImage: "https://images.unsplash.com/photo-1574087961230-03975ba6bf0a?q=80&w=2670&auto=format&fit=crop", // River / Green
     description: "Taxi Le Pecq.",
     meta: { title: "Taxi Le Pecq (78)", description: "Taxi Le Pecq." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -319,7 +319,7 @@ const _taxilevallois: CityConfig = {
     city: "Levallois-Perret",
     phoneNumber: "01 84 60 92 04",
     email: "contact@taxilevallois.com",
-    heroImage: "/images/levallois.jpg",
+    heroImage: "https://images.unsplash.com/photo-1444723121867-26fe31533ad7?q=80&w=2670&auto=format&fit=crop", // Density / Business
     description: "Taxi Levallois.",
     meta: { title: "Taxi Levallois-Perret (92)", description: "Taxi Levallois." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -339,7 +339,7 @@ const _taxilevesinet: CityConfig = {
     city: "Le Vésinet",
     phoneNumber: "01 84 60 78 05",
     email: "contact@taxilevesinet.com",
-    heroImage: "/images/levesinet.jpg",
+    heroImage: "https://images.unsplash.com/photo-1594968412030-8451f28b2a3c?q=80&w=2670&auto=format&fit=crop", // Park / Lake
     description: "Taxi Le Vésinet.",
     meta: { title: "Taxi Le Vésinet (78)", description: "Taxi Le Vésinet." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -359,7 +359,7 @@ const _taxilouveciennes: CityConfig = {
     city: "Louveciennes",
     phoneNumber: "01 84 60 78 06",
     email: "contact@taxilouveciennes.com",
-    heroImage: "/images/louveciennes.jpg",
+    heroImage: "https://images.unsplash.com/photo-1563725656116-24e5482e9b09?q=80&w=2670&auto=format&fit=crop", // Aqueduct / Historic
     description: "Taxi Louveciennes.",
     meta: { title: "Taxi Louveciennes (78)", description: "Taxi Louveciennes." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -379,7 +379,7 @@ const _taximarly: CityConfig = {
     city: "Marly-le-Roi",
     phoneNumber: "01 84 60 78 07",
     email: "contact@taximarly.com",
-    heroImage: "/images/marly.jpg",
+    heroImage: "https://images.unsplash.com/photo-1620397228833-289b5314eb49?q=80&w=2670&auto=format&fit=crop", // Park / Historic
     description: "Taxi Marly.",
     meta: { title: "Taxi Marly-le-Roi (78)", description: "Taxi Marly." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -399,7 +399,7 @@ const _taximontreuil: CityConfig = {
     city: "Montreuil",
     phoneNumber: "01 84 60 93 00",
     email: "contact@taximontreuil.com",
-    heroImage: "/images/montreuil.jpg",
+    heroImage: "https://images.unsplash.com/photo-1600853760458-45a90940507d?q=80&w=2670&auto=format&fit=crop", // Urban / Street Art
     description: "Taxi Montreuil.",
     meta: { title: "Taxi Montreuil (93)", description: "Taxi Montreuil." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -419,7 +419,7 @@ const _taxinanterre: CityConfig = {
     city: "Nanterre",
     phoneNumber: "01 84 60 92 05",
     email: "contact@taxinanterre.com",
-    heroImage: "/images/nanterre.jpg",
+    heroImage: "https://images.unsplash.com/photo-1577713451555-d3dceb22570b?q=80&w=3181&auto=format&fit=crop", // Nanterre / Towers (La def)
     description: "Taxi Nanterre.",
     meta: { title: "Taxi Nanterre (92)", description: "Taxi Nanterre." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -439,7 +439,7 @@ const _taxineuilly: CityConfig = {
     city: "Neuilly-sur-Seine",
     phoneNumber: "01 84 60 92 06",
     email: "contact@taxineuilly.com",
-    heroImage: "/images/neuilly.jpg",
+    heroImage: "https://images.unsplash.com/photo-1551101968-3e414168c818?q=80&w=2670&auto=format&fit=crop", // Luxury / Avenue
     description: "Taxi Neuilly.",
     meta: { title: "Taxi Neuilly-sur-Seine (92)", description: "Taxi Neuilly." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -459,7 +459,7 @@ const _taxipoissy: CityConfig = {
     city: "Poissy",
     phoneNumber: "01 84 60 78 08",
     email: "contact@taxipoissy.com",
-    heroImage: "/images/poissy.jpg",
+    heroImage: "https://images.unsplash.com/photo-1588691888273-0972740994cc?q=80&w=2670&auto=format&fit=crop", // Poissy / River
     description: "Taxi Poissy.",
     meta: { title: "Taxi Poissy (78)", description: "Taxi Poissy." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -479,7 +479,7 @@ const _taxirueil: CityConfig = {
     city: "Rueil-Malmaison",
     phoneNumber: "01 84 60 92 07",
     email: "contact@taxirueil.com",
-    heroImage: "/images/rueil.jpg",
+    heroImage: "https://images.unsplash.com/photo-1603565021200-a20d43a75871?q=80&w=2670&auto=format&fit=crop", // Rueil / Chateau
     description: "Taxi Rueil.",
     meta: { title: "Taxi Rueil-Malmaison (92)", description: "Taxi Rueil." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -499,7 +499,7 @@ const _taxisaintcloud: CityConfig = {
     city: "Saint-Cloud",
     phoneNumber: "01 84 60 92 08",
     email: "contact@taxisaintcloud.com",
-    heroImage: "/images/saintcloud.jpg",
+    heroImage: "https://images.unsplash.com/photo-1558284564-96cce29fa757?q=80&w=2670&auto=format&fit=crop", // Saint-Cloud / View
     description: "Taxi Saint-Cloud.",
     meta: { title: "Taxi Saint-Cloud (92)", description: "Taxi Saint-Cloud." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -519,7 +519,7 @@ const _taxisaintcyr: CityConfig = {
     city: "Saint-Cyr-l'École",
     phoneNumber: "01 84 60 78 09",
     email: "contact@taxisaintcyr.com",
-    heroImage: "/images/saintcyr.jpg",
+    heroImage: "https://images.unsplash.com/photo-1453749024868-697896193389?q=80&w=2670&auto=format&fit=crop", // Saint-Cyr / Classic
     description: "Taxi Saint-Cyr.",
     meta: { title: "Taxi Saint-Cyr-l'École (78)", description: "Taxi Saint-Cyr." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -539,7 +539,7 @@ const _taxisaintdenis: CityConfig = {
     city: "Saint-Denis",
     phoneNumber: "01 84 60 93 01",
     email: "contact@taxisaintdenis.com",
-    heroImage: "/images/saintdenis.jpg",
+    heroImage: "https://images.unsplash.com/photo-1510952267577-d9580d859188?q=80&w=2670&auto=format&fit=crop", // Saint-Denis / Basilica
     description: "Taxi Saint-Denis.",
     meta: { title: "Taxi Saint-Denis (93)", description: "Taxi Saint-Denis." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -559,7 +559,7 @@ const _taxisaintgermain: CityConfig = {
     city: "Saint-Germain-en-Laye",
     phoneNumber: "01 84 60 78 10",
     email: "contact@taxisaintgermain.com",
-    heroImage: "/images/saintgermain.jpg",
+    heroImage: "https://images.unsplash.com/photo-1528659550302-7c8567584090?q=80&w=2670&auto=format&fit=crop", // Saint-Germain / Chateau
     description: "Taxi Saint-Germain.",
     meta: { title: "Taxi Saint-Germain-en-Laye (78)", description: "Taxi Saint-Germain." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -579,7 +579,7 @@ const _taxisaintnom: CityConfig = {
     city: "Saint-Nom-la-Bretèche",
     phoneNumber: "01 84 60 78 11",
     email: "contact@taxisaintnom.com",
-    heroImage: "/images/saintnom.jpg",
+    heroImage: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2676&auto=format&fit=crop", // Saint-Nom / Golf
     description: "Taxi Saint-Nom.",
     meta: { title: "Taxi Saint-Nom-la-Bretèche (78)", description: "Taxi Saint-Nom." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -599,7 +599,7 @@ const _taxisaintouen: CityConfig = {
     city: "Saint-Ouen",
     phoneNumber: "01 84 60 93 02",
     email: "contact@taxisaintouen.com",
-    heroImage: "/images/saintouen.jpg",
+    heroImage: "https://images.unsplash.com/photo-1552560229-edf081308aeb?q=80&w=2674&auto=format&fit=crop", // Saint-Ouen / Flea Market
     description: "Taxi Saint-Ouen.",
     meta: { title: "Taxi Saint-Ouen (93)", description: "Taxi Saint-Ouen." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -619,7 +619,7 @@ const _taxisaintquentin: CityConfig = {
     city: "Saint-Quentin-en-Yvelines",
     phoneNumber: "01 84 60 78 12",
     email: "contact@taxisaintquentin.com",
-    heroImage: "/images/sqy.jpg",
+    heroImage: "https://images.unsplash.com/photo-1586526749045-8c01d1c8153c?q=80&w=2670&auto=format&fit=crop", // SQY / Architecture
     description: "Taxi SQY.",
     meta: { title: "Taxi Saint-Quentin-en-Yvelines (78)", description: "Taxi SQY." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
@@ -642,7 +642,7 @@ const _taxisversailles: CityConfig = {
     city: "Versailles",
     phoneNumber: "01 84 60 78 13",
     email: "contact@taxisversailles.com",
-    heroImage: "/images/versailles.jpg",
+    heroImage: "https://images.unsplash.com/photo-1555543666-3d604eeb64b0?q=80&w=2670&auto=format&fit=crop", // Versailles / Chateau
     description: "Taxi Versailles.",
     meta: { title: "Taxi Versailles (78)", description: "Taxi Versailles." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
