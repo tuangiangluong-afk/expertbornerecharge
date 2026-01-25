@@ -16,7 +16,8 @@ export default function ContactForm({ domain, city }: ContactFormProps) {
         e.preventDefault();
         setStatus("loading");
 
-        const formData = new FormData(e.currentTarget);
+        const form = e.currentTarget;
+        const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
 
         try {
@@ -32,7 +33,7 @@ export default function ContactForm({ domain, city }: ContactFormProps) {
             }
 
             setStatus("success");
-            e.currentTarget.reset();
+            form.reset();
         } catch (error: any) {
             console.error(error);
             setStatus("error");
