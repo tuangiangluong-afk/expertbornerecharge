@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import { supabase } from "@/lib/supabase";
 import CallButton from "@/components/CallButton";
 import { getTheme } from "@/lib/theme";
+import { calculateDistance } from "@/lib/distance";
 
 // Helper to find POI (DB + Legacy Fallback)
 async function getPoi(slug: string, tenantId: string) {
@@ -113,6 +114,21 @@ export default async function GuidePage({ params }: { params: Promise<{ domain: 
 
     const theme = getTheme(city.slug);
 
+    // Real Distance Calculation for POI
+    let estimatedPrice = city.pricing.base; // Fallback
+    let estimatedDuration = "15-25 min";
+
+    // Try to calculate real distance from city center to POI
+    const distanceResult = await calculateDistance(
+        city.city + ", France",
+        poi.name + ", " + city.city + ", France"
+    );
+
+    if (distanceResult) {
+        estimatedPrice = distanceResult.priceRange;
+        estimatedDuration = distanceResult.duration;
+    }
+
 
     return (
         <div className="min-h-screen font-sans bg-neutral-50 text-neutral-900">
@@ -184,8 +200,9 @@ export default async function GuidePage({ params }: { params: Promise<{ domain: 
                         <div className="mt-8 pt-6 border-t border-neutral-100">
                             <div className="flex items-baseline justify-between mb-2">
                                 <span className="text-sm text-neutral-500">Estimation</span>
-                                <span className="text-2xl font-bold text-neutral-900">{city.pricing.base}</span>
+                                <span className="text-2xl font-bold text-neutral-900">{estimatedPrice}</span>
                             </div>
+                            <p className="text-xs text-neutral-400 mb-4">Durée estimée: {estimatedDuration}</p>
                             <CallButton
                                 phoneNumber={city.phoneNumber}
                                 cityName={city.city}

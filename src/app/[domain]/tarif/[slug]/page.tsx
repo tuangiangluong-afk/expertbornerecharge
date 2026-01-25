@@ -6,6 +6,7 @@ import { Phone, MapPin, Clock, ArrowRight, Car, Euro, CheckCircle } from "lucide
 import CallButton from "@/components/CallButton";
 import Link from "next/link";
 import { getTheme } from "@/lib/theme";
+import { calculateDistance, getDestinationAddress } from "@/lib/distance";
 import type { Metadata } from "next";
 
 // Helper to find Destination
@@ -55,20 +56,36 @@ export default async function TarifPage({ params }: { params: Promise<{ domain: 
     const classes = theme.classes;
 
     // Spintax Content
-    const intro = getSpintaxContent("airport_intro", city.city); // Reusing airport intro as generic travel intro for now
+    const intro = getSpintaxContent("airport_intro", city.city);
     const ctaText = getSpintaxContent("cta_button", city.city);
 
-    // Mock Pricing Logic (Range)
-    // In a real app, we would have a distance matrix. Here we simulate "Start from 35€" based on destination type.
-    let minPrice = "35€";
-    let timeEst = "30 min";
+    // Real Distance Calculation using Google Distance Matrix API
+    let priceRange = "Sur devis";
+    let timeEst = "Variable";
+    let distanceText = "";
 
-    if (dest.type === 'airport') {
-        minPrice = "45€ - 75€";
-        timeEst = "45 - 60 min";
-    } else if (dest.type === 'station') {
-        minPrice = "30€ - 50€";
-        timeEst = "30 - 45 min";
+    const destAddress = getDestinationAddress(dest.slug);
+    if (destAddress) {
+        const distanceResult = await calculateDistance(city.city + ", France", destAddress);
+        if (distanceResult) {
+            priceRange = distanceResult.priceRange;
+            timeEst = distanceResult.duration;
+            distanceText = distanceResult.distance;
+        }
+    }
+
+    // Fallback for destinations not in our address map
+    if (priceRange === "Sur devis") {
+        if (dest.type === 'airport') {
+            priceRange = "45€ - 75€";
+            timeEst = "45 - 60 min";
+        } else if (dest.type === 'station') {
+            priceRange = "30€ - 50€";
+            timeEst = "30 - 45 min";
+        } else {
+            priceRange = "25€ - 45€";
+            timeEst = "20 - 40 min";
+        }
     }
 
     return (
@@ -200,7 +217,7 @@ export default async function TarifPage({ params }: { params: Promise<{ domain: 
                                             <p className="text-xs text-neutral-400 mb-1">Prix Estimé</p>
                                             <div className="flex items-center gap-2 font-mono text-xl font-bold text-green-400">
                                                 <Euro size={16} />
-                                                {minPrice}
+                                                {priceRange}
                                             </div>
                                         </div>
                                     </div>
@@ -231,7 +248,7 @@ export default async function TarifPage({ params }: { params: Promise<{ domain: 
                         <h3 className="text-xl font-bold text-neutral-900 mt-6 mb-4">Combien coûte un taxi {city.city} - {dest.name} ?</h3>
                         <p>
                             Le prix réglementé des taxis utilise un taximètre. Cependant, pour les trajets aéroports ou longue distance, des forfaits peuvent être appliqués ou estimés.
-                            L'estimation de <strong>{minPrice}</strong> donnée ci-dessus est indicative pour un trajet de jour en conditions normales.
+                            L'estimation de <strong>{priceRange}</strong> donnée ci-dessus est indicative pour un trajet de jour en conditions normales.
                         </p>
                     </div>
 

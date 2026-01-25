@@ -583,7 +583,7 @@ const _taxisaintnom: CityConfig = {
     description: "Taxi Saint-Nom.",
     meta: { title: "Taxi Saint-Nom-la-Bretèche (78)", description: "Taxi Saint-Nom." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
-    hospitals: [], stations: ["Gare de St Nom"], neighborhoods: [],
+    hospitals: ["Hôpital de Poissy", "Clinique de Saint-Germain"], stations: ["Gare de Saint-Nom-la-Bretèche", "Gare de Saint-Germain-en-Laye (RER A)", "Gare de Marly-le-Roi"], neighborhoods: ["Le Village", "Les Fontenelles"],
     points_of_interest: {
         hotels: ["Domaine de la Tuilerie"],
         nightlife: ["Golf de Saint-Nom", "Club House"],
