@@ -11,13 +11,27 @@ import { InternalMesh } from "@/components/InternalMesh";
 import { slugify } from "@/lib/slugify";
 
 // Helper to find POI in National Config
+import { NATIONAL_TARGETS } from "@/config/national-targets";
+
+// Helper to find POI across National Config AND all Partner Cities
 function getPOI(slug: string) {
-    const allPois = [
+    // 1. Search in National Config
+    const nationalPois = [
         ...NATIONAL_CONFIG.points_of_interest.hotels,
         ...NATIONAL_CONFIG.points_of_interest.nightlife,
         ...NATIONAL_CONFIG.points_of_interest.monuments
     ];
-    return allPois.find(p => slugify(p) === slug);
+
+    let match = nationalPois.find(p => slugify(p) === slug);
+    if (match) return match;
+
+    // 2. Search in Partner Cities (Targets)
+    for (const target of NATIONAL_TARGETS) {
+        match = target.top_places.find(p => slugify(p) === slug);
+        if (match) return match;
+    }
+
+    return undefined;
 }
 
 export async function generateStaticParams() {
@@ -64,10 +78,9 @@ export default async function NationalGuidePage({ params }: { params: Promise<{ 
                 <div className="container mx-auto flex items-center justify-between">
                     <Link
                         href="/home"
-                        className={`flex items-center gap-2 text-sm font-bold text-neutral-600 hover:text-neutral-900 transition`}
+                        className={`flex items-center gap-2 text-xl font-black tracking-tighter text-neutral-900 hover:text-blue-600 transition`}
                     >
-                        <Car size={16} />
-                        Taxi de France
+                        Taxi de France<span className="text-blue-600">.</span>
                     </Link>
                     <CallButton
                         phoneNumber={city.phoneNumber}
@@ -177,15 +190,21 @@ export default async function NationalGuidePage({ params }: { params: Promise<{ 
                                 <Phone size={32} className="mx-auto mb-4 text-blue-400" />
                                 <h3 className="font-bold text-lg mb-2">Besoin d'aide ?</h3>
                                 <p className="text-sm text-neutral-400 mb-4">Notre standard national est disponible 24h/7j pour vos demandes spécifiques.</p>
-                                <a href={`tel:${city.phoneNumber}`} className="inline-block bg-white text-neutral-900 px-6 py-2 rounded-full font-bold text-sm hover:bg-mono-100 transition">
+                                <CallButton
+                                    phoneNumber={city.phoneNumber}
+                                    cityName={city.name}
+                                    theme={theme}
+                                    className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-blue-500 transition shadow-lg w-full"
+                                >
+                                    <Phone size={18} />
                                     {city.phoneNumber}
-                                </a>
+                                </CallButton>
                             </div>
                         </div>
                     </div>
                 </div>
             </main>
-            <InternalMesh />
+            <InternalMesh city={NATIONAL_CONFIG.city} />
             {/* Override styling for dark theme integration */}
             <div className="bg-neutral-900 border-t border-white/5 [&_footer]:bg-transparent [&_footer]:border-none">
                 <Footer config={city} />

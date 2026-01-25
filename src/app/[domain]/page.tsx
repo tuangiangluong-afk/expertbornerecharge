@@ -15,6 +15,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase";
 import { getTheme } from "@/lib/theme";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata({
     params,
@@ -23,6 +24,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const resolvedParams = await params;
     const city = getCity(resolvedParams.domain);
+
+    // Redirect Ghost Broker Partners to their canonical Hub URL
+    if (city && city.type === 'PARTNER') {
+        // We cannot redirect inside generateMetadata, but we can return canonical
+        // The actual redirect happens in the Page component
+        return {
+            alternates: {
+                canonical: `https://taxifrance.fr/ville/${city.slug}`,
+            },
+        };
+    }
+
     if (!city) {
         return {
             title: "Domaine disponible - Taxi de France",
@@ -88,6 +101,11 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
 
     if (!city) {
         return notFound();
+    }
+
+    // CANONICAL REDIRECT: Prevent Duplicate Content for Ghost Broker Cities
+    if (city.type === 'PARTNER') {
+        redirect(`/ville/${city.slug}`);
     }
 
     // Fetch Dynamic Content (Hybrid CMS Approach)

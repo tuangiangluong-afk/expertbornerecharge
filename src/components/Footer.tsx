@@ -36,11 +36,12 @@ export function Footer({ config }: FooterProps) {
                         <div>
                             <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Destinations Populaires</h5>
                             <ul className="space-y-3 text-sm">
-                                {SEO_DESTINATIONS.map((dest) => (
-                                    <li key={dest.slug}>
-                                        <Link href={`/tarif/${dest.slug}`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                {/* Dynamic Destinations: Use Stations or Monuments if available, else fallback */}
+                                {(config.stations && config.stations.length > 0 ? config.stations : SEO_DESTINATIONS.map(d => d.name)).slice(0, 6).map((dest) => (
+                                    <li key={typeof dest === 'string' ? dest : dest}>
+                                        <Link href={typeof dest === 'string' ? `/guides/${slugify(dest)}` : `/tarif/${slugify(dest)}`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                             <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                            Taxi {dest.name}
+                                            Taxi {typeof dest === 'string' ? dest : dest}
                                         </Link>
                                     </li>
                                 ))}

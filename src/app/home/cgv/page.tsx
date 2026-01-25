@@ -63,13 +63,30 @@ export default function CGV() {
                         <p>
                             Toute annulation doit être notifiée dès que possible. En cas de &quot;No Show&quot; (client absent), le chauffeur est en droit de réclamer une indemnité correspondant à l&apos;approche effectuée.
                         </p>
-                        <p>
+                        <p className="mt-4">
                             MEDIASHMAN agit en qualité d&apos;intermédiaire technologique. La responsabilité du transport incombe exclusivement au chauffeur exécutant la course, qui doit être assuré et en règle.
                         </p>
                     </div>
 
+                    {/* BROKER PROTECTION - Critical Legal Shield */}
+                    <div className="mb-8 rounded-2xl border-2 border-red-200 bg-red-50 p-8 shadow-sm">
+                        <h2 className="mb-4 text-2xl font-bold text-red-900">4. Nature du Service - Mise en Relation</h2>
+                        <p className="font-semibold text-red-800">
+                            Taxi France est une <strong>plateforme de mise en relation technique</strong> entre les utilisateurs et des chauffeurs professionnels indépendants.
+                        </p>
+                        <p className="mt-4 text-red-700">
+                            <strong>Taxi France n&apos;est pas transporteur.</strong> Les prestations de transport sont effectuées par des chauffeurs indépendants ou des sociétés tierces, dûment autorisés et assurés.
+                        </p>
+                        <p className="mt-4 text-red-700">
+                            En conséquence, <strong>Taxi France décline toute responsabilité</strong> en cas de litige lié à l&apos;exécution de la course, incluant mais non limité à : retards, accidents, perte ou détérioration de bagages, comportement du chauffeur, ou tout dommage survenu pendant le transport.
+                        </p>
+                        <p className="mt-4 text-sm text-red-600">
+                            L&apos;utilisateur reconnaît que sa relation contractuelle pour le transport est établie directement avec le chauffeur ou la société de transport exécutant la course.
+                        </p>
+                    </div>
+
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
-                        <h2 className="mb-4 text-2xl font-bold text-blue-900">4. Loi Applicable</h2>
+                        <h2 className="mb-4 text-2xl font-bold text-blue-900">5. Loi Applicable</h2>
                         <p>
                             Les présentes CGV sont soumises au droit français. Tout litige relève des tribunaux compétents de Paris.
                         </p>

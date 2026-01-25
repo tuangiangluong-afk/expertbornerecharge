@@ -1,19 +1,18 @@
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ShieldCheck, Star, MapPin, Zap, CheckCircle, Phone, Calendar } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, ShieldCheck, Star, MapPin, Zap, Phone } from "lucide-react";
 import { Vehicles } from "@/components/Vehicles";
-import { BookingWidget } from "@/components/BookingWidget";
 import { Reviews } from "@/components/Reviews";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
 import { StructuredData } from "@/components/StructuredData";
-import { CityConfig } from "@/lib/db";
 import { getTheme } from "@/lib/theme";
 import { NATIONAL_CONFIG } from "@/config/national";
 import CallButton from "@/components/CallButton";
 import { InternalMesh } from "@/components/InternalMesh";
+import { CitySearch } from "@/components/CitySearch";
 
-const THEME = getTheme("home"); // Will get a consistent theme
-const CLASSES = THEME.classes;
+const THEME = getTheme("home");
 
 export default function HomePage() {
     return (
@@ -44,90 +43,194 @@ export default function HomePage() {
                 </div>
             </nav>
 
-            {/* Hero Section - Immersive with Booking Widget */}
-            <section className="relative pt-32 pb-20 px-6 overflow-hidden">
-                {/* Background Image & Gradients */}
+            {/* HERO SECTION */}
+            <header className="relative bg-neutral-900 pt-40 pb-32 overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2940&auto=format&fit=crop')] bg-cover bg-center filter brightness-[0.4]" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-950/60 to-slate-950" />
+                    <Image
+                        src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2940&auto=format&fit=crop"
+                        alt="Taxi France Network"
+                        fill
+                        className="object-cover opacity-30"
+                        priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto max-w-7xl">
-                    <div className="grid lg:grid-cols-2 gap-16 items-center">
-                        {/* Left Content */}
-                        <div className="text-left">
-                            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-sm font-medium text-blue-400 mb-8 backdrop-blur-sm shadow-[0_0_20px_-5px_rgba(59,130,246,0.3)]">
-                                <span className="relative flex h-2 w-2">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                                </span>
-                                Réseau National Indépendant
+                <div className="container mx-auto px-4 relative z-10 text-center max-w-4xl">
+                    <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 mb-8 animate-fade-in-up">
+                        <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span className="text-sm font-medium text-white/90">Réseau National Connecté &bull; 30 Villes Ouvertes</span>
+                    </div>
+
+                    <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight mb-6 leading-[1.1]">
+                        Votre Taxi, <br className="hidden md:block" />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Partout en France.</span>
+                    </h1>
+
+                    <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed">
+                        La première plateforme de mise en relation avec les chauffeurs indépendants.
+                        <br className="hidden sm:block" />Tarifs réglementés, pas de majoration, approche gratuite.
+                    </p>
+
+                    {/* SEARCH BAR - LEAD MAGNET */}
+                    <div className="mb-16 px-4">
+                        <CitySearch />
+                        <p className="text-sm text-slate-500 mt-6">
+                            Essayez : <Link href="/ville/taxi-lyon" className="hover:text-white underline decoration-blue-500/50">Lyon</Link>, <Link href="/ville/taxi-bordeaux" className="hover:text-white underline decoration-blue-500/50">Bordeaux</Link>, <Link href="/gare/taxi-gare-montparnasse" className="hover:text-white underline decoration-blue-500/50">Gare Montparnasse</Link>...
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <CallButton
+                            phoneNumber={NATIONAL_CONFIG.phoneNumber}
+                            cityName="France"
+                            theme={THEME}
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg shadow-blue-900/50 transition active:scale-95 flex items-center gap-3"
+                        >
+                            <Phone size={20} />
+                            Appeler le Standard National
+                        </CallButton>
+                        <a href="#zones" className="text-white/80 font-medium hover:text-white transition flex items-center gap-2 px-6 py-4">
+                            Voir nos zones <ArrowRight size={16} />
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            {/* TOP ZONES GRID - NAVIGATION */}
+            <section id="zones" className="py-20 bg-slate-900 border-y border-white/5">
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl font-bold text-white mb-4">Nos Zones Prioritaires</h2>
+                        <p className="text-slate-400 max-w-2xl mx-auto">
+                            Découvrez nos chauffeurs partenaires dans les plus grandes métropoles et gares de France.
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                        {/* LYON CARD */}
+                        <Link href="/ville/taxi-lyon" className="group relative bg-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-white/5 flex flex-col h-64">
+                            <div className="absolute inset-0">
+                                <Image
+                                    src="https://images.unsplash.com/photo-1620647833074-ce49b6b90710?q=80&w=2670&auto=format&fit=crop"
+                                    alt="Taxi Lyon"
+                                    fill
+                                    className="object-cover transition duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-80"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
                             </div>
-
-                            <h1 className="mb-8 text-5xl font-black tracking-tight text-white sm:text-7xl leading-[1.1] drop-shadow-2xl">
-                                Le Taxi, <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-100 to-white">
-                                    Réinventé.
-                                </span>
-                            </h1>
-
-                            <p className="mb-10 text-xl text-slate-400 leading-relaxed max-w-xl">
-                                Accédez directement aux meilleurs chauffeurs artisans de France.
-                                Sans commission plateforme. Sans intermédiaire inutile.
-                            </p>
-
-                            <div className="flex flex-col sm:flex-row gap-4">
-                                <Link
-                                    href="/home/reserver-taxi-ile-de-france"
-                                    className="inline-flex items-center justify-center gap-3 rounded-2xl bg-white text-slate-900 px-8 py-4 text-lg font-bold transition-all hover:bg-blue-50 hover:scale-[1.02]"
-                                >
-                                    <MapPin size={20} />
-                                    Choisir ma ville
-                                </Link>
-                                <CallButton
-                                    phoneNumber={NATIONAL_CONFIG.phoneNumber}
-                                    cityName="France"
-                                    theme={THEME}
-                                    className="inline-flex items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-8 py-4 text-lg font-bold text-white transition-all hover:bg-white/10"
-                                >
-                                    <Phone size={20} />
-                                    Appel Standard
-                                </CallButton>
+                            <div className="absolute bottom-0 left-0 p-6 text-white w-full z-10">
+                                <div className="text-xs font-bold text-blue-400 mb-1 uppercase tracking-wider">Hub TGV & Aéroport</div>
+                                <h3 className="text-2xl font-bold mb-1">Taxi Lyon</h3>
+                                <div className="flex items-center gap-2 text-sm text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                                    <span>Gare Part-Dieu</span> &bull; <span>St Exupéry</span>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
 
-                        {/* Right Content: Booking Widget */}
-                        <div className="relative z-20">
-                            <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-2 rounded-3xl shadow-2xl">
-                                <BookingWidget city={NATIONAL_CONFIG} />
+                        {/* MARSEILLE CARD */}
+                        <Link href="/ville/taxi-marseille" className="group relative bg-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-white/5 flex flex-col h-64">
+                            <div className="absolute inset-0">
+                                <Image
+                                    src="https://images.unsplash.com/photo-1589561454226-796a8aa89b05?q=80&w=2670&auto=format&fit=crop"
+                                    alt="Taxi Marseille"
+                                    fill
+                                    className="object-cover transition duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-80"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
                             </div>
-                            {/* Decorative blob behind */}
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[100px] -z-10 pointer-events-none" />
-                        </div>
+                            <div className="absolute bottom-0 left-0 p-6 text-white w-full z-10">
+                                <div className="text-xs font-bold text-blue-400 mb-1 uppercase tracking-wider">Métropole Sud</div>
+                                <h3 className="text-2xl font-bold mb-1">Taxi Marseille</h3>
+                                <div className="flex items-center gap-2 text-sm text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                                    <span>Gare St Charles</span> &bull; <span>Aéroport</span>
+                                </div>
+                            </div>
+                        </Link>
+
+                        {/* NICE CARD */}
+                        <Link href="/ville/taxi-nice" className="group relative bg-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-white/5 flex flex-col h-64">
+                            <div className="absolute inset-0">
+                                <Image
+                                    src="https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?q=80&w=2670&auto=format&fit=crop"
+                                    alt="Taxi Nice"
+                                    fill
+                                    className="object-cover transition duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-80"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                            </div>
+                            <div className="absolute bottom-0 left-0 p-6 text-white w-full z-10">
+                                <div className="text-xs font-bold text-blue-400 mb-1 uppercase tracking-wider">Côte d'Azur</div>
+                                <h3 className="text-2xl font-bold mb-1">Taxi Nice</h3>
+                                <div className="flex items-center gap-2 text-sm text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                                    <span>Aéroport NCE</span> &bull; <span>Monaco</span>
+                                </div>
+                            </div>
+                        </Link>
+
+                        {/* BORDEAUX CARD */}
+                        <Link href="/ville/taxi-bordeaux" className="group relative bg-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-white/5 flex flex-col h-64">
+                            <div className="absolute inset-0">
+                                <Image
+                                    src="https://images.unsplash.com/photo-1559087867-ce4c91325525?q=80&w=2670&auto=format&fit=crop"
+                                    alt="Taxi Bordeaux"
+                                    fill
+                                    className="object-cover transition duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-80"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                            </div>
+                            <div className="absolute bottom-0 left-0 p-6 text-white w-full z-10">
+                                <div className="text-xs font-bold text-blue-400 mb-1 uppercase tracking-wider">Aquitaine</div>
+                                <h3 className="text-2xl font-bold mb-1">Taxi Bordeaux</h3>
+                                <div className="flex items-center gap-2 text-sm text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                                    <span>Gare St Jean</span> &bull; <span>Vignobles</span>
+                                </div>
+                            </div>
+                        </Link>
+
+                        {/* PARIS CARD */}
+                        <Link href="/home/reserver-taxi-ile-de-france" className="group relative bg-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-white/5 flex flex-col h-64 lg:col-span-2">
+                            <div className="absolute inset-0">
+                                <Image
+                                    src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2673&auto=format&fit=crop"
+                                    alt="Taxi Paris IDF"
+                                    fill
+                                    className="object-cover transition duration-700 group-hover:scale-105 opacity-50 group-hover:opacity-70"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                            </div>
+                            <div className="absolute bottom-0 left-0 p-6 text-white w-full z-10">
+                                <div className="text-xs font-bold text-green-400 mb-1 uppercase tracking-wider">Flotte Premium</div>
+                                <h3 className="text-3xl font-bold mb-1">Taxi Paris & Île-de-France</h3>
+                                <div className="flex items-center gap-2 text-sm text-slate-300">
+                                    <span>Gares Parisiennes</span> &bull; <span>Roissy CDG</span> &bull; <span>Orly</span> &bull; <span>La Défense</span>
+                                </div>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </section>
 
             {/* Features Section - Excellence */}
-            <section className="py-20 px-6 bg-slate-900 border-y border-white/5">
+            <section className="py-20 px-6 bg-slate-950 border-y border-white/5">
                 <div className="mx-auto max-w-7xl">
                     <div className="grid md:grid-cols-3 gap-8">
-                        <div className="p-8 rounded-3xl bg-slate-800/50 border border-white/5 hover:bg-slate-800 transition">
-                            <div className="w-14 h-14 bg-blue-900/50 rounded-2xl flex items-center justify-center mb-6 text-blue-400">
+                        <div className="p-8 rounded-3xl bg-slate-900 border border-white/5 hover:border-white/10 transition">
+                            <div className="w-14 h-14 bg-blue-900/30 rounded-2xl flex items-center justify-center mb-6 text-blue-400">
                                 <ShieldCheck size={32} />
                             </div>
                             <h3 className="text-xl font-bold mb-3">Chauffeurs Vérifiés</h3>
                             <p className="text-slate-400 leading-relaxed">Chaque chauffeur est un professionnel agréé, vérifié et noté par la communauté. Sécurité absolue.</p>
                         </div>
-                        <div className="p-8 rounded-3xl bg-slate-800/50 border border-white/5 hover:bg-slate-800 transition">
-                            <div className="w-14 h-14 bg-emerald-900/50 rounded-2xl flex items-center justify-center mb-6 text-emerald-400">
+                        <div className="p-8 rounded-3xl bg-slate-900 border border-white/5 hover:border-white/10 transition">
+                            <div className="w-14 h-14 bg-emerald-900/30 rounded-2xl flex items-center justify-center mb-6 text-emerald-400">
                                 <Zap size={32} />
                             </div>
                             <h3 className="text-xl font-bold mb-3">Sans Commission</h3>
                             <p className="text-slate-400 leading-relaxed">Vous payez le juste prix directement au chauffeur. Pas de frais cachés, pas de tarifs dynamiques abusifs.</p>
                         </div>
-                        <div className="p-8 rounded-3xl bg-slate-800/50 border border-white/5 hover:bg-slate-800 transition">
-                            <div className="w-14 h-14 bg-purple-900/50 rounded-2xl flex items-center justify-center mb-6 text-purple-400">
+                        <div className="p-8 rounded-3xl bg-slate-900 border border-white/5 hover:border-white/10 transition">
+                            <div className="w-14 h-14 bg-purple-900/30 rounded-2xl flex items-center justify-center mb-6 text-purple-400">
                                 <Star size={32} />
                             </div>
                             <h3 className="text-xl font-bold mb-3">Service Premium</h3>
@@ -137,85 +240,14 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* Region Selection - Bento Grid Style */}
-            <section id="zones" className="py-32 px-6 relative bg-slate-950">
-                <div className="mx-auto max-w-7xl">
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                        <div>
-                            <h2 className="text-4xl font-bold tracking-tight text-white mb-4">Nos Zones Premium</h2>
-                            <p className="text-slate-400 text-lg max-w-xl">
-                                Une présence affirmée sur les secteurs les plus dynamiques.
-                                Sélectionnez votre région.
-                            </p>
-                        </div>
-                        <Link href="/home/reserver-taxi-ile-de-france" className="text-blue-400 hover:text-white transition font-bold flex items-center gap-2">
-                            Voir toutes les régions <ArrowRight size={18} />
-                        </Link>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[500px]">
-                        {/* Highlights / Stats Card */}
-                        <div className="md:col-span-4 rounded-3xl bg-gradient-to-br from-slate-900 to-slate-800 border border-white/10 p-8 flex flex-col justify-between relative overflow-hidden group">
-                            <div className="absolute top-0 right-0 p-32 bg-blue-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-600/30 transition-all duration-700" />
-                            <div>
-                                <div className="p-3 bg-white/5 w-fit rounded-xl border border-white/10 mb-6">
-                                    <ShieldCheck className="text-emerald-400" size={32} />
-                                </div>
-                                <h3 className="text-2xl font-bold text-white mb-2">Qualité Garantie</h3>
-                                <p className="text-slate-400">Réseau numéro 1 en satisfaction client.</p>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4 mt-8">
-                                <div>
-                                    <div className="text-3xl font-black text-white">4.9/5</div>
-                                    <div className="text-xs text-slate-500 font-bold uppercase tracking-wider">Avis Clients</div>
-                                </div>
-                                <div>
-                                    <div className="text-3xl font-black text-white">100%</div>
-                                    <div className="text-xs text-slate-500 font-bold uppercase tracking-wider">Fiabilité</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Main Region Card - IDF */}
-                        <Link
-                            href="/home/reserver-taxi-ile-de-france"
-                            className="md:col-span-8 rounded-3xl relative overflow-hidden group cursor-pointer"
-                        >
-                            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2973&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105 filter brightness-[0.6] group-hover:brightness-[0.7]" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-90" />
-
-                            <div className="absolute bottom-0 left-0 p-8 md:p-12 w-full">
-                                <div className="flex justify-between items-end">
-                                    <div>
-                                        <div className="inline-block px-3 py-1 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest rounded mb-4">
-                                            Zone Prioritaire
-                                        </div>
-                                        <h3 className="text-4xl md:text-5xl font-black text-white mb-4">Île-de-France</h3>
-                                        <p className="text-slate-300 text-lg max-w-lg mb-6 line-clamp-2 md:line-clamp-none">
-                                            Couverture complète de Paris et sa région. Gares, Aéroports, La Défense.
-                                        </p>
-                                        <div className="flex gap-2 text-xs font-bold text-white/80">
-                                            Paris 75 • Hauts-de-Seine 92 • Yvelines 78 • Seine-Saint-Denis 93
-                                        </div>
-                                    </div>
-                                    <div className="hidden md:flex h-16 w-16 rounded-full bg-white text-slate-950 items-center justify-center transition-transform duration-300 group-hover:-translate-y-2 group-hover:translate-x-2">
-                                        <ArrowRight size={32} />
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
-                    </div>
-                </div>
-            </section>
-
             {/* Vehicles Fleet Section */}
             <Vehicles
                 city="France entière"
-                slug="home" // Ensure theme works
+                slug="home"
                 phoneNumber={NATIONAL_CONFIG.phoneNumber}
             />
 
-            {/* Reviews Section - Force specific config to show default reviews */}
+            {/* Reviews Section */}
             <div className="bg-white text-neutral-900 border-y border-neutral-200">
                 <Reviews city="France" tenantSlug="_default" />
             </div>
@@ -229,13 +261,11 @@ export default function HomePage() {
             <InternalMesh />
 
             {/* Footer - SEO Optimized */}
-
-            {/* Footer - SEO Optimized */}
             <footer className="bg-slate-950 border-t border-white/5">
                 <div className="container mx-auto">
                     <div className="prose prose-invert max-w-none pt-12 pb-4 text-center">
                         <p className="text-slate-500 text-sm">
-                            Taxi de France est une plateforme de mise en relation. Les services sont assurés par des chauffeurs indépendants.
+                            Taxi de France est une plateforme de mise en relation technique. Les services sont assurés par des chauffeurs indépendants.
                         </p>
                     </div>
                     {/* Override styling for dark theme integration */}

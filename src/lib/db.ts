@@ -17,6 +17,7 @@ export interface CityConfig {
     pricing: {
         base: string;
         description: string;
+        km?: number; // Tarif au kilomètre (optionnel)
     };
     // Iceberg Extend
     hospitals: string[];
@@ -30,6 +31,9 @@ export interface CityConfig {
     };
     ga_id?: string; // Google Analytics G-XXXXXXXXXX
     gtm_id?: string; // Google Tag Manager GTM-XXXXXX
+    // Ghost Broker Strategy
+    type?: 'OWNED' | 'PARTNER'; // Default to OWNED if undefined
+    partnerPhone?: string; // Number to forward to if PARTNER
 }
 
 export function getCity(domain: string): CityConfig | null {
@@ -58,6 +62,10 @@ export function getCity(domain: string): CityConfig | null {
 
     if (cityKey) return CITIES[cityKey];
     return null;
+}
+
+export function getCityBySlug(slug: string): CityConfig | null {
+    return Object.values(CITIES).find(c => c.slug === slug) || null;
 }
 
 
@@ -655,6 +663,41 @@ const _taxisversailles: CityConfig = {
     }
 };
 
+// ========================================
+// PARTNER CITIES (Ghost Broker Strategy)
+// ========================================
+const _taxilyon: CityConfig = {
+    slug: "taxi-lyon",
+    domain: "taxilyon.fr", // Virtual - Not a real owned domain yet
+    type: 'PARTNER',
+    partnerPhone: "+33478282323", // Placeholder - Allo Taxi Lyon
+    name: "Taxi Lyon",
+    city: "Lyon",
+    phoneNumber: "04 78 28 23 23",
+    email: "contact@taxifrance.fr", // Route to our central
+    heroImage: "https://images.unsplash.com/photo-1620647833074-ce49b6b90710?q=80&w=2670&auto=format&fit=crop",
+    description: "Réservez votre Taxi à Lyon. Partenaires officiels Gare Part-Dieu et Aéroport Saint-Exupéry.",
+    meta: {
+        title: "Taxi Lyon | Réservation Taxi Gare Part-Dieu & Aéroport St Exupéry",
+        description: "Taxi Lyon : Service de réservation immédiate. Chauffeurs lyonnais indépendants. Transfert Gare Part-Dieu, Perrache et Aéroport Saint-Exupéry."
+    },
+    features: ["Gare Part-Dieu", "Aéroport St Exupéry", "Conventionné CPAM", "Longue Distance"],
+    pricing: {
+        base: "2.50€",
+        description: "Prise en charge (Tarif Préfectoral Rhône)"
+    },
+    hospitals: ["Hôpital Edouard Herriot", "Hôpital de la Croix-Rousse", "Centre Léon Bérard", "Clinique de la Sauvegarde"],
+    stations: ["Gare Lyon Part-Dieu", "Gare Lyon Perrache", "Gare Saint-Exupéry TGV"],
+    neighborhoods: ["Presqu'île", "Vieux Lyon", "La Part-Dieu", "Confluence", "Croix-Rousse", "Gerland"],
+    points_of_interest: {
+        hotels: ["InterContinental Lyon - Hotel Dieu", "Radisson Blu", "Mama Shelter Lyon", "Sofitel Lyon Bellecour"],
+        nightlife: ["Le Sucre", "Rue Mercière", "Ninkasi Gerland", "Transbordeur"],
+        monuments: ["Basilique de Fourvière", "Place Bellecour", "Parc de la Tête d'Or", "Vieux Lyon"],
+        parking_difficulty: "Enfer (Zone LEZ)"
+    }
+};
+
+
 export const CITIES: Record<string, CityConfig> = {
     // --- .COM DOMAINS ONLY ---
     // Each entry uses the clone() helper to set domain and slug correctly
@@ -688,4 +731,52 @@ export const CITIES: Record<string, CityConfig> = {
     "taxisaintquentin_com": clone(_taxisaintquentin, "taxisaintquentin.com", "taxisaintquentin_com"),
     "taxisversailles_com": clone(_taxisversailles, "taxisversailles.com", "taxisversailles_com"),
     "taxinanterre.fr": clone(_taxinanterre, "taxinanterre.fr", "taxinanterre_fr"),
+
+    // --- PARTNER CITIES (Ghost Broker - Auto-Generated) ---
+    ...generatePartnerCities(),
 };
+
+// ========================================
+// PARTNER CITY GENERATOR
+// ========================================
+import { NATIONAL_TARGETS, NationalTarget } from "@/config/national-targets";
+
+function generatePartnerCities(): Record<string, CityConfig> {
+    const result: Record<string, CityConfig> = {};
+
+    for (const target of NATIONAL_TARGETS) {
+        const config: CityConfig = {
+            slug: target.slug,
+            domain: `${target.slug.replace('taxi-', '')}.taxifrance.fr`, // Virtual subdomain
+            type: 'PARTNER',
+            partnerPhone: "+33970000000", // Default - Replace with real partner phone
+            name: `Taxi ${target.name}`,
+            city: target.name,
+            phoneNumber: "09 72 50 12 50", // National standard
+            email: "contact@taxifrance.fr",
+            heroImage: target.heroImage || "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2940&auto=format&fit=crop",
+            description: `Réservez votre taxi à ${target.name}. Service de transport disponible 24h/24 avec nos partenaires locaux.`,
+            meta: {
+                title: target.heroTitle,
+                description: `Taxi ${target.name} : Réservation immédiate. Chauffeurs locaux indépendants. Transfert gares, aéroports et transport médical.`
+            },
+            features: ["Disponible 24h/24", "Prix Fixe", "Chauffeurs Locaux", "Transport Médical"],
+            pricing: {
+                base: `${target.price_start.toFixed(2)}€`,
+                description: "Prise en charge"
+            },
+            hospitals: [], // Will be enriched per-city
+            stations: target.top_places.filter(p => p.toLowerCase().includes('gare') || p.toLowerCase().includes('aéroport')),
+            neighborhoods: target.top_places.filter(p => !p.toLowerCase().includes('gare') && !p.toLowerCase().includes('aéroport')),
+            points_of_interest: {
+                hotels: [],
+                nightlife: [],
+                monuments: target.top_places,
+                parking_difficulty: "Variable"
+            }
+        };
+        result[target.slug] = config;
+    }
+
+    return result;
+}

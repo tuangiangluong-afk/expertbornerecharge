@@ -73,6 +73,9 @@ export type SpintaxType =
     | "guide_intro"
     | "guide_bus_pain"
     | "guide_taxi_solution"
+    // Partner Cities (Ghost Broker)
+    | "partner_description"
+    | "partner_meta_description"
     // Legacy keys
     | "intro"
     | "medical"
@@ -96,6 +99,19 @@ export function getSpintaxContent(type: SpintaxType, city: string): string {
             `Optez pour le confort absolu : votre chauffeur taxi vous dépose juste devant l'entrée. Pas de marche, pas de stress.`,
             `La solution la plus rapide : un taxi privé qui vous attend et vous conduit directement à destination pour un tarif fixe.`,
             `Gagnez du temps et de l'énergie avec notre service porte-à-porte. Véhicule climatisé et chauffeur courtois garantis.`
+        ],
+
+        // --- PARTNER CITIES (Ghost Broker - Unique per city) ---
+        partner_description: [
+            `{Besoin|À la recherche} d'un {taxi|chauffeur privé} fiable à ${city} ? {Notre réseau|Taxi France} {sélectionne|vous connecte avec} les {meilleurs artisans|partenaires locaux} pour vos {trajets|déplacements} vers {la gare|l'aéroport} ou le centre-ville. {Réservez|Commandez} en ligne {immédiatement|dès maintenant} et {profitez|bénéficiez} d'un tarif {fixe|réglementé} sans surprise.`,
+            `Votre {taxi|chauffeur} à ${city} {disponible|prêt} {24h/24|à toute heure}. {Transport|Navette} vers {les gares TGV|l'aéroport} et {le centre-ville|les quartiers d'affaires}. {Prix connu|Forfait annoncé} à l'avance, {pas de mauvaise surprise|transparence totale}.`,
+            `{Découvrez|Profitez de} notre service de taxi à ${city}. {Chauffeurs vérifiés|Partenaires triés sur le volet}, {berlines confortables|véhicules récents} et {réservation simplifiée|commande en 2 clics}. {Idéal|Parfait} pour vos {rendez-vous professionnels|déplacements personnels}.`,
+            `{Le spécialiste|L'expert} du {taxi|transport} à ${city}. {Ponctualité|Fiabilité} {garantie|assurée} pour vos {transferts aéroport|liaisons gares}. {CB acceptée|Paiement facile} et {facturation entreprise|notes de frais} sur demande.`
+        ],
+        partner_meta_description: [
+            `Taxi ${city} : Réservation {immédiate|en ligne}. Chauffeurs {locaux|indépendants} vérifiés. Transfert {gares|aéroports} 24/7. {Prix fixe|Tarif réglementé}.`,
+            `{Réservez|Commandez} votre taxi à ${city}. {Service|Transport} {rapide|fiable} vers {gare TGV|aéroport}. {CB acceptée|Paiement carte}. {Devis|Tarif} gratuit.`,
+            `Taxi ${city} - {Votre chauffeur|Transport privé} en {10 min|quelques minutes}. {Forfait aéroport|Prix connu} à l'avance. {Réservation|Commande} {simple|facile}.`
         ],
 
         // --- SEO METADATA (Aggressive CTR) ---
