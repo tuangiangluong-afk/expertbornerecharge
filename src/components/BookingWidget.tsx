@@ -8,11 +8,16 @@ import { AddressAutocomplete } from "./AddressAutocomplete";
 
 const LIBRARIES: ("places")[] = ["places"];
 
+import { getTheme } from "@/lib/theme";
+
 interface BookingWidgetProps {
     city: CityConfig;
 }
 
 export function BookingWidget({ city }: BookingWidgetProps) {
+    const theme = getTheme(city.slug);
+    const classes = theme.classes;
+
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY || "",
         libraries: LIBRARIES,
@@ -112,7 +117,7 @@ export function BookingWidget({ city }: BookingWidgetProps) {
 
     return (
         <div id="book" className="bg-white p-6 sm:p-8 rounded-3xl shadow-xl border border-neutral-100 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-t-3xl"></div>
+            <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${classes.gradientFrom} ${classes.gradientTo} rounded-t-3xl`}></div>
 
             <div className="mb-6">
                 <h3 className="text-2xl font-bold text-neutral-900">Réserver un chauffeur</h3>

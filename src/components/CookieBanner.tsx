@@ -41,7 +41,7 @@ const CookieBanner = ({ slug, cityName }: CookieBannerProps) => {
     if (!showBanner) return null;
 
     return (
-        <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 bg-neutral-900/95 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-2xl z-50 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className={`fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 bg-neutral-900/95 backdrop-blur-md border ${classes.border.replace('/30', '/50')} rounded-2xl p-6 shadow-2xl ${classes.shadow} z-50 animate-in fade-in slide-in-from-bottom-4 duration-500`}>
             <div className="flex items-start gap-4">
                 <div className={`p-2 rounded-lg shrink-0 ${classes.bg} bg-opacity-20`}>
                     <Cookie className={`w-6 h-6 ${theme.text}`} />

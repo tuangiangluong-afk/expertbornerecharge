@@ -190,7 +190,7 @@ export default async function GuidePage({ params }: { params: Promise<{ domain: 
                                 phoneNumber={city.phoneNumber}
                                 cityName={city.city}
                                 theme={theme}
-                                className={`block w-full ${theme.classes.bg} ${theme.text} bg-neutral-900 text-center font-bold py-4 rounded-xl hover:brightness-110 transition shadow-lg flex items-center justify-center gap-2`}
+                                className={`block w-full ${theme.classes.bg} ${theme.text} text-center font-bold py-4 rounded-xl hover:brightness-110 transition shadow-lg flex items-center justify-center gap-2`}
                             >
                                 <Phone size={20} fill="currentColor" />
                                 Commander mon Chauffeur
