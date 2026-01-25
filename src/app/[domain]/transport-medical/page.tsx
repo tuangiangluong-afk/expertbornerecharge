@@ -5,6 +5,7 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { Ambulance, Phone, ShieldCheck, CheckCircle, ArrowRight, Clock } from "lucide-react";
 import { getTheme } from "@/lib/theme";
 import CallButton from "@/components/CallButton";
+import { MedicalSteps } from "@/components/MedicalSteps";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SEO_SERVICES } from "@/lib/seo-data";
@@ -73,6 +74,8 @@ export default async function MedicalTransportPage({ params }: { params: Promise
                             {introText}
                         </p>
                     </div>
+
+                    <MedicalSteps cityName={city.city} />
 
                     <div className="grid gap-8 md:grid-cols-2 mb-16">
                         {/* Card 1: Destinations */}

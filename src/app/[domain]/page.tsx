@@ -323,8 +323,8 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                 </div>
             </section>
 
-            {/* Reviews Section using Deterministic Spintax */}
-            <Reviews city={city.city} />
+            {/* Reviews Section - DB backed with spintax fallback */}
+            <Reviews city={city.city} tenantSlug={city.slug} />
 
             {/* FAQ Section */}
             <FAQ city={city.city} type="general" faqs={faqs} />
