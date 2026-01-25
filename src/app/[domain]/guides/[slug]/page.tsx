@@ -206,12 +206,12 @@ export default async function GuidePage({ params }: { params: Promise<{ domain: 
                     <h3 className="text-xl font-bold text-neutral-900 mb-6">Autres destinations populaires à {city.city}</h3>
                     <div className="flex flex-wrap gap-3 mb-8">
                         {city.points_of_interest?.hotels.slice(0, 5).map(h => (
-                            <a key={h} href={`/${city.slug}/guides/${slugify(h)}`} className="text-sm px-3 py-1.5 rounded-lg bg-neutral-100 text-neutral-600 hover:bg-neutral-200 transition">
+                            <a key={h} href={`/guides/${slugify(h)}`} className="text-sm px-3 py-1.5 rounded-lg bg-neutral-100 text-neutral-600 hover:bg-neutral-200 transition">
                                 {h}
                             </a>
                         ))}
                         {city.points_of_interest?.monuments.slice(0, 5).map(m => (
-                            <a key={m} href={`/${city.slug}/guides/${slugify(m)}`} className="text-sm px-3 py-1.5 rounded-lg bg-neutral-100 text-neutral-600 hover:bg-neutral-200 transition">
+                            <a key={m} href={`/guides/${slugify(m)}`} className="text-sm px-3 py-1.5 rounded-lg bg-neutral-100 text-neutral-600 hover:bg-neutral-200 transition">
                                 {m}
                             </a>
                         ))}
