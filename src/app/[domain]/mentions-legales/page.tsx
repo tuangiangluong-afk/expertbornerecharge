@@ -51,7 +51,7 @@ export default async function MentionsLegales({ params }: { params: Promise<{ do
                             <li><strong>Siège social :</strong> 91 RUE DU FAUBOURG SAINT-HONORE, 75008 PARIS</li>
                             <li><strong>SIREN :</strong> 509 987 681 R.C.S. PARIS</li>
                             <li><strong>Responsable de publication :</strong> Direction MEDIASHMAN</li>
-                            <li><strong>Email de contact :</strong> contact@{city.domain}</li>
+                            <li><strong>Contact :</strong> <a href="/contact" className="underline">Formulaire de contact</a></li>
                         </ul>
                     </div>
 
