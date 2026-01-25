@@ -1,5 +1,5 @@
 import { CITIES, getCity } from "@/lib/db";
-import { SEO_DESTINATIONS } from "@/lib/seo-data";
+import { SEO_DESTINATIONS, SEO_SERVICES } from "@/lib/seo-data";
 import { getSpintaxContent } from "@/lib/spintax";
 import { notFound } from "next/navigation";
 import { Phone, MapPin, Clock, ArrowRight, Car, Euro, CheckCircle } from "lucide-react";
@@ -233,6 +233,26 @@ export default async function TarifPage({ params }: { params: Promise<{ domain: 
                             Le prix réglementé des taxis utilise un taximètre. Cependant, pour les trajets aéroports ou longue distance, des forfaits peuvent être appliqués ou estimés.
                             L'estimation de <strong>{minPrice}</strong> donnée ci-dessus est indicative pour un trajet de jour en conditions normales.
                         </p>
+                    </div>
+
+                    {/* See Also Section */}
+                    <div className="mt-16 border-t border-neutral-200/50 pt-8">
+                        <h3 className="text-xl font-bold text-neutral-900 mb-6">Voir aussi nos autres services à {city.city}</h3>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                            {SEO_SERVICES.map((service) => (
+                                <Link
+                                    key={service.slug}
+                                    href={`/${service.slug}`}
+                                    className="group block p-4 rounded-xl bg-white border border-neutral-200 hover:border-neutral-300 hover:shadow-md transition"
+                                >
+                                    <h4 className={`font-bold ${classes.text} group-hover:opacity-80 transition flex items-center gap-2`}>
+                                        <ArrowRight size={16} />
+                                        {service.title}
+                                    </h4>
+                                    <p className="text-sm text-neutral-500 mt-1">{service.description}</p>
+                                </Link>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </main>
