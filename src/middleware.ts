@@ -55,9 +55,20 @@ export default async function middleware(req: NextRequest) {
     }
 
     // Rewrite to our dynamic route /src/app/[domain]/...
-    // We pass the hostname as the 'domain' param.
-    // getCity(domain) will return the correct config.
+
+    // Custom Rewrite for specific service shortcuts (root level access)
+    const serviceShortcuts = ['/conventionne-cpam', '/van-minibus', '/nuit'];
+    let finalPath = path;
+
+    // Use pathname (without query) for matching to be robust
+    const pathname = url.pathname;
+    if (serviceShortcuts.some(s => pathname === s || pathname.startsWith(s + '/'))) {
+        // Reconstruct path with /service prefix, keeping query params from original 'path'
+        // path = /conventionne-cpam?foo=bar -> finalPath = /service/conventionne-cpam?foo=bar
+        finalPath = `/service${path}`;
+    }
+
     return NextResponse.rewrite(
-        new URL(`/${hostname}${path}`, req.url)
+        new URL(`/${hostname}${finalPath}`, req.url)
     );
 }
