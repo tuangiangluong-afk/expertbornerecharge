@@ -479,7 +479,7 @@ const _taxirueil: CityConfig = {
     city: "Rueil-Malmaison",
     phoneNumber: "01 84 60 92 07",
     email: "contact@taxirueil.com",
-    heroImage: "https://images.unsplash.com/photo-1603565021200-a20d43a75871?q=80&w=2670&auto=format&fit=crop", // Rueil / Chateau
+    heroImage: "https://images.unsplash.com/photo-1572025442641-51874911eb34?q=80&w=2670&auto=format&fit=crop", // Rueil / Chateau substitute
     description: "Taxi Rueil.",
     meta: { title: "Taxi Rueil-Malmaison (92)", description: "Taxi Rueil." },
     features: TEMPLATE_FEATURES, pricing: TEMPLATE_PRICING,
