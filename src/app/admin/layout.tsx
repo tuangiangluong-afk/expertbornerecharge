@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LayoutDashboard, FileText, Car, MessageCircle, MapPin, Database, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, FileText, Car, MessageCircle, MapPin, Database, Settings, LogOut, Star } from "lucide-react";
 import { TenantSwitcher } from "@/components/admin/TenantSwitcher";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { redirect } from "next/navigation";
@@ -60,6 +60,10 @@ export default async function AdminLayout({
                     <Link href="/admin/faq" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-neutral-400 hover:bg-white/5 hover:text-white transition">
                         <MessageCircle size={18} />
                         FAQ & Questions
+                    </Link>
+                    <Link href="/admin/reviews" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-neutral-400 hover:bg-white/5 hover:text-white transition">
+                        <Star size={18} />
+                        Avis Clients
                     </Link>
                     <Link href="/admin/settings" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-neutral-400 hover:bg-white/5 hover:text-white transition">
                         <Settings size={18} />
