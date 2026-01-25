@@ -111,5 +111,41 @@ export default async function sitemap(props?: Props): Promise<MetadataRoute.Site
         };
     });
 
+    // Programmatic SEO: Guides (POIs)
+    if (city.points_of_interest) {
+        const allPois = [
+            ...city.points_of_interest.hotels,
+            ...city.points_of_interest.nightlife,
+            ...city.points_of_interest.monuments
+        ];
+
+        for (const poi of allPois) {
+            const slug = poi.toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-");
+            routes.push({
+                url: `${baseUrl}/guides/${slug}`,
+                lastModified: new Date(),
+                changeFrequency: 'monthly',
+                priority: 0.7,
+            });
+        }
+    }
+
+    // Programmatic SEO: Transport Medical (Hospitals)
+    if (city.hospitals) {
+        for (const hospital of city.hospitals) {
+            const slug = hospital.toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-");
+            routes.push({
+                url: `${baseUrl}/transport-medical/${slug}`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly',
+                priority: 0.9, // High priority (Business/Medical)
+            });
+        }
+    }
+
     return [...routes, ...tarifRoutes, ...serviceRoutes];
 }

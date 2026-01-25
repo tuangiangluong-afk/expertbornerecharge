@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 import { Star, Plus, Trash2, Edit2, Save, X, CheckCircle } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 interface Review {
     id: string;
@@ -16,6 +17,9 @@ interface Review {
 }
 
 export default function AdminReviewsPage() {
+    const searchParams = useSearchParams();
+    const currentTenantId = searchParams.get("tenantId");
+
     const [reviews, setReviews] = useState<Review[]>([]);
     const [loading, setLoading] = useState(true);
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -32,13 +36,20 @@ export default function AdminReviewsPage() {
 
     const fetchReviews = useCallback(async () => {
         setLoading(true);
-        const { data } = await (supabase as any)
+
+        let query = (supabase as any)
             .from("reviews")
             .select("*")
             .order("created_at", { ascending: false });
+
+        if (currentTenantId && currentTenantId !== 'all') {
+            query = query.eq("tenant_id", currentTenantId);
+        }
+
+        const { data } = await query;
         setReviews(data || []);
         setLoading(false);
-    }, []);
+    }, [currentTenantId]);
 
     useEffect(() => {
         fetchReviews();
@@ -106,7 +117,7 @@ export default function AdminReviewsPage() {
 
     const resetForm = () => {
         setFormData({
-            tenant_id: "",
+            tenant_id: currentTenantId || "",
             author_name: "",
             rating: 5,
             content: "",
@@ -115,6 +126,13 @@ export default function AdminReviewsPage() {
         setEditingId(null);
         setShowForm(false);
     };
+
+    // Update form tenant when switching workspace
+    useEffect(() => {
+        if (currentTenantId && currentTenantId !== 'all') {
+            setFormData(prev => ({ ...prev, tenant_id: currentTenantId }));
+        }
+    }, [currentTenantId]);
 
     return (
         <div className="min-h-screen bg-gray-100 p-8">
@@ -189,8 +207,8 @@ export default function AdminReviewsPage() {
                                                 type="button"
                                                 onClick={() => setFormData({ ...formData, rating: n })}
                                                 className={`p-2 rounded-lg transition ${formData.rating >= n
-                                                        ? "bg-yellow-400 text-white"
-                                                        : "bg-gray-100 text-gray-400"
+                                                    ? "bg-yellow-400 text-white"
+                                                    : "bg-gray-100 text-gray-400"
                                                     }`}
                                             >
                                                 <Star size={20} fill="currentColor" />
@@ -298,8 +316,8 @@ export default function AdminReviewsPage() {
                                             <button
                                                 onClick={() => handleToggleActive(review.id, review.is_active)}
                                                 className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${review.is_active
-                                                        ? "bg-green-100 text-green-700"
-                                                        : "bg-gray-100 text-gray-500"
+                                                    ? "bg-green-100 text-green-700"
+                                                    : "bg-gray-100 text-gray-500"
                                                     }`}
                                             >
                                                 {review.is_active ? (
