@@ -36,11 +36,15 @@ export async function generateMetadata({ params }: { params: Promise<{ domain: s
     const title = `${service.title} à ${city.city} | Service Officiel`;
     const description = `Besoin d'un ${service.title.toLowerCase()} à ${city.city} ? ${service.description} Réservation immédiate.`;
 
+    // Special Shortcuts Cannonical Logic
+    const SHORTCUTS = ['conventionne-cpam', 'van-minibus', 'nuit'];
+    const path = SHORTCUTS.includes(resolvedParams.slug) ? `/${resolvedParams.slug}` : `/service/${resolvedParams.slug}`;
+
     return {
         title: title,
         description: description,
         alternates: {
-            canonical: `https://${city.domain}/service/${resolvedParams.slug}`,
+            canonical: `https://${city.domain}${path}`,
         }
     };
 }
