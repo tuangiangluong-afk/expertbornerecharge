@@ -5,6 +5,21 @@ import { notFound } from "next/navigation";
 import { getTheme } from "@/lib/theme";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ domain: string }> }): Promise<Metadata> {
+    const resolvedParams = await params;
+    const city = getCity(resolvedParams.domain);
+    if (!city) return {};
+
+    return {
+        title: `Conditions Générales de Vente - ${city.name}`,
+        description: `CGV applicables aux réservations de taxi et VTC sur ${city.domain}.`,
+        alternates: {
+            canonical: `https://${city.domain}/cgv`,
+        },
+    };
+}
 
 export default async function CGV({ params }: { params: Promise<{ domain: string }> }) {
     const resolvedParams = await params;
