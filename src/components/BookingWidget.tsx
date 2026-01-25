@@ -12,9 +12,10 @@ import { getTheme } from "@/lib/theme";
 
 interface BookingWidgetProps {
     city: CityConfig;
+    compact?: boolean;
 }
 
-export function BookingWidget({ city }: BookingWidgetProps) {
+export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
     const theme = getTheme(city.slug);
     const classes = theme.classes;
 
@@ -116,7 +117,7 @@ export function BookingWidget({ city }: BookingWidgetProps) {
     }
 
     return (
-        <div id="book" className="bg-white p-6 sm:p-8 rounded-3xl shadow-xl border border-neutral-100 relative overflow-hidden">
+        <div id="book" className={`bg-white rounded-3xl shadow-xl border border-neutral-100 relative overflow-hidden ${compact ? 'p-4' : 'p-6 sm:p-8'}`}>
             <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${classes.gradientFrom} ${classes.gradientTo} rounded-t-3xl`}></div>
 
             <div className="mb-6">
@@ -124,19 +125,21 @@ export function BookingWidget({ city }: BookingWidgetProps) {
                 <p className="text-neutral-500 text-sm">Réponse immédiate • Prix fixe</p>
             </div>
 
-            {/* Trust Header - FOMO */}
-            <div className="mb-6 flex items-center justify-between rounded-lg bg-green-50 px-4 py-2.5 border border-green-100">
-                <div className="flex items-center gap-2 text-xs font-bold text-green-700">
-                    <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                    </span>
-                    3 chauffeurs dispo
+            {/* Trust Header - FOMO - Hidden in compact mode to save space */}
+            {!compact && (
+                <div className="mb-6 flex items-center justify-between rounded-lg bg-green-50 px-4 py-2.5 border border-green-100">
+                    <div className="flex items-center gap-2 text-xs font-bold text-green-700">
+                        <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        3 chauffeurs dispo
+                    </div>
+                    <div className="text-xs text-green-600 font-medium">
+                        Réponse &lt; 5 min
+                    </div>
                 </div>
-                <div className="text-xs text-green-600 font-medium">
-                    Réponse &lt; 5 min
-                </div>
-            </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Locations */}
