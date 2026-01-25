@@ -6,6 +6,8 @@ import { Phone, Mail } from "lucide-react";
 
 import { getTheme } from "@/lib/theme";
 
+import { SEO_DESTINATIONS } from "@/lib/seo-data";
+
 interface FooterProps {
     config: CityConfig;
 }
@@ -33,10 +35,10 @@ export function Footer({ config }: FooterProps) {
                         <div>
                             <h5 className="text-white font-bold mb-4">Destinations Populaires</h5>
                             <ul className="space-y-2 text-sm">
-                                {hotels.slice(0, 5).map((poi: string) => (
-                                    <li key={poi}>
-                                        <Link href={`/guides/${slugify(poi)}`} className="text-neutral-500 hover:text-yellow-400 transition">
-                                            Taxi vers {poi}
+                                {SEO_DESTINATIONS.map((dest) => (
+                                    <li key={dest.slug}>
+                                        <Link href={`/tarif/${dest.slug}`} className="text-neutral-500 hover:text-yellow-400 transition">
+                                            Taxi {dest.name}
                                         </Link>
                                     </li>
                                 ))}

@@ -98,20 +98,19 @@ export default async function TarifPage({ params }: { params: Promise<{ domain: 
             </nav>
 
             <main className="container mx-auto max-w-4xl px-4 py-12">
-                {/* Breadcrumb */}
                 <div className="mb-8 flex items-center gap-2 text-xs text-neutral-500 uppercase tracking-wider font-semibold">
                     <Link href="/" className="hover:text-neutral-900 transition">Accueil</Link>
                     <span>/</span>
                     <span className="text-neutral-900">Tarifs</span>
                     <span>/</span>
-                    <span className={`text-${theme.primary}-700`}>{dest.name}</span>
+                    <span className={`${classes.text}`}>{dest.name}</span>
                 </div>
 
                 <div className="grid gap-12 lg:grid-cols-2">
                     {/* Left: Content */}
                     <div>
                         <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-neutral-900 sm:text-5xl">
-                            Taxi <span className={`text-${theme.primary}-700`}>{city.city}</span> <br />
+                            Taxi <span className={`${classes.text}`}>{city.city}</span> <br />
                             vers {dest.name}
                         </h1>
                         <p className="mb-8 text-lg text-neutral-600 leading-relaxed">
@@ -120,14 +119,14 @@ export default async function TarifPage({ params }: { params: Promise<{ domain: 
 
                         <div className="space-y-4 mb-8">
                             <div className="flex items-start gap-3">
-                                <CheckCircle className={`mt-1 shrink-0 text-${theme.primary}-600`} size={20} />
+                                <CheckCircle className={`mt-1 shrink-0 ${classes.text}`} size={20} />
                                 <div>
                                     <h3 className="font-bold text-neutral-900">Prix Fixe & Transparent</h3>
                                     <p className="text-sm text-neutral-600">Le prix peut être convenu à l'avance. Pas de surprise à l'arrivée.</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-3">
-                                <CheckCircle className={`mt-1 shrink-0 text-${theme.primary}-600`} size={20} />
+                                <CheckCircle className={`mt-1 shrink-0 ${classes.text}`} size={20} />
                                 <div>
                                     <h3 className="font-bold text-neutral-900">Chauffeurs Sélectionnés</h3>
                                     <p className="text-sm text-neutral-600">Ponctualité, courtoisie et véhicules récents pour votre confort.</p>
