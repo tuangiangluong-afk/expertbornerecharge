@@ -276,7 +276,11 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                 </div>
             </section>
 
-            <Vehicles city={city.city} slug={effectiveCity.slug} />
+            <Vehicles
+                city={city.city}
+                slug={effectiveCity.slug}
+                phoneNumber={effectiveCity.phoneNumber}
+            />
 
             {/* Main Content */}
             <section className="py-24 bg-neutral-50">

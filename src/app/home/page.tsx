@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, ShieldCheck, Star, MapPin, Zap } from "lucide-react";
+import { Vehicles } from "@/components/Vehicles";
 
 export default function HomePage() {
     return (
@@ -144,6 +145,13 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
+
+            {/* Vehicles Fleet Section - Reintroduced with CallModal */}
+            <Vehicles
+                city="Île-de-France"
+                slug="home"
+                phoneNumber="01 84 60 92 92"
+            />
 
             {/* Footer - Minimalist */}
             <footer className="border-t border-white/5 bg-slate-950 px-6 py-12">

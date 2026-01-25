@@ -1,8 +1,12 @@
+"use client";
+
 import { Car, Users, Gauge, Wifi, ShieldCheck, BatteryCharging, Briefcase } from "lucide-react";
 import { getSpintaxContent } from "@/lib/spintax";
 import { Database } from "@/types/database.types";
 import { getTheme } from "@/lib/theme";
 import Image from "next/image";
+import { useState } from "react";
+import CallModal from "./CallModal";
 
 type Vehicle = Database['public']['Tables']['vehicles']['Row'];
 
@@ -10,11 +14,13 @@ interface VehiclesProps {
     city: string;
     slug: string;
     vehicles?: Vehicle[] | null;
+    phoneNumber: string;
 }
 
-export function Vehicles({ city, slug, vehicles }: VehiclesProps) {
+export function Vehicles({ city, slug, vehicles, phoneNumber }: VehiclesProps) {
     const theme = getTheme(slug);
     const classes = theme.classes;
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Legacy Spintax Fallback
     const sedanTitle = getSpintaxContent("vehicle_sedan_title", city);
@@ -25,8 +31,18 @@ export function Vehicles({ city, slug, vehicles }: VehiclesProps) {
     // FORCE STATIC DISPLAY FOR NEW DESIGN (Ignore DB for now)
     const hasDynamicVehicles = false; // vehicles && vehicles.length > 0;
 
+    const handleBook = () => setIsModalOpen(true);
+
     return (
         <section className="py-20 bg-slate-50">
+            <CallModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                phoneNumber={phoneNumber}
+                cityName={city}
+                theme={theme}
+            />
+
             <div className="container mx-auto px-4 max-w-6xl">
                 <div className="text-center mb-16">
                     <div className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1.5 text-xs font-bold text-blue-700 mb-4">
@@ -44,7 +60,7 @@ export function Vehicles({ city, slug, vehicles }: VehiclesProps) {
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                     {hasDynamicVehicles ? (
                         vehicles!.map((car) => (
-                            <VehicleCard key={car.id} car={car} city={city} theme={theme} />
+                            <VehicleCard key={car.id} car={car} theme={theme} onBook={handleBook} />
                         ))
                     ) : (
                         <>
@@ -84,9 +100,9 @@ export function Vehicles({ city, slug, vehicles }: VehiclesProps) {
                                             <Wifi size={16} className="text-green-500" /> Climatisé
                                         </li>
                                     </ul>
-                                    <a href={`tel:${city.replace(/ /g, "")}`} className={`block w-full py-4 rounded-xl font-bold text-center transition border shadow-lg hover:brightness-110 active:scale-95 text-white ${classes.bg} ${classes.border}`}>
+                                    <button onClick={handleBook} className={`block w-full py-4 rounded-xl font-bold text-center transition border shadow-lg hover:brightness-110 active:scale-95 text-white ${classes.bg} ${classes.border}`}>
                                         Réserver un véhicule Éco
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
 
@@ -126,9 +142,9 @@ export function Vehicles({ city, slug, vehicles }: VehiclesProps) {
                                             <Gauge size={16} className="text-slate-900" /> Conduite Souple
                                         </li>
                                     </ul>
-                                    <a href={`tel:${city.replace(/ /g, "")}`} className={`block w-full py-4 rounded-xl font-bold text-center transition border shadow-lg hover:brightness-110 active:scale-95 text-white ${classes.bg} ${classes.border}`}>
+                                    <button onClick={handleBook} className={`block w-full py-4 rounded-xl font-bold text-center transition border shadow-lg hover:brightness-110 active:scale-95 text-white ${classes.bg} ${classes.border}`}>
                                         Réserver une Berline
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
 
@@ -168,9 +184,9 @@ export function Vehicles({ city, slug, vehicles }: VehiclesProps) {
                                             <ShieldCheck size={16} className="text-blue-600" /> Sièges Bébé
                                         </li>
                                     </ul>
-                                    <a href={`tel:${city.replace(/ /g, "")}`} className={`block w-full py-4 rounded-xl font-bold text-center transition border shadow-lg hover:brightness-110 active:scale-95 text-white ${classes.bg} ${classes.border}`}>
+                                    <button onClick={handleBook} className={`block w-full py-4 rounded-xl font-bold text-center transition border shadow-lg hover:brightness-110 active:scale-95 text-white ${classes.bg} ${classes.border}`}>
                                         Réserver un Van
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </>
@@ -180,9 +196,9 @@ export function Vehicles({ city, slug, vehicles }: VehiclesProps) {
         </section>
     );
 }
+
 // Helper component for dynamic vehicle rendering (reused from above)
-// Helper component for dynamic vehicle rendering (reused from above)
-function VehicleCard({ car, city, theme }: { car: Vehicle; city: string; theme: any }) {
+function VehicleCard({ car, theme, onBook }: { car: Vehicle; theme: any, onBook: () => void }) {
     const classes = theme.classes;
     // Determine image source: DB url or fallback based on name/slug detection if we were fully dynamic
     // For now we use the hardcoded paths for the new static design, this component is kept for structure.
@@ -231,9 +247,9 @@ function VehicleCard({ car, city, theme }: { car: Vehicle; city: string; theme: 
                         <ShieldCheck size={16} className="text-blue-500" /> Sécurité
                     </li>
                 </ul>
-                <a href={`tel:${city.replace(/ /g, "")}`} className={`block w-full py-4 rounded-xl font-bold text-center transition border shadow-lg hover:brightness-110 active:scale-95 text-white ${classes.bg} ${classes.border} mt-auto`}>
+                <button onClick={onBook} className={`block w-full py-4 rounded-xl font-bold text-center transition border shadow-lg hover:brightness-110 active:scale-95 text-white ${classes.bg} ${classes.border} mt-auto`}>
                     Réserver ce véhicule
-                </a>
+                </button>
             </div>
         </div>
     );
