@@ -44,7 +44,7 @@ export default async function CGV({ params }: { params: Promise<{ domain: string
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <p className="text-sm text-neutral-500">Dernière mise à jour : 25/01/2026</p>
                         <p>
-                            Les présentes Conditions Générales de Vente (ci-après "CGV") régissent les relations contractuelles entre la société <strong>MEDIASHMAN</strong>, sise au 91 RUE DU FAUBOURG SAINT-HONORE, 75008 PARIS (SIREN 509 987 681), ci-après "L'Éditeur", et toute personne utilisant le site <strong>https://{city.domain}</strong> pour la réservation de services de transport, ci-après "Le Client".
+                            Les présentes Conditions Générales de Vente (ci-après "CGV") régissent les relations contractuelles entre la société <strong>MEDIASHMAN</strong>, sise au 91 RUE DU FAUBOURG SAINT-HONORE, 75008 PARIS (SIREN 509 987 681), ci-après "L'Éditeur", et toute personne utilisant le site <strong>Vous pouvez nous contacter via notre <a href="/contact" className="underline">formulaire de contact</a>.</strong> pour la réservation de services de transport, ci-après "Le Client".
                         </p>
                     </div>
 

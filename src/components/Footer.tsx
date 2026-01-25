@@ -16,47 +16,24 @@ export function Footer({ config }: FooterProps) {
         <footer className="bg-neutral-900 border-t border-white/10 py-12 text-neutral-400">
             <div className="container mx-auto px-4 text-center">
                 <h4 className="text-white font-bold mb-4">À propos de {config.name}</h4>
-                <p className="max-w-2xl mx-auto text-sm mb-8">
-                    {config.name} est un service de mise en relation avec les meilleurs artisans taxis de {config.city}.
-                    Nous garantissons un service de qualité, une ponctualité exemplaire et des tarifs réglementés.
-                    Partenaire du réseau TaxiFrance.
-                </p>
-                <div className="grid md:grid-cols-2 gap-8 text-left mb-8 max-w-2xl mx-auto border-t border-white/10 pt-8 mt-8">
-                    <div>
-                        <h5 className="text-white font-bold mb-4">Destinations Populaires</h5>
-                        <ul className="space-y-2 text-sm">
-                            {hotels.slice(0, 5).map((poi: string) => (
-                                <li key={poi}>
-                                    <Link href={`/guides/${slugify(poi)}`} className="text-neutral-500 hover:text-yellow-400 transition">
-                                        Taxi vers {poi}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div>
-                        <h5 className="text-white font-bold mb-4">Sortir à {config.city}</h5>
-                        <ul className="space-y-2 text-sm">
-                            {nightlife.slice(0, 5).map((poi: string) => (
-                                <li key={poi}>
-                                    <Link href={`/guides/${slugify(poi)}`} className="text-neutral-500 hover:text-yellow-400 transition">
-                                        Taxi pour {poi}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
+                <footer className="bg-neutral-900 border-t border-white/10 text-neutral-400 py-12 relative overflow-hidden">
+                    <div className="container mx-auto px-4 relative z-10">
+                        <div className="text-center mb-12">
+                            <h2 className="text-2xl font-bold text-white mb-4">
+                                Taxi {config.city}
+                            </h2>
+                            <p className="max-w-md mx-auto">
+                                Service de transport 24/7. Gare, Aéroport, Médical.
+                                <br />
+                                Partenaire du réseau TaxiFrance.
+                            </p>
+                        </div>
 
-                <div className="text-xs border-t border-white/10 pt-8">
-                    &copy; {new Date().getFullYear()} {config.name} - Tous droits réservés.
-                </div>
-                <div className="flex justify-center gap-4 text-xs mt-4 mb-2">
-                    <Link href="/mentions-legales" className="text-neutral-500 hover:text-white transition-colors">Mentions Légales</Link>
-                    <span className="text-neutral-700">•</span>
-                    <Link href="/cgv" className="text-neutral-500 hover:text-white transition-colors">CGV</Link>
-                </div>
-            </div>
-        </footer>
-    );
+                        <div className="grid md:grid-cols-2 gap-8 text-left mb-8 max-w-2xl mx-auto border-t border-white/10 pt-8 mt-8">
+                            <span className="text-neutral-700">•</span>
+                            <Link href="/cgv" className="text-neutral-500 hover:text-white transition-colors">CGV</Link>
+                        </div>
+                    </div>
+                </footer>
+                );
 }
