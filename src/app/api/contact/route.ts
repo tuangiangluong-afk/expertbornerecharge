@@ -43,6 +43,11 @@ export async function POST(req: Request) {
             `
         });
 
+        if (data.error) {
+            console.error("Resend API Error:", data.error);
+            return NextResponse.json({ error: data.error.message || "Erreur d'envoi Resend" }, { status: 400 });
+        }
+
         return NextResponse.json(data);
     } catch (error) {
         console.error('Contact API Error:', error);

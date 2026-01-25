@@ -26,13 +26,17 @@ export default function ContactForm({ domain, city }: ContactFormProps) {
                 body: JSON.stringify({ ...data, domain, city }),
             });
 
-            if (!res.ok) throw new Error("Erreur lors de l'envoi");
+            if (!res.ok) {
+                const json = await res.json();
+                throw new Error(json.error || "Erreur lors de l'envoi");
+            }
 
             setStatus("success");
             e.currentTarget.reset();
-        } catch (error) {
+        } catch (error: any) {
+            console.error(error);
             setStatus("error");
-            setErrorMessage("Une erreur est survenue. Veuillez nous appeler directement.");
+            setErrorMessage(error.message || "Une erreur est survenue. Veuillez nous appeler directement.");
         }
     }
 
