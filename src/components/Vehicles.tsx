@@ -2,6 +2,7 @@ import { Car, Users, Gauge, Wifi, ShieldCheck, BatteryCharging, Briefcase } from
 import { getSpintaxContent } from "@/lib/spintax";
 import { Database } from "@/types/database.types";
 import { getTheme } from "@/lib/theme";
+import Image from "next/image";
 
 type Vehicle = Database['public']['Tables']['vehicles']['Row'];
 
@@ -21,8 +22,8 @@ export function Vehicles({ city, slug, vehicles }: VehiclesProps) {
     const vanTitle = getSpintaxContent("vehicle_van_title", city);
     const vanDesc = getSpintaxContent("vehicle_van_desc", city);
 
-    const hasDynamicVehicles = vehicles && vehicles.length > 0;
-
+    // FORCE STATIC DISPLAY FOR NEW DESIGN (Ignore DB for now)
+    const hasDynamicVehicles = false; // vehicles && vehicles.length > 0;
 
     return (
         <section className="py-20 bg-slate-50">
@@ -50,9 +51,11 @@ export function Vehicles({ city, slug, vehicles }: VehiclesProps) {
                             {/* 1. Eco / Abordable */}
                             <div className="group bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 hover:shadow-2xl hover:border-blue-300 transition-all duration-300 flex flex-col">
                                 <div className="h-48 overflow-hidden relative shrink-0">
-                                    <img
-                                        src="/images/vehicle-eco.png"
+                                    <Image
+                                        src="/vehicle-eco.png"
                                         alt="Taxi Eco Abordable - Toyota Prius"
+                                        width={400}
+                                        height={300}
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
                                     <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full">
@@ -90,13 +93,15 @@ export function Vehicles({ city, slug, vehicles }: VehiclesProps) {
                             {/* 2. Berline Affaires */}
                             <div className="group bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 hover:shadow-2xl hover:border-blue-300 transition-all duration-300 flex flex-col">
                                 <div className="h-48 overflow-hidden relative shrink-0">
-                                    <img
-                                        src="/images/vehicle-business.png"
+                                    <Image
+                                        src="/vehicle-business.png"
                                         alt="Taxi Berline Affaires - Mercedes Classe E"
+                                        width={400}
+                                        height={300}
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
                                     <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full">
-                                        1-3 Passagers
+                                        1-4 Passagers
                                     </div>
                                     <div className="absolute top-4 left-4 bg-slate-900 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                                         Affaires
@@ -130,9 +135,11 @@ export function Vehicles({ city, slug, vehicles }: VehiclesProps) {
                             {/* 3. Grand Confort / Van */}
                             <div className="group bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 hover:shadow-2xl hover:border-blue-300 transition-all duration-300 flex flex-col">
                                 <div className="h-48 overflow-hidden relative shrink-0">
-                                    <img
-                                        src="/images/vehicle-van.png"
+                                    <Image
+                                        src="/vehicle-van.png"
                                         alt="Taxi Van Grand Confort - Mercedes Classe V"
+                                        width={400}
+                                        height={300}
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
                                     <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full">
@@ -174,14 +181,26 @@ export function Vehicles({ city, slug, vehicles }: VehiclesProps) {
     );
 }
 // Helper component for dynamic vehicle rendering (reused from above)
+// Helper component for dynamic vehicle rendering (reused from above)
 function VehicleCard({ car, city, theme }: { car: Vehicle; city: string; theme: any }) {
     const classes = theme.classes;
+    // Determine image source: DB url or fallback based on name/slug detection if we were fully dynamic
+    // For now we use the hardcoded paths for the new static design, this component is kept for structure.
+
+    // Hack for the hardcoded static values to map to the new images if we were looping
+    let imgSrc = car.image_url || "/placeholder-car.jpg";
+    if (car.name.includes("Eco")) imgSrc = "/vehicle-eco.png";
+    if (car.name.includes("Affaires")) imgSrc = "/vehicle-business.png";
+    if (car.name.includes("Van")) imgSrc = "/vehicle-van.png";
+
     return (
         <div className="group bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 hover:shadow-2xl hover:border-blue-300 transition-all duration-300 flex flex-col">
             <div className="h-48 overflow-hidden relative shrink-0">
-                <img
-                    src={car.image_url || "/placeholder-car.jpg"}
+                <Image
+                    src={imgSrc}
                     alt={car.name}
+                    width={400}
+                    height={300}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full">
