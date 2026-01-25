@@ -25,15 +25,20 @@ export default function CallModal({
 
     useEffect(() => {
         setMounted(true);
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape") onClose();
+        };
+
         if (isOpen) {
             setIsCalling(false);
-            // Prevent scrolling on body when modal is open
             document.body.style.overflow = "hidden";
+            window.addEventListener("keydown", handleKeyDown);
         }
         return () => {
             document.body.style.overflow = "unset";
+            window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [isOpen]);
+    }, [isOpen, onClose]);
 
     const handleCall = () => {
         setIsCalling(true);

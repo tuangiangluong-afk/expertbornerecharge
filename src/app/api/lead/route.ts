@@ -66,7 +66,7 @@ export async function POST(req: Request) {
         try {
             await resend.emails.send({
                 from: 'Taxi France <reservations@taxiaplaisir.com>', // User specified domain
-                to: [destEmail, 'marcc_5@hotmail.com'], // Send to tenant owner + Admin global (hardcoded based on context?) 
+                to: ['compareandcash@gmail.com'], // Forced for now as per user request 
                 // Actually the user said "admin et chauffeur". "admin" is probably the user (marcc_5?). 
                 subject: `📢 Nouvelle Course : ${pickupLocation?.split(',')[0]} -> ${dropoffLocation?.split(',')[0]}`,
                 html: `
