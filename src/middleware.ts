@@ -68,7 +68,15 @@ export default async function middleware(req: NextRequest) {
         finalPath = `/service${path}`;
     }
 
-    return NextResponse.rewrite(
+    const response = NextResponse.rewrite(
         new URL(`/${hostname}${finalPath}`, req.url)
     );
+
+    // Security Headers (A+ on SecurityHeaders.io)
+    response.headers.set("X-Frame-Options", "DENY");
+    response.headers.set("X-Content-Type-Options", "nosniff");
+    response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+    response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+
+    return response;
 }

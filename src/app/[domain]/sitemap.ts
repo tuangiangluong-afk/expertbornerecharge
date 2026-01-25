@@ -10,7 +10,9 @@ export default async function sitemap({
     const resolvedParams = await params;
     const city = getCity(resolvedParams.domain);
 
+    // Sitemap.xml is requested often by bots, ensure it doesn't crash
     if (!city) {
+        console.error(`[Sitemap] City not found for domain: ${resolvedParams.domain}`);
         return [];
     }
 
