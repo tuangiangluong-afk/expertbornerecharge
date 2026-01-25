@@ -38,9 +38,9 @@ export const THEMES = [
         classes: {
             bg: 'bg-blue-600',
             bgHover: 'hover:bg-blue-500',
-            text: 'text-blue-400',
-            border: 'border-blue-400/30',
-            shadow: 'shadow-blue-400/20',
+            text: 'text-blue-600',
+            border: 'border-blue-600/30',
+            shadow: 'shadow-blue-600/20',
             gradientFrom: 'from-blue-600',
             gradientTo: 'to-blue-500'
         }
@@ -52,9 +52,9 @@ export const THEMES = [
         classes: {
             bg: 'bg-violet-600',
             bgHover: 'hover:bg-violet-500',
-            text: 'text-violet-400',
-            border: 'border-violet-400/30',
-            shadow: 'shadow-violet-400/20',
+            text: 'text-violet-600',
+            border: 'border-violet-600/30',
+            shadow: 'shadow-violet-600/20',
             gradientFrom: 'from-violet-600',
             gradientTo: 'to-violet-500'
         }
@@ -66,9 +66,9 @@ export const THEMES = [
         classes: {
             bg: 'bg-rose-600',
             bgHover: 'hover:bg-rose-500',
-            text: 'text-rose-400',
-            border: 'border-rose-400/30',
-            shadow: 'shadow-rose-400/20',
+            text: 'text-rose-600',
+            border: 'border-rose-600/30',
+            shadow: 'shadow-rose-600/20',
             gradientFrom: 'from-rose-600',
             gradientTo: 'to-rose-500'
         }
@@ -78,13 +78,13 @@ export const THEMES = [
         primary: 'cyan',
         text: 'text-neutral-900',
         classes: {
-            bg: 'bg-cyan-400',
-            bgHover: 'hover:bg-cyan-300',
-            text: 'text-cyan-400',
-            border: 'border-cyan-400/30',
-            shadow: 'shadow-cyan-400/20',
-            gradientFrom: 'from-cyan-400',
-            gradientTo: 'to-cyan-500'
+            bg: 'bg-cyan-500',
+            bgHover: 'hover:bg-cyan-400',
+            text: 'text-cyan-600',
+            border: 'border-cyan-500/30',
+            shadow: 'shadow-cyan-500/20',
+            gradientFrom: 'from-cyan-500',
+            gradientTo: 'to-cyan-600'
         }
     },
     {
@@ -94,9 +94,9 @@ export const THEMES = [
         classes: {
             bg: 'bg-orange-500',
             bgHover: 'hover:bg-orange-400',
-            text: 'text-orange-400',
-            border: 'border-orange-400/30',
-            shadow: 'shadow-orange-400/20',
+            text: 'text-orange-600',
+            border: 'border-orange-500/30',
+            shadow: 'shadow-orange-500/20',
             gradientFrom: 'from-orange-500',
             gradientTo: 'to-orange-600'
         }
@@ -108,9 +108,9 @@ export const THEMES = [
         classes: {
             bg: 'bg-indigo-600',
             bgHover: 'hover:bg-indigo-500',
-            text: 'text-indigo-400',
-            border: 'border-indigo-400/30',
-            shadow: 'shadow-indigo-400/20',
+            text: 'text-indigo-600',
+            border: 'border-indigo-600/30',
+            shadow: 'shadow-indigo-600/20',
             gradientFrom: 'from-indigo-600',
             gradientTo: 'to-indigo-500'
         }
