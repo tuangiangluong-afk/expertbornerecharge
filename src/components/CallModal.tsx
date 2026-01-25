@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Phone, X, ShieldCheck, Clock } from "lucide-react";
 import { Theme } from "@/lib/theme";
 
@@ -20,11 +21,18 @@ export default function CallModal({
     theme,
 }: CallModalProps) {
     const [isCalling, setIsCalling] = useState(false);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         if (isOpen) {
             setIsCalling(false);
+            // Prevent scrolling on body when modal is open
+            document.body.style.overflow = "hidden";
         }
+        return () => {
+            document.body.style.overflow = "unset";
+        };
     }, [isOpen]);
 
     const handleCall = () => {
@@ -37,9 +45,9 @@ export default function CallModal({
         }, 800);
     };
 
-    if (!isOpen) return null;
+    if (!mounted || !isOpen) return null;
 
-    return (
+    return createPortal(
         <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
             {/* Backdrop */}
             <div
@@ -125,6 +133,7 @@ export default function CallModal({
                     </div>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 }
