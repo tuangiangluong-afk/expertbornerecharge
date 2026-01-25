@@ -78,7 +78,7 @@ export default async function TarifPage({ params }: { params: Promise<{ domain: 
                 <div className="container mx-auto flex items-center justify-between">
                     <Link
                         href="/"
-                        className={`flex items-center gap-2 text-sm font-bold ${theme.text} hover:opacity-80 transition`}
+                        className={`flex items-center gap-2 text-sm font-bold text-neutral-600 hover:text-neutral-900 transition`}
                     >
                         <Car size={16} />
                         {city.name}
@@ -104,14 +104,14 @@ export default async function TarifPage({ params }: { params: Promise<{ domain: 
                     <span>/</span>
                     <span className="text-neutral-900">Tarifs</span>
                     <span>/</span>
-                    <span className={`${theme.text}`}>{dest.name}</span>
+                    <span className={`text-${theme.primary}-700`}>{dest.name}</span>
                 </div>
 
                 <div className="grid gap-12 lg:grid-cols-2">
                     {/* Left: Content */}
                     <div>
                         <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-neutral-900 sm:text-5xl">
-                            Taxi <span className={`${theme.text}`}>{city.city}</span> <br />
+                            Taxi <span className={`text-${theme.primary}-700`}>{city.city}</span> <br />
                             vers {dest.name}
                         </h1>
                         <p className="mb-8 text-lg text-neutral-600 leading-relaxed">
@@ -120,14 +120,14 @@ export default async function TarifPage({ params }: { params: Promise<{ domain: 
 
                         <div className="space-y-4 mb-8">
                             <div className="flex items-start gap-3">
-                                <CheckCircle className={`mt-1 shrink-0 ${theme.text}`} size={20} />
+                                <CheckCircle className={`mt-1 shrink-0 text-${theme.primary}-600`} size={20} />
                                 <div>
                                     <h3 className="font-bold text-neutral-900">Prix Fixe & Transparent</h3>
                                     <p className="text-sm text-neutral-600">Le prix peut être convenu à l'avance. Pas de surprise à l'arrivée.</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-3">
-                                <CheckCircle className={`mt-1 shrink-0 ${theme.text}`} size={20} />
+                                <CheckCircle className={`mt-1 shrink-0 text-${theme.primary}-600`} size={20} />
                                 <div>
                                     <h3 className="font-bold text-neutral-900">Chauffeurs Sélectionnés</h3>
                                     <p className="text-sm text-neutral-600">Ponctualité, courtoisie et véhicules récents pour votre confort.</p>
