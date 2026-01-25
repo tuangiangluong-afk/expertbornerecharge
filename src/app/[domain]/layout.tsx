@@ -3,6 +3,7 @@ import { GTMScript } from "@/components/GTMScript";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import { supabase } from "@/lib/supabase";
+import CookieBanner from "@/components/CookieBanner";
 
 export default async function DomainLayout({
     children,
@@ -47,6 +48,7 @@ export default async function DomainLayout({
                 </>
             )}
             {children}
+            <CookieBanner slug={city.slug} cityName={city.name} />
         </>
     );
 }
