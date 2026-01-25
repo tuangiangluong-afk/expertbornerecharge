@@ -19,7 +19,10 @@ export async function generateMetadata({
 
     return {
         title: `Taxi Conventionné ${city.city} | Transport Médical VSL - CPAM`,
-        description: `Besoin d'un taxi conventionné à ${city.city} ? Transport assis vers ${city.hospitals[0]} et tous centres de soins. Tiers payant accepté.`
+        description: `Besoin d'un taxi conventionné à ${city.city} ? Transport assis vers ${city.hospitals[0]} et tous centres de soins. Tiers payant accepté.`,
+        alternates: {
+            canonical: `https://${city.domain}/transport-medical`,
+        },
     };
 }
 

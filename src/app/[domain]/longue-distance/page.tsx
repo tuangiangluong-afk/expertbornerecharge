@@ -18,7 +18,10 @@ export async function generateMetadata({
 
     return {
         title: `Taxi Longue Distance ${city.city} | Devis Immédiat & Prix Fixe`,
-        description: `Service VTC/Taxi longue distance depuis ${city.city}. Berline confort, chauffeurs expérimentés. Forfaits vers Nice, Lyon, Paris, Barcelone...`
+        description: `Service VTC/Taxi longue distance depuis ${city.city}. Berline confort, chauffeurs expérimentés. Forfaits vers Nice, Lyon, Paris, Barcelone...`,
+        alternates: {
+            canonical: `https://${city.domain}/longue-distance`,
+        },
     };
 }
 

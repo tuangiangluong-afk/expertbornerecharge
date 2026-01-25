@@ -18,7 +18,10 @@ export async function generateMetadata({
 
     return {
         title: `Taxi Gare & Aéroport ${city.city} | Navette 24/7`,
-        description: `Réservez votre transfert depuis/vers ${city.stations[0]} ou l'aéroport. Chauffeur ponctuel, tarifs fixes. ${city.name}.`
+        description: `Réservez votre transfert depuis/vers ${city.stations[0]} ou l'aéroport. Chauffeur ponctuel, tarifs fixes. ${city.name}.`,
+        alternates: {
+            canonical: `https://${city.domain}/gare-aeroport`,
+        },
     };
 }
 
@@ -64,7 +67,7 @@ export default async function StationPage({ params }: { params: Promise<{ domain
                                     <Train size={32} />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-lg">Gares SNCF / TGV</h3>
+                                    <h2 className="font-bold text-lg">Gares SNCF / TGV</h2>
                                     <p className="text-sm text-neutral-500">Connexions directes</p>
                                 </div>
                             </div>
@@ -84,7 +87,7 @@ export default async function StationPage({ params }: { params: Promise<{ domain
                                     <Plane size={32} />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-lg">Aéroports</h3>
+                                    <h2 className="font-bold text-lg">Aéroports</h2>
                                     <p className="text-sm text-neutral-500">Toutes distances</p>
                                 </div>
                             </div>
