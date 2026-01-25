@@ -129,7 +129,7 @@ export default async function LongDistancePage({ params }: { params: Promise<{ d
                 <div className="container mx-auto px-4">
                     <h2 className="text-2xl font-bold text-white mb-8 text-center">Destinations fréquentes depuis {city.city}</h2>
                     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-                        {["Aéroport Marseille", "Gare Aix TGV", "Nice Côte d'Azur", "Toulon", "Montpellier", "Saint-Tropez"].map((dest) => (
+                        {["Paris Centre", "Aéroport CDG", "Aéroport Orly", "Disneyland Paris", "Deauville", "Bruxelles"].map((dest) => (
                             <div key={dest} className="flex items-center justify-between p-4 rounded-xl bg-neutral-800/50 border border-white/5 hover:border-yellow-500/50 transition cursor-pointer group">
                                 <span className="font-medium text-neutral-300 group-hover:text-white">{dest}</span>
                                 <span className="text-xs font-bold px-2 py-1 rounded bg-neutral-700 text-neutral-400 group-hover:bg-yellow-500 group-hover:text-neutral-900 transition">Devis</span>
