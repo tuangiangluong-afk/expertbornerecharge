@@ -23,8 +23,8 @@ export default function HomePage() {
             <section className="relative pt-40 pb-20 px-6 overflow-hidden">
                 {/* Background Image & Gradients */}
                 <div className="absolute inset-0 z-0">
-                    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2940&auto=format&fit=crop')] bg-cover bg-center filter brightness-[0.3]" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-950/50 to-slate-950" />
+                    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2940&auto=format&fit=crop')] bg-cover bg-center filter brightness-[0.5]" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/40 to-slate-950" />
                 </div>
 
                 {/* Background decorative elements */}

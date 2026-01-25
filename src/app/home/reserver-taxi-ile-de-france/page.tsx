@@ -48,8 +48,8 @@ export default function RegionPage() {
                                 className="group relative flex flex-col h-[500px] rounded-[2rem] overflow-hidden bg-slate-900 border border-white/5 shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:shadow-blue-900/20"
                             >
                                 {/* Card Background with Gradient */}
-                                <div className={`absolute inset-0 bg-gradient-to-b ${dept.heroColor} opacity-40 group-hover:opacity-60 transition-opacity duration-500`} />
-                                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay" />
+                                <div className={`absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 filter brightness-[0.4] group-hover:brightness-[0.5]`} style={{ backgroundImage: `url('${dept.image}')` }} />
+                                <div className={`absolute inset-0 bg-gradient-to-t ${dept.heroColor} opacity-60 mix-blend-multiply`} />
 
                                 {/* Content */}
                                 <div className="relative z-10 p-8 flex flex-col h-full">

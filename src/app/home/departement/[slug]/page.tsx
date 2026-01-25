@@ -112,15 +112,21 @@ export default async function DepartmentPage({ params }: Props) {
                                         className="group relative flex flex-col overflow-hidden rounded-3xl bg-white shadow-lg shadow-slate-200/50 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-2 border border-slate-100"
                                     >
                                         {/* Header Image Gradient */}
-                                        <div className={`relative h-32 bg-gradient-to-br ${dept.heroColor} overflow-hidden`}>
-                                            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
+                                        <div className={`relative h-40 overflow-hidden`}>
+                                            <div
+                                                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 filter brightness-[0.7] group-hover:brightness-[0.8]"
+                                                style={{ backgroundImage: `url('${city.heroImage.startsWith("/") && !city.heroImage.includes(".") ? "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2940&auto=format&fit=crop" : city.heroImage}')` }}
+                                            />
+                                            {/* Gradient Overlay */}
+                                            <div className={`absolute inset-0 bg-gradient-to-t ${dept.heroColor} opacity-60 mix-blend-multiply`} />
+
                                             {/* City Badge */}
-                                            <div className="absolute bottom-4 left-6">
-                                                <h3 className="text-2xl font-black text-white tracking-tight drop-shadow-md">
+                                            <div className="absolute bottom-4 left-6 z-10 w-full pr-12">
+                                                <h3 className="text-2xl font-black text-white tracking-tight drop-shadow-lg leading-none">
                                                     {city.city}
                                                 </h3>
                                             </div>
-                                            <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-white border border-white/20 uppercase tracking-widest">
+                                            <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-white border border-white/20 uppercase tracking-widest z-10">
                                                 Taxi Officiel
                                             </div>
                                         </div>
