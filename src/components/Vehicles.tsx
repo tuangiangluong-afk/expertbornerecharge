@@ -1,15 +1,20 @@
 import { Car, Users, Gauge, Wifi, ShieldCheck, BatteryCharging, Briefcase } from "lucide-react";
 import { getSpintaxContent } from "@/lib/spintax";
 import { Database } from "@/types/database.types";
+import { getTheme } from "@/lib/theme";
 
 type Vehicle = Database['public']['Tables']['vehicles']['Row'];
 
 interface VehiclesProps {
     city: string;
+    slug: string;
     vehicles?: Vehicle[] | null;
 }
 
-export function Vehicles({ city, vehicles }: VehiclesProps) {
+export function Vehicles({ city, slug, vehicles }: VehiclesProps) {
+    const theme = getTheme(slug);
+    const classes = theme.classes;
+
     // Legacy Spintax Fallback
     const sedanTitle = getSpintaxContent("vehicle_sedan_title", city);
     const sedanDesc = getSpintaxContent("vehicle_sedan_desc", city);
@@ -38,118 +43,125 @@ export function Vehicles({ city, vehicles }: VehiclesProps) {
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                     {hasDynamicVehicles ? (
                         vehicles!.map((car) => (
-                            <div key={car.id} className="group bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 hover:shadow-2xl hover:border-blue-300 transition-all duration-300 flex flex-col">
-                                <div className="h-48 overflow-hidden relative shrink-0">
-                                    <img
-                                        src={car.image_url || "/placeholder-car.jpg"}
-                                        alt={car.name}
-                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                    />
-                                    <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full">
-                                        1-{car.capacity_passengers} Passagers
-                                    </div>
-                                    {car.price_class === 'premium' && (
-                                        <div className="absolute top-4 left-4 bg-yellow-400 text-neutral-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                                            Premium
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="p-8 flex flex-col flex-1">
-                                    <h3 className="text-2xl font-bold text-slate-900 mb-2">{car.name}</h3>
-                                    <p className="text-slate-600 mb-6 leading-relaxed flex-1">
-                                        {car.description}
-                                    </p>
-                                    <ul className="grid grid-cols-2 gap-3 mb-8">
-                                        <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                                            <Users size={16} className="text-blue-500" /> {car.capacity_passengers} pers.
-                                        </li>
-                                        <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                                            <Briefcase size={16} className="text-blue-500" /> {car.capacity_luggage} valises
-                                        </li>
-                                        <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                                            <Wifi size={16} className="text-blue-500" /> Wi-Fi inclus
-                                        </li>
-                                        <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                                            <ShieldCheck size={16} className="text-blue-500" /> Sécurité
-                                        </li>
-                                    </ul>
-                                    <a href={`tel:${city.replace(/ /g, "")}`} className="block w-full py-4 rounded-xl bg-slate-50 text-slate-900 font-bold text-center hover:bg-slate-100 transition border border-slate-200 mt-auto">
-                                        Réserver ce véhicule
-                                    </a>
-                                </div>
-                            </div>
+                            <VehicleCard key={car.id} car={car} city={city} theme={theme} />
                         ))
                     ) : (
                         <>
-                            {/* Fallback Static Sedan */}
-                            <div className="group bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 hover:shadow-2xl hover:border-blue-300 transition-all duration-300">
-                                <div className="h-48 overflow-hidden relative">
+                            {/* 1. Eco / Abordable */}
+                            <div className="group bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 hover:shadow-2xl hover:border-blue-300 transition-all duration-300 flex flex-col">
+                                <div className="h-48 overflow-hidden relative shrink-0">
                                     <img
-                                        src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80"
-                                        alt="Taxi Berline"
+                                        src="/images/vehicle-eco.png"
+                                        alt="Taxi Eco Abordable - Toyota Prius"
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
                                     <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full">
                                         1-4 Passagers
                                     </div>
+                                    <div className="absolute top-4 left-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                        Éco
+                                    </div>
                                 </div>
-                                <div className="p-8">
-                                    <h3 className="text-2xl font-bold text-slate-900 mb-2">{sedanTitle}</h3>
-                                    <p className="text-slate-600 mb-6 leading-relaxed">
-                                        {sedanDesc}
+                                <div className="p-8 flex flex-col flex-1">
+                                    <h3 className="text-2xl font-bold text-slate-900 mb-2">Gamme Éco</h3>
+                                    <p className="text-slate-600 mb-6 leading-relaxed flex-1">
+                                        La solution idéale pour vos trajets quotidiens au meilleur tarif. Confort et sobriété énergétique.
                                     </p>
                                     <ul className="grid grid-cols-2 gap-3 mb-8">
                                         <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                                            <Gauge size={16} className="text-blue-500" /> Rapide & Efficace
+                                            <Gauge size={16} className="text-green-500" /> Tarif Abordable
                                         </li>
                                         <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                                            <Wifi size={16} className="text-blue-500" /> Wi-Fi à bord
+                                            <BatteryCharging size={16} className="text-green-500" /> Hybride / Élec
                                         </li>
                                         <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                                            <ShieldCheck size={16} className="text-blue-500" /> Sécurité Max
+                                            <ShieldCheck size={16} className="text-green-500" /> Sécurité
                                         </li>
                                         <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                                            <BatteryCharging size={16} className="text-blue-500" /> Chargeurs USB
+                                            <Wifi size={16} className="text-green-500" /> Climatisé
                                         </li>
                                     </ul>
-                                    <a href={`tel:0600000000`} className="block w-full py-4 rounded-xl bg-slate-50 text-slate-900 font-bold text-center hover:bg-slate-100 transition border border-slate-200">
+                                    <a href={`tel:${city.replace(/ /g, "")}`} className={`block w-full py-4 rounded-xl font-bold text-center transition border shadow-lg hover:brightness-110 active:scale-95 text-white ${classes.bg} ${classes.border}`}>
+                                        Réserver un véhicule Éco
+                                    </a>
+                                </div>
+                            </div>
+
+                            {/* 2. Berline Affaires */}
+                            <div className="group bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 hover:shadow-2xl hover:border-blue-300 transition-all duration-300 flex flex-col">
+                                <div className="h-48 overflow-hidden relative shrink-0">
+                                    <img
+                                        src="/images/vehicle-business.png"
+                                        alt="Taxi Berline Affaires - Mercedes Classe E"
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    />
+                                    <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full">
+                                        1-3 Passagers
+                                    </div>
+                                    <div className="absolute top-4 left-4 bg-slate-900 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                        Affaires
+                                    </div>
+                                </div>
+                                <div className="p-8 flex flex-col flex-1">
+                                    <h3 className="text-2xl font-bold text-slate-900 mb-2">Berline Affaires</h3>
+                                    <p className="text-slate-600 mb-6 leading-relaxed flex-1">
+                                        Voyagez en première classe. Véhicules de standing (Mercedes Classe E) pour vos rendez-vous pros ou transferts.
+                                    </p>
+                                    <ul className="grid grid-cols-2 gap-3 mb-8">
+                                        <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
+                                            <Briefcase size={16} className="text-slate-900" /> Standing Pro
+                                        </li>
+                                        <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
+                                            <Wifi size={16} className="text-slate-900" /> Wi-Fi & Chargeur
+                                        </li>
+                                        <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
+                                            <ShieldCheck size={16} className="text-slate-900" /> Chauffeur Veston
+                                        </li>
+                                        <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
+                                            <Gauge size={16} className="text-slate-900" /> Conduite Souple
+                                        </li>
+                                    </ul>
+                                    <a href={`tel:${city.replace(/ /g, "")}`} className={`block w-full py-4 rounded-xl font-bold text-center transition border shadow-lg hover:brightness-110 active:scale-95 text-white ${classes.bg} ${classes.border}`}>
                                         Réserver une Berline
                                     </a>
                                 </div>
                             </div>
 
-                            {/* Fallback Static Van */}
-                            <div className="group bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 hover:shadow-2xl hover:border-blue-300 transition-all duration-300">
-                                <div className="h-48 overflow-hidden relative">
+                            {/* 3. Grand Confort / Van */}
+                            <div className="group bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 hover:shadow-2xl hover:border-blue-300 transition-all duration-300 flex flex-col">
+                                <div className="h-48 overflow-hidden relative shrink-0">
                                     <img
-                                        src="https://images.unsplash.com/photo-1559416568-154dfae1887c?auto=format&fit=crop&q=80"
-                                        alt="Taxi Van"
+                                        src="/images/vehicle-van.png"
+                                        alt="Taxi Van Grand Confort - Mercedes Classe V"
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
                                     <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full">
-                                        5-7 Passagers
+                                        1-7 Passagers
+                                    </div>
+                                    <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                        Van VIP
                                     </div>
                                 </div>
-                                <div className="p-8">
-                                    <h3 className="text-2xl font-bold text-slate-900 mb-2">{vanTitle}</h3>
-                                    <p className="text-slate-600 mb-6 leading-relaxed">
-                                        {vanDesc}
+                                <div className="p-8 flex flex-col flex-1">
+                                    <h3 className="text-2xl font-bold text-slate-900 mb-2">Van Grand Confort</h3>
+                                    <p className="text-slate-600 mb-6 leading-relaxed flex-1">
+                                        L'espace absolu pour les groupes ou familles. Mercedes Classe V. Idéal navettes aéroports avec bagages.
                                     </p>
                                     <ul className="grid grid-cols-2 gap-3 mb-8">
                                         <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                                            <Users size={16} className="text-blue-500" /> Espace Groupe
+                                            <Users size={16} className="text-blue-600" /> 7 Sièges Cuir
                                         </li>
                                         <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                                            <Wifi size={16} className="text-blue-500" /> Wi-Fi à bord
+                                            <Briefcase size={16} className="text-blue-600" /> Coffre XXL
                                         </li>
                                         <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                                            <ShieldCheck size={16} className="text-blue-500" /> Sièges Bébé
+                                            <Wifi size={16} className="text-blue-600" /> Salon Mobile
                                         </li>
                                         <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                                            <Gauge size={16} className="text-blue-500" /> Grand Coffre
+                                            <ShieldCheck size={16} className="text-blue-600" /> Sièges Bébé
                                         </li>
                                     </ul>
-                                    <a href={`tel:0600000000`} className="block w-full py-4 rounded-xl bg-slate-50 text-slate-900 font-bold text-center hover:bg-slate-100 transition border border-slate-200">
+                                    <a href={`tel:${city.replace(/ /g, "")}`} className={`block w-full py-4 rounded-xl font-bold text-center transition border shadow-lg hover:brightness-110 active:scale-95 text-white ${classes.bg} ${classes.border}`}>
                                         Réserver un Van
                                     </a>
                                 </div>
@@ -159,5 +171,51 @@ export function Vehicles({ city, vehicles }: VehiclesProps) {
                 </div>
             </div>
         </section>
+    );
+}
+// Helper component for dynamic vehicle rendering (reused from above)
+function VehicleCard({ car, city, theme }: { car: Vehicle; city: string; theme: any }) {
+    const classes = theme.classes;
+    return (
+        <div className="group bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 hover:shadow-2xl hover:border-blue-300 transition-all duration-300 flex flex-col">
+            <div className="h-48 overflow-hidden relative shrink-0">
+                <img
+                    src={car.image_url || "/placeholder-car.jpg"}
+                    alt={car.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full">
+                    1-{car.capacity_passengers} Passagers
+                </div>
+                {car.price_class === 'premium' && (
+                    <div className="absolute top-4 left-4 bg-yellow-400 text-neutral-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                        Premium
+                    </div>
+                )}
+            </div>
+            <div className="p-8 flex flex-col flex-1">
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">{car.name}</h3>
+                <p className="text-slate-600 mb-6 leading-relaxed flex-1">
+                    {car.description}
+                </p>
+                <ul className="grid grid-cols-2 gap-3 mb-8">
+                    <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
+                        <Users size={16} className="text-blue-500" /> {car.capacity_passengers} pers.
+                    </li>
+                    <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
+                        <Briefcase size={16} className="text-blue-500" /> {car.capacity_luggage} valises
+                    </li>
+                    <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
+                        <Wifi size={16} className="text-blue-500" /> Wi-Fi inclus
+                    </li>
+                    <li className="flex items-center gap-2 text-sm text-slate-700 font-medium">
+                        <ShieldCheck size={16} className="text-blue-500" /> Sécurité
+                    </li>
+                </ul>
+                <a href={`tel:${city.replace(/ /g, "")}`} className={`block w-full py-4 rounded-xl font-bold text-center transition border shadow-lg hover:brightness-110 active:scale-95 text-white ${classes.bg} ${classes.border} mt-auto`}>
+                    Réserver ce véhicule
+                </a>
+            </div>
+        </div>
     );
 }
