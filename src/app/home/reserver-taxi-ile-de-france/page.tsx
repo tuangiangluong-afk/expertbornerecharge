@@ -11,7 +11,7 @@ export default function RegionPage() {
             <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-slate-950/80 backdrop-blur-xl">
                 <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
                     <Link href="/home" className="text-2xl font-black tracking-tighter text-white hover:text-blue-400 transition">
-                        TaxiFrance<span className="text-blue-500">.</span>
+                        Taxi de France<span className="text-blue-500">.</span>
                     </Link>
                     <Link href="/home" className="text-sm font-bold text-slate-400 hover:text-white transition flex items-center gap-2">
                         <ArrowLeft size={16} /> Retour Accueil

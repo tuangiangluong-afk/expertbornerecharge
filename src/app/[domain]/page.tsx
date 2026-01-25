@@ -25,8 +25,8 @@ export async function generateMetadata({
     const city = getCity(resolvedParams.domain);
     if (!city) {
         return {
-            title: "Domaine disponible - TaxiFrance",
-            description: "Ce domaine fait partie du réseau TaxiFrance.",
+            title: "Domaine disponible - Taxi de France",
+            description: "Ce domaine fait partie du réseau Taxi de France.",
         };
     }
 

@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | TaxiFrance",
-    default: "TaxiFrance - Réseau de Taxis Indépendants",
+    template: "%s | Taxi de France",
+    default: "Taxi de France - Réseau de Taxis Indépendants",
   },
   description: "Réservez votre taxi partout en France. Chauffeurs locaux, tarifs réglementés et service de qualité. Gare, Aéroport et Transport Médical.",
   robots: {
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    siteName: "TaxiFrance",
+    siteName: "Taxi de France",
     locale: "fr_FR",
     type: "website",
   },

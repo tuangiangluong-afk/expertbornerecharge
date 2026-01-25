@@ -9,7 +9,7 @@ export default function HomePage() {
             <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-slate-950/80 backdrop-blur-xl transition-all duration-300">
                 <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
                     <Link href="/home" className="text-2xl font-black tracking-tighter text-white">
-                        TaxiFrance<span className="text-blue-500">.</span>
+                        Taxi de France<span className="text-blue-500">.</span>
                     </Link>
                     <Link
                         href="/contact"
@@ -156,9 +156,13 @@ export default function HomePage() {
             {/* Footer - Minimalist */}
             <footer className="border-t border-white/5 bg-slate-950 px-6 py-12">
                 <div className="mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div className="text-xl font-bold text-white">TaxiFrance.</div>
+                    <div className="text-xl font-bold text-white">Taxi de France.</div>
+                    <div className="flex gap-6 text-sm text-slate-500">
+                        <Link href="/mentions-legales" className="hover:text-white transition">Mentions Légales</Link>
+                        <Link href="/cgv" className="hover:text-white transition">CGV</Link>
+                    </div>
                     <div className="text-sm text-slate-500">
-                        &copy; {new Date().getFullYear()} Réseau TaxiFrance. L'excellence du transport.
+                        &copy; {new Date().getFullYear()} Réseau Taxi de France. L'excellence du transport.
                     </div>
                 </div>
             </footer>

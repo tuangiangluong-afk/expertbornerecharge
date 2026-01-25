@@ -27,7 +27,7 @@ export function Footer({ config }: FooterProps) {
                 <p className="max-w-2xl mx-auto text-sm mb-8">
                     {config.name} est un service de mise en relation avec les meilleurs artisans taxis de {config.city}.
                     Nous garantissons un service de qualité, une ponctualité exemplaire et des tarifs réglementés.
-                    Partenaire du réseau TaxiFrance.
+                    Partenaire du réseau Taxi de France.
                 </p>
 
                 <div className="border-t border-white/10 pt-12 mt-12">

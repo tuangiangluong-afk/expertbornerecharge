@@ -5,7 +5,7 @@ export default function AdminPage() {
     return (
         <div className="min-h-screen bg-gray-50 text-neutral-900">
             <header className="bg-white border-b px-8 py-4">
-                <h1 className="text-xl font-bold">TaxiFrance Master Admin</h1>
+                <h1 className="text-xl font-bold">Taxi de France Master Admin</h1>
             </header>
 
             <main className="p-8 max-w-7xl mx-auto">

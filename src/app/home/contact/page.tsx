@@ -26,7 +26,7 @@ export default function HubContactPage() {
                             Contact & Partenariats
                         </span>
                         <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-6">
-                            Rejoignez le Réseau <span className="text-blue-500">TaxiFrance</span>
+                            Rejoignez le Réseau <span className="text-blue-500">Taxi de France</span>
                         </h1>
                         <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
                             Vous êtes chauffeur de taxi indépendant ? Vous souhaitez rejoindre notre réseau national ?
