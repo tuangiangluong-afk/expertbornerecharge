@@ -11,8 +11,9 @@ export const config = {
 export default async function middleware(req: NextRequest) {
     const url = req.nextUrl;
 
-    // Get hostname (e.g. taxiaix.fr, taxiaix.localhost:3000)
-    const hostname = req.headers.get("host") || "taxifrance.fr";
+    // Get hostname (e.g. taxiaix.fr, taxiaix.localhost)
+    let hostname = req.headers.get("host") || "taxifrance.fr";
+    hostname = hostname.split(":")[0]; // Remove port if present
 
     // Check if we are on the main hub
     // scenarios: "localhost:3000", "taxifrance.fr", "taxifrance.vercel.app"
