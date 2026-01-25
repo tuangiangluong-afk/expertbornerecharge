@@ -1,21 +1,37 @@
 import { MetadataRoute } from "next";
 import { getCity } from "@/lib/db";
 import { SEO_DESTINATIONS, SEO_SERVICES } from "@/lib/seo-data";
+import { headers } from "next/headers";
 
-export default async function sitemap({
-    params,
-}: {
+type Props = {
     params: Promise<{ domain: string }>;
-}): Promise<MetadataRoute.Sitemap> {
-    const resolvedParams = await params;
-    const city = getCity(resolvedParams.domain);
+}
 
-    // Sitemap.xml is requested often by bots, ensure it doesn't crash
+export default async function sitemap(props?: Props): Promise<MetadataRoute.Sitemap> {
+    let domain: string | undefined;
+
+    // Try to get domain from params
+    if (props && props.params) {
+        const resolved = await props.params;
+        domain = resolved.domain;
+    }
+
+    // Fallback: Headers (since we rewrite in middleware, Host header should be correct)
+    if (!domain) {
+        const headersList = await headers();
+        const host = headersList.get("host"); // e.g. taxisversailles.com:3000
+        if (host) {
+            domain = host.split(":")[0];
+        }
+    }
+
+    const city = domain ? getCity(domain) : null;
+
     if (!city) {
-        console.error(`[Sitemap] City not found for domain: ${resolvedParams.domain}`);
         return [];
     }
 
+    // baseUrl must match legitimate domain
     const baseUrl = `https://${city.domain}`;
 
     // Core Static Pages
@@ -82,12 +98,18 @@ export default async function sitemap({
     }));
 
     // Programmatic SEO: Service Pages
-    const serviceRoutes = SEO_SERVICES.map((serv) => ({
-        url: `${baseUrl}/service/${serv.slug}`,
-        lastModified: new Date(),
-        changeFrequency: "monthly" as const,
-        priority: 0.8,
-    }));
+    // Special handling for shortcuts defined in middleware
+    const SHORTCUTS = ['conventionne-cpam', 'van-minibus', 'nuit'];
+
+    const serviceRoutes = SEO_SERVICES.map((serv) => {
+        const isShortcut = SHORTCUTS.includes(serv.slug);
+        return {
+            url: isShortcut ? `${baseUrl}/${serv.slug}` : `${baseUrl}/service/${serv.slug}`,
+            lastModified: new Date(),
+            changeFrequency: "monthly" as const,
+            priority: 0.8,
+        };
+    });
 
     return [...routes, ...tarifRoutes, ...serviceRoutes];
 }
