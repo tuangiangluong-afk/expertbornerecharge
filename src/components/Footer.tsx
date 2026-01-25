@@ -30,51 +30,68 @@ export function Footer({ config }: FooterProps) {
                     Partenaire du réseau TaxiFrance.
                 </p>
 
-                <div className="grid md:grid-cols-2 gap-8 text-left mb-8 max-w-2xl mx-auto border-t border-white/10 pt-8 mt-8">
-                    <div className="grid md:grid-cols-3 gap-8 text-left mb-8 max-w-2xl mx-auto border-t border-white/10 pt-8 mt-8">
+                <div className="border-t border-white/10 pt-12 mt-12">
+                    <div className="grid md:grid-cols-3 gap-12 text-left max-w-6xl mx-auto">
+                        {/* Column 1: Destinations */}
                         <div>
-                            <h5 className="text-white font-bold mb-4">Destinations Populaires</h5>
-                            <ul className="space-y-2 text-sm">
+                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Destinations Populaires</h5>
+                            <ul className="space-y-3 text-sm">
                                 {SEO_DESTINATIONS.map((dest) => (
                                     <li key={dest.slug}>
-                                        <Link href={`/tarif/${dest.slug}`} className="text-neutral-500 hover:text-yellow-400 transition">
+                                        <Link href={`/tarif/${dest.slug}`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                            <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                             Taxi {dest.name}
                                         </Link>
                                     </li>
                                 ))}
                             </ul>
                         </div>
+
+                        {/* Column 2: Nightlife / POI */}
                         <div>
-                            <h5 className="text-white font-bold mb-4">Sortir à {config.city}</h5>
-                            <ul className="space-y-2 text-sm">
+                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Sortir à {config.city}</h5>
+                            <ul className="space-y-3 text-sm">
                                 {nightlife.slice(0, 5).map((poi: string) => (
                                     <li key={poi}>
-                                        <Link href={`/guides/${slugify(poi)}`} className="text-neutral-500 hover:text-yellow-400 transition">
+                                        <Link href={`/guides/${slugify(poi)}`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                            <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                             Taxi pour {poi}
                                         </Link>
                                     </li>
                                 ))}
                             </ul>
                         </div>
+
+                        {/* Column 3: Contact */}
                         <div>
-                            <h3 className="text-lg font-bold text-white mb-6">Contact</h3>
-                            <ul className="space-y-4">
+                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Contact</h5>
+                            <ul className="space-y-6">
                                 <li>
                                     <CallButton
                                         phoneNumber={config.phoneNumber}
                                         cityName={config.city}
                                         theme={theme}
-                                        className="flex items-center gap-3 text-neutral-400 hover:text-white transition group"
+                                        className="flex items-start gap-4 text-neutral-400 hover:text-white transition group text-left"
                                     >
-                                        <Phone size={18} className="group-hover:text-yellow-400 transition shrink-0" />
-                                        <span className="whitespace-nowrap">{config.phoneNumber}</span>
+                                        <div className={`p-2 rounded-lg bg-white/5 group-hover:${theme.classes.bg} transition group-hover:text-neutral-900`}>
+                                            <Phone size={20} />
+                                        </div>
+                                        <div>
+                                            <span className="block text-white font-bold text-lg mb-1">{config.phoneNumber}</span>
+                                            <span className="text-xs text-neutral-500 uppercase tracking-widest font-semibold">Disponible 24h/7j</span>
+                                        </div>
                                     </CallButton>
                                 </li>
                                 <li>
-                                    <a href="/contact" className="flex items-center gap-3 text-neutral-400 hover:text-white transition group">
-                                        <Mail size={18} className="group-hover:text-yellow-400 transition" />
-                                        <span>Nous écrire</span>
-                                    </a>
+                                    <Link href="/contact" className="flex items-start gap-4 text-neutral-400 hover:text-white transition group text-left">
+                                        <div className={`p-2 rounded-lg bg-white/5 group-hover:${theme.classes.bg} transition group-hover:text-neutral-900`}>
+                                            <Mail size={20} />
+                                        </div>
+                                        <div>
+                                            <span className="block text-white font-bold text-lg mb-1">Nous écrire</span>
+                                            <span className="text-xs text-neutral-500 uppercase tracking-widest font-semibold">Réponse rapide</span>
+                                        </div>
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
