@@ -26,10 +26,11 @@ export function StructuredData({ city }: { city: CityConfig }) {
         "@context": "https://schema.org",
         "@graph": [
             {
-                "@type": "TaxiService",
+                "@type": "LocalBusiness",
+                "additionalType": "https://schema.org/TaxiService",
                 "@id": `https://${city.domain}/#localbusiness`,
                 "name": city.name,
-                "image": `https://${city.domain}${city.heroImage.startsWith('http') ? '' : city.heroImage}`,
+                "image": city.heroImage.startsWith('http') ? city.heroImage : `https://${city.domain}${city.heroImage}`,
                 "telephone": city.phoneNumber,
                 "email": city.email,
                 "url": `https://${city.domain}`,

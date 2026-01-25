@@ -13,6 +13,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase";
+import { getTheme } from "@/lib/theme";
 
 export async function generateMetadata({
     params,
@@ -115,8 +116,11 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
 
     // Group POIs for Footer (Legacy structure support)
     const poisList = pois || [];
-    const hotels = poisList.filter((p: { type?: string }) => p.type === 'hotel').map((p: { name: string }) => p.name) || city.points_of_interest?.hotels || [];
-    const nightlife = poisList.filter((p: { type?: string }) => p.type === 'nightlife').map((p: { name: string }) => p.name) || city.points_of_interest?.nightlife || [];
+    const dbHotels = poisList.filter((p: { type?: string }) => p.type === 'hotel').map((p: { name: string }) => p.name);
+    const dbNightlife = poisList.filter((p: { type?: string }) => p.type === 'nightlife').map((p: { name: string }) => p.name);
+
+    const hotels = dbHotels.length > 0 ? dbHotels : (city.points_of_interest?.hotels || []);
+    const nightlife = dbNightlife.length > 0 ? dbNightlife : (city.points_of_interest?.nightlife || []);
 
     // Fetch Content Overrides (Page Builder)
     const { data: pageContent } = await supabase
@@ -140,7 +144,11 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
         phoneNumber: tenant?.phone_number || city.phoneNumber,
         ga_id: tenant?.ga_id || city.ga_id, // Admin override triggers here
         gtm_id: tenant?.gtm_id || city.gtm_id,
-        // We can extend this to other fields if needed
+        points_of_interest: {
+            ...city.points_of_interest,
+            hotels: hotels,
+            nightlife: nightlife
+        }
     };
 
     const heroTitle = getContent("hero_title", getSpintaxContent("hero_title", effectiveCity.city));
@@ -149,17 +157,21 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
     const ctaButton = getContent("cta_button", getSpintaxContent("cta_button", effectiveCity.city));
     const heroImage = getContent("hero_image", effectiveCity.heroImage);
 
+    // Dynamic Theme Color
+    const theme = getTheme(effectiveCity.slug);
+    const classes = theme.classes;
+
     return (
-        <div className="min-h-screen font-sans text-neutral-900 bg-neutral-50 selection:bg-yellow-400 selection:text-neutral-900">
+        <div className={`min-h-screen font-sans text-neutral-900 bg-neutral-50 selection:${classes.bg} selection:text-neutral-900`}>
             <StructuredData city={effectiveCity} />
             <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-neutral-900/80 px-4 py-3 backdrop-blur-md">
                 <div className="flex items-center justify-between">
                     <span className="text-xl font-bold tracking-tight text-white">
-                        {effectiveCity.name}<span className="text-yellow-400">.</span>
+                        {effectiveCity.name}<span className={`text-${theme.primary}-400`}>.</span>
                     </span>
                     <a
                         href={`tel:${effectiveCity.phoneNumber.replace(/ /g, "")}`}
-                        className="flex items-center gap-2 rounded-full bg-yellow-400 px-4 py-2 text-sm font-bold text-neutral-900 shadow-lg shadow-yellow-400/20 active:scale-95 transition hover:bg-yellow-300"
+                        className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold ${theme.text} shadow-lg active:scale-95 transition hover:brightness-110 ${classes.bg} ${classes.shadow}`}
                     >
                         <Phone size={16} fill="currentColor" />
                         <span className="hidden sm:inline">Appeler</span>
@@ -185,7 +197,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
 
                 {/* Content Container */}
                 <div className="container mx-auto px-4 text-center relative z-20">
-                    <div className="inline-flex items-center rounded-full border border-yellow-400/30 bg-yellow-400/10 px-4 py-1.5 text-sm font-bold text-yellow-400 backdrop-blur-md mb-8 shadow-lg shadow-yellow-400/10">
+                    <div className={`inline-flex items-center rounded-full border ${classes.border} ${classes.bg.replace('bg-', 'bg-')}/10 px-4 py-1.5 text-sm font-bold ${classes.text} backdrop-blur-md mb-8 shadow-lg ${classes.shadow}`}>
                         <span className="mr-2 h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
                         {heroBadge}
                     </div>
@@ -195,6 +207,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                         dangerouslySetInnerHTML={{ __html: heroTitle }}
                     />
 
+
                     <p className="mx-auto mb-12 max-w-2xl text-xl text-neutral-300 font-medium leading-relaxed">
                         {heroSubtitle}
                     </p>
@@ -202,7 +215,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                     <div className="flex flex-col items-center justify-center gap-4 sm:flex-row mb-12">
                         <a
                             href={`tel:${effectiveCity.phoneNumber.replace(/ /g, "")}`}
-                            className="flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-yellow-400 to-yellow-500 px-8 py-5 text-xl font-bold text-neutral-900 transition transform hover:-translate-y-1 hover:shadow-2xl shadow-yellow-500/30 sm:w-auto"
+                            className={`flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r ${classes.gradientFrom} ${classes.gradientTo} px-8 py-5 text-xl font-bold ${theme.text} transition transform hover:-translate-y-1 hover:shadow-2xl ${classes.shadow} sm:w-auto`}
                         >
                             <Phone fill="currentColor" />
                             {ctaButton}
@@ -211,6 +224,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                             href="#book"
                             className="flex w-full items-center justify-center gap-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 px-8 py-5 text-xl font-bold text-white transition hover:bg-white/20 sm:w-auto"
                         >
+
                             <Calendar size={20} />
                             Réserver pour plus tard
                         </a>
@@ -286,7 +300,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                                 <h3 className="font-bold text-2xl mb-4 relative z-10">Tarifs Transparents</h3>
                                 <div className="flex justify-between items-baseline border-b border-white/10 pb-4 mb-4 relative z-10">
                                     <span className="text-neutral-400">Prise en charge</span>
-                                    <span className="text-3xl font-bold text-yellow-400">{city.pricing.base}</span>
+                                    <span className={`text-3xl font-bold ${classes.text}`}>{city.pricing.base}</span>
                                 </div>
                                 <p className="text-sm text-neutral-400 relative z-10">{city.pricing.description}. Majorations nuit et dimanche selon arrêté préfectoral en vigueur.</p>
                             </div>
@@ -313,7 +327,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                         {/* Quartiers */}
                         <div>
                             <h3 className="text-2xl font-bold text-neutral-900 mb-6">
-                                Quartiers desservis à {city.city} <span className="text-yellow-500">.</span>
+                                Quartiers desservis à {city.city} <span className={`${classes.text}`}>.</span>
                             </h3>
                             <div className="grid grid-cols-2 gap-3">
                                 {city.neighborhoods.slice(0, 8).map((neighborhood) => (
@@ -322,7 +336,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                                         href={`/quartier/${slugify(neighborhood)}`}
                                         className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2"
                                     >
-                                        <span className="text-yellow-500">→</span>
+                                        <span className={`font-bold ${classes.text}`}>→</span>
                                         Taxi {neighborhood}
                                     </a>
                                 ))}
@@ -332,19 +346,19 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                         {/* Services */}
                         <div>
                             <h3 className="text-2xl font-bold text-neutral-900 mb-6">
-                                Nos Services <span className="text-yellow-500">.</span>
+                                Nos Services <span className={`${classes.text}`}>.</span>
                             </h3>
                             <div className="grid gap-3">
                                 <a href={`/transport-medical`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
-                                    <span className="text-yellow-500">→</span>
+                                    <span className={`${classes.text}`}>→</span>
                                     Transport Médical & VSL Conventionné
                                 </a>
                                 <a href={`/gare-aeroport`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
-                                    <span className="text-yellow-500">→</span>
+                                    <span className={`${classes.text}`}>→</span>
                                     Transfert Gare TGV & Aéroport
                                 </a>
                                 <a href={`/longue-distance`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
-                                    <span className="text-yellow-500">→</span>
+                                    <span className={`${classes.text}`}>→</span>
                                     Taxi Longue Distance
                                 </a>
                             </div>
@@ -376,17 +390,17 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
             <Footer config={effectiveCity} />
 
             {/* MOBILE CONVERSION BAR - VISIBLE ONLY ON MOBILE */}
-            <div className="fixed bottom-0 left-0 right-0 z-50 flex h-20 items-center gap-2 border-t border-white/10 bg-neutral-900/95 px-4 pb-2 backdrop-blur-lg md:hidden">
+            <div className={`fixed bottom-0 left-0 right-0 z-50 flex h-20 items-center gap-2 border-t border-white/10 bg-neutral-900/95 px-4 pb-2 backdrop-blur-lg md:hidden`}>
                 <a
                     href={`tel:${effectiveCity.phoneNumber.replace(/ /g, "")}`}
                     className="flex flex-1 flex-col items-center justify-center rounded-xl bg-neutral-800 py-2 text-white active:scale-95"
                 >
-                    <Phone size={20} className="mb-1 text-yellow-400" />
+                    <Phone size={20} className={`mb-1 ${classes.text}`} />
                     <span className="text-xs font-bold">Appeler</span>
                 </a>
                 <a
                     href="#book"
-                    className="flex-[2] flex flex-col items-center justify-center rounded-xl bg-yellow-400 py-2 text-neutral-900 shadow-lg shadow-yellow-400/20 active:scale-95"
+                    className={`flex-[2] flex flex-col items-center justify-center rounded-xl ${classes.bg} py-2 ${theme.text} ${classes.shadow} active:scale-95`}
                 >
                     <Calendar size={20} className="mb-1 text-neutral-900" />
                     <span className="text-xs font-bold uppercase tracking-wide">Commander Taxi</span>
