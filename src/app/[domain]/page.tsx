@@ -376,7 +376,7 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                                         {hotels.slice(0, 4).map((hotel: string) => (
                                             <a
                                                 key={hotel}
-                                                href={`/${city.slug}/guides/${slugify(hotel)}`}
+                                                href={`/guides/${slugify(hotel)}`}
                                                 className="text-xs text-neutral-500 hover:text-neutral-700 hover:underline transition"
                                             >
                                                 Taxi → {hotel}
