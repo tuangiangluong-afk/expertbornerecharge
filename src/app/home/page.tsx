@@ -84,39 +84,32 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* Cities Grid */}
+            {/* Regions Grid - Hub & Spoke Structure */}
             <section id="villes" className="px-6 py-24">
                 <div className="mx-auto max-w-6xl">
                     <h2 className="mb-12 text-center text-3xl font-bold tracking-tight">
-                        Villes Disponibles
+                        Nos Zones d'Intervention
                     </h2>
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {Object.values(CITIES).map((city) => (
-                            <Link
-                                key={city.slug}
-                                href={`http://${city.domain}`} // Pointing to the real domain (or localhost via middleware logic if flexible)
-                                target="_blank" // For demo purposes, opening in new tab
-                                className="group relative block overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm transition hover:shadow-md"
-                            >
-                                <div className="aspect-video w-full bg-neutral-200 object-cover">
-                                    {/* Placeholder for city image */}
-                                    <div className="flex h-full w-full items-center justify-center bg-neutral-100 text-neutral-400">
-                                        {city.city}
-                                    </div>
+                        <Link
+                            href="/reserver-taxi-ile-de-france"
+                            className="group relative block overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm transition hover:shadow-md"
+                        >
+                            <div className="aspect-video w-full bg-blue-600 object-cover flex items-center justify-center text-white text-4xl font-bold opacity-90 group-hover:opacity-100 transition">
+                                IDF
+                            </div>
+                            <div className="p-6 text-center">
+                                <h3 className="mb-2 text-xl font-bold text-neutral-900 group-hover:text-blue-600">
+                                    Île-de-France
+                                </h3>
+                                <p className="mb-4 text-sm text-neutral-600">
+                                    Paris, Hauts-de-Seine, Yvelines, Seine-Saint-Denis...
+                                </p>
+                                <div className="flex items-center justify-center text-sm font-medium text-blue-600">
+                                    Voir les départements <ArrowRight size={16} className="ml-1" />
                                 </div>
-                                <div className="p-6">
-                                    <h3 className="mb-2 text-xl font-bold text-neutral-900 group-hover:text-blue-600">
-                                        {city.name}
-                                    </h3>
-                                    <p className="mb-4 line-clamp-2 text-sm text-neutral-600">
-                                        {city.description}
-                                    </p>
-                                    <div className="flex items-center text-sm font-medium text-blue-600">
-                                        Réserver maintenant <ArrowRight size={16} className="ml-1" />
-                                    </div>
-                                </div>
-                            </Link>
-                        ))}
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </section>
