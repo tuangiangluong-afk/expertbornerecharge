@@ -6,6 +6,8 @@ import { StructuredData } from "@/components/StructuredData";
 import { Phone, MapPin, Bus, Clock, CheckCircle } from "lucide-react";
 import type { Metadata } from "next";
 import { supabase } from "@/lib/supabase";
+import CallButton from "@/components/CallButton";
+import { getTheme } from "@/lib/theme";
 
 // Helper to find POI (DB + Legacy Fallback)
 async function getPoi(slug: string, tenantId: string) {
@@ -109,6 +111,8 @@ export default async function GuidePage({ params }: { params: Promise<{ domain: 
     const busPain = getSpintaxContent("guide_bus_pain", city.city);
     const taxiSolution = getSpintaxContent("guide_taxi_solution", city.city);
 
+    const theme = getTheme(city.slug);
+
 
     return (
         <div className="min-h-screen font-sans bg-neutral-50 text-neutral-900">
@@ -117,16 +121,18 @@ export default async function GuidePage({ params }: { params: Promise<{ domain: 
             {/* Simple Header */}
             <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-neutral-900/90 px-4 py-3 backdrop-blur-md">
                 <div className="flex items-center justify-between container mx-auto">
-                    <a href="/" className="text-xl font-bold tracking-tight text-white hover:text-yellow-400 transition">
-                        {city.name}<span className="text-yellow-400">.</span>
+                    <a href="/" className={`text-xl font-bold tracking-tight text-white hover:text-${theme.primary}-400 transition`}>
+                        {city.name}<span className={`text-${theme.primary}-400`}>.</span>
                     </a>
-                    <a
-                        href={`tel:${city.phoneNumber.replace(/ /g, "")}`}
-                        className="flex items-center gap-2 rounded-full bg-yellow-400 px-4 py-2 text-sm font-bold text-neutral-900 shadow-lg hover:bg-yellow-300"
+                    <CallButton
+                        phoneNumber={city.phoneNumber}
+                        cityName={city.city}
+                        theme={theme}
+                        className={`flex items-center gap-2 rounded-full ${theme.classes.bg} px-4 py-2 text-sm font-bold ${theme.text} shadow-lg hover:brightness-110`}
                     >
                         <Phone size={16} fill="currentColor" />
                         <span>Appeler</span>
-                    </a>
+                    </CallButton>
                 </div>
             </nav>
 
@@ -180,9 +186,15 @@ export default async function GuidePage({ params }: { params: Promise<{ domain: 
                                 <span className="text-sm text-neutral-500">Estimation</span>
                                 <span className="text-2xl font-bold text-neutral-900">{city.pricing.base}</span>
                             </div>
-                            <a href={`tel:${city.phoneNumber.replace(/ /g, "")}`} className="block w-full bg-neutral-900 text-white text-center font-bold py-4 rounded-xl hover:bg-neutral-800 transition shadow-lg">
+                            <CallButton
+                                phoneNumber={city.phoneNumber}
+                                cityName={city.city}
+                                theme={theme}
+                                className={`block w-full ${theme.classes.bg} ${theme.text} bg-neutral-900 text-center font-bold py-4 rounded-xl hover:brightness-110 transition shadow-lg flex items-center justify-center gap-2`}
+                            >
+                                <Phone size={20} fill="currentColor" />
                                 Commander mon Chauffeur
-                            </a>
+                            </CallButton>
                             <p className="text-xs text-center text-neutral-400 mt-2">Disponible maintenant • Arrivée en 10 min</p>
                         </div>
                     </div>

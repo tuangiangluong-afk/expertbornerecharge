@@ -4,6 +4,8 @@ import { slugify } from "@/lib/slugify";
 import CallButton from "@/components/CallButton";
 import { Phone, Mail } from "lucide-react";
 
+import { getTheme } from "@/lib/theme";
+
 interface FooterProps {
     config: CityConfig;
 }
@@ -14,6 +16,7 @@ export function Footer({ config }: FooterProps) {
     // Fetch Dynamic Content (POIs) from Static Config (db.ts)
     const hotels = config.points_of_interest?.hotels || [];
     const nightlife = config.points_of_interest?.nightlife || [];
+    const theme = getTheme(config.slug);
 
     return (
         <footer className="bg-neutral-900 border-t border-white/10 py-12 text-neutral-400">
@@ -58,6 +61,7 @@ export function Footer({ config }: FooterProps) {
                                     <CallButton
                                         phoneNumber={config.phoneNumber}
                                         cityName={config.city}
+                                        theme={theme}
                                         className="flex items-center gap-3 text-neutral-400 hover:text-white transition group"
                                     >
                                         <Phone size={18} className="group-hover:text-yellow-400 transition" />
