@@ -134,6 +134,7 @@ export function BookingWidget({ city }: BookingWidgetProps) {
                             value={pickup}
                             onChange={(val) => setPickup(val)}
                             onSelect={(addr) => handleLocationSelect('pickup', addr)}
+                            theme={theme}
                         />
                         <AddressAutocomplete
                             label="Arrivée"
@@ -141,6 +142,7 @@ export function BookingWidget({ city }: BookingWidgetProps) {
                             value={dropoff}
                             onChange={(val) => setDropoff(val)}
                             onSelect={(addr) => handleLocationSelect('dropoff', addr)}
+                            theme={theme}
                         />
                     </>
                 ) : (

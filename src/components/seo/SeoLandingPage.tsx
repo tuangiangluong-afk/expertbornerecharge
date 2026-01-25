@@ -2,6 +2,8 @@ import Link from "next/link";
 import { BookingWidget } from "@/components/BookingWidget";
 import { Phone, CheckCircle, MapPin, Clock, ShieldCheck } from "lucide-react";
 import { Footer } from "@/components/Footer";
+import { getTheme } from "@/lib/theme";
+import CallButton from "@/components/CallButton";
 
 interface SeoPageProps {
     page: {
@@ -47,10 +49,15 @@ export default function SeoLandingPage({ page, tenant }: SeoPageProps) {
                             </p>
 
                             <div className="flex flex-wrap gap-4 pt-4">
-                                <a href={`tel:${tenant.phone_number}`} className="flex items-center gap-3 bg-yellow-400 text-black px-6 py-4 rounded-xl font-bold hover:bg-yellow-300 transition">
+                                <CallButton
+                                    phoneNumber={tenant.phone_number || ''}
+                                    cityName={page.target_city}
+                                    theme={getTheme(page.target_city.toLowerCase())}
+                                    className="flex items-center gap-3 bg-yellow-400 text-black px-6 py-4 rounded-xl font-bold hover:bg-yellow-300 transition"
+                                >
                                     <Phone size={20} />
                                     {tenant.phone_number}
-                                </a>
+                                </CallButton>
                                 <div className="flex items-center gap-2 text-sm text-gray-400 px-4">
                                     <ShieldCheck size={16} />
                                     Transport Agréé

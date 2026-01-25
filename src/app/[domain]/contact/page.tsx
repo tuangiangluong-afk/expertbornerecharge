@@ -117,7 +117,7 @@ export default async function ContactPage({ params }: { params: Promise<{ domain
                     <div className="lg:col-span-2">
                         <div className="bg-white rounded-3xl p-8 shadow-xl border border-neutral-100">
                             <h2 className="text-2xl font-bold mb-6">Envoyer un message</h2>
-                            <ContactForm domain={city.domain} city={city.city} />
+                            <ContactForm domain={city.domain} city={city.city} theme={theme} />
                         </div>
                     </div>
                 </div>

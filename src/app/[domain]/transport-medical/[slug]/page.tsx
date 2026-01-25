@@ -4,6 +4,8 @@ import { slugify } from "@/lib/slugify";
 import { notFound } from "next/navigation";
 import { StructuredData } from "@/components/StructuredData";
 import { Phone, CheckCircle, Ambulance, FileText } from "lucide-react";
+import { getTheme } from "@/lib/theme";
+import CallButton from "@/components/CallButton";
 import type { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: Promise<{ domain: string; slug: string }> }): Promise<Metadata> {
@@ -42,13 +44,15 @@ export default async function HospitalPage({ params }: { params: Promise<{ domai
                     <a href={`/${city.slug}`} className="text-xl font-bold tracking-tight text-white hover:text-yellow-400 transition">
                         {city.name}<span className="text-yellow-400">.</span>
                     </a>
-                    <a
-                        href={`tel:${city.phoneNumber.replace(/ /g, "")}`}
+                    <CallButton
+                        phoneNumber={city.phoneNumber}
+                        cityName={city.city}
+                        theme={getTheme(city.slug)}
                         className="flex items-center gap-2 rounded-full bg-yellow-400 px-4 py-2 text-sm font-bold text-neutral-900 shadow-lg hover:bg-yellow-300"
                     >
                         <Phone size={16} fill="currentColor" />
                         <span>Réserver TAP</span>
-                    </a>
+                    </CallButton>
                 </div>
             </nav>
 
@@ -87,9 +91,14 @@ export default async function HospitalPage({ params }: { params: Promise<{ domai
                         </div>
                     </div>
 
-                    <a href={`tel:${city.phoneNumber.replace(/ /g, "")}`} className="block w-full bg-blue-600 text-white text-center font-bold py-4 rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-600/20">
+                    <CallButton
+                        phoneNumber={city.phoneNumber}
+                        cityName={city.city}
+                        theme={getTheme(city.slug)}
+                        className="block w-full bg-blue-600 text-white text-center font-bold py-4 rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-600/20"
+                    >
                         Commander pour {hospitalName}
-                    </a>
+                    </CallButton>
                 </div>
 
                 {/* Maillage Hôpitaux */}

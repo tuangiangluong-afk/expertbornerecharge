@@ -1,7 +1,9 @@
 import { CITIES, getCity } from "@/lib/db";
 import { getSpintaxContent } from "@/lib/spintax";
 import { FAQ } from "@/components/FAQ";
-import { Plane, Train, Clock, Phone, ArrowRight } from "lucide-react";
+import { Train, Plane, Phone, Clock, ArrowRight } from "lucide-react";
+import { getTheme } from "@/lib/theme";
+import CallButton from "@/components/CallButton";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SEO_SERVICES } from "@/lib/seo-data";
@@ -41,12 +43,14 @@ export default async function StationPage({ params }: { params: Promise<{ domain
                     <a href="/" className="text-xl font-bold tracking-tight text-neutral-900 hover:text-blue-600">
                         {city.name}
                     </a>
-                    <a
-                        href={`tel:${city.phoneNumber.replace(/ /g, "")}`}
+                    <CallButton
+                        phoneNumber={city.phoneNumber}
+                        cityName={city.city}
+                        theme={getTheme(city.slug)}
                         className="rounded-full bg-green-600 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-green-600/20"
                     >
                         Appeler
-                    </a>
+                    </CallButton>
                 </div>
             </nav>
 
@@ -101,13 +105,15 @@ export default async function StationPage({ params }: { params: Promise<{ domain
                         </div>
                     </div>
 
-                    <a
-                        href={`tel:${city.phoneNumber.replace(/ /g, "")}`}
+                    <CallButton
+                        phoneNumber={city.phoneNumber}
+                        cityName={city.city}
+                        theme={getTheme(city.slug)}
                         className="inline-flex items-center justify-center gap-3 rounded-xl bg-neutral-900 px-10 py-5 text-xl font-bold text-white transition hover:bg-neutral-800 shadow-2xl"
                     >
                         <Phone fill="currentColor" />
                         {ctaText}
-                    </a>
+                    </CallButton>
 
                     <div className="mt-16 text-left">
                         <FAQ city={city.city} type="airport" />

@@ -3,16 +3,20 @@
 import { useState } from "react";
 import { Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 
+import { Theme } from "@/lib/theme";
+
 interface ContactFormProps {
     domain: string;
     city: string;
+    theme: Theme;
 }
 
-export default function ContactForm({ domain, city }: ContactFormProps) {
+export default function ContactForm({ domain, city, theme }: ContactFormProps) {
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [errorMessage, setErrorMessage] = useState("");
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        // ... (existing logic same)
         e.preventDefault();
         setStatus("loading");
 
@@ -61,6 +65,10 @@ export default function ContactForm({ domain, city }: ContactFormProps) {
         );
     }
 
+    // Theme-based classes - use static Tailwind classes (dynamic ones don't compile)
+    const inputClasses = `w-full rounded-xl border border-neutral-300 px-4 py-3 text-neutral-900 focus:border-blue-500 focus:ring-blue-500 transition outline-none bg-white font-medium`;
+    const buttonClasses = `w-full flex items-center justify-center gap-2 rounded-xl py-4 text-white font-bold text-lg transition active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed ${theme.classes.bg} hover:brightness-110`;
+
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
@@ -72,7 +80,7 @@ export default function ContactForm({ domain, city }: ContactFormProps) {
                         name="name"
                         id="name"
                         placeholder="Jean Dupont"
-                        className="w-full rounded-xl border border-neutral-300 px-4 py-3 focus:border-neutral-900 focus:ring-neutral-900 transition outline-none bg-white font-medium"
+                        className={inputClasses}
                     />
                 </div>
                 <div className="space-y-2">
@@ -83,7 +91,7 @@ export default function ContactForm({ domain, city }: ContactFormProps) {
                         name="email"
                         id="email"
                         placeholder="jean@exemple.com"
-                        className="w-full rounded-xl border border-neutral-300 px-4 py-3 focus:border-neutral-900 focus:ring-neutral-900 transition outline-none bg-white font-medium"
+                        className={inputClasses}
                     />
                 </div>
             </div>
@@ -93,7 +101,7 @@ export default function ContactForm({ domain, city }: ContactFormProps) {
                 <select
                     name="subject"
                     id="subject"
-                    className="w-full rounded-xl border border-neutral-300 px-4 py-3 focus:border-neutral-900 focus:ring-neutral-900 transition outline-none bg-white font-medium"
+                    className={inputClasses}
                 >
                     <option value="reservation">Réservation / Devis</option>
                     <option value="partnership">Partenariat Chauffeur</option>
@@ -110,7 +118,7 @@ export default function ContactForm({ domain, city }: ContactFormProps) {
                     id="message"
                     rows={5}
                     placeholder="Bonjour, je souhaite réserver..."
-                    className="w-full rounded-xl border border-neutral-300 px-4 py-3 focus:border-neutral-900 focus:ring-neutral-900 transition outline-none bg-white font-medium resize-none"
+                    className={`${inputClasses} resize-none`}
                 />
             </div>
 
@@ -124,7 +132,7 @@ export default function ContactForm({ domain, city }: ContactFormProps) {
             <button
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-neutral-900 py-4 text-white font-bold text-lg hover:bg-neutral-800 transition active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
+                className={buttonClasses}
             >
                 {status === "loading" ? (
                     <>

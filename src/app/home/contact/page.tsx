@@ -2,6 +2,7 @@
 import ContactForm from "@/components/ContactForm";
 import Link from "next/link";
 import { ArrowLeft, Mail, Phone, MapPin } from "lucide-react";
+import { getTheme } from "@/lib/theme";
 
 export default function HubContactPage() {
     return (
@@ -33,14 +34,7 @@ export default function HubContactPage() {
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-8 mb-12">
-                        <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 text-center">
-                            <div className="mx-auto w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center mb-4 text-blue-400">
-                                <Mail size={24} />
-                            </div>
-                            <h3 className="font-bold text-white mb-2">Email</h3>
-                            <p className="text-slate-400 text-sm">partner@taxifrance.fr</p>
-                        </div>
+                    <div className="grid md:grid-cols-2 gap-8 mb-12">
                         <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 text-center">
                             <div className="mx-auto w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center mb-4 text-emerald-400">
                                 <Phone size={24} />
@@ -59,7 +53,7 @@ export default function HubContactPage() {
 
                     <div className="bg-white rounded-3xl p-8 md:p-12 shadow-2xl">
                         <h2 className="text-2xl font-bold text-slate-900 mb-8">Envoyer un message</h2>
-                        <ContactForm domain="taxifrance.fr" city="Hub National" />
+                        <ContactForm domain="taxifrance.fr" city="Hub National" theme={getTheme('national')} />
                     </div>
                 </div>
             </section>

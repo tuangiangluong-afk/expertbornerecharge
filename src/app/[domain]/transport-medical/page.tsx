@@ -2,7 +2,9 @@ import { CITIES, getCity } from "@/lib/db";
 import { getSpintaxContent } from "@/lib/spintax";
 import { FAQ } from "@/components/FAQ";
 import { Breadcrumb } from "@/components/Breadcrumb";
-import { Ambulance, CheckCircle, Phone, ShieldCheck, ArrowRight } from "lucide-react";
+import { Ambulance, Phone, ShieldCheck, CheckCircle, ArrowRight, Clock } from "lucide-react";
+import { getTheme } from "@/lib/theme";
+import CallButton from "@/components/CallButton";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SEO_SERVICES } from "@/lib/seo-data";
@@ -43,12 +45,14 @@ export default async function MedicalTransportPage({ params }: { params: Promise
                     <a href={`/${city.slug}`} className="text-xl font-bold tracking-tight text-neutral-900 hover:text-blue-600">
                         {city.name}
                     </a>
-                    <a
-                        href={`tel:${city.phoneNumber.replace(/ /g, "")}`}
+                    <CallButton
+                        phoneNumber={city.phoneNumber}
+                        cityName={city.city}
+                        theme={getTheme(city.slug)}
                         className="rounded-full bg-green-600 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-green-600/20"
                     >
                         Appeler
-                    </a>
+                    </CallButton>
                 </div>
             </nav>
 
@@ -128,13 +132,15 @@ export default async function MedicalTransportPage({ params }: { params: Promise
                         <p className="text-blue-100 mb-8 max-w-xl mx-auto">
                             Nos chauffeurs sont formés pour l'accompagnement des patients. Aide à la marche et démarches administratives incluses.
                         </p>
-                        <a
-                            href={`tel:${city.phoneNumber.replace(/ /g, "")}`}
+                        <CallButton
+                            phoneNumber={city.phoneNumber}
+                            cityName={city.city}
+                            theme={getTheme(city.slug)}
                             className="inline-flex items-center justify-center gap-3 rounded-xl bg-white px-8 py-4 text-lg font-bold text-blue-900 transition hover:bg-blue-50 shadow-lg active:scale-95"
                         >
                             <Phone fill="currentColor" />
                             {ctaText}
-                        </a>
+                        </CallButton>
                     </div>
 
                     <div className="mt-16">

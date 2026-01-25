@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { StructuredData } from "@/components/StructuredData";
 import { slugify } from "@/lib/slugify";
+import { getTheme } from "@/lib/theme";
+import CallButton from "@/components/CallButton";
 
 export async function generateMetadata({
     params,
@@ -51,12 +53,14 @@ export default async function QuartierPage({ params }: { params: Promise<{ domai
                     <a href="/" className="text-xl font-bold tracking-tight text-neutral-900 hover:text-blue-600">
                         {city.name}
                     </a>
-                    <a
-                        href={`tel:${city.phoneNumber.replace(/ /g, "")}`}
+                    <CallButton
+                        phoneNumber={city.phoneNumber}
+                        cityName={city.city}
+                        theme={getTheme(city.slug)}
                         className="rounded-full bg-green-600 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-green-600/20"
                     >
                         Appeler
-                    </a>
+                    </CallButton>
                 </div>
             </nav>
 
@@ -97,13 +101,15 @@ export default async function QuartierPage({ params }: { params: Promise<{ domai
                     </div>
 
                     <div className="flex flex-col gap-4 sm:flex-row">
-                        <a
-                            href={`tel:${city.phoneNumber.replace(/ /g, "")}`}
+                        <CallButton
+                            phoneNumber={city.phoneNumber}
+                            cityName={city.city}
+                            theme={getTheme(city.slug)}
                             className="flex-1 inline-flex items-center justify-center gap-3 rounded-xl bg-neutral-900 px-6 py-4 font-bold text-white transition hover:bg-neutral-800"
                         >
                             <Phone fill="currentColor" size={18} />
                             Commander Taxi {quartierDisplay}
-                        </a>
+                        </CallButton>
                     </div>
                 </div>
 

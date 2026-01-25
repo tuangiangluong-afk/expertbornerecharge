@@ -1,9 +1,13 @@
 import { CITIES, getCity } from "@/lib/db";
 import { getSpintaxContent } from "@/lib/spintax";
+import { getTheme } from "@/lib/theme";
+import CallButton from "@/components/CallButton";
+import { slugify } from "@/lib/slugify";
 import { FAQ } from "@/components/FAQ";
 import { Car, Map, ShieldCheck, Star, Phone, ArrowRight } from "lucide-react";
+import { DistanceCalculator } from "@/components/DistanceCalculator";
 import { notFound } from "next/navigation";
-import { SEO_SERVICES } from "@/lib/seo-data";
+import { SEO_SERVICES, SEO_DESTINATIONS } from "@/lib/seo-data";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -41,12 +45,14 @@ export default async function LongDistancePage({ params }: { params: Promise<{ d
                     <a href="/" className="text-xl font-bold tracking-tight text-white hover:text-yellow-400 transition">
                         {city.name}
                     </a>
-                    <a
-                        href={`tel:${city.phoneNumber.replace(/ /g, "")}`}
+                    <CallButton
+                        phoneNumber={city.phoneNumber}
+                        cityName={city.city}
+                        theme={getTheme(city.slug)}
                         className="rounded-full bg-yellow-500 px-4 py-2 text-sm font-bold text-neutral-900 shadow-lg shadow-yellow-500/20 hover:bg-yellow-400 transition"
                     >
                         Appeler
-                    </a>
+                    </CallButton>
                 </div>
             </nav>
 
@@ -87,45 +93,20 @@ export default async function LongDistancePage({ params }: { params: Promise<{ d
                         </ul>
 
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <a
-                                href={`tel:${city.phoneNumber.replace(/ /g, "")}`}
+                            <CallButton
+                                phoneNumber={city.phoneNumber}
+                                cityName={city.city}
+                                theme={getTheme(city.slug)}
                                 className="inline-flex items-center justify-center gap-3 rounded-xl bg-yellow-500 px-8 py-4 text-lg font-bold text-neutral-900 transition hover:bg-yellow-400 shadow-xl shadow-yellow-500/20"
                             >
                                 <Phone fill="currentColor" size={20} />
                                 Demander un devis
-                            </a>
+                            </CallButton>
                         </div>
                     </div>
 
-                    {/* "Quote Calculator" Visual Placeholder */}
-                    <div className="bg-neutral-800/50 backdrop-blur-sm p-8 rounded-2xl border border-white/10 shadow-2xl">
-                        <h3 className="text-xl font-bold text-white mb-6">Estimez votre trajet</h3>
-                        <div className="space-y-4">
-                            <div className="relative">
-                                <div className="absolute left-4 top-3 text-neutral-500"><Map size={18} /></div>
-                                <input type="text" value={city.city} disabled className="w-full bg-neutral-900 border border-neutral-700 rounded-lg py-3 pl-12 pr-4 text-neutral-400" />
-                            </div>
-                            <div className="relative">
-                                <div className="absolute left-4 top-3 text-neutral-500"><Map size={18} /></div>
-                                <input type="text" placeholder="Destination (ex: Paris, Nice...)" className="w-full bg-neutral-900 border border-neutral-700 rounded-lg py-3 pl-12 pr-4 text-white placeholder:text-neutral-600 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none" />
-                            </div>
-                            <div className="pt-4 pb-2">
-                                <div className="flex justify-between text-sm text-neutral-400 mb-2">
-                                    <span>Véhicule</span>
-                                    <span>Berline (1-4 passagers)</span>
-                                </div>
-                                <div className="h-2 bg-neutral-700 rounded-full overflow-hidden">
-                                    <div className="h-full w-full bg-yellow-500" />
-                                </div>
-                            </div>
-                            <button className="w-full py-4 bg-neutral-700 text-neutral-400 font-bold rounded-lg cursor-not-allowed">
-                                Entrez une destination...
-                            </button>
-                        </div>
-                        <p className="mt-4 text-xs text-center text-neutral-500">
-                            Tarif indicatif soumis à confirmation téléphonique.
-                        </p>
-                    </div>
+                    {/* Real Calculator */}
+                    <DistanceCalculator city={city} />
                 </div>
             </section>
 
@@ -134,11 +115,11 @@ export default async function LongDistancePage({ params }: { params: Promise<{ d
                 <div className="container mx-auto px-4">
                     <h2 className="text-2xl font-bold text-white mb-8 text-center">Destinations fréquentes depuis {city.city}</h2>
                     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-                        {["Paris Centre", "Aéroport CDG", "Aéroport Orly", "Disneyland Paris", "Deauville", "Bruxelles"].map((dest) => (
-                            <div key={dest} className="flex items-center justify-between p-4 rounded-xl bg-neutral-800/50 border border-white/5 hover:border-yellow-500/50 transition cursor-pointer group">
-                                <span className="font-medium text-neutral-300 group-hover:text-white">{dest}</span>
+                        {SEO_DESTINATIONS.map((dest) => (
+                            <Link key={dest.slug} href={`/tarif/${dest.slug}`} className="flex items-center justify-between p-4 rounded-xl bg-neutral-800/50 border border-white/5 hover:border-yellow-500/50 transition cursor-pointer group">
+                                <span className="font-medium text-neutral-300 group-hover:text-white">{dest.name}</span>
                                 <span className="text-xs font-bold px-2 py-1 rounded bg-neutral-700 text-neutral-400 group-hover:bg-yellow-500 group-hover:text-neutral-900 transition">Devis</span>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>
