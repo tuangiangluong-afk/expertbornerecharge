@@ -1,9 +1,11 @@
 import { CITIES, getCity } from "@/lib/db";
 import { getSpintaxContent } from "@/lib/spintax";
 import { FAQ } from "@/components/FAQ";
-import { Plane, Train, Clock, Phone } from "lucide-react";
+import { Plane, Train, Clock, Phone, ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { SEO_SERVICES } from "@/lib/seo-data";
+import Link from "next/link";
 
 export async function generateMetadata({
     params,
@@ -106,6 +108,26 @@ export default async function StationPage({ params }: { params: Promise<{ domain
 
                     <div className="mt-16 text-left">
                         <FAQ city={city.city} type="airport" />
+                    </div>
+
+                    {/* See Also Section */}
+                    <div className="mt-16 pt-10 border-t border-neutral-200 text-left">
+                        <h3 className="text-xl font-bold text-neutral-900 mb-6">Voir aussi nos autres services à {city.city}</h3>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                            {SEO_SERVICES.filter(s => s.slug !== 'van-minibus').map((service) => ( // Filter current logic if needed, but here generic is fine
+                                <Link
+                                    key={service.slug}
+                                    href={`/${service.slug}`}
+                                    className="group block p-4 rounded-xl bg-white border border-neutral-200 hover:border-neutral-300 hover:shadow-md transition"
+                                >
+                                    <h4 className="font-bold text-neutral-900 group-hover:opacity-80 transition flex items-center gap-2">
+                                        <ArrowRight size={16} />
+                                        {service.title}
+                                    </h4>
+                                    <p className="text-sm text-neutral-500 mt-1">{service.description}</p>
+                                </Link>
+                            ))}
+                        </div>
                     </div>
 
                     {/* SEO Maillage */}

@@ -1,8 +1,10 @@
 import { CITIES, getCity } from "@/lib/db";
 import { getSpintaxContent } from "@/lib/spintax";
 import { FAQ } from "@/components/FAQ";
-import { Car, Map, ShieldCheck, Star, Phone } from "lucide-react";
+import { Car, Map, ShieldCheck, Star, Phone, ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
+import { SEO_SERVICES } from "@/lib/seo-data";
+import Link from "next/link";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -140,6 +142,27 @@ export default async function LongDistancePage({ params }: { params: Promise<{ d
             </section>
 
             <FAQ city={city.city} type="long_distance" />
+
+            <section className="py-16 bg-neutral-900 border-t border-white/5">
+                <div className="container mx-auto px-4 max-w-5xl">
+                    <h3 className="text-xl font-bold text-white mb-6">Voir aussi nos autres services à {city.city}</h3>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                        {SEO_SERVICES.filter(s => s.slug !== 'longue-distance').map((service) => (
+                            <Link
+                                key={service.slug}
+                                href={`/${service.slug}`}
+                                className="group block p-4 rounded-xl bg-neutral-800 border border-white/5 hover:border-yellow-500/50 hover:bg-neutral-800/80 transition"
+                            >
+                                <h4 className="font-bold text-white group-hover:text-yellow-400 transition flex items-center gap-2">
+                                    <ArrowRight size={16} />
+                                    {service.title}
+                                </h4>
+                                <p className="text-sm text-neutral-400 mt-1">{service.description}</p>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </section>
 
         </div>
     );

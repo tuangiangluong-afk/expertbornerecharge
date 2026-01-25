@@ -66,8 +66,8 @@ export function Footer({ config }: FooterProps) {
                                         theme={theme}
                                         className="flex items-center gap-3 text-neutral-400 hover:text-white transition group"
                                     >
-                                        <Phone size={18} className="group-hover:text-yellow-400 transition" />
-                                        <span>{config.phoneNumber}</span>
+                                        <Phone size={18} className="group-hover:text-yellow-400 transition shrink-0" />
+                                        <span className="whitespace-nowrap">{config.phoneNumber}</span>
                                     </CallButton>
                                 </li>
                                 <li>
