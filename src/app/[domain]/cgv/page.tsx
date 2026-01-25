@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ domain: s
 
     return {
         title: `Conditions Générales de Vente - ${city.name}`,
-        description: `CGV applicables aux réservations de taxi et VTC sur ${city.domain}.`,
+        description: `Retrouvez nos Conditions Générales de Vente (CGV) pour la réservation de taxis et VTC : tarifs, annulations, responsabilités et litiges.`,
         alternates: {
             canonical: `https://${city.domain}/cgv`,
         },
