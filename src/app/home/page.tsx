@@ -7,23 +7,28 @@ export default function HomePage() {
             {/* Navbar - Glassmorphism */}
             <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-slate-950/80 backdrop-blur-xl transition-all duration-300">
                 <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-                    <div className="text-2xl font-black tracking-tighter text-white">
+                    <Link href="/home" className="text-2xl font-black tracking-tighter text-white">
                         TaxiFrance<span className="text-blue-500">.</span>
-                    </div>
-                    <a
-                        href="mailto:partner@taxifrance.fr"
+                    </Link>
+                    <Link
+                        href="/contact"
                         className="rounded-full bg-white/10 px-5 py-2 text-sm font-bold text-white transition hover:bg-white/20 hover:scale-105 border border-white/5 backdrop-blur-md"
                     >
-                        Espace Partenaire
-                    </a>
+                        Devenir Partenaire
+                    </Link>
                 </div>
             </nav>
 
             {/* Hero Section - Immersive */}
             <section className="relative pt-40 pb-20 px-6 overflow-hidden">
-                {/* Background Gradients */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/40 via-slate-950/0 to-slate-950 pointer-events-none" />
-                <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
+                {/* Background Image & Gradients */}
+                <div className="absolute inset-0 z-0">
+                    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2940&auto=format&fit=crop')] bg-cover bg-center filter brightness-[0.3]" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-950/50 to-slate-950" />
+                </div>
+
+                {/* Background decorative elements */}
+                <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[100px] pointer-events-none z-0" />
 
                 <div className="relative z-10 mx-auto max-w-5xl text-center">
                     <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-sm font-medium text-blue-400 mb-8 backdrop-blur-sm shadow-[0_0_20px_-5px_rgba(59,130,246,0.3)]">
@@ -34,9 +39,9 @@ export default function HomePage() {
                         Réseau National Indépendant
                     </div>
 
-                    <h1 className="mb-8 text-5xl font-black tracking-tight text-white sm:text-7xl lg:text-8xl leading-[1.1]">
+                    <h1 className="mb-8 text-5xl font-black tracking-tight text-white sm:text-7xl lg:text-8xl leading-[1.1] drop-shadow-2xl">
                         Le Taxi, <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-200 to-white">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-100 to-white">
                             Réinventé.
                         </span>
                     </h1>
