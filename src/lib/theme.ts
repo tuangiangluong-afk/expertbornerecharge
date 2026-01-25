@@ -36,13 +36,13 @@ export const THEMES = [
         primary: 'blue',
         text: 'text-white',
         classes: {
-            bg: 'bg-blue-700',
-            bgHover: 'hover:bg-blue-800',
-            text: 'text-blue-700',
-            border: 'border-blue-700/30',
-            shadow: 'shadow-blue-700/20',
-            gradientFrom: 'from-blue-700',
-            gradientTo: 'to-blue-600'
+            bg: 'bg-blue-900',
+            bgHover: 'hover:bg-blue-950',
+            text: 'text-blue-900',
+            border: 'border-blue-900/30',
+            shadow: 'shadow-blue-900/20',
+            gradientFrom: 'from-blue-900',
+            gradientTo: 'to-blue-950'
         }
     },
     {
@@ -50,13 +50,13 @@ export const THEMES = [
         primary: 'violet',
         text: 'text-white',
         classes: {
-            bg: 'bg-violet-700',
-            bgHover: 'hover:bg-violet-800',
-            text: 'text-violet-700',
-            border: 'border-violet-700/30',
-            shadow: 'shadow-violet-700/20',
-            gradientFrom: 'from-violet-700',
-            gradientTo: 'to-violet-600'
+            bg: 'bg-violet-900',
+            bgHover: 'hover:bg-violet-950',
+            text: 'text-violet-900',
+            border: 'border-violet-900/30',
+            shadow: 'shadow-violet-900/20',
+            gradientFrom: 'from-violet-900',
+            gradientTo: 'to-violet-950'
         }
     },
     {
@@ -64,13 +64,13 @@ export const THEMES = [
         primary: 'rose',
         text: 'text-white',
         classes: {
-            bg: 'bg-rose-700',
-            bgHover: 'hover:bg-rose-800',
-            text: 'text-rose-700',
-            border: 'border-rose-700/30',
-            shadow: 'shadow-rose-700/20',
-            gradientFrom: 'from-rose-700',
-            gradientTo: 'to-rose-600'
+            bg: 'bg-rose-900',
+            bgHover: 'hover:bg-rose-950',
+            text: 'text-rose-900',
+            border: 'border-rose-900/30',
+            shadow: 'shadow-rose-900/20',
+            gradientFrom: 'from-rose-900',
+            gradientTo: 'to-rose-950'
         }
     },
     {
@@ -78,13 +78,13 @@ export const THEMES = [
         primary: 'cyan',
         text: 'text-neutral-900',
         classes: {
-            bg: 'bg-cyan-500',
-            bgHover: 'hover:bg-cyan-400',
-            text: 'text-cyan-700',
-            border: 'border-cyan-500/30',
-            shadow: 'shadow-cyan-500/20',
-            gradientFrom: 'from-cyan-500',
-            gradientTo: 'to-cyan-600'
+            bg: 'bg-cyan-600',
+            bgHover: 'hover:bg-cyan-500',
+            text: 'text-cyan-800',
+            border: 'border-cyan-600/30',
+            shadow: 'shadow-cyan-600/20',
+            gradientFrom: 'from-cyan-600',
+            gradientTo: 'to-cyan-700'
         }
     },
     {
@@ -92,13 +92,13 @@ export const THEMES = [
         primary: 'orange',
         text: 'text-neutral-900',
         classes: {
-            bg: 'bg-orange-500',
-            bgHover: 'hover:bg-orange-400',
-            text: 'text-orange-700',
-            border: 'border-orange-500/30',
-            shadow: 'shadow-orange-500/20',
-            gradientFrom: 'from-orange-500',
-            gradientTo: 'to-orange-600'
+            bg: 'bg-orange-600',
+            bgHover: 'hover:bg-orange-500',
+            text: 'text-orange-800',
+            border: 'border-orange-600/30',
+            shadow: 'shadow-orange-600/20',
+            gradientFrom: 'from-orange-600',
+            gradientTo: 'to-orange-700'
         }
     },
     {
@@ -106,13 +106,13 @@ export const THEMES = [
         primary: 'indigo',
         text: 'text-white',
         classes: {
-            bg: 'bg-indigo-700',
-            bgHover: 'hover:bg-indigo-800',
-            text: 'text-indigo-700',
-            border: 'border-indigo-700/30',
-            shadow: 'shadow-indigo-700/20',
-            gradientFrom: 'from-indigo-700',
-            gradientTo: 'to-indigo-600'
+            bg: 'bg-indigo-900',
+            bgHover: 'hover:bg-indigo-950',
+            text: 'text-indigo-900',
+            border: 'border-indigo-900/30',
+            shadow: 'shadow-indigo-900/20',
+            gradientFrom: 'from-indigo-900',
+            gradientTo: 'to-indigo-950'
         }
     },
 ] as const;
