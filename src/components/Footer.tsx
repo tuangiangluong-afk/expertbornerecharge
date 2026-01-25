@@ -51,6 +51,11 @@ export function Footer({ config }: FooterProps) {
                 <div className="text-xs border-t border-white/10 pt-8">
                     &copy; {new Date().getFullYear()} {config.name} - Tous droits réservés.
                 </div>
+                <div className="flex justify-center gap-4 text-xs mt-4 mb-2">
+                    <Link href="/mentions-legales" className="text-neutral-500 hover:text-white transition-colors">Mentions Légales</Link>
+                    <span className="text-neutral-700">•</span>
+                    <Link href="/cgv" className="text-neutral-500 hover:text-white transition-colors">CGV</Link>
+                </div>
             </div>
         </footer>
     );

@@ -117,6 +117,10 @@ export const THEMES = [
     },
 ] as const;
 
+export type Theme = typeof THEMES[number];
+
+
+
 export function getTheme(slug: string) {
     // Simple hash function
     let hash = 0;

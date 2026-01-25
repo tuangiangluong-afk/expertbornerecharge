@@ -8,6 +8,7 @@ import { Reviews } from "@/components/Reviews";
 import { StructuredData } from "@/components/StructuredData";
 import { GTMScript } from "@/components/GTMScript";
 import { BookingWidget } from "@/components/BookingWidget";
+import CallButton from "@/components/CallButton";
 import { slugify } from "@/lib/slugify";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -169,14 +170,16 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                     <span className="text-xl font-bold tracking-tight text-white">
                         {effectiveCity.name}<span className={`text-${theme.primary}-400`}>.</span>
                     </span>
-                    <a
-                        href={`tel:${effectiveCity.phoneNumber.replace(/ /g, "")}`}
+                    <CallButton
+                        phoneNumber={effectiveCity.phoneNumber}
+                        cityName={effectiveCity.name}
+                        theme={theme}
                         className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold ${theme.text} shadow-lg active:scale-95 transition hover:brightness-110 ${classes.bg} ${classes.shadow}`}
                     >
                         <Phone size={16} fill="currentColor" />
                         <span className="hidden sm:inline">Appeler</span>
                         <span className="sm:hidden">Appeler</span>
-                    </a>
+                    </CallButton>
                 </div>
             </nav>
 
@@ -213,13 +216,15 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
                     </p>
 
                     <div className="flex flex-col items-center justify-center gap-4 sm:flex-row mb-12">
-                        <a
-                            href={`tel:${effectiveCity.phoneNumber.replace(/ /g, "")}`}
+                        <CallButton
+                            phoneNumber={effectiveCity.phoneNumber}
+                            cityName={effectiveCity.name}
+                            theme={theme}
                             className={`flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r ${classes.gradientFrom} ${classes.gradientTo} px-8 py-5 text-xl font-bold ${theme.text} transition transform hover:-translate-y-1 hover:shadow-2xl ${classes.shadow} sm:w-auto`}
                         >
                             <Phone fill="currentColor" />
                             {ctaButton}
-                        </a>
+                        </CallButton>
                         <a
                             href="#book"
                             className="flex w-full items-center justify-center gap-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 px-8 py-5 text-xl font-bold text-white transition hover:bg-white/20 sm:w-auto"
@@ -391,13 +396,15 @@ export default async function CityPage({ params }: { params: Promise<{ domain: s
 
             {/* MOBILE CONVERSION BAR - VISIBLE ONLY ON MOBILE */}
             <div className={`fixed bottom-0 left-0 right-0 z-50 flex h-20 items-center gap-2 border-t border-white/10 bg-neutral-900/95 px-4 pb-2 backdrop-blur-lg md:hidden`}>
-                <a
-                    href={`tel:${effectiveCity.phoneNumber.replace(/ /g, "")}`}
+                <CallButton
+                    phoneNumber={effectiveCity.phoneNumber}
+                    cityName={effectiveCity.name}
+                    theme={theme}
                     className="flex flex-1 flex-col items-center justify-center rounded-xl bg-neutral-800 py-2 text-white active:scale-95"
                 >
                     <Phone size={20} className={`mb-1 ${classes.text}`} />
                     <span className="text-xs font-bold">Appeler</span>
-                </a>
+                </CallButton>
                 <a
                     href="#book"
                     className={`flex-[2] flex flex-col items-center justify-center rounded-xl ${classes.bg} py-2 ${theme.text} ${classes.shadow} active:scale-95`}

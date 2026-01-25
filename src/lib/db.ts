@@ -33,8 +33,17 @@ export interface CityConfig {
 }
 
 export function getCity(domain: string): CityConfig | null {
-    // Normalize: remove www. if present
+    // Normalize: remove port and www.
+    domain = domain.split(':')[0];
     domain = domain.replace(/^www\./, '');
+
+    // DEV: Handle localhost
+    if (domain.endsWith('.localhost')) {
+        const subdomain = domain.split('.')[0]; // taxirueil
+        // Find matching city config ignoring TLD
+        const found = Object.values(CITIES).find(c => c.domain.startsWith(`${subdomain}.`));
+        if (found) return found;
+    }
 
     if (CITIES[domain]) return CITIES[domain];
 
@@ -50,6 +59,7 @@ export function getCity(domain: string): CityConfig | null {
     if (cityKey) return CITIES[cityKey];
     return null;
 }
+
 
 const TEMPLATE_FEATURES = [
     "Navette Aéroport",
