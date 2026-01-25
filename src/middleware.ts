@@ -29,50 +29,45 @@ export default async function middleware(req: NextRequest) {
     const path = `${url.pathname}${searchParams.length > 0 ? `?${searchParams}` : ""
         }`;
 
+    let response: NextResponse;
+
     // 1. Main Hub Logic - Redirect / to /home
     if (isMainHub) {
         // Direct access to city pages like /taxiaix should work
         if (path.startsWith("/taxi") || path.startsWith("/admin") || path.startsWith("/home") || path.startsWith("/login")) {
-            return NextResponse.next();
+            response = NextResponse.next();
+        } else {
+            // Otherwise rewrite to /home
+            response = NextResponse.rewrite(
+                new URL(`/home${path === "/" ? "" : path}`, req.url)
+            );
         }
-        // Otherwise rewrite to /home
-        return NextResponse.rewrite(
-            new URL(`/home${path === "/" ? "" : path}`, req.url)
+    } else {
+        // 2. Tenant Logic
+        let domainKey = hostname;
+
+        // Custom Domain Mapping (localhost dev)
+        if (hostname.includes(".localhost")) {
+            domainKey = hostname.split(".")[0]; // taxiaix.localhost -> taxiaix
+            if (domainKey === "www") domainKey = hostname.split(".")[1]; // www.taxiaix.localhost -> taxiaix
+        }
+
+        // Custom Rewrite for specific service shortcuts (root level access)
+        const serviceShortcuts = ['/conventionne-cpam', '/van-minibus', '/nuit'];
+        let finalPath = path;
+
+        // Use pathname (without query) for matching to be robust
+        const pathname = url.pathname;
+        if (serviceShortcuts.some(s => pathname === s || pathname.startsWith(s + '/'))) {
+            finalPath = `/service${path}`;
+        }
+
+        response = NextResponse.rewrite(
+            new URL(`/${hostname}${finalPath}`, req.url)
         );
     }
 
-    // 2. Tenant Logic
-    let domainKey = hostname;
-
-    // Custom Domain Mapping (localhost dev)
-    if (hostname.includes(".localhost")) {
-        domainKey = hostname.split(".")[0]; // taxiaix.localhost -> taxiaix
-        if (domainKey === "www") domainKey = hostname.split(".")[1]; // www.taxiaix.localhost -> taxiaix
-    } else {
-        // Production Domain Mapping
-        // Just use the hostname directly. db.ts (getCity) handles exact domain matching (e.g. taxiaplaisir.com)
-        // AND aliases (e.g. taxiaplaisir.fr for taxiaplaisir slug)
-    }
-
-    // Rewrite to our dynamic route /src/app/[domain]/...
-
-    // Custom Rewrite for specific service shortcuts (root level access)
-    const serviceShortcuts = ['/conventionne-cpam', '/van-minibus', '/nuit'];
-    let finalPath = path;
-
-    // Use pathname (without query) for matching to be robust
-    const pathname = url.pathname;
-    if (serviceShortcuts.some(s => pathname === s || pathname.startsWith(s + '/'))) {
-        // Reconstruct path with /service prefix, keeping query params from original 'path'
-        // path = /conventionne-cpam?foo=bar -> finalPath = /service/conventionne-cpam?foo=bar
-        finalPath = `/service${path}`;
-    }
-
-    const response = NextResponse.rewrite(
-        new URL(`/${hostname}${finalPath}`, req.url)
-    );
-
-    // Security Headers (A+ on SecurityHeaders.io)
+    // Security Headers (Applied to ALL responses)
     response.headers.set("X-Frame-Options", "DENY");
     response.headers.set("X-Content-Type-Options", "nosniff");
     response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
