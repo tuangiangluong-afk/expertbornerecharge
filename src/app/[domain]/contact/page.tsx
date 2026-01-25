@@ -36,7 +36,7 @@ export default async function ContactPage({ params }: { params: Promise<{ domain
                 <div className="container mx-auto flex items-center justify-between">
                     <Link
                         href="/"
-                        className={`flex items-center gap-2 text-sm font-bold ${theme.text} hover:opacity-80 transition`}
+                        className={`flex items-center gap-2 text-sm font-bold text-neutral-600 hover:text-neutral-900 transition`}
                     >
                         <ArrowLeft size={16} />
                         Retour
