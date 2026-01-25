@@ -65,12 +65,13 @@ export default function CallModal({
 
                 {/* Header */}
                 <div className={`${theme.classes.bg} p-6 text-center relative overflow-hidden`}>
-                    <div className="absolute top-4 right-4 z-10">
+                    <div className="absolute top-4 right-4 z-50">
                         <button
                             onClick={onClose}
-                            className="rounded-full bg-white/20 p-2 text-white hover:bg-white/30 transition-colors"
+                            className="rounded-full bg-white/20 p-3 text-white hover:bg-white/30 transition-colors -mr-2 -mt-2"
+                            aria-label="Fermer"
                         >
-                            <X size={20} />
+                            <X size={24} />
                         </button>
                     </div>
 
@@ -87,7 +88,7 @@ export default function CallModal({
                     </div>
 
                     {/* Background Pattern */}
-                    <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                    <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
                 </div>
 
                 {/* Content */}
