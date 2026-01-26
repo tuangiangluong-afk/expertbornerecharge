@@ -3,7 +3,7 @@ import { getSpintaxContent } from "@/lib/spintax";
 import { getTheme } from "@/lib/theme";
 import CallButton from "@/components/CallButton";
 import { slugify } from "@/lib/slugify";
-import { FAQ } from "@/components/FAQ";
+import FAQ from "@/components/FAQ";
 import { Car, Map, ShieldCheck, Star, Phone, ArrowRight } from "lucide-react";
 import { DistanceCalculator } from "@/components/DistanceCalculator";
 import { notFound } from "next/navigation";

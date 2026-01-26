@@ -1,4 +1,4 @@
-import { getCity } from "@/lib/db";
+import { getSiteConfig } from "@/lib/sites-config";
 import { GTMScript } from "@/components/GTMScript";
 import { notFound } from "next/navigation";
 import Script from "next/script";
@@ -13,20 +13,20 @@ export default async function DomainLayout({
     params: Promise<{ domain: string }>;
 }) {
     const resolvedParams = await params;
-    const city = getCity(resolvedParams.domain);
+    const site = getSiteConfig(resolvedParams.domain);
 
-    if (!city) return notFound();
+    if (!site) return notFound();
 
     // Fetch dynamic config from Supabase (allows Admin UI updates)
     const { data: tenant } = await supabase
         .from("tenants")
         .select("ga_id, gtm_id")
-        .eq("id", city.slug)
+        .eq("id", site.slug)
         .maybeSingle() as any;
 
     // Priority: Database > Config File
-    const gaId = tenant?.ga_id || city.ga_id;
-    const gtmId = tenant?.gtm_id; // db.ts doesn't have gtm_id typed yet, but we can assume DB is source of truth
+    const gaId = tenant?.ga_id || site.ga_id;
+    const gtmId = tenant?.gtm_id || site.gtm_id;
 
     return (
         <>
@@ -48,7 +48,7 @@ export default async function DomainLayout({
                 </>
             )}
             {children}
-            <CookieBanner slug={city.slug} cityName={city.name} />
+            <CookieBanner slug={site.slug} cityName={site.city} />
         </>
     );
 }

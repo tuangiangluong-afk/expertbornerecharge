@@ -1,17 +1,25 @@
 @import "tailwindcss";
 
 @theme {
+  /* IRVE Brand Colors */
   --color-background: 210 40% 98%;
   --color-foreground: 222 47% 11%;
 
-  --color-primary: 221 83% 53%;
+  /* Electric Blue - Primary */
+  --color-primary: 217 91% 60%;
   --color-primary-foreground: 210 40% 98%;
 
+  /* Deep Navy - Secondary */
   --color-secondary: 217 33% 17%;
   --color-secondary-foreground: 210 40% 98%;
 
-  --color-accent: 43 96% 64%;
-  --color-accent-foreground: 222 47% 11%;
+  /* Eco Green - Accent */
+  --color-accent: 145 63% 42%;
+  --color-accent-foreground: 0 0% 100%;
+
+  /* Alert Yellow */
+  --color-warning: 38 92% 50%;
+  --color-warning-foreground: 222 47% 11%;
 
   --color-card: 0 0% 100%;
   --color-card-foreground: 222 47% 11%;
@@ -29,16 +37,24 @@
 }
 
 @utility text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-400;
 }
 
-@utility text-gradient-gold {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-yellow-600;
+@utility text-gradient-green {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-emerald-400;
 }
 
-@utility bg-midnight {
-  background-color: #1a202c;
-  /* slate-900 fallback */
+@utility bg-irve-gradient {
+  background: linear-gradient(135deg, #0066FF 0%, #00C8FF 100%);
+}
+
+@utility bg-eco-gradient {
+  background: linear-gradient(135deg, #00C853 0%, #00E676 100%);
+}
+
+/* French Flag Accent Bar */
+@utility french-bar {
+  background: linear-gradient(90deg, #002395 33%, #FFFFFF 33%, #FFFFFF 66%, #ED2939 66%);
 }
 
 /* Base styles */
@@ -46,4 +62,37 @@
   body {
     @apply bg-neutral-50 text-neutral-900;
   }
+  
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Selection color */
+  ::selection {
+    @apply bg-blue-600 text-white;
+  }
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 102, 255, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(0, 102, 255, 0.6); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+/* Spintax Highlight */
+.spintax-highlight {
+  @apply text-blue-600 font-bold;
 }

@@ -4,6 +4,7 @@ import { SEO_ROUTES } from "@/lib/seo-routes";
 import { NATIONAL_CONFIG } from "@/config/national";
 import { slugify } from "@/lib/slugify";
 import { CityConfig } from "@/lib/db";
+import { getNearbyCities } from "@/lib/geo";
 
 interface InternalMeshProps {
     city?: string;
@@ -22,10 +23,18 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
         ? config.points_of_interest.monuments.slice(0, 5) // Show top 5 local monuments
         : NATIONAL_CONFIG.points_of_interest.monuments.slice(0, 5); // Fallback to Paris monuments if no local data
 
-    // Use neighborhoods or nightlife as secondary column
     const secondaryPois = config?.neighborhoods?.length
         ? config.neighborhoods.slice(0, 3)
         : NATIONAL_CONFIG.points_of_interest.nightlife.slice(0, 3);
+
+    // 3. Deep Mesh (Geo-Spatial) & Deduplication
+    const rawNearby = config ? getNearbyCities(config.slug, 5) : [];
+    const slugs = new Set();
+    const nearbyCities = rawNearby.filter(city => {
+        if (slugs.has(city.slug)) return false;
+        slugs.add(city.slug);
+        return true;
+    });
 
     return (
         <section className="bg-neutral-900 border-t border-white/5 py-16 px-6">
@@ -37,52 +46,73 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
                         <ul className="space-y-3">
                             {SEO_SERVICES.map(s => (
                                 <li key={s.slug}>
-                                    <Link href={`/${s.slug}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
+                                    <a href="#simulateur" className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
                                         <span className="w-1 h-1 bg-blue-500 rounded-full"></span>
                                         {s.title}
-                                    </Link>
+                                    </a>
                                 </li>
                             ))}
                         </ul>
                     </div>
 
-                    {/* 2. Top Liaisons (Trajets) */}
+                    {/* 2. Villes à Proximité */}
                     <div>
-                        <h4 className="text-white font-bold mb-6 text-lg">Trajets Fréquents</h4>
+                        <h4 className="text-white font-bold mb-6 text-lg">Installateurs à Proximité</h4>
                         <ul className="space-y-3">
-                            {finalRoutes.map(route => (
-                                <li key={route.slug}>
-                                    <Link href={`/trajet/${route.slug}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
+                            {nearbyCities.slice(0, 5).map(city => (
+                                <li key={city.slug}>
+                                    <Link href={`/ville/${city.slug}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
                                         <span className="w-1 h-1 bg-emerald-500 rounded-full"></span>
-                                        Taxi {route.start} - {route.end}
+                                        Installation {city.city}
                                     </Link>
                                 </li>
                             ))}
                         </ul>
                     </div>
 
-                    {/* 3. Guide Local (Smart Context) */}
+                    {/* 3. Quartiers / Zones (SEO Local) */}
                     <div>
                         <h4 className="text-white font-bold mb-6 text-lg">
-                            {config ? `À voir à ${config.city}` : "Destinations Phares"}
+                            {config ? `Quartiers de ${config.city}` : "Zones d'intervention"}
                         </h4>
                         <ul className="space-y-3">
-                            {monuments.map(m => (
-                                <li key={m}>
-                                    <Link href={config?.slug.includes('taxi-') ? `/guides/${slugify(m)}` : `/guides/${slugify(m)}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
+                            {(config?.neighborhoods || []).slice(0, 8).map(quartier => (
+                                <li key={quartier}>
+                                    <a href="#simulateur" className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
                                         <span className="w-1 h-1 bg-yellow-500 rounded-full"></span>
-                                        Taxi {m}
-                                    </Link>
+                                        Borne {quartier}
+                                    </a>
                                 </li>
                             ))}
-                            {secondaryPois.map(n => (
-                                <li key={n}>
-                                    <Link href={`/quartier/${slugify(n)}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
-                                        <span className="w-1 h-1 bg-purple-500 rounded-full"></span>
-                                        Taxi {n}
-                                    </Link>
-                                </li>
-                            ))}
+                        </ul>
+                    </div>
+
+                    {/* 4. Deep Mesh / Proximité */}
+                    <div>
+                        <h4 className="text-white font-bold mb-6 text-lg">
+                            {nearbyCities.length > 0 ? "Installateurs à Proximité" : "Réseau National"}
+                        </h4>
+                        <ul className="space-y-3">
+                            {nearbyCities.length > 0 ? (
+                                nearbyCities.map(city => (
+                                    <li key={city.slug}>
+                                        <Link href={`/ville/${city.slug}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
+                                            <span className="w-1 h-1 bg-blue-500 rounded-full"></span>
+                                            Borne Recharge {city.city}
+                                        </Link>
+                                    </li>
+                                ))
+                            ) : (
+                                // Fallback if no specific nearby cities (e.g. on National page)
+                                SEO_ROUTES.slice(0, 5).map(route => (
+                                    <li key={route.slug}>
+                                        <Link href={`/trajet/${route.slug}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
+                                            <span className="w-1 h-1 bg-gray-500 rounded-full"></span>
+                                            {route.start} ↔ {route.end}
+                                        </Link>
+                                    </li>
+                                ))
+                            )}
                         </ul>
                     </div>
                 </div>

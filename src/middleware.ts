@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isMainHub } from "@/lib/sites-config";
 
 export const config = {
     matcher: [
@@ -11,65 +12,59 @@ export const config = {
 export default async function middleware(req: NextRequest) {
     const url = req.nextUrl;
 
-    // Get hostname (e.g. taxiaix.fr, taxiaix.localhost)
-    let hostname = req.headers.get("host") || "taxifrance.fr";
+    // Get hostname (e.g. bornerechargeparis.fr, expertbornerecharge.com)
+    let hostname = req.headers.get("host") || "expertbornerecharge.com";
     hostname = hostname.split(":")[0]; // Remove port if present
 
     // Check if we are on the main hub
-    // scenarios: "localhost:3000", "taxifrance.fr", "taxifrance.vercel.app"
-    const isMainHub =
-        hostname.includes("localhost") && !hostname.includes(".localhost") ||
-        hostname === "taxifrance.fr" ||
-        hostname === "www.taxifrance.fr" ||
-        hostname.includes("taxifrance.vercel.app") ||
-        hostname.includes("192.168.1.144");
+    const isHub = isMainHub(hostname);
 
-    // Get the path (e.g. /transport-medical)
+    // Get the path
     const searchParams = req.nextUrl.searchParams.toString();
-    const path = `${url.pathname}${searchParams.length > 0 ? `?${searchParams}` : ""
-        }`;
+    const path = `${url.pathname}${searchParams.length > 0 ? `?${searchParams}` : ""}`;
 
     let response: NextResponse;
 
-    // 1. Sitemap Rewrite (Fix for /home/sitemap.ts)
+    // 1. Sitemap Rewrite
     if (path === "/sitemap.xml") {
         return NextResponse.rewrite(new URL("/home/sitemap.xml", req.url));
     }
 
-    // 2. Main Hub Logic - Redirect / to /home
-    if (isMainHub) {
-        // Direct access to city pages like /taxiaix should work
-        if (path.startsWith("/taxi") || path.startsWith("/admin") || path.startsWith("/home") || path.startsWith("/login")) {
+    // 2. Main Hub Logic
+    if (isHub) {
+        // Admin and specific routes pass through
+        if (path.startsWith("/admin") || path.startsWith("/home") || path.startsWith("/login") || path.startsWith("/api") || path.startsWith("/guides") || path.startsWith("/outils") || path.startsWith("/vehicules") || path.startsWith("/ville")) {
             response = NextResponse.next();
         } else {
-            // Otherwise rewrite to /home
+            // Rewrite to /home
             response = NextResponse.rewrite(
                 new URL(`/home${path === "/" ? "" : path}`, req.url)
             );
         }
     } else {
-        // 2. Tenant Logic
+        // 3. Satellite Domain Logic
         let domainKey = hostname;
 
-        // Custom Domain Mapping (localhost dev)
+        // Handle localhost development (bornerechargeparis.localhost -> bornerechargeparis)
         if (hostname.includes(".localhost")) {
-            domainKey = hostname.split(".")[0]; // taxiaix.localhost -> taxiaix
-            if (domainKey === "www") domainKey = hostname.split(".")[1]; // www.taxiaix.localhost -> taxiaix
+            domainKey = hostname.split(".")[0];
+            if (domainKey === "www") domainKey = hostname.split(".")[1];
         }
 
-        // Custom Rewrite for specific service shortcuts (root level access)
-        const serviceShortcuts = ['/conventionne-cpam', '/van-minibus', '/nuit'];
-        let finalPath = path;
-
-        // Use pathname (without query) for matching to be robust
-        const pathname = url.pathname;
-        if (serviceShortcuts.some(s => pathname === s || pathname.startsWith(s + '/'))) {
-            finalPath = `/service${path}`;
+        // Remove www for routing
+        if (domainKey.startsWith("www.")) {
+            domainKey = domainKey.replace("www.", "");
         }
 
+        // Rewrite to [domain] route - use domainKey for localhost, hostname for production
+        const routeParam = hostname.includes(".localhost") ? domainKey : hostname;
         response = NextResponse.rewrite(
-            new URL(`/${hostname}${finalPath}`, req.url)
+            new URL(`/${routeParam}${path}`, req.url)
         );
+
+        // Inject headers for the page to read
+        response.headers.set("x-irve-domain", hostname);
+        response.headers.set("x-irve-city", domainKey);
     }
 
     // Security Headers (Applied to ALL responses)

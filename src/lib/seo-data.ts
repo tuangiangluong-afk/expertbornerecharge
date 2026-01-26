@@ -24,27 +24,27 @@ export const SEO_DESTINATIONS: SeoDestination[] = [
 
 export const SEO_SERVICES: SeoService[] = [
     {
-        slug: 'conventionne-cpam',
-        title: 'Taxi Conventionné CPAM',
-        description: 'Transport médical assis (VSL) agréé Sécurité Sociale.',
-        keywords: ['médical', 'hôpital', 'dialyse', 'radiothérapie', 'consultation']
+        slug: 'installation-borne-maison',
+        title: 'Borne Maison Individuelle',
+        description: 'Installation de Wallbox 7kW à 22kW pour garage ou parking privé.',
+        keywords: ['maison', 'pavillon', 'wallbox', 'domicile']
     },
     {
-        slug: 'van-minibus',
-        title: 'Taxi Van & Minibus',
-        description: 'Transport de groupe jusqu\'à 7 passagers avec bagages.',
-        keywords: ['groupe', 'famille', 'van', 'grand taxi']
+        slug: 'installation-borne-copropriete',
+        title: 'Borne en Copropriété',
+        description: 'Solutions pour syndics et résidents. Droit à la prise et facturation individuelle.',
+        keywords: ['copropriété', 'syndic', 'immeuble', 'parking souterrain']
     },
     {
-        slug: 'longue-distance',
-        title: 'Taxi Longue Distance',
-        description: 'Trajets toutes distances au départ ou vers votre ville.',
-        keywords: ['province', 'long trajet', 'kilomètres']
+        slug: 'installation-borne-entreprise',
+        title: 'Borne Entreprise & Flotte',
+        description: 'Recharge pour collaborateurs et flotte de véhicules. Supervision et monétisation.',
+        keywords: ['entreprise', 'flotte', 'parking pro', 'supervision']
     },
     {
-        slug: 'nuit',
-        title: 'Taxi de Nuit',
-        description: 'Service disponible 24h/24 et 7j/7 pour vos sorties et urgences.',
-        keywords: ['nuit', 'soirée', 'urgence', '24h/24']
+        slug: 'installation-rapide',
+        title: 'Dépannage & Maintenance',
+        description: 'Service de maintenance et réparation de bornes toutes marques certifié IRVE.',
+        keywords: ['dépannage', 'maintenance', 'sav', 'réparation']
     }
 ];

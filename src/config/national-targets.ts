@@ -8,8 +8,8 @@ export interface NationalTarget {
     name: string;
     heroTitle: string;
     geo: { lat: number; lng: number };
-    price_start: number; // Tarif préfectoral prise en charge
-    top_places: string[];
+    price_start: number; // Prix installation à partir de
+    top_places: string[]; // Zones d'intervention (Quartiers, Villes voisines)
     zip: string;
     tier: 'BIG5' | 'GOLDEN' | 'HUB' | 'STRATEGIC';
     heroImage?: string;
@@ -20,343 +20,328 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
     // 👑 TIER 1: BIG 5 (60% du CA)
     // ========================================
     {
-        slug: "taxi-lyon",
+        slug: "bornerechargeparis",
+        name: "Paris",
+        heroTitle: "Installateur Borne Recharge Paris (75)",
+        geo: { lat: 48.856, lng: 2.352 },
+        price_start: 900.00,
+        top_places: ["Paris 16", "Paris 17", "Le Marais", "Montmartre"],
+        zip: "75000",
+        tier: 'BIG5',
+        heroImage: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=2672&auto=format&fit=crop"
+    },
+    {
+        slug: "bornerechargevolyon",
         name: "Lyon",
-        heroTitle: "Taxi Lyon & Gare Part-Dieu",
+        heroTitle: "Installation Borne Recharge Lyon",
         geo: { lat: 45.764, lng: 4.835 },
-        price_start: 2.50,
-        top_places: ["Gare Part-Dieu", "Place Bellecour", "Groupama Stadium", "Fourvière"],
+        price_start: 890.00,
+        top_places: ["Monts d'Or", "Presqu'île", "Part-Dieu", "Confluence"],
         zip: "69000",
         tier: 'BIG5',
-        heroImage: "https://images.unsplash.com/photo-1620647833074-ce49b6b90710?q=80&w=2670&auto=format&fit=crop"
+        heroImage: "https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-marseille",
+        slug: "bornerechargemarseille",
         name: "Marseille",
-        heroTitle: "Taxi Marseille & Vieux-Port",
+        heroTitle: "Pose Borne Électrique Marseille",
         geo: { lat: 43.296, lng: 5.369 },
-        price_start: 2.40,
-        top_places: ["Gare Saint-Charles", "Vieux-Port", "Notre-Dame de la Garde", "Stade Vélodrome"],
+        price_start: 850.00,
+        top_places: ["Prado", "Corniche", "Vieux-Port", "Euroméditerranée"],
         zip: "13000",
         tier: 'BIG5',
-        heroImage: "https://images.unsplash.com/photo-1589561454226-796a8aa89b05?q=80&w=2670&auto=format&fit=crop"
+        heroImage: "https://images.unsplash.com/photo-1559825481-12a05cc00018?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-nice",
+        slug: "bornerechargenice",
         name: "Nice",
-        heroTitle: "Taxi Nice Côte d'Azur",
+        heroTitle: "Installateur IRVE Nice",
         geo: { lat: 43.710, lng: 7.262 },
-        price_start: 3.00,
-        top_places: ["Promenade des Anglais", "Aéroport Nice Côte d'Azur", "Vieux Nice", "Place Masséna"],
+        price_start: 950.00,
+        top_places: ["Promenade des Anglais", "Cimiez", "Mont Boron", "Carré d'Or"],
         zip: "06000",
         tier: 'BIG5',
         heroImage: "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-bordeaux",
+        slug: "bornerechargebordeaux",
         name: "Bordeaux",
-        heroTitle: "Taxi Bordeaux & Gare Saint-Jean",
+        heroTitle: "Expert Borne Recharge Bordeaux",
         geo: { lat: 44.837, lng: -0.579 },
-        price_start: 2.50,
-        top_places: ["Gare Saint-Jean", "Place de la Bourse", "Cité du Vin", "Stade Matmut"],
+        price_start: 890.00,
+        top_places: ["Chartrons", "Caudéran", "Le Bouscat", "Talence"],
         zip: "33000",
         tier: 'BIG5',
-        heroImage: "https://images.unsplash.com/photo-1559087867-ce4c91325525?q=80&w=2670&auto=format&fit=crop"
+        heroImage: "https://Images.unsplash.com/photo-1559087867-ce4c91325525?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-toulouse",
+        slug: "bornerechargetoulouse",
         name: "Toulouse",
-        heroTitle: "Taxi Toulouse & Aéroport Blagnac",
+        heroTitle: "Installation Wallbox Toulouse",
         geo: { lat: 43.604, lng: 1.444 },
-        price_start: 2.40,
-        top_places: ["Aéroport Blagnac", "Gare Matabiau", "Place du Capitole", "Cité de l'Espace"],
+        price_start: 850.00,
+        top_places: ["Capitol", "Carmes", "Saint-Cyprien", "Balma"],
         zip: "31000",
         tier: 'BIG5',
         heroImage: "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?q=80&w=2670&auto=format&fit=crop"
     },
 
     // ========================================
-    // 💎 TIER 2: GOLDEN CITIES (Panier Moyen Explosif)
+    // 💎 TIER 2: GOLDEN CITIES (Pouvoir d'achat Élevé)
     // ========================================
     {
-        slug: "taxi-cannes",
+        slug: "bornerechargecannes",
         name: "Cannes",
-        heroTitle: "Taxi Cannes & Palais des Festivals",
+        heroTitle: "Borne de Recharge Cannes & Mougins",
         geo: { lat: 43.552, lng: 7.017 },
-        price_start: 3.20,
-        top_places: ["Palais des Festivals", "La Croisette", "Port de Cannes", "Vieux Port"],
+        price_start: 1100.00,
+        top_places: ["La Californie", "Croisette", "Super Cannes", "Mougins"],
         zip: "06400",
         tier: 'GOLDEN',
         heroImage: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-aix-en-provence",
+        slug: "bornerechargeaix",
         name: "Aix-en-Provence",
-        heroTitle: "Navette TGV Aix & Centre Ville",
+        heroTitle: "Installation Borne Aix & Luberon",
         geo: { lat: 43.529, lng: 5.447 },
-        price_start: 2.60,
-        top_places: ["Gare Aix TGV", "Cours Mirabeau", "Jas de Bouffan", "Atelier Cézanne"],
+        price_start: 950.00,
+        top_places: ["Centre Historique", "Puyricard", "Les Milles", "Tholonet"],
         zip: "13100",
         tier: 'GOLDEN',
         heroImage: "https://images.unsplash.com/photo-1596422846543-75c6fc197825?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-antibes",
+        slug: "bornerechargeantibes",
         name: "Antibes",
-        heroTitle: "Taxi Antibes & Juan-les-Pins",
+        heroTitle: "Borne Recharge Antibes & Sophia",
         geo: { lat: 43.580, lng: 7.125 },
-        price_start: 3.00,
-        top_places: ["Port Vauban", "Cap d'Antibes", "Juan-les-Pins", "Marineland"],
+        price_start: 980.00,
+        top_places: ["Cap d'Antibes", "Juan-les-Pins", "Biot", "Sophia-Antipolis"],
         zip: "06600",
         tier: 'GOLDEN',
         heroImage: "https://images.unsplash.com/photo-1534258936925-c58bed479fcb?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-biarritz",
-        name: "Biarritz",
-        heroTitle: "Taxi Biarritz & Côte Basque",
-        geo: { lat: 43.483, lng: -1.558 },
-        price_start: 2.80,
-        top_places: ["Grande Plage", "Casino Barrière", "Aéroport Biarritz", "Rocher de la Vierge"],
-        zip: "64200",
+        slug: "bornerechargeneuilly",
+        name: "Neuilly-sur-Seine",
+        heroTitle: "Installation Borne Neuilly 92",
+        geo: { lat: 48.884, lng: 2.268 },
+        price_start: 1200.00,
+        top_places: ["Saint-James", "Sablons", "Bagatelle", "Ile de la Jatte"],
+        zip: "92200",
         tier: 'GOLDEN',
-        heroImage: "https://images.unsplash.com/photo-1597466765990-64ad1c35dafc?q=80&w=2670&auto=format&fit=crop"
+        heroImage: "https://images.unsplash.com/photo-1551101968-3e414168c818?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-deauville",
-        name: "Deauville",
-        heroTitle: "Taxi Deauville & Trouville",
-        geo: { lat: 49.359, lng: 0.077 },
-        price_start: 2.80,
-        top_places: ["Casino Barrière", "Les Planches", "Hippodrome", "CID"],
-        zip: "14800",
+        slug: "bornerechargelille",
+        name: "Lille",
+        heroTitle: "Installateur Borne IRVE Lille",
+        geo: { lat: 50.629, lng: 3.057 },
+        price_start: 890.00,
+        top_places: ["Vieux-Lille", "Marcq-en-Barœul", "Bondues", "Lambersart"],
+        zip: "59000",
         tier: 'GOLDEN',
-        heroImage: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=2670&auto=format&fit=crop"
+        heroImage: "https://images.unsplash.com/photo-1577866068998-24bc8d46db6d?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-annecy",
-        name: "Annecy",
-        heroTitle: "Taxi Annecy & Lac d'Annecy",
-        geo: { lat: 45.899, lng: 6.129 },
-        price_start: 2.60,
-        top_places: ["Lac d'Annecy", "Vieille Ville", "Gare d'Annecy", "Palais de l'Île"],
-        zip: "74000",
-        tier: 'GOLDEN',
-        heroImage: "https://images.unsplash.com/photo-1601461953939-36fbe4ed0b16?q=80&w=2670&auto=format&fit=crop"
-    },
-    {
-        slug: "taxi-strasbourg",
+        slug: "bornerechargestrasbourg",
         name: "Strasbourg",
-        heroTitle: "Taxi Strasbourg & Parlement Européen",
+        heroTitle: "Borne Électrique Strasbourg",
         geo: { lat: 48.573, lng: 7.752 },
-        price_start: 2.50,
-        top_places: ["Gare de Strasbourg", "Parlement Européen", "Petite France", "Cathédrale"],
+        price_start: 890.00,
+        top_places: ["Orangerie", "Robertsau", "Contades", "Neudorf"],
         zip: "67000",
         tier: 'GOLDEN',
         heroImage: "https://images.unsplash.com/photo-1574158622682-e40e69881006?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-lille",
-        name: "Lille",
-        heroTitle: "Taxi Lille & Gare Lille Europe",
-        geo: { lat: 50.629, lng: 3.057 },
-        price_start: 2.40,
-        top_places: ["Gare Lille Flandres", "Gare Lille Europe", "Aéroport Lesquin", "Grand'Place"],
-        zip: "59000",
-        tier: 'GOLDEN',
-        heroImage: "https://images.unsplash.com/photo-1577866068998-24bc8d46db6d?q=80&w=2670&auto=format&fit=crop"
-    },
-
-    // ========================================
-    // 🚄 TIER 3: HUBS RÉGIONAUX
-    // ========================================
-    {
-        slug: "taxi-nantes",
+        slug: "bornerechargenantes",
         name: "Nantes",
-        heroTitle: "Taxi Nantes & Gare TGV",
+        heroTitle: "Installation Borne Nantes",
         geo: { lat: 47.218, lng: -1.553 },
-        price_start: 2.40,
-        top_places: ["Gare de Nantes", "Château des Ducs", "Machines de l'Île", "Aéroport Atlantique"],
+        price_start: 850.00,
+        top_places: ["Procé", "Monselet", "Saint-Félix", "Carquefou"],
         zip: "44000",
         tier: 'HUB',
         heroImage: "https://images.unsplash.com/photo-1609671188873-b3a01e77d59c?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-rennes",
+        slug: "bornerechargerennes",
         name: "Rennes",
-        heroTitle: "Taxi Rennes & Gare TGV",
+        heroTitle: "Borne Recharge Rennes",
         geo: { lat: 48.117, lng: -1.677 },
-        price_start: 2.40,
-        top_places: ["Gare de Rennes", "Place de la République", "Parc du Thabor", "Aéroport Saint-Jacques"],
+        price_start: 850.00,
+        top_places: ["Thabor", "Sévigné", "Saint-Grégoire", "Cesson-Sévigné"],
         zip: "35000",
         tier: 'HUB',
         heroImage: "https://images.unsplash.com/photo-1580657018950-e16b6d6db77c?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-montpellier",
+        slug: "bornerechargemontpellier",
         name: "Montpellier",
-        heroTitle: "Taxi Montpellier & Gare Saint-Roch",
+        heroTitle: "Installation Borne Montpellier",
         geo: { lat: 43.611, lng: 3.877 },
-        price_start: 2.40,
-        top_places: ["Gare Saint-Roch", "Place de la Comédie", "Aéroport Méditerranée", "Antigone"],
+        price_start: 850.00,
+        top_places: ["Port Marianne", "Aiguelongue", "Castelnau-le-Lez", "Lattes"],
         zip: "34000",
         tier: 'HUB',
         heroImage: "https://images.unsplash.com/photo-1593259037804-f6e9b11adceb?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-grenoble",
-        name: "Grenoble",
-        heroTitle: "Taxi Grenoble & Stations de Ski",
-        geo: { lat: 45.188, lng: 5.724 },
-        price_start: 2.50,
-        top_places: ["Gare de Grenoble", "Bastille", "Chamrousse", "Alpe d'Huez"],
-        zip: "38000",
-        tier: 'HUB',
-        heroImage: "https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2670&auto=format&fit=crop"
+        slug: "bornerechargeannecy",
+        name: "Annecy",
+        heroTitle: "Borne Recharge Annecy & 74",
+        geo: { lat: 45.899, lng: 6.129 },
+        price_start: 950.00,
+        top_places: ["Annecy-le-Vieux", "Veyrier-du-Lac", "Sevrier", "Pringy"],
+        zip: "74000",
+        tier: 'GOLDEN',
+        heroImage: "https://images.unsplash.com/photo-1601461953939-36fbe4ed0b16?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-toulon",
+        slug: "bornerechargetoulon",
         name: "Toulon",
-        heroTitle: "Taxi Toulon & Port Militaire",
+        heroTitle: "Installateur Borne Recharge Toulon",
         geo: { lat: 43.124, lng: 5.928 },
-        price_start: 2.40,
-        top_places: ["Gare de Toulon", "Port de Toulon", "Mont Faron", "Aéroport Hyères"],
+        price_start: 950.00,
+        top_places: ["Mourillon", "Le Mont Faron", "Cap Brun", "Siblas"],
         zip: "83000",
         tier: 'HUB',
         heroImage: "https://images.unsplash.com/photo-1576494231340-2e9d3a98e0df?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-avignon",
+        slug: "bornerechargeavignon",
         name: "Avignon",
-        heroTitle: "Taxi Avignon TGV & Provence",
+        heroTitle: "Installation Borne Avignon & Vaucluse",
         geo: { lat: 43.949, lng: 4.805 },
-        price_start: 2.50,
-        top_places: ["Gare Avignon TGV", "Palais des Papes", "Pont d'Avignon", "Gordes"],
+        price_start: 900.00,
+        top_places: ["Palais des Papes", "Villeneuve-lès-Avignon", "Le Pontet", "Montfavet"],
         zip: "84000",
         tier: 'HUB',
         heroImage: "https://images.unsplash.com/photo-1557171611-9b5377d4c3b0?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-reims",
+        slug: "bornerechargereims",
         name: "Reims",
-        heroTitle: "Taxi Reims & Route du Champagne",
+        heroTitle: "Borne de Recharge Reims",
         geo: { lat: 49.258, lng: 4.031 },
-        price_start: 2.50,
-        top_places: ["Gare de Reims", "Cathédrale Notre-Dame", "Caves de Champagne", "Maisons de Champagne"],
+        price_start: 890.00,
+        top_places: ["Cathédrale", "Cormontreuil", "Tinqueux", "Bétheny"],
         zip: "51100",
         tier: 'HUB',
         heroImage: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-dijon",
+        slug: "bornerechargedijon",
         name: "Dijon",
-        heroTitle: "Taxi Dijon & Route des Vins",
+        heroTitle: "Installation Borne Dijon & 21",
         geo: { lat: 47.322, lng: 5.041 },
-        price_start: 2.40,
-        top_places: ["Gare de Dijon", "Palais des Ducs", "Climats de Bourgogne", "Clos de Vougeot"],
+        price_start: 890.00,
+        top_places: ["Centre Historique", "Toison d'Or", "Fontaine-lès-Dijon", "Talant"],
         zip: "21000",
         tier: 'HUB',
         heroImage: "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-rouen",
+        slug: "bornerechargerouen",
         name: "Rouen",
-        heroTitle: "Taxi Rouen & Normandie",
+        heroTitle: "Installateur IRVE Rouen",
         geo: { lat: 49.443, lng: 1.099 },
-        price_start: 2.40,
-        top_places: ["Gare de Rouen", "Cathédrale Notre-Dame", "Gros-Horloge", "Panorama XXL"],
+        price_start: 890.00,
+        top_places: ["Rive Droite", "Mont-Saint-Aignan", "Bois-Guillaume", "Sotteville"],
         zip: "76000",
         tier: 'HUB',
         heroImage: "https://images.unsplash.com/photo-1595838788874-a9df08cbf069?q=80&w=2670&auto=format&fit=crop"
     },
 
     // ========================================
-    // ✈️ TIER 4: STRATEGIC SPOTS (Aéroports)
+    // ✈️ TIER 4: STRATEGIC SPOTS (Zones Périurbaines Riches)
     // ========================================
     {
-        slug: "taxi-roissy-cdg",
-        name: "Roissy CDG",
-        heroTitle: "Taxi Aéroport Roissy Charles de Gaulle",
+        slug: "bornerechargeroissy",
+        name: "Roissy-en-France",
+        heroTitle: "Installation Borne Roissy & 95",
         geo: { lat: 49.009, lng: 2.547 },
-        price_start: 55.00, // Forfait Paris
-        top_places: ["Terminal 1", "Terminal 2", "Terminal 3", "Roissypole"],
+        price_start: 950.00,
+        top_places: ["Tremblay-en-France", "Villepinte", "Goussainville", "Louvres"],
         zip: "95700",
         tier: 'STRATEGIC',
         heroImage: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-orly",
+        slug: "bornerechargeorly",
         name: "Orly",
-        heroTitle: "Taxi Aéroport Paris Orly",
+        heroTitle: "Borne Recharge Orly & Sud 94",
         geo: { lat: 48.726, lng: 2.365 },
-        price_start: 36.00, // Forfait Paris
-        top_places: ["Orly 1", "Orly 2", "Orly 3", "Orly 4"],
+        price_start: 950.00,
+        top_places: ["Thiais", "Rungis", "Choisy-le-Roi", "Athis-Mons"],
         zip: "94310",
         tier: 'STRATEGIC',
         heroImage: "https://images.unsplash.com/photo-1474302770737-173ee21bab63?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-beauvais",
+        slug: "bornerechargebeauvais",
         name: "Beauvais",
-        heroTitle: "Taxi Aéroport Beauvais-Tillé",
+        heroTitle: "Installateur Borne Beauvais",
         geo: { lat: 49.455, lng: 2.113 },
-        price_start: 150.00, // Course longue vers Paris
-        top_places: ["Terminal Ryanair", "Cathédrale", "Centre-ville"],
+        price_start: 900.00,
+        top_places: ["Centre-Ville", "Tillé", "Allonne", "Voisinlieu"],
         zip: "60000",
         tier: 'STRATEGIC',
         heroImage: "https://images.unsplash.com/photo-1606768666853-403c90a981ad?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-saint-exupery",
-        name: "Lyon Saint-Exupéry",
-        heroTitle: "Taxi Aéroport Lyon Saint-Exupéry",
+        slug: "bornerechargestexupery",
+        name: "Saint-Exupéry",
+        heroTitle: "Installation Borne Est Lyonnais",
         geo: { lat: 45.723, lng: 5.081 },
-        price_start: 65.00,
-        top_places: ["Terminal 1", "Terminal 2", "Gare TGV", "Centre Commercial"],
+        price_start: 950.00,
+        top_places: ["Saint-Laurent-de-Mure", "Genas", "Meyzieu", "Pusignan"],
         zip: "69125",
         tier: 'STRATEGIC',
         heroImage: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-nice-aeroport",
-        name: "Nice Côte d'Azur Aéroport",
-        heroTitle: "Taxi Aéroport Nice Côte d'Azur",
+        slug: "bornerechargecagnes",
+        name: "Cagnes-sur-Mer",
+        heroTitle: "Borne Recharge Cagnes & St-Laurent",
         geo: { lat: 43.666, lng: 7.215 },
-        price_start: 35.00,
-        top_places: ["Terminal 1", "Terminal 2", "Monaco", "Cannes"],
-        zip: "06200",
+        price_start: 1000.00,
+        top_places: ["Cros-de-Cagnes", "Saint-Laurent-du-Var", "Villeneuve-Loubet", "La Colle-sur-Loup"],
+        zip: "06800",
         tier: 'STRATEGIC',
         heroImage: "https://images.unsplash.com/photo-1558979158-65a1eaa08691?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-geneve",
-        name: "Genève (Ferney-Voltaire)",
-        heroTitle: "Taxi Aéroport Genève Côté France",
+        slug: "bornerechargepaysgex",
+        name: "Pays de Gex",
+        heroTitle: "Installation Borne Frontière Suisse",
         geo: { lat: 46.238, lng: 6.109 },
-        price_start: 50.00,
-        top_places: ["Aéroport de Genève", "Ferney-Voltaire", "Annemasse", "Divonne-les-Bains"],
+        price_start: 1200.00,
+        top_places: ["Ferney-Voltaire", "Divonne-les-Bains", "Saint-Genis-Pouilly", "Gex"],
         zip: "01210",
         tier: 'STRATEGIC',
         heroImage: "https://images.unsplash.com/photo-1580477371194-e8de0a57a04a?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-bale-mulhouse",
-        name: "Bâle-Mulhouse",
-        heroTitle: "Taxi Aéroport Bâle-Mulhouse-Fribourg",
+        slug: "bornerechargemulhouse",
+        name: "Mulhouse",
+        heroTitle: "Borne Recharge Mulhouse & 3 Frontières",
         geo: { lat: 47.590, lng: 7.529 },
-        price_start: 45.00,
-        top_places: ["Terminal Principal", "Mulhouse", "Bâle", "Colmar"],
-        zip: "68300",
+        price_start: 890.00,
+        top_places: ["Saint-Louis", "Rixheim", "Kingersheim", "Wittenheim"],
+        zip: "68100",
         tier: 'STRATEGIC',
         heroImage: "https://images.unsplash.com/photo-1515861461893-af66afaf3f1f?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "taxi-disneyland",
-        name: "Disneyland Paris",
-        heroTitle: "Taxi Disneyland Paris & Chessy",
+        slug: "bornerechargemarnevallee",
+        name: "Marne-la-Vallée",
+        heroTitle: "Installation Borne Marne-la-Vallée",
         geo: { lat: 48.876, lng: 2.779 },
-        price_start: 70.00,
-        top_places: ["Parc Disneyland", "Walt Disney Studios", "Disney Village", "Gare de Chessy"],
+        price_start: 950.00,
+        top_places: ["Chessy", "Serris", "Bussy-Saint-Georges", "Val d'Europe"],
         zip: "77700",
         tier: 'STRATEGIC',
         heroImage: "https://images.unsplash.com/photo-1495753132225-3d4d2c8ce2e9?q=80&w=2670&auto=format&fit=crop"
@@ -379,71 +364,57 @@ export function getTargetAsCityConfig(slug: string): CityConfig | undefined {
     const target = NATIONAL_TARGETS.find(t => t.slug === slug);
     if (!target) return undefined;
 
-    // Pricing logic: Flat rate (>10€) vs Meter start
-    const isFlatRate = target.price_start > 10;
-    const priceDisplay = isFlatRate
-        ? `${target.price_start}€`
-        : `Dès ${target.price_start.toFixed(2)}€`;
-    const priceDesc = isFlatRate
-        ? "Forfait Aéroport Estimé"
-        : "Prise en charge tarifaire";
+    // Pricing logic: Installation starts at 900€
+    const priceDisplay = `À partir de ${target.price_start}€`;
+    const priceDesc = "Installation clé en main";
 
-    // SPINTAX-GENERATED unique description
-    const uniqueDescription = getSpintaxContent("partner_description", target.name);
-    const uniqueMetaDescription = getSpintaxContent("partner_meta_description", target.name);
+    // Standardized EV Description
+    const uniqueDescription = `Expert Installation Borne de Recharge à ${target.name} (${target.zip}). Devis gratuit pour particuliers (maison, copropriété) et entreprises. Installateurs certifiés IRVE.`;
+    const uniqueMetaDescription = `Installation Borne de Recharge ${target.name}. Devis gratuit installateur IRVE. Aides ADVENIR et Crédit d'impôt déduits.`;
 
     return {
         slug: target.slug,
         city: target.name,
-        name: `Taxi ${target.name}`,
-        domain: `taxifrance.fr/ville/${target.slug}`,
-        heroImage: target.heroImage || "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2940&auto=format&fit=crop",
+        name: `Expert Borne ${target.name}`,
+        domain: `expertbornerecharge.com/ville/${target.slug}`,
+        heroImage: target.heroImage || "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=2672&auto=format&fit=crop",
 
-        // SPINTAX-INJECTED unique content
         description: uniqueDescription,
 
-        // Tier-based features
+        // EV Features
         features: [
-            "Chauffeurs Locaux",
-            "Berline Confort",
-            "Prix Réglementé",
-            "CB Acceptée",
-            ...(target.tier === 'STRATEGIC' ? ["Suivi de Vol", "Attente Pancarte"] : ["Transport Médical"])
+            "Devis Gratuit",
+            "Certifié IRVE",
+            "Aides Déduites",
+            "Garantie 2 ans",
+            "Maison & Copro"
         ],
 
-        // Smart extraction from top_places
-        stations: target.top_places.filter(p =>
-            p.toLowerCase().includes('gare') ||
-            p.toLowerCase().includes('aéroport') ||
-            p.toLowerCase().includes('terminal')
-        ),
-        hospitals: [`Hôpital ${target.name} Sud`, `Clinique ${target.name}`, "Centre Hospitalier"],
-        neighborhoods: target.top_places.filter(p =>
-            !p.toLowerCase().includes('gare') &&
-            !p.toLowerCase().includes('aéroport') &&
-            !p.toLowerCase().includes('terminal')
-        ).slice(0, 4),
+        // Adapt fields for EVs
+        stations: [], // Not relevant for EV installers usually, maybe store locations?
+        hospitals: [],
+        neighborhoods: target.top_places,
 
         points_of_interest: {
             hotels: [],
-            nightlife: target.top_places.slice(0, 3),
+            nightlife: [],
             monuments: target.top_places,
-            parking_difficulty: "Variable"
+            parking_difficulty: "High Demand"
         },
 
         pricing: {
             base: priceDisplay,
             description: priceDesc,
-            km: target.tier === 'STRATEGIC' ? 0 : 2.20 // 0 si forfait aéroport, sinon 2.20€/km
+            km: 0
         },
 
-        phoneNumber: "09 72 50 12 50", // National standard
-        email: "contact@taxifrance.fr",
+        phoneNumber: "09 72 50 12 50",
+        email: "contact@expertbornerecharge.com",
         type: "PARTNER",
 
         meta: {
             title: target.heroTitle,
-            description: uniqueMetaDescription.substring(0, 160)
+            description: uniqueMetaDescription
         }
     };
 }

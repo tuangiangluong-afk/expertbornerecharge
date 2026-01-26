@@ -1,114 +1,82 @@
-import { Plus, Minus } from "lucide-react";
-import { Database } from "@/types/database.types";
+"use client";
 
-type DBFaq = Database['public']['Tables']['faqs']['Row'];
+import { useState } from "react";
+import { ChevronDown, HelpCircle } from "lucide-react";
 
 interface FAQProps {
-    city: string;
-    type: "general" | "medical" | "airport" | "long_distance";
-    faqs?: DBFaq[] | null; // Optional: From Supabase
+    city?: string;
+    type?: string;
 }
 
-export function FAQ({ city, type, faqs }: FAQProps) {
-    // Check if dynamic FAQs exist for this type
-    const dynamicFaqs = faqs?.filter(f => f.category === type);
-    const hasDynamicFaqs = dynamicFaqs && dynamicFaqs.length > 0;
+export default function FAQ({ city, type }: FAQProps) {
+    const questions = [
+        {
+            q: "Combien coûte l'installation d'une borne de recharge ?",
+            a: "Le prix moyen d'une installation clé en main (Borne + Pose) varie entre 900€ et 1500€ TTC après déduction du crédit d'impôt. Le coût dépend de la distance entre votre tableau électrique et la place de parking, ainsi que de la puissance de la borne (7kW ou 11kW)."
+        },
+        {
+            q: "Puis-je installer une borne en copropriété ?",
+            a: "Oui, grâce au 'Droit à la Prise'. Vous pouvez faire installer une borne à vos frais sur votre place de parking. Vous devez simplement notifier votre syndic par lettre recommandée (nous avons un outil gratuit pour générer ce courrier)."
+        },
+        {
+            q: "Quelles sont les aides de l'État en 2026 ?",
+            a: "Les particuliers bénéficient d'un Crédit d'Impôt de 500€ par système de charge (pilotable). La TVA est réduite à 5,5% si l'installation est réalisée par un professionnel qualifié IRVE."
+        },
+        {
+            q: "Combien de temps faut-il pour une installation ?",
+            a: "Une fois le devis validé, l'installation prend généralement une demi-journée (3 à 4 heures). Nos installateurs s'occupent de tout : fixation, raccordement, mise en service et explications."
+        },
+        {
+            q: "Pourquoi choisir un installateur certifié IRVE ?",
+            a: "La certification IRVE est obligatoire pour toute installation supérieure à 3,7kW. Elle garantit la conformité de l'installation, votre sécurité, et elle est indispensable pour obtenir le crédit d'impôt et pour que votre assurance habitation vous couvre en cas de sinistre."
+        }
+    ];
 
-    const questions = {
-        general: [
-            {
-                q: `Comment réserver un taxi à ${city} ?`,
-                a: `Vous pouvez réserver votre taxi à ${city} directement en ligne via notre formulaire sécurisé ou par téléphone. Nous assurons une disponibilité 24h/24 et 7j/7 pour vos déplacements locaux et longue distance.`
-            },
-            {
-                q: "Acceptez-vous la carte bancaire ?",
-                a: "Oui, tous nos chauffeurs partenaires acceptent le paiement par carte bancaire (Visa, Mastercard, Amex) ainsi que les espèces. Une facture vous sera remise à la fin de la course."
-            },
-            {
-                q: `Quels sont les temps d'attente à ${city} ?`,
-                a: `En réservant à l'avance, votre chauffeur sera là à l'heure convenue sans attente. Pour une demande immédiate, le temps d'approche moyen à ${city} est de 10 à 15 minutes selon la circulation.`
-            },
-            {
-                q: "Vos tarifs sont-ils fixes ?",
-                a: "Pour les courses gares et aéroports, nous pouvons proposer des forfaits fixes. Pour les courses locales, le tarif est réglementé par le compteur horokilométrique, garantissant une transparence totale."
-            }
-        ],
-        medical: [
-            {
-                q: "Le transport est-il remboursé par la Sécurité Sociale ?",
-                a: `Oui, nos taxis sont conventionnés CPAM. Si vous disposez d'une prescription médicale de transport (Bon de Transport), vos frais seront pris en charge à 65% ou 100% selon votre situation.`
-            },
-            {
-                q: "Pratiquez-vous le tiers payant ?",
-                a: "Absolument. Sur présentation de votre carte Vitale et de votre prescription, vous n'avez pas à avancer la part Sécurité Sociale. Nous gérons les démarches administratives."
-            },
-            {
-                q: "Accompagnez-vous les patients dans le service ?",
-                a: "Oui, notre service de taxi conventionné inclut l'aide à la marche et l'accompagnement jusqu'au service hospitalier si nécessaire. Nos chauffeurs sont formés pour l'assistance aux personnes."
-            }
-        ],
-        airport: [
-            {
-                q: "Que se passe-t-il si mon vol/train a du retard ?",
-                a: "Aucun souci. Nous suivons votre vol ou train en temps réel grâce à votre numéro de dossier. Votre chauffeur s'adapte à votre heure d'arrivée réelle sans frais supplémentaires."
-            },
-            {
-                q: "Le chauffeur m'attendra-t-il avec une pancarte ?",
-                a: "Oui, pour les accueils gares et aéroports, votre chauffeur vous attendra avec une pancarte nominative (ou tablette tablette) directement à la sortie des voyageurs ou en tête de quai."
-            },
-            {
-                q: "Proposez-vous des sièges auto pour enfants ?",
-                a: "Oui, sur demande préalable lors de la réservation, nous pouvons équiper le véhicule de sièges bébé ou réhausseurs adaptés à l'âge de vos enfants, gratuitement."
-            }
-        ],
-        long_distance: [
-            {
-                q: "Comment fonctionne la tarification longue distance ?",
-                a: "Pour les trajets longue distance, nous privilégions le forfait fixe convenu à l'avance. Cela vous évite les surprises du compteur en cas d'embouteillage. Demandez votre devis gratuit."
-            },
-            {
-                q: "Le véhicule est-il confortable pour de longs trajets ?",
-                a: "Absolument. Notre flotte 'Grand Tourisme' est composée de berlines et vans récents (Mercedes Classe E, V-Class) offrant un confort optimal : climatisation bizone, chargeurs, bouteilles d'eau."
-            },
-            {
-                q: "Puis-je réserver pour un aller-retour ?",
-                a: "Oui, nous pouvons assurer l'aller-retour, même avec plusieurs jours d'écart. De plus, la réservation aller-retour peut parfois vous faire bénéficier d'une remise sur le trajet global."
-            }
-        ]
-    };
-
-    const currentQuestions = questions[type];
+    const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
-        <section className="py-16 bg-white">
-            <div className="container mx-auto max-w-4xl px-4">
-                <h2 className="text-3xl font-bold text-center mb-12 text-slate-900">
-                    Questions Fréquentes <span className="text-yellow-500">.</span>
-                </h2>
-                <div className="grid gap-6">
-                    {hasDynamicFaqs ? (
-                        dynamicFaqs!.map((faq) => (
-                            <div key={faq.id} className="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-yellow-400/30 transition shadow-sm">
-                                <h3 className="text-lg font-bold text-slate-900 mb-2 flex items-center gap-2">
-                                    <span className="text-yellow-500 font-black">?</span> {faq.question}
-                                </h3>
-                                <p className="text-slate-600 leading-relaxed text-sm pl-6 border-l-2 border-yellow-200">
-                                    {faq.answer}
-                                </p>
-                            </div>
-                        ))
-                    ) : (
-                        currentQuestions.map((item, i) => (
-                            <div key={i} className="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-yellow-400/30 transition shadow-sm">
-                                <h3 className="text-lg font-bold text-slate-900 mb-2 flex items-center gap-2">
-                                    <span className="text-yellow-500 font-black">?</span> {item.q}
-                                </h3>
-                                <p className="text-slate-600 leading-relaxed text-sm pl-6 border-l-2 border-yellow-200">
+        <section className="py-20 bg-slate-50 border-t border-slate-200">
+            <div className="container mx-auto px-4 max-w-4xl">
+                <div className="text-center mb-12">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider mb-4">
+                        Questions Fréquentes
+                    </span>
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">
+                        Vous avez des questions ?
+                    </h2>
+                    <p className="text-xl text-slate-600 mt-4">
+                        Nous avons les réponses pour votre projet de recharge.
+                    </p>
+                </div>
+
+                <div className="space-y-4">
+                    {questions.map((item, i) => (
+                        <div
+                            key={i}
+                            className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                        >
+                            <button
+                                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                                className="w-full flex items-center justify-between p-6 text-left"
+                            >
+                                <span className="font-bold text-lg text-slate-900 pr-8">{item.q}</span>
+                                <ChevronDown
+                                    className={`text-slate-400 transition-transform duration-300 ${openIndex === i ? "rotate-180" : ""}`}
+                                />
+                            </button>
+
+                            <div
+                                className={`
+                                    overflow-hidden transition-all duration-300 ease-in-out
+                                    ${openIndex === i ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}
+                                `}
+                            >
+                                <div className="p-6 pt-0 text-slate-600 leading-relaxed border-t border-slate-100">
                                     {item.a}
-                                </p>
+                                </div>
                             </div>
-                        ))
-                    )}
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>

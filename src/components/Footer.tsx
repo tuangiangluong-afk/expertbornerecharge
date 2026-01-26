@@ -25,41 +25,59 @@ export function Footer({ config }: FooterProps) {
             <div className="container mx-auto px-4 text-center">
                 <h4 className="text-white font-bold mb-4">À propos de {config.name}</h4>
                 <p className="max-w-2xl mx-auto text-sm mb-8">
-                    {config.name} est un service de mise en relation avec les meilleurs artisans taxis de {config.city}.
-                    Nous garantissons un service de qualité, une ponctualité exemplaire et des tarifs réglementés.
-                    Partenaire du réseau Taxi de France.
+                    {config.name} est le comparateur de référence pour l'installation de bornes de recharge à {config.city}.
+                    Nous sélectionnons les meilleurs électriciens certifiés IRVE pour vos projets en maison, copropriété ou entreprise.
+                    Obtenez jusqu'à 3 devis gratuits et comparez.
                 </p>
 
                 <div className="border-t border-white/10 pt-12 mt-12">
                     <div className="grid md:grid-cols-3 gap-12 text-left max-w-6xl mx-auto">
-                        {/* Column 1: Destinations */}
+                        {/* Column 1: Zones / Quartiers */}
                         <div>
-                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Destinations Populaires</h5>
+                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Zones d'Intervention</h5>
                             <ul className="space-y-3 text-sm">
-                                {/* Dynamic Destinations: Use Stations or Monuments if available, else fallback */}
-                                {(config.stations && config.stations.length > 0 ? config.stations : SEO_DESTINATIONS.map(d => d.name)).slice(0, 6).map((dest) => (
-                                    <li key={typeof dest === 'string' ? dest : dest}>
-                                        <Link href={typeof dest === 'string' ? `/guides/${slugify(dest)}` : `/tarif/${slugify(dest)}`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                {(config.neighborhoods || []).slice(0, 6).map((zone) => (
+                                    <li key={zone}>
+                                        <Link href={`/ville/${config.slug}#simulateur`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                             <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                            Taxi {typeof dest === 'string' ? dest : dest}
+                                            {zone}
                                         </Link>
                                     </li>
                                 ))}
+                                {(!config.neighborhoods || config.neighborhoods.length === 0) && (
+                                    <li className="text-neutral-500 italic">Tout {config.city} et agglomération</li>
+                                )}
                             </ul>
                         </div>
 
-                        {/* Column 2: Nightlife / POI */}
+                        {/* Column 2: Services EV */}
                         <div>
-                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Sortir à {config.city}</h5>
+                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Nos Solutions</h5>
                             <ul className="space-y-3 text-sm">
-                                {nightlife.slice(0, 5).map((poi: string) => (
-                                    <li key={poi}>
-                                        <Link href={`/guides/${slugify(poi)}`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
-                                            <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                            Taxi pour {poi}
-                                        </Link>
-                                    </li>
-                                ))}
+                                <li>
+                                    <Link href="/guides/installation-borne-recharge-copropriete" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                        <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
+                                        Borne en Copropriété
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/guides/cout-installation-borne-recharge" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                        <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
+                                        Tarifs Installation
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/guides/aides-subventions-borne-recharge" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                        <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
+                                        Aides & Subventions
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/contact" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                        <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
+                                        Devenir Installateur Partenaire
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
 

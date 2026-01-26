@@ -1,6 +1,6 @@
 import { CITIES, getCity } from "@/lib/db";
 import { getSpintaxContent } from "@/lib/spintax";
-import { FAQ } from "@/components/FAQ";
+import FAQ from "@/components/FAQ";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Ambulance, Phone, ShieldCheck, CheckCircle, ArrowRight, Clock } from "lucide-react";
 import { getTheme } from "@/lib/theme";

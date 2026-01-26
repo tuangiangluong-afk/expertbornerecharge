@@ -14,10 +14,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Taxi de France",
-    default: "Taxi de France - Réseau de Taxis Indépendants",
+    template: "%s | Expert Borne Recharge",
+    default: "Expert Borne Recharge - Installation IRVE Particuliers & Pros",
   },
-  description: "Réservez votre taxi partout en France. Chauffeurs locaux, tarifs réglementés et service de qualité. Gare, Aéroport et Transport Médical.",
+  description: "Installation de bornes de recharge pour véhicules électriques. Réseau d'installateurs certifiés IRVE partout en France. Devis gratuit en 24h.",
   robots: {
     index: true,
     follow: true,
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    siteName: "Taxi de France",
+    siteName: "Expert Borne Recharge",
     locale: "fr_FR",
     type: "website",
   },

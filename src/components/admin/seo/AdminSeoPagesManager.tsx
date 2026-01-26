@@ -102,6 +102,66 @@ export function AdminSeoPagesManager({ tenantId }: { tenantId: string }) {
                 </div>
             </div>
 
+            {/* AI AGENT SECTION */}
+            <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-6 rounded-xl shadow-lg border border-blue-500/30">
+                <div className="flex items-center gap-3 mb-4">
+                    <div className="bg-blue-400 p-2 rounded-lg text-black">
+                        <Zap size={24} />
+                    </div>
+                    <div>
+                        <h2 className="text-xl font-bold">Agent AI Gemini (Rédaction Autonome)</h2>
+                        <p className="text-blue-200 text-sm">Laissez l'IA trouver les sujets et rédiger les articles.</p>
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    <div className="flex gap-4">
+                        <input
+                            placeholder="Thématique (ex: Borne en Copropriété)"
+                            className="flex-1 bg-white/10 border border-white/20 rounded p-3 text-white placeholder:text-blue-300/50"
+                            id="ai-topic-input"
+                        />
+                        <button
+                            onClick={async () => {
+                                const input = document.getElementById('ai-topic-input') as HTMLInputElement;
+                                if (!input.value) return;
+                                const topics = await import("@/app/actions/seo").then(m => m.findAITopics(input.value));
+                                // Hacky state management for demo speed - purely via DOM is risky but fast for MVP
+                                const container = document.getElementById('ai-results');
+                                if (container && topics) {
+                                    container.innerHTML = topics.map((t: any) => `
+                                        <div class="flex justify-between items-center bg-white/5 p-3 rounded mb-2 border border-white/10">
+                                            <div>
+                                                <div class="font-bold text-white">${t.topic}</div>
+                                                <div class="text-xs text-blue-300">Potentiel: ${t.estimated_interest}/100 | ${t.intent}</div>
+                                            </div>
+                                            <button 
+                                                onclick="(async () => { this.disabled=true; this.innerText='Rédaction...'; await window.generateArticle('${t.topic}'); window.location.reload(); })()"
+                                                class="px-3 py-1 bg-green-500 hover:bg-green-400 text-white text-xs font-bold rounded"
+                                            >
+                                                Générer
+                                            </button>
+                                        </div>
+                                    `).join('');
+
+                                    // Inject generator function to window scope for the inline onclick above (Dirty but effective for single-file MVP)
+                                    (window as any).generateArticle = async (topic: string) => {
+                                        await import("@/app/actions/seo").then(m => m.generateAIArticle(tenantId, topic));
+                                    };
+                                }
+                            }}
+                            className="bg-blue-500 hover:bg-blue-400 text-white px-6 py-2 rounded font-bold"
+                        >
+                            Brainstorming
+                        </button>
+                    </div>
+
+                    <div id="ai-results" className="mt-4 space-y-2">
+                        {/* Results will appear here */}
+                    </div>
+                </div>
+            </div>
+
             {/* List of Pages */}
             <div>
                 <h3 className="text-lg font-bold mb-4">Pages Générées ({pages.length})</h3>
@@ -112,27 +172,29 @@ export function AdminSeoPagesManager({ tenantId }: { tenantId: string }) {
                                 <th className="px-4 py-3 font-medium text-gray-500">Slug / URL</th>
                                 <th className="px-4 py-3 font-medium text-gray-500">Titre H1</th>
                                 <th className="px-4 py-3 font-medium text-gray-500">Cible</th>
-                                <th className="px-4 py-3 font-medium text-gray-500">Pattern</th>
+                                <th className="px-4 py-3 font-medium text-gray-500">Pattern/IA</th>
                                 <th className="px-4 py-3 font-medium text-gray-500 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y">
                             {pages.map(page => (
                                 <tr key={page.id} className="hover:bg-gray-50">
-                                    <td className="px-4 py-3 font-mono text-xs">{page.slug}</td>
-                                    <td className="px-4 py-3 font-semibold">{page.h1_title}</td>
+                                    <td className="px-4 py-3 font-mono text-xs max-w-[200px] truncate">{page.slug}</td>
+                                    <td className="px-4 py-3 font-semibold text-neutral-900">{page.h1_title}</td>
                                     <td className="px-4 py-3">
-                                        <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs">
-                                            {page.target_city}
+                                        <span className={`px-2 py-1 rounded-full text-xs ${page.target_service === 'Guide' ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-600'}`}>
+                                            {page.target_city || page.target_service || 'N/A'}
                                         </span>
                                     </td>
-                                    <td className="px-4 py-3 text-gray-500">{page.seo_patterns?.name}</td>
+                                    <td className="px-4 py-3 text-gray-500">
+                                        {page.seo_patterns?.name || (page.content_json?.[0]?.type === 'markdown' ? '🤖 Gemini Agent' : 'Inconnu')}
+                                    </td>
                                     <td className="px-4 py-3 text-right">
                                         <a
                                             href={page.url_path}
                                             target="_blank"
                                             rel="noreferrer"
-                                            className="text-blue-600 hover:text-blue-800 flex items-center gap-1 justify-end"
+                                            className="text-blue-600 hover:text-blue-800 flex items-center gap-1 justify-end font-medium"
                                         >
                                             Voir <ExternalLink size={14} />
                                         </a>

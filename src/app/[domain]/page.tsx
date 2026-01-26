@@ -1,21 +1,20 @@
-import { CITIES, getCity } from "@/lib/db";
-import { getSpintaxContent } from "@/lib/spintax";
-import { Phone, Calendar, Clock, MapPin, CheckCircle, Star } from "lucide-react";
-import { FAQ } from "@/components/FAQ";
-import { Footer } from "@/components/Footer";
-import { Vehicles } from "@/components/Vehicles";
-import { Reviews } from "@/components/Reviews";
-import { StructuredData } from "@/components/StructuredData";
-import { GTMScript } from "@/components/GTMScript";
-import { BookingWidget } from "@/components/BookingWidget";
-import CallButton from "@/components/CallButton";
-import { slugify } from "@/lib/slugify";
+import { getSiteConfig } from "@/lib/sites-config";
+import { getSpintaxContent } from "@/lib/spintax-irve";
+import { Phone, Calendar, CheckCircle, Star, Zap, Shield, Award, TrendingDown, Home, Building2, Briefcase, MapPin, ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Link from "next/link";
 import Image from "next/image";
-import { supabase } from "@/lib/supabase";
-import { getTheme } from "@/lib/theme";
-import { redirect } from "next/navigation";
+import LeadForm from "@/components/LeadForm";
+import Logo from "@/components/Logo";
+import Header from "@/components/Header";
+import FAQ from "@/components/FAQ";
+import SchemaJSON from "@/components/SchemaJSON";
+import Reviews from "@/components/Reviews";
+
+// ============================================
+// METADATA
+// ============================================
 
 export async function generateMetadata({
     params,
@@ -23,57 +22,37 @@ export async function generateMetadata({
     params: Promise<{ domain: string }>;
 }): Promise<Metadata> {
     const resolvedParams = await params;
-    const city = getCity(resolvedParams.domain);
+    const site = getSiteConfig(resolvedParams.domain);
 
-    // Redirect Ghost Broker Partners to their canonical Hub URL
-    if (city && city.type === 'PARTNER') {
-        // We cannot redirect inside generateMetadata, but we can return canonical
-        // The actual redirect happens in the Page component
+    if (!site) {
         return {
-            alternates: {
-                canonical: `https://taxifrance.fr/ville/${city.slug}`,
-            },
+            title: "Expert Borne Recharge | Installation IRVE",
+            description: "Installation de bornes de recharge pour véhicules électriques.",
         };
     }
 
-    if (!city) {
-        return {
-            title: "Domaine disponible - Taxi de France",
-            description: "Ce domaine fait partie du réseau Taxi de France.",
-        };
-    }
-
-    // Low-Level Spintax for High CTR (Aggressive SEO)
-    const title = getSpintaxContent("meta_title", city.city);
-    const description = getSpintaxContent("meta_description", city.city);
-    const heroImage = city.heroImage.startsWith('http') ? city.heroImage : `https://${city.domain}${city.heroImage}`;
+    // Dynamic Meta via Spintax
+    const spintaxTitle = getSpintaxContent("meta_title", site, 'LOCAL');
+    const spintaxDesc = getSpintaxContent("meta_description", site, 'LOCAL');
 
     return {
-        title: title,
-        description: description,
-        keywords: [
-            `Taxi ${city.city}`,
-            `Taxi gare ${city.city}`,
-            `Navette aéroport ${city.city}`,
-            `Transport médical ${city.city}`,
-            ...city.features,
-            "TaxiConventionné",
-            "VSL"
-        ],
+        title: spintaxTitle,
+        description: spintaxDesc,
+        keywords: site.localKeywords,
         alternates: {
-            canonical: `https://${city.domain}`,
+            canonical: `https://${site.domain}`,
         },
         openGraph: {
-            title: title,
-            description: description,
-            url: `https://${city.domain}`,
-            siteName: `Taxi ${city.city}`,
+            title: spintaxTitle,
+            description: spintaxDesc,
+            url: `https://${site.domain}`,
+            siteName: site.name,
             images: [
                 {
-                    url: heroImage,
+                    url: site.heroImage,
                     width: 1200,
                     height: 630,
-                    alt: `Taxi à ${city.city}`
+                    alt: `Installation borne de recharge à ${site.city}`
                 }
             ],
             locale: "fr_FR",
@@ -82,360 +61,588 @@ export async function generateMetadata({
         robots: {
             index: true,
             follow: true,
-            googleBot: {
-                index: true,
-                follow: true,
-                "max-video-preview": -1,
-                "max-image-preview": "large",
-                "max-snippet": -1,
-            },
         },
     };
 }
 
+// ============================================
+// PAGE COMPONENT
+// ============================================
 
-
-export default async function CityPage({ params }: { params: Promise<{ domain: string }> }) {
+export default async function SitePage({ params }: { params: Promise<{ domain: string }> }) {
     const resolvedParams = await params;
-    const city = getCity(resolvedParams.domain);
 
-    if (!city) {
+    // DEBUG
+    console.log("========= [domain] PAGE DEBUG =========");
+    console.log("Received domain param:", resolvedParams.domain);
+
+    const site = getSiteConfig(resolvedParams.domain);
+    console.log("getSiteConfig result:", site ? site.slug : "NULL");
+    console.log("========================================");
+
+    if (!site) {
         return notFound();
     }
 
-    // CANONICAL REDIRECT: Prevent Duplicate Content for Ghost Broker Cities
-    if (city.type === 'PARTNER') {
-        redirect(`/ville/${city.slug}`);
-    }
+    const isHub = site.slug === 'home';
 
-    // Fetch Dynamic Content (Hybrid CMS Approach)
-    const { data: vehicles } = await supabase
-        .from("vehicles")
-        .select("*")
-        .eq("tenant_id", city.slug)
-        .order("display_order", { ascending: true });
+    // Spintax Generation
+    // Spintax Generation
+    const h1Content = getSpintaxContent("hero_title", site, 'LOCAL');
+    const subtitleContent = getSpintaxContent("hero_subtitle", site, 'LOCAL');
+    const badgeContent = getSpintaxContent("hero_badge", site, 'LOCAL');
+    const introContent = getSpintaxContent("intro_p1", site, 'LOCAL');
+    const ctaPrimary = getSpintaxContent("cta_primary", site, 'LOCAL');
 
-    const { data: pois } = await supabase
-        .from("pois")
-        .select("*")
-        .eq("tenant_id", city.slug);
+    // THEME & COLOR SYSTEM
+    // We derive the color theme from the PriceRange/Target to vary the look
+    // PREMIUM/LUXE -> Blue/Gold/Black
+    // STANDARD -> Emerald/Green (Eco friendly)
+    // COPRO -> Purple (Syndic trustworthy)
 
-    const { data: faqs } = await supabase
-        .from("faqs")
-        .select("*")
-        .eq("tenant_id", city.slug)
-        .order("display_order", { ascending: true });
+    type ThemeColor = 'blue' | 'emerald' | 'amber' | 'purple';
 
-    // Fetch Tenant for GTM and Admin Overrides
-    const { data: tenant } = await supabase
-        .from("tenants")
-        .select("name, ga_id, gtm_id, phone_number")
-        .eq("id", city.slug)
-        .maybeSingle() as any;
+    let themeColor: ThemeColor = 'blue'; // Default
+    if (site.priceRange === 'LUXE') themeColor = 'amber';
+    else if (site.targetType === 'COPRO') themeColor = 'purple';
+    else if (site.priceRange === 'STANDARD') themeColor = 'emerald';
 
-    // Group POIs for Footer (Legacy structure support)
-    const poisList = pois || [];
-    const dbHotels = poisList.filter((p: { type?: string }) => p.type === 'hotel').map((p: { name: string }) => p.name);
-    const dbNightlife = poisList.filter((p: { type?: string }) => p.type === 'nightlife').map((p: { name: string }) => p.name);
-
-    const hotels = dbHotels.length > 0 ? dbHotels : (city.points_of_interest?.hotels || []);
-    const nightlife = dbNightlife.length > 0 ? dbNightlife : (city.points_of_interest?.nightlife || []);
-
-    // Fetch Content Overrides (Page Builder)
-    const { data: pageContent } = await supabase
-        .from("content_pages")
-        .select("*")
-        .eq("tenant_id", city.slug)
-        .eq("path", "/") // Home Page
-        .eq("section", "home_hero");
-
-    // Helper to get value securely
-    const contentList = (pageContent || []) as Array<{ key: string; value?: string | null }>;
-    const getContent = (key: string, fallback: string) => {
-        const override = contentList.find(p => p.key === key)?.value;
-        return override || fallback;
-    };
-
-    // Merge Static Config with Dynamic Admin Data (Hybrid Pattern)
-    const effectiveCity = {
-        ...city,
-        name: tenant?.name || city.name,
-        phoneNumber: tenant?.phone_number || city.phoneNumber,
-        ga_id: tenant?.ga_id || city.ga_id, // Admin override triggers here
-        gtm_id: tenant?.gtm_id || city.gtm_id,
-        points_of_interest: {
-            ...city.points_of_interest,
-            hotels: hotels,
-            nightlife: nightlife
+    // Color Palette Map
+    const colors = {
+        blue: {
+            primary: "bg-blue-600",
+            hover: "hover:bg-blue-700",
+            text: "text-blue-600",
+            light: "bg-blue-50",
+            border: "border-blue-200",
+            gradient: "from-blue-600 to-blue-700",
+            shadow: "shadow-blue-500/30"
+        },
+        emerald: {
+            primary: "bg-emerald-600",
+            hover: "hover:bg-emerald-700",
+            text: "text-emerald-600",
+            light: "bg-emerald-50",
+            border: "border-emerald-200",
+            gradient: "from-emerald-600 to-emerald-700",
+            shadow: "shadow-emerald-500/30"
+        },
+        amber: { // Luxe / Gold
+            primary: "bg-amber-600",
+            hover: "hover:bg-amber-700",
+            text: "text-amber-600",
+            light: "bg-amber-50",
+            border: "border-amber-200",
+            gradient: "from-amber-600 to-amber-700",
+            shadow: "shadow-amber-500/30"
+        },
+        purple: { // Copro / Tech
+            primary: "bg-purple-600",
+            hover: "hover:bg-purple-700",
+            text: "text-purple-600",
+            light: "bg-purple-50",
+            border: "border-purple-200",
+            gradient: "from-purple-600 to-purple-700",
+            shadow: "shadow-purple-500/30"
         }
     };
 
-    const heroTitle = getContent("hero_title", getSpintaxContent("hero_title", effectiveCity.city));
-    const heroSubtitle = getContent("hero_subtitle", getSpintaxContent("hero_subtitle", effectiveCity.city));
-    const heroBadge = getContent("hero_badge", getSpintaxContent("hero_badge", effectiveCity.city));
-    const ctaButton = getContent("cta_button", getSpintaxContent("cta_button", effectiveCity.city));
-    const heroImage = getContent("hero_image", effectiveCity.heroImage);
-
-    // Dynamic Theme Color
-    const theme = getTheme(effectiveCity.slug);
-    const classes = theme.classes;
+    const palette = colors[themeColor];
+    const isPremium = site.theme === 'premium'; // Dark mode header check remains
 
     return (
-        <div className={`min-h-screen font-sans text-neutral-900 bg-neutral-50 selection:${classes.bg} selection:text-neutral-900`}>
-            <StructuredData city={effectiveCity} />
-            <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-neutral-900/80 px-4 py-3 backdrop-blur-md">
-                <div className="flex items-center justify-between">
-                    <span className="text-xl font-bold tracking-tight text-white">
-                        {effectiveCity.name}<span className={`text-${theme.primary}-400`}>.</span>
-                    </span>
-                    <CallButton
-                        phoneNumber={effectiveCity.phoneNumber}
-                        cityName={effectiveCity.name}
-                        theme={theme}
-                        className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold ${theme.text} shadow-lg active:scale-95 transition hover:brightness-110 ${classes.bg} ${classes.shadow}`}
-                    >
-                        <Phone size={16} fill="currentColor" />
-                        <span className="hidden sm:inline">Appeler</span>
-                        <span className="sm:hidden">Appeler</span>
-                    </CallButton>
-                </div>
-            </nav>
+        <div className="min-h-screen font-sans text-neutral-900 bg-neutral-50">
+            {/* ============================================ */}
+            {/* NAVIGATION - Theme Adaptive */}
+            {/* ============================================ */}
+            {/* ============================================ */}
+            {/* NAVIGATION - Theme Adaptive */}
+            {/* ============================================ */}
+            <Header
+                isHub={isHub}
+                city={site.city}
+                phoneNumber={site.phoneNumber}
+                variant={isPremium ? "light" : "default"}
+                themeColor={themeColor}
+            />
 
-            {/* Hero Section - sales optimized */}
-            <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden bg-neutral-900">
-                {/* Hero Background - Optimized LCP */}
-                <div className="absolute inset-0 -z-10">
-                    <div className="absolute inset-0 z-10 bg-gradient-to-b from-neutral-900/80 via-neutral-900/60 to-neutral-900" />
+            <SchemaJSON type="LocalBusiness" site={site} />
+
+            {/* ============================================ */}
+            {/* HERO - Trust/Locale Style */}
+            {/* ============================================ */}
+            <section className="relative pt-20 pb-12 lg:pt-32 lg:pb-32 overflow-hidden">
+                {/* Background */}
+                <div className="absolute inset-0 -z-10 bg-slate-900">
+                    <div className={`absolute inset-0 z-10 bg-gradient-to-b ${isPremium ? "from-neutral-900/90 via-neutral-900/80 to-neutral-900" : "from-white/95 via-white/80 to-white"}`} />
                     <Image
-                        src={heroImage}
-                        alt={`Taxi à ${effectiveCity.city}`}
+                        src={site.heroImage}
+                        alt={`Installation borne de recharge à ${site.city}`}
                         fill
                         priority
-                        className="object-cover opacity-50"
+                        className="object-cover opacity-30"
                         sizes="100vw"
                     />
                 </div>
 
-                {/* Content Container */}
-                <div className="container mx-auto px-4 text-center relative z-20">
-                    <div className={`inline-flex items-center rounded-full border ${classes.border} ${classes.bg.replace('bg-', 'bg-')}/10 px-4 py-1.5 text-sm font-bold ${classes.text} backdrop-blur-md mb-8 shadow-lg ${classes.shadow}`}>
-                        <span className="mr-2 h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
-                        {heroBadge}
-                    </div>
+                <div className="container mx-auto px-4 relative z-20">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                        {/* Left: Content */}
+                        <div className="text-center lg:text-left">
 
-                    <h1
-                        className="mx-auto mb-6 max-w-4xl text-5xl font-extrabold tracking-tight text-white sm:text-7xl lg:text-8xl drop-shadow-2xl"
-                        dangerouslySetInnerHTML={{ __html: heroTitle }}
-                    />
+                            {/* Trust Badge */}
+                            <div className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-bold mb-6 border ${isPremium ? "border-amber-500/30 bg-amber-500/10 text-amber-500" : "border-blue-200 bg-blue-50 text-blue-700"}`}>
+                                <CheckCircle size={16} className="mr-2" />
+                                {badgeContent}
+                            </div>
 
+                            {/* H1 */}
+                            <h1
+                                className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight ${isPremium ? "text-white" : "text-neutral-900"}`}
+                                dangerouslySetInnerHTML={{ __html: h1Content }}
+                            />
 
-                    <p className="mx-auto mb-12 max-w-2xl text-xl text-neutral-300 font-medium leading-relaxed">
-                        {heroSubtitle}
-                    </p>
+                            {/* Subtitle */}
+                            <div
+                                className={`text-xl mb-8 max-w-xl mx-auto lg:mx-0 ${isPremium ? "text-neutral-400" : "text-neutral-600"}`}
+                                dangerouslySetInnerHTML={{ __html: introContent }}
+                            />
 
-                    <div className="flex flex-col items-center justify-center gap-4 sm:flex-row mb-12">
-                        <CallButton
-                            phoneNumber={effectiveCity.phoneNumber}
-                            cityName={effectiveCity.name}
-                            theme={theme}
-                            className={`flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r ${classes.gradientFrom} ${classes.gradientTo} px-8 py-5 text-xl font-bold ${theme.text} transition transform hover:-translate-y-1 hover:shadow-2xl ${classes.shadow} sm:w-auto`}
-                        >
-                            <Phone fill="currentColor" />
-                            {ctaButton}
-                        </CallButton>
-                        <a
-                            href="#book"
-                            className="flex w-full items-center justify-center gap-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 px-8 py-5 text-xl font-bold text-white transition hover:bg-white/20 sm:w-auto"
-                        >
+                            {/* Certifications */}
+                            <div className="flex flex-wrap gap-3 justify-center lg:justify-start mb-8">
+                                {(site.features || ["Qualifelec", "IRVE"]).slice(0, 3).map((feat, i) => (
+                                    <div
+                                        key={i}
+                                        className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm border shadow-sm ${isPremium ? "bg-neutral-800 text-neutral-300 border-neutral-700" : "bg-white text-neutral-700 border-neutral-200"}`}
+                                    >
+                                        <Award size={14} className="text-yellow-500" />
+                                        {feat}
+                                    </div>
+                                ))}
+                            </div>
 
-                            <Calendar size={20} />
-                            Réserver pour plus tard
-                        </a>
-                    </div>
+                            {/* CTA Buttons */}
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                                <a
+                                    href="#simulateur"
+                                    className={`flex items-center justify-center gap-3 rounded-2xl px-8 py-4 text-lg font-bold text-white shadow-xl transition-all hover:-translate-y-1 bg-gradient-to-r ${palette.gradient} ${palette.shadow}`}
+                                >
+                                    <Zap size={24} />
+                                    {ctaPrimary}
+                                </a>
+                            </div>
+                        </div>
 
-                    {/* Booking Widget */}
-                    <div id="book" className="w-full max-w-md mx-auto scroll-mt-24 relative z-20">
-                        <BookingWidget city={effectiveCity} />
+                        {/* Right: Lead Form - STRATEGIC PLACEMENT HIGH CONVERSION */}
+                        <div className="hidden lg:block w-full max-w-md mx-auto relative z-30">
+                            <div id="simulateur" className="bg-white rounded-3xl shadow-2xl shadow-blue-900/20 overflow-hidden border border-neutral-100">
+                                <div className="p-1 bg-gradient-to-r from-blue-600 to-blue-500"></div>
+                                <div className="p-6">
+                                    <div className="text-center mb-6">
+                                        <h3 className="text-lg font-bold text-neutral-900">Testez votre éligibilité</h3>
+                                        <p className="text-sm text-neutral-500">Réponse immédiate • Gratuit • Sans engagement</p>
+                                    </div>
+                                    <LeadForm
+                                        city={site.city}
+                                        domain={site.domain}
+                                        targetType={site.targetType}
+                                        themeColor={themeColor}
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* QUICK SERVICES GRID - REORDERED: Business First */}
-            <section className="relative z-30 -mt-16 px-4">
-                <div className="container mx-auto max-w-5xl">
-                    <div className="grid gap-6 md:grid-cols-3">
-                        {/* Service 1: Gare & Aéro */}
-                        <a href="/gare-aeroport" className="group block p-6 rounded-2xl bg-white/95 backdrop-blur shadow-xl border border-white/50 hover:border-teal-500 hover:shadow-2xl hover:shadow-teal-500/10 transition-all transform hover:-translate-y-1">
-                            <div className="h-12 w-12 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                                <MapPin size={24} fill="currentColor" />
-                            </div>
-                            <h3 className="text-lg font-bold text-neutral-900 mb-2">Gare & Aéroport</h3>
-                            <p className="text-sm text-neutral-500">Liaison Orly, Roissy CDG & Gares TGV. Suivi de vol inclus.</p>
-                        </a>
+            {/* ============================================ */}
+            {/* AIDES SECTION (Gradient) */}
+            {/* ============================================ */}
+            <section className={`py-20 bg-gradient-to-b ${palette.gradient} text-white`}>
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+                            Jusqu'à <span className="text-yellow-400">2 460€</span> d'aides cumulables
+                        </h2>
+                        <p className="text-blue-100 text-lg">
+                            Profitez de toutes les aides disponibles en 2026
+                        </p>
+                    </div>
 
-                        {/* Service 2: Longue Distance */}
-                        <a href="/longue-distance" className="group block p-6 rounded-2xl bg-white/95 backdrop-blur shadow-xl border border-white/50 hover:border-purple-500 hover:shadow-2xl hover:shadow-purple-500/10 transition-all transform hover:-translate-y-1">
-                            <div className="h-12 w-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                                <CheckCircle size={24} fill="currentColor" />
+                    <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                        {[
+                            { label: "Prime ADVENIR", value: "960€", detail: "Copropriétés" },
+                            { label: "Crédit d'Impôt", value: "500€", detail: "75% plafonné" },
+                            { label: "TVA Réduite", value: "5.5%", detail: "Au lieu de 20%" },
+                            { label: "MaPrimeRénov'", value: "1000€", detail: "Sous conditions" },
+                        ].map((aide, i) => (
+                            <div key={i} className="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20">
+                                <div className="text-3xl font-bold text-yellow-400 mb-2">{aide.value}</div>
+                                <div className="font-semibold mb-1">{aide.label}</div>
+                                <div className="text-sm text-blue-200">{aide.detail}</div>
                             </div>
-                            <h3 className="text-lg font-bold text-neutral-900 mb-2">Longue Distance</h3>
-                            <p className="text-sm text-neutral-500">Forfaits toute distance France & Europe sur devis.</p>
-                        </a>
-
-                        {/* Service 3: Medical */}
-                        <a href="/transport-medical" className="group block p-6 rounded-2xl bg-white/95 backdrop-blur shadow-xl border border-white/50 hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/10 transition-all transform hover:-translate-y-1">
-                            <div className="h-12 w-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                                <Star size={24} fill="currentColor" />
-                            </div>
-                            <h3 className="text-lg font-bold text-neutral-900 mb-2">Transport Médical</h3>
-                            <p className="text-sm text-neutral-500">Agréé CPAM. Tiers payant accepté vers tous les hôpitaux.</p>
-                        </a>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            <Vehicles
-                city={city.city}
-                slug={effectiveCity.slug}
-                phoneNumber={effectiveCity.phoneNumber}
-            />
+            {/* ============================================ */}
+            {/* COST COMPARATOR - THE KILLER */}
+            {/* ============================================ */}
+            <section className="py-20 bg-neutral-50">
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-12">
+                        <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 rounded-full px-4 py-2 text-sm font-bold mb-4">
+                            <TrendingDown size={18} />
+                            Économies garanties
+                        </div>
+                        <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-4">
+                            Essence vs Recharge à domicile
+                        </h2>
+                        <p className="text-neutral-600 text-lg max-w-2xl mx-auto">
+                            Rechargez votre véhicule à la maison et économisez jusqu'à <strong>1 500€ par an</strong>
+                        </p>
+                    </div>
 
-            {/* Main Content */}
-            <section className="py-24 bg-neutral-50">
-                <div className="container mx-auto max-w-5xl px-4">
-                    <div className="grid gap-16 md:grid-cols-2">
-                        <div>
-                            <h2 className="text-4xl font-extrabold tracking-tight text-neutral-900 mb-8">
-                                L'Excellence du transport à {city.city}
-                            </h2>
-                            <div className="space-y-6">
-                                {city.features.map((feature, i) => (
-                                    <div key={i} className="flex items-start gap-4">
-                                        <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-yellow-100 text-yellow-600 shadow-sm">
-                                            <CheckCircle size={16} />
+                    <div className="max-w-4xl mx-auto">
+                        <div className="bg-white rounded-3xl shadow-2xl border border-neutral-200">
+                            <div className="grid md:grid-cols-2">
+                                {/* Essence Column */}
+                                <div className="p-8 bg-red-50 border-b md:border-b-0 md:border-r border-red-100 rounded-t-3xl md:rounded-tr-none md:rounded-l-3xl">
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                                            <span className="text-2xl">⛽</span>
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-lg text-neutral-900">{feature}</h4>
-                                            <p className="text-neutral-500 text-sm">Service garanti par nos chauffeurs partenaires.</p>
+                                            <h3 className="font-bold text-lg text-red-900">Essence / Diesel</h3>
+                                            <p className="text-sm text-red-600">Coût mensuel moyen</p>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-
-                            <div className="mt-12 p-8 bg-neutral-900 rounded-3xl text-white shadow-2xl relative overflow-hidden">
-                                <div className="absolute top-0 right-0 -mt-8 -mr-8 h-32 w-32 bg-yellow-500 rounded-full blur-3xl opacity-20"></div>
-                                <h3 className="font-bold text-2xl mb-4 relative z-10">Tarifs Transparents</h3>
-                                <div className="flex justify-between items-baseline border-b border-white/10 pb-4 mb-4 relative z-10">
-                                    <span className="text-neutral-400">Prise en charge</span>
-                                    <span className={`text-3xl font-bold ${classes.text}`}>{city.pricing.base}</span>
-                                </div>
-                                <p className="text-sm text-neutral-400 relative z-10">{city.pricing.description}. Majorations nuit et dimanche selon arrêté préfectoral en vigueur.</p>
-                            </div>
-                        </div>
-
-                        {/* Booking Form (Glass) */}
-                        <div className="relative">
-                            <BookingWidget city={effectiveCity} />
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Reviews Section - DB backed with spintax fallback */}
-            <Reviews city={city.city} tenantSlug={city.slug} />
-
-            {/* FAQ Section */}
-            <FAQ city={city.city} type="general" faqs={faqs} />
-
-            {/* Internal Linking Sections - SEO Maillage */}
-            <section className="py-16 bg-neutral-50 border-t border-neutral-200">
-                <div className="container mx-auto px-4">
-                    <div className="grid md:grid-cols-2 gap-12">
-                        {/* Quartiers */}
-                        <div>
-                            <h3 className="text-2xl font-bold text-neutral-900 mb-6">
-                                Quartiers desservis à {city.city} <span className={`${classes.text}`}>.</span>
-                            </h3>
-                            <div className="grid grid-cols-2 gap-3">
-                                {city.neighborhoods.slice(0, 8).map((neighborhood) => (
-                                    <a
-                                        key={neighborhood}
-                                        href={`/quartier/${slugify(neighborhood)}`}
-                                        className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2"
-                                    >
-                                        <span className={`font-bold ${classes.text}`}>→</span>
-                                        Taxi {neighborhood}
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Services */}
-                        <div>
-                            <h3 className="text-2xl font-bold text-neutral-900 mb-6">
-                                Nos Services <span className={`${classes.text}`}>.</span>
-                            </h3>
-                            <div className="grid gap-3">
-                                <a href={`/transport-medical`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
-                                    <span className={`${classes.text}`}>→</span>
-                                    Transport Médical & VSL Conventionné
-                                </a>
-                                <a href={`/gare-aeroport`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
-                                    <span className={`${classes.text}`}>→</span>
-                                    Transfert Gare TGV & Aéroport
-                                </a>
-                                <a href={`/longue-distance`} className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline transition flex items-center gap-2">
-                                    <span className={`${classes.text}`}>→</span>
-                                    Taxi Longue Distance
-                                </a>
-                            </div>
-
-                            {/* Guides links */}
-                            {hotels.length > 0 && (
-                                <div className="mt-6">
-                                    <h4 className="font-semibold text-neutral-800 mb-3">Guides locaux</h4>
-                                    <div className="grid grid-cols-2 gap-2">
-                                        {hotels.slice(0, 4).map((hotel: string) => (
-                                            <a
-                                                key={hotel}
-                                                href={`/guides/${slugify(hotel)}`}
-                                                className="text-xs text-neutral-500 hover:text-neutral-700 hover:underline transition"
-                                            >
-                                                Taxi → {hotel}
-                                            </a>
-                                        ))}
+                                    <div className="space-y-4">
+                                        <div className="flex justify-between items-center py-3 border-b border-red-100">
+                                            <span className="text-neutral-700">Consommation</span>
+                                            <span className="font-semibold">6L/100km</span>
+                                        </div>
+                                        <div className="flex justify-between items-center py-3 border-b border-red-100">
+                                            <span className="text-neutral-700">Distance/mois</span>
+                                            <span className="font-semibold">1 500 km</span>
+                                        </div>
+                                        <div className="flex justify-between items-center py-3 border-b border-red-100">
+                                            <span className="text-neutral-700">Prix au litre</span>
+                                            <span className="font-semibold">1.85€</span>
+                                        </div>
+                                        <div className="flex justify-between items-center pt-4">
+                                            <span className="font-bold text-neutral-900">Total mensuel</span>
+                                            <span className="text-3xl font-bold text-red-600">167€</span>
+                                        </div>
                                     </div>
                                 </div>
-                            )}
+
+                                {/* Electric Column */}
+                                <div className="p-8 bg-green-50 relative rounded-b-3xl md:rounded-bl-none md:rounded-r-3xl">
+                                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg z-10">
+                                        RECOMMANDÉ
+                                    </div>
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                            <Zap className="text-green-600" size={24} />
+                                        </div>
+                                        <div>
+                                            <h3 className="font-bold text-lg text-green-900">Recharge domicile</h3>
+                                            <p className="text-sm text-green-600">Coût mensuel moyen</p>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-4">
+                                        <div className="flex justify-between items-center py-3 border-b border-green-100">
+                                            <span className="text-neutral-700">Consommation</span>
+                                            <span className="font-semibold">15kWh/100km</span>
+                                        </div>
+                                        <div className="flex justify-between items-center py-3 border-b border-green-100">
+                                            <span className="text-neutral-700">Distance/mois</span>
+                                            <span className="font-semibold">1 500 km</span>
+                                        </div>
+                                        <div className="flex justify-between items-center py-3 border-b border-green-100">
+                                            <span className="text-neutral-700">Prix kWh HC*</span>
+                                            <span className="font-semibold">0.18€</span>
+                                        </div>
+                                        <div className="flex justify-between items-center pt-4">
+                                            <span className="font-bold text-neutral-900">Total mensuel</span>
+                                            <span className="text-3xl font-bold text-green-600">41€</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Savings Banner */}
+                            <div className="bg-gradient-to-r from-green-600 to-emerald-600 p-6 text-white text-center">
+                                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                                    <div>
+                                        <span className="text-green-200">Économie mensuelle:</span>
+                                        <span className="text-3xl font-bold ml-2">126€</span>
+                                    </div>
+                                    <div className="hidden sm:block w-px h-10 bg-white/30"></div>
+                                    <div>
+                                        <span className="text-green-200">Économie annuelle:</span>
+                                        <span className="text-3xl font-bold ml-2">1 512€</span>
+                                    </div>
+                                </div>
+                                <p className="text-sm text-green-200 mt-3">
+                                    *Tarif heures creuses EDF. La borne programme automatiquement la recharge aux heures les moins chères.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
+            {/* ============================================ */}
+            {/* SERVICES GRID */}
+            {/* ============================================ */}
+            <section className="py-20 bg-white">
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-4">
+                            Nos forfaits d'installation {site.city}
+                        </h2>
+                        <p className="text-neutral-600 text-lg">
+                            Des formules tout compris pour maison, copro et pro
+                        </p>
+                    </div>
 
-            {/* Footer */}
-            <Footer config={effectiveCity} />
+                    <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                        {[
+                            {
+                                icon: Home,
+                                title: "Maison Individuelle",
+                                description: "Installation rapide en 48h. Wallbox 7 à 22kW. Garage ou extérieur.",
+                                features: ["Installation en 48h", "Wallbox garantie 2 ans", "Raccordement tableau"],
+                                color: "blue",
+                                href: "/solutions/maison"
+                            },
+                            {
+                                icon: Building2,
+                                title: "Copropriété",
+                                description: "Solution collective ou individuelle. Accompagnement AG. Prime ADVENIR.",
+                                features: ["Étude technique gratuite", "Présentation en AG", "Jusqu'à 960€ d'aide"],
+                                color: "purple",
+                                highlight: true,
+                                href: "/solutions/copropriete"
+                            },
+                            {
+                                icon: Briefcase,
+                                title: "Entreprise / Flotte",
+                                description: "Bornes pour collaborateurs ou flotte. Facturation intégrée. Supervision.",
+                                features: ["Multi-bornes", "Gestion à distance", "Facturation automatique"],
+                                color: "emerald",
+                                href: "/solutions/entreprise"
+                            }
+                        ].map((service, i) => (
+                            <Link key={i} href={service.href} className="block group h-full">
+                                <div
+                                    className={`
+                                        relative h-full p-8 rounded-3xl border-2 transition-all duration-300
+                                        ${service.highlight
+                                            ? 'border-purple-500 bg-purple-50 shadow-xl shadow-purple-500/10 group-hover:scale-[1.02]'
+                                            : 'border-neutral-200 bg-white hover:border-blue-500 hover:shadow-xl group-hover:scale-[1.02]'
+                                        }
+                                    `}
+                                >
+                                    {service.highlight && (
+                                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-600 text-white text-xs font-bold px-4 py-1 rounded-full">
+                                            PROJET LE PLUS DEMANDÉ
+                                        </div>
+                                    )}
+                                    <div className={`
+                                        w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110
+                                        ${service.color === 'blue' ? 'bg-blue-100 text-blue-600' : ''}
+                                        ${service.color === 'purple' ? 'bg-purple-100 text-purple-600' : ''}
+                                        ${service.color === 'emerald' ? 'bg-emerald-100 text-emerald-600' : ''}
+                                    `}>
+                                        <service.icon size={28} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-neutral-900 mb-3 group-hover:text-blue-600 transition-colors">{service.title}</h3>
+                                    <p className="text-neutral-600 mb-6">{service.description}</p>
+                                    <ul className="space-y-2 mb-6">
+                                        {service.features.map((feature, j) => (
+                                            <li key={j} className="flex items-center gap-2 text-sm text-neutral-700">
+                                                <CheckCircle size={16} className="text-green-500" />
+                                                {feature}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <div className="text-blue-600 font-bold inline-flex items-center mt-auto">
+                                        En savoir plus <ArrowRight size={16} className="ml-2" />
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </section>
 
-            {/* MOBILE CONVERSION BAR - VISIBLE ONLY ON MOBILE */}
-            <div className={`fixed bottom-0 left-0 right-0 z-50 flex h-20 items-center gap-2 border-t border-white/10 bg-neutral-900/95 px-4 pb-2 backdrop-blur-lg md:hidden`}>
-                <CallButton
-                    phoneNumber={effectiveCity.phoneNumber}
-                    cityName={effectiveCity.name}
-                    theme={theme}
-                    className="flex flex-1 flex-col items-center justify-center rounded-xl bg-neutral-800 py-2 text-white active:scale-95"
-                >
-                    <Phone size={20} className={`mb-1 ${classes.text}`} />
-                    <span className="text-xs font-bold">Appeler</span>
-                </CallButton>
-                <a
-                    href="#book"
-                    className={`flex-[2] flex flex-col items-center justify-center rounded-xl ${classes.bg} py-2 ${theme.text} ${classes.shadow} active:scale-95`}
-                >
-                    <Calendar size={20} className="mb-1 text-neutral-900" />
-                    <span className="text-xs font-bold uppercase tracking-wide">Commander Taxi</span>
-                </a>
+            {/* ============================================ */}
+            {/* PROCESS SECTION */}
+            {/* ============================================ */}
+            <section className="py-20 bg-neutral-900 text-white">
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+                            Votre borne installée en <span className="text-blue-400">3 étapes</span>
+                        </h2>
+                        <p className="text-neutral-400 text-lg">
+                            Un processus simple et rapide, de la demande à la recharge
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                        {[
+                            {
+                                step: "01",
+                                title: "Demande de devis",
+                                description: "Remplissez le formulaire. Un conseiller vous rappelle sous 24h.",
+                                icon: Calendar
+                            },
+                            {
+                                step: "02",
+                                title: "Visite technique",
+                                description: "Un installateur partenaire certifié IRVE évalue votre installation.",
+                                icon: Shield
+                            },
+                            {
+                                step: "03",
+                                title: "Installation",
+                                description: "Pose de votre borne par un installateur certifié IRVE.",
+                                icon: Zap
+                            }
+                        ].map((item, i) => (
+                            <div key={i} className="text-center">
+                                <div className="relative inline-block mb-6">
+                                    <div className="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto">
+                                        <item.icon size={32} />
+                                    </div>
+                                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center text-neutral-900 font-bold text-sm">
+                                        {item.step}
+                                    </div>
+                                </div>
+                                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                                <p className="text-neutral-400">{item.description}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="text-center mt-12">
+                        <a
+                            href="#simulateur"
+                            className="inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-4 text-lg font-bold text-white shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all"
+                        >
+                            <Zap size={24} />
+                            Comparer les devis gratuits
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            {/* ============================================ */}
+            {/* REVIEWS SECTION */}
+            {/* ============================================ */}
+            <Reviews site={site} />
+
+            {/* ============================================ */}
+            {/* FAQ SECTION */}
+            {/* ============================================ */}
+            <FAQ />
+
+            {/* ============================================ */}
+            {/* LOCAL SEO SECTION */}
+            {/* ============================================ */}
+            {!isHub && site.quartiers.length > 0 && (
+                <section className="py-16 bg-neutral-50 border-t border-neutral-200">
+                    <div className="container mx-auto px-4">
+                        <h3 className="text-2xl font-bold text-neutral-900 mb-6">
+                            Installation borne de recharge à {site.city} et environs
+                        </h3>
+                        <div className="flex flex-wrap gap-3">
+                            {site.quartiers.map((quartier, i) => (
+                                <a
+                                    key={i}
+                                    href="#simulateur"
+                                    className="inline-block bg-white px-4 py-2 rounded-full text-sm text-neutral-700 border border-neutral-200 hover:border-blue-500 hover:text-blue-600 hover:shadow-sm transition-colors cursor-pointer"
+                                >
+                                    Borne Recharge {quartier}
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* ============================================ */}
+            {/* FOOTER */}
+            {/* ============================================ */}
+            <footer className="bg-neutral-900 text-white py-12">
+                <div className="container mx-auto px-4">
+                    <div className="grid md:grid-cols-4 gap-8 mb-8">
+                        <div>
+                            <Logo
+                                city={isHub ? null : site.city}
+                                isHub={isHub}
+                                size="sm"
+                                variant="light"
+                                className="mb-4"
+                            />
+                            <p className="text-sm text-neutral-400">
+                                Comparateur indépendant d'installateurs de bornes de recharge certifiés IRVE.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 className="font-bold mb-4">Contact</h4>
+                            <ul className="space-y-2 text-sm text-neutral-400">
+                                <li className="flex items-center gap-2">
+                                    <MapPin size={14} />
+                                    {site.city}, France
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="font-bold mb-4">Certifications</h4>
+                            <ul className="space-y-2 text-sm text-neutral-400">
+                                {site.certifications.map((cert, i) => (
+                                    <li key={i} className="flex items-center gap-2">
+                                        <Award size={14} className="text-yellow-500" />
+                                        {cert}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="font-bold mb-4">Légal</h4>
+                            <ul className="space-y-2 text-sm text-neutral-400">
+                                <li><a href="/mentions-legales" className="hover:text-white transition">Mentions légales</a></li>
+                                <li><a href="/cgv" className="hover:text-white transition">CGV</a></li>
+                                <li><a href="/politique-confidentialite" className="hover:text-white transition">Politique de confidentialité</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="border-t border-neutral-800 pt-8 text-center text-sm text-neutral-500">
+                        © {new Date().getFullYear()} {site.name}. Tous droits réservés.
+                    </div>
+                </div>
+            </footer>
+
+            {/* ============================================ */}
+            {/* MOBILE STICKY CTA */}
+            {/* ============================================ */}
+            <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-neutral-900/95 backdrop-blur-lg border-t border-white/10 p-4">
+                <div className="flex gap-3">
+                    <a
+                        href="#simulateur"
+                        className={`flex-[2] flex items-center justify-center gap-2 bg-gradient-to-r ${palette.gradient} text-white rounded-xl py-3 font-bold shadow-lg ${palette.shadow}`}
+                    >
+                        <Zap size={18} />
+                        Devis gratuit
+                    </a>
+                </div>
             </div>
         </div>
     );
-
 }
