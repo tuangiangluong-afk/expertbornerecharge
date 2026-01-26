@@ -2,8 +2,6 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: Request) {
     try {
         const body = await request.json();
@@ -18,10 +16,14 @@ export async function POST(request: Request) {
         }
 
         // Si pas de clé API, on simule le succès (pour éviter de casser le dev)
-        if (!process.env.RESEND_API_KEY) {
+        const apiKey = process.env.RESEND_API_KEY;
+        if (!apiKey) {
             console.log("⚠️ [MOCK] Email sent (No API Key):", body);
             return NextResponse.json({ success: true, message: 'Simulation envoi email' });
         }
+
+        // Initialize Resend ONLY if key exists (runtime)
+        const resend = new Resend(apiKey);
 
         // Envoi via Resend
         const { data, error } = await resend.emails.send({
