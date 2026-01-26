@@ -1,7 +1,7 @@
 import { Briefcase, BarChart3, TrendingUp, ArrowRight, CheckCircle } from "lucide-react";
 import LeadForm from "@/components/LeadForm";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
 
 export const metadata = {
