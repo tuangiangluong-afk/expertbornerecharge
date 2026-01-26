@@ -79,12 +79,6 @@ export function StructuredData({ city }: { city: CityConfig }) {
                     {
                         "@type": "ListItem",
                         "position": 1,
-                        "name": "Accueil",
-                        "item": `https://${city.domain}`
-                    },
-                    {
-                        "@type": "ListItem",
-                        "position": 2,
                         "name": `Taxi ${city.city}`,
                         "item": `https://${city.domain}`
                     }
