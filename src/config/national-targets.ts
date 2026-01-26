@@ -379,6 +379,10 @@ export function getTargetAsCityConfig(slug: string): CityConfig | undefined {
         domain: `expertbornerecharge.com/ville/${target.slug}`,
         heroImage: target.heroImage || "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=2672&auto=format&fit=crop",
 
+        postalCode: target.zip,
+        department: target.zip.substring(0, 2),
+        region: "France",
+
         description: uniqueDescription,
 
         // EV Features
@@ -411,6 +415,7 @@ export function getTargetAsCityConfig(slug: string): CityConfig | undefined {
         phoneNumber: "09 72 50 12 50",
         email: "contact@expertbornerecharge.com",
         type: "PARTNER",
+        targetType: "MIXED",
 
         meta: {
             title: target.heroTitle,

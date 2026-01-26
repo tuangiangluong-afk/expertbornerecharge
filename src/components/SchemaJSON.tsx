@@ -1,9 +1,10 @@
 import { SiteConfig } from "@/lib/sites-config";
+import { CityConfig } from "@/lib/db";
 import { Vehicle } from "@/data/vehicles";
 
 interface SchemaJSONProps {
     type: "LocalBusiness" | "Product";
-    site?: SiteConfig;
+    site?: SiteConfig | CityConfig;
     vehicle?: Vehicle;
 }
 

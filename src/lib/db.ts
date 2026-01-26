@@ -7,6 +7,9 @@ export interface CityConfig {
     aliases?: string[];
     name: string;
     city: string;
+    postalCode?: string;
+    department?: string;
+    region?: string;
     phoneNumber: string;
     email: string;
     heroImage: string;
@@ -34,6 +37,7 @@ export interface CityConfig {
     ga_id?: string;
     gtm_id?: string;
     type?: 'OWNED' | 'PARTNER';
+    targetType?: 'COPRO' | 'MAISON' | 'ENTREPRISE' | 'MIXED';
     partnerPhone?: string;
 }
 
