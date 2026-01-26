@@ -61,8 +61,15 @@ export type SpintaxType =
 export type SpintaxContext = 'HUB' | 'LOCAL';
 
 import type { SiteConfig } from "@/lib/sites-config";
+import type { CityConfig } from "@/lib/db";
 
-export function getSpintaxContent(type: SpintaxType, site: SiteConfig, context: SpintaxContext = 'LOCAL'): string {
+type BaseConfig = {
+    city: string;
+    department: string;
+    region: string;
+};
+
+export function getSpintaxContent(type: SpintaxType, site: BaseConfig | SiteConfig | CityConfig, context: SpintaxContext = 'LOCAL'): string {
     const city = site.city;
     const dept = site.department; // ex: "92"
     const region = site.region;   // ex: "Île-de-France"
