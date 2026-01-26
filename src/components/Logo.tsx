@@ -8,6 +8,8 @@ interface LogoProps {
     isHub?: boolean;
     /** Size variant */
     size?: "sm" | "md" | "lg";
+    /** Theme variant */
+    variant?: "default" | "light";
     /** Theme color (default: blue) */
     themeColor?: 'blue' | 'emerald' | 'amber' | 'purple';
     /** Additional className */
