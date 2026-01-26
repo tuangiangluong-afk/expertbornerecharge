@@ -1,5 +1,5 @@
 import { getCityBySlug, CITIES } from "@/lib/db";
-import { getSpintaxContent } from "@/lib/spintax-irve";
+import { getSpintaxContent } from "@/lib/spintax";
 import { Phone, CheckCircle, Zap, TrendingDown, Home, Building2, Briefcase, MapPin, Award, ArrowRight, Shield, Calendar } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
