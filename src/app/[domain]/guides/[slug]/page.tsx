@@ -5,24 +5,14 @@ import { notFound } from "next/navigation";
 import { StructuredData } from "@/components/StructuredData";
 import { Phone, MapPin, Bus, Clock, CheckCircle } from "lucide-react";
 import type { Metadata } from "next";
-import { supabase } from "@/lib/supabase";
+
 import CallButton from "@/components/CallButton";
 import { getTheme } from "@/lib/theme";
 import { calculateDistance } from "@/lib/distance";
 
-// Helper to find POI (DB + Legacy Fallback)
+// Helper to find POI (Static Config Only)
 async function getPoi(slug: string, tenantId: string) {
-    // 1. Try Supabase
-    const { data } = await supabase
-        .from("pois")
-        .select("*")
-        .eq("tenant_id", tenantId)
-        .eq("slug", slug)
-        .maybeSingle(); // Use maybeSingle to avoid 406 row errors
-
-    if (data) return data;
-
-    // 2. Legacy Fallback (db.ts)
+    // Legacy/Static Fallback (db.ts)
     const city = CITIES[tenantId];
     if (city?.points_of_interest) {
         const allPois = [
