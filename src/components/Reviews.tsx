@@ -1,6 +1,6 @@
 import { Star, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
-import { getSpintaxContent } from "@/lib/spintax-irve";
+import { getSpintaxContent } from "@/lib/spintax";
 import { SiteConfig } from "@/lib/sites-config";
 
 interface ReviewsProps {

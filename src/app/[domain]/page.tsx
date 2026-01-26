@@ -1,5 +1,5 @@
 import { getSiteConfig } from "@/lib/sites-config";
-import { getSpintaxContent } from "@/lib/spintax-irve";
+import { getSpintaxContent } from "@/lib/spintax";
 import { Phone, Calendar, CheckCircle, Star, Zap, Shield, Award, TrendingDown, Home, Building2, Briefcase, MapPin, ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
