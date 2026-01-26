@@ -506,7 +506,7 @@ export default function LeadForm({
                 )}
 
                 {/* Navigation */}
-                <div className="flex gap-3 mt-8">
+                <div className="flex gap-3 mt-8 items-start">
                     {step > 1 && (
                         <button
                             onClick={prevStep}
@@ -533,7 +533,7 @@ export default function LeadForm({
                             <ArrowRight size={20} />
                         </button>
                     ) : (
-                        <>
+                        <div className="w-full">
                             <button
                                 type="submit"
                                 disabled={status === 'loading'}
@@ -559,7 +559,7 @@ export default function LeadForm({
                                 En cliquant sur ce bouton, vous acceptez nos <a href="/cgu" className="underline hover:text-blue-600">CGU</a> et acceptez d'être recontacté par nos installateurs partenaires certifiés IRVE pour votre projet.
                                 Vos données sont sécurisées.
                             </p>
-                        </>
+                        </div>
                     )}
                 </div>
 
