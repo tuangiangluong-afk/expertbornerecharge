@@ -33,7 +33,7 @@ export default async function middleware(req: NextRequest) {
     // 2. Main Hub Logic
     if (isHub) {
         // Admin and specific routes pass through
-        if (path.startsWith("/admin") || path.startsWith("/home") || path.startsWith("/login") || path.startsWith("/api") || path.startsWith("/guides") || path.startsWith("/outils") || path.startsWith("/vehicules") || path.startsWith("/ville")) {
+        if (path.startsWith("/admin") || path.startsWith("/home") || path.startsWith("/login") || path.startsWith("/api") || path.startsWith("/guides") || path.startsWith("/outils") || path.startsWith("/vehicules") || path.startsWith("/ville") || path.startsWith("/solutions")) {
             response = NextResponse.next();
         } else {
             // Rewrite to /home
