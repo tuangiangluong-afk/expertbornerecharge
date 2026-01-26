@@ -71,8 +71,8 @@ type BaseConfig = {
 
 export function getSpintaxContent(type: SpintaxType, site: BaseConfig | SiteConfig | CityConfig, context: SpintaxContext = 'LOCAL'): string {
     const city = site.city;
-    const dept = site.department; // ex: "92"
-    const region = site.region;   // ex: "Île-de-France"
+    const dept = site.department || ""; // ex: "92"
+    const region = site.region || "";   // ex: "Île-de-France"
 
     const templates: Record<SpintaxType, Record<SpintaxContext, string[]>> = {
         meta_title: {
