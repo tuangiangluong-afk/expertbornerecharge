@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CityConfig } from "@/lib/db";
+import { SiteConfig } from "@/lib/sites-config";
 import { slugify } from "@/lib/slugify";
 import CallButton from "@/components/CallButton";
 import { Phone, Mail } from "lucide-react";
@@ -9,15 +10,18 @@ import { getTheme } from "@/lib/theme";
 import { SEO_DESTINATIONS } from "@/lib/seo-data";
 
 interface FooterProps {
-    config: CityConfig;
+    config: CityConfig | SiteConfig;
 }
 
 export function Footer({ config }: FooterProps) {
     if (!config) return null;
 
-    // Fetch Dynamic Content (POIs) from Static Config (db.ts)
-    const hotels = config.points_of_interest?.hotels || [];
-    const nightlife = config.points_of_interest?.nightlife || [];
+    // Normalize Data for both Config Types
+    const neighborhoods = (config as any).neighborhoods || (config as any).quartiers || [];
+    const poi = (config as any).points_of_interest || {};
+    const hotels = poi.hotels || [];
+    const nightlife = poi.nightlife || [];
+
     const theme = getTheme(config.slug);
 
     return (
@@ -36,7 +40,7 @@ export function Footer({ config }: FooterProps) {
                         <div>
                             <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Zones d'Intervention</h5>
                             <ul className="space-y-3 text-sm">
-                                {(config.neighborhoods || []).slice(0, 6).map((zone) => (
+                                {neighborhoods.slice(0, 6).map((zone: string) => (
                                     <li key={zone}>
                                         <Link href={`/ville/${config.slug}#simulateur`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                             <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
@@ -44,7 +48,7 @@ export function Footer({ config }: FooterProps) {
                                         </Link>
                                     </li>
                                 ))}
-                                {(!config.neighborhoods || config.neighborhoods.length === 0) && (
+                                {neighborhoods.length === 0 && (
                                     <li className="text-neutral-500 italic">Tout {config.city} et agglomération</li>
                                 )}
                             </ul>
