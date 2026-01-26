@@ -879,7 +879,7 @@ export function isMainHub(hostname: string): boolean {
     return (
         hostname === 'expertbornerecharge.com' ||
         hostname.includes('localhost') && !hostname.includes('.localhost') ||
-        hostname.includes('expertbornerecharge.vercel.app') ||
+        hostname.includes('.vercel.app') ||
         hostname.includes('192.168.')
     );
 }
