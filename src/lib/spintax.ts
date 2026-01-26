@@ -107,10 +107,10 @@ export function getSpintaxContent(type: SpintaxType, site: BaseConfig | SiteConf
                 "Prix Installation Borne <span class=\"spintax-highlight\">{city}</span>"
             ],
             LOCAL: [
-                "Votre Installateur Borne de Recharge à <span class=\"spintax-highlight\">{city}</span>",
-                "Installation Borne Électrique <span class=\"spintax-highlight\">{city}</span> et Région",
-                "L'Expert de la Recharge à <span class=\"spintax-highlight\">{city}</span>",
-                "Solutions de Recharge IRVE sur <span class=\"spintax-highlight\">{city}</span>"
+                "Trouvez un Installateur Borne à <span class=\"spintax-highlight\">{city}</span>",
+                "Comparateur Installateurs IRVE <span class=\"spintax-highlight\">{city}</span>",
+                "Réseau d'Experts Recharge à <span class=\"spintax-highlight\">{city}</span>",
+                "Devis Installation Borne sur <span class=\"spintax-highlight\">{city}</span>"
             ]
         },
         hero_subtitle: {
@@ -119,8 +119,8 @@ export function getSpintaxContent(type: SpintaxType, site: BaseConfig | SiteConf
                 "Mise en concurrence des meilleurs électriciens de {city}. Service gratuit et sans engagement."
             ],
             LOCAL: [
-                "Intervention rapide pour maison et copropriété. Votre électricien local dédié.",
-                "Expertise locale, SAV réactif et accompagnement complet pour vos aides."
+                "Comparez les meilleurs artisans locaux certifiés IRVE. Devis gratuits sous 24h.",
+                "Mise en relation directe avec les installateurs agréés de votre région."
             ]
         },
         hero_badge: {
@@ -130,9 +130,9 @@ export function getSpintaxContent(type: SpintaxType, site: BaseConfig | SiteConf
                 "Offres Multiples"
             ],
             LOCAL: [
-                "Artisan Local",
-                "Expert {city}",
-                "Intervention 48h"
+                "Réseau National",
+                "Comparateur Local",
+                "Devis Gratuits"
             ]
         },
         // Fallback or generic content can be duplicated or specialized further
@@ -141,33 +141,34 @@ export function getSpintaxContent(type: SpintaxType, site: BaseConfig | SiteConf
                 "Vous cherchez à installer une borne de recharge à {city} ? Notre plateforme compare pour vous les artisans."
             ],
             LOCAL: [
-                "En tant qu'installateur local basé près de {city}, nous intervenons rapidement."
+                "Profitez de notre réseau d'installateurs qualifiés à {city} pour votre projet de recharge.",
+                "Sélectionnez le meilleur professionnel IRVE pour votre installation à {city} grâce à notre comparateur."
             ]
         },
         services_intro: {
             HUB: ["Comparez les offres"],
-            LOCAL: ["Nos prestations"]
+            LOCAL: ["Offres Partenaires"]
         },
         cta_primary: {
             HUB: ["Comparer les devis"],
-            LOCAL: ["Demander mon devis"]
+            LOCAL: ["Comparer 3 devis"]
         },
         cta_secondary: {
             HUB: ["Voir les prix"],
-            LOCAL: ["Nous appeler"]
+            LOCAL: ["Parler à un conseiller"]
         },
         // Reviews, can be shared or split. Sharing for now to keep volume up.
         review_text_1: {
             HUB: ["J'ai pu comparer 3 devis et choisir le moins cher à {city}."],
-            LOCAL: ["Installation parfaite à {city}, technicien très pro."]
+            LOCAL: ["Merci pour la mise en relation rapide avec un électricien à {city}."]
         },
         review_text_2: {
             HUB: ["Service de comparaison très utile pour ma copro."],
-            LOCAL: ["Je recommande cet installateur local."]
+            LOCAL: ["J'ai trouvé un installateur pro grâce à ce site."]
         },
         review_text_3: {
             HUB: ["Rapide et efficace pour trouver un pro."],
-            LOCAL: ["Travail soigné, chantier propre."]
+            LOCAL: ["Excellent service pour comparer les prix sur {city}."]
         },
         review_name_1: { HUB: ["Thomas D."], LOCAL: ["Thomas D."] },
         review_name_2: { HUB: ["Lucie F."], LOCAL: ["Lucie F."] },

@@ -402,10 +402,10 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-4">
-                            Nos forfaits d'installation {site.city}
+                            Types d'installations & Prix Moyens
                         </h2>
                         <p className="text-neutral-600 text-lg">
-                            Des formules tout compris pour maison, copro et pro
+                            Comparez les devis pour maison, copro et professionnels
                         </p>
                     </div>
 
@@ -414,16 +414,16 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
                             {
                                 icon: Home,
                                 title: "Maison Individuelle",
-                                description: "Installation rapide en 48h. Wallbox 7 à 22kW. Garage ou extérieur.",
-                                features: ["Installation en 48h", "Wallbox garantie 2 ans", "Raccordement tableau"],
+                                description: "Pour les particuliers. Borne 7kW à 22kW. Garage ou extérieur.",
+                                features: ["Installation sous 48h", "Éligible Crédit Impôt", "Devis gratuits"],
                                 color: "blue",
                                 href: "/solutions/maison"
                             },
                             {
                                 icon: Building2,
                                 title: "Copropriété",
-                                description: "Solution collective ou individuelle. Accompagnement AG. Prime ADVENIR.",
-                                features: ["Étude technique gratuite", "Présentation en AG", "Jusqu'à 960€ d'aide"],
+                                description: "Pour syndics et résidents. Droit à la prise ou infrastructure collective.",
+                                features: ["Étude technique offerte", "Dossier AG clé en main", "Aides ADVENIR"],
                                 color: "purple",
                                 highlight: true,
                                 href: "/solutions/copropriete"
@@ -431,8 +431,8 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
                             {
                                 icon: Briefcase,
                                 title: "Entreprise / Flotte",
-                                description: "Bornes pour collaborateurs ou flotte. Facturation intégrée. Supervision.",
-                                features: ["Multi-bornes", "Gestion à distance", "Facturation automatique"],
+                                description: "Pour parkings pro. Supervision, facturation et gestion de flotte.",
+                                features: ["Conformité Loi LOM", "Gestion à distance", "Facturation auto"],
                                 color: "emerald",
                                 href: "/solutions/entreprise"
                             }
@@ -471,7 +471,7 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
                                         ))}
                                     </ul>
                                     <div className="text-blue-600 font-bold inline-flex items-center mt-auto">
-                                        En savoir plus <ArrowRight size={16} className="ml-2" />
+                                        Comparer les prix <ArrowRight size={16} className="ml-2" />
                                     </div>
                                 </div>
                             </Link>
@@ -487,10 +487,10 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                            Votre borne installée en <span className="text-blue-400">3 étapes</span>
+                            Trouvez votre installateur en <span className="text-blue-400">3 étapes</span>
                         </h2>
                         <p className="text-neutral-400 text-lg">
-                            Un processus simple et rapide, de la demande à la recharge
+                            Un service de mise en relation simple, rapide et gratuit
                         </p>
                     </div>
 
@@ -498,20 +498,20 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
                         {[
                             {
                                 step: "01",
-                                title: "Demande de devis",
-                                description: "Remplissez le formulaire. Un conseiller vous rappelle sous 24h.",
+                                title: "Décrivez votre projet",
+                                description: "Remplissez le formulaire en 1 minute pour préciser votre besoin.",
                                 icon: Calendar
                             },
                             {
                                 step: "02",
-                                title: "Visite technique",
-                                description: "Un installateur partenaire certifié IRVE évalue votre installation.",
+                                title: "Comparez les offres",
+                                description: "Recevez jusqu'à 3 devis d'installateurs locaux certifiés IRVE.",
                                 icon: Shield
                             },
                             {
                                 step: "03",
-                                title: "Installation",
-                                description: "Pose de votre borne par un installateur certifié IRVE.",
+                                title: "Choisissez le meilleur",
+                                description: "Sélectionnez l'artisan qui vous convient et lancez les travaux.",
                                 icon: Zap
                             }
                         ].map((item, i) => (
@@ -536,7 +536,7 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
                             className="inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-4 text-lg font-bold text-white shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all"
                         >
                             <Zap size={24} />
-                            Comparer les devis gratuits
+                            Comparer les Devis
                         </a>
                     </div>
                 </div>
