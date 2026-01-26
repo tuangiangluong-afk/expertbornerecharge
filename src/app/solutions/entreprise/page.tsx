@@ -3,7 +3,7 @@ import { CheckCircle, Zap, Briefcase, BarChart, Settings, ArrowRight, Truck } fr
 import type { Metadata } from "next";
 import Image from "next/image";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { Footer } from "@/components/Footer";
 import LeadForm from "@/components/LeadForm";
 import FAQ from "@/components/FAQ";
 
