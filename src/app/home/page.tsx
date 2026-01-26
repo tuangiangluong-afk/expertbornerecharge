@@ -8,6 +8,7 @@ import { Footer } from "@/components/Footer";
 import { StructuredData } from "@/components/StructuredData";
 import { getTheme } from "@/lib/theme";
 import { NATIONAL_CONFIG } from "@/config/national";
+import { NATIONAL_TARGETS } from "@/config/national-targets";
 import CallButton from "@/components/CallButton";
 import { InternalMesh } from "@/components/InternalMesh";
 import { CitySearch } from "@/components/CitySearch";
@@ -208,6 +209,25 @@ export default function HomePage() {
                             </div>
                         </Link>
                     </div>
+
+                    {/* ALL OTHER CITIES - SEO MESH */}
+                    <div className="mt-16 pt-16 border-t border-white/5">
+                        <h3 className="text-xl font-bold text-white mb-8 text-center">Et partout ailleurs en France</h3>
+                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            {NATIONAL_TARGETS
+                                .filter(t => !['taxi-lyon', 'taxi-marseille', 'taxi-nice', 'taxi-bordeaux'].includes(t.slug))
+                                .map((city) => (
+                                    <Link
+                                        key={city.slug}
+                                        href={`/ville/${city.slug}`}
+                                        className="px-4 py-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-blue-500/30 transition text-sm text-slate-400 hover:text-white flex items-center gap-2 group"
+                                    >
+                                        <span className="w-1.5 h-1.5 rounded-full bg-blue-600 group-hover:bg-blue-400 transition"></span>
+                                        {city.name}
+                                    </Link>
+                                ))}
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -238,30 +258,30 @@ export default function HomePage() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Vehicles Fleet Section */}
-            <Vehicles
+            < Vehicles
                 city="France entière"
                 slug="home"
                 phoneNumber={NATIONAL_CONFIG.phoneNumber}
             />
 
             {/* Reviews Section */}
-            <div className="bg-white text-neutral-900 border-y border-neutral-200">
+            < div className="bg-white text-neutral-900 border-y border-neutral-200" >
                 <Reviews city="France" tenantSlug="_default" />
-            </div>
+            </div >
 
             {/* FAQ */}
-            <div className="bg-slate-50 text-neutral-900 border-b border-neutral-200">
+            < div className="bg-slate-50 text-neutral-900 border-b border-neutral-200" >
                 <FAQ city="France" type="general" />
-            </div>
+            </div >
 
             {/* FULL INTERNAL LINKING MESH (SEO HUB) */}
-            <InternalMesh />
+            < InternalMesh />
 
             {/* Footer - SEO Optimized */}
-            <footer className="bg-slate-950 border-t border-white/5">
+            < footer className="bg-slate-950 border-t border-white/5" >
                 <div className="container mx-auto">
                     <div className="prose prose-invert max-w-none pt-12 pb-4 text-center">
                         <p className="text-slate-500 text-sm">
@@ -273,7 +293,7 @@ export default function HomePage() {
                         <Footer config={NATIONAL_CONFIG} />
                     </div>
                 </div>
-            </footer>
-        </div>
+            </footer >
+        </div >
     );
 }

@@ -31,10 +31,35 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
         <section className="bg-neutral-900 border-t border-white/5 py-16 px-6">
             <div className="mx-auto max-w-7xl">
                 <div className="grid md:grid-cols-4 gap-12">
-// ... (Services column remains same)
+                    {/* 1. Services */}
+                    <div>
+                        <h4 className="text-white font-bold mb-6 text-lg">Nos Services</h4>
+                        <ul className="space-y-3">
+                            {SEO_SERVICES.map(s => (
+                                <li key={s.slug}>
+                                    <Link href={`/${s.slug}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
+                                        <span className="w-1 h-1 bg-blue-500 rounded-full"></span>
+                                        {s.title}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
 
                     {/* 2. Top Liaisons (Trajets) */}
-// ... (Routes column remains same)
+                    <div>
+                        <h4 className="text-white font-bold mb-6 text-lg">Trajets Fréquents</h4>
+                        <ul className="space-y-3">
+                            {finalRoutes.map(route => (
+                                <li key={route.slug}>
+                                    <Link href={`/trajet/${route.slug}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
+                                        <span className="w-1 h-1 bg-emerald-500 rounded-full"></span>
+                                        Taxi {route.start} - {route.end}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
 
                     {/* 3. Guide Local (Smart Context) */}
                     <div>
