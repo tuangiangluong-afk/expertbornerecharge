@@ -72,7 +72,7 @@ export default function Logo({
                     alt="Expert Borne Recharge"
                     width={220}
                     height={s.height * 1.4}
-                    className={`h-auto object-contain ${isFooter ? 'brightness-0 invert' : ''}`}
+                    className={`h-auto object-contain ${isFooter ? 'brightness-0 invert' : 'dark:brightness-0 dark:invert'}`}
                     style={{ height: s.height * 1.4, width: 'auto' }}
                     priority
                 />
