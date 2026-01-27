@@ -851,6 +851,7 @@ export const SITES: Record<string, SiteConfig> = {
     // 21. Marseille
     "bornerechargemarseille.fr": _marseilleConfig,
     "bornerechargemarseille": _marseilleConfig,
+    "marseille": _marseilleConfig,
 };
 
 // ============================================

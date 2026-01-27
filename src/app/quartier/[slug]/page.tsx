@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { Phone, MapPin, ArrowRight, Car, Building2, CheckCircle, Home } from "lucide-react";
+import { Phone, MapPin, ArrowRight, Building2, CheckCircle, Home } from "lucide-react";
 import CallButton from "@/components/CallButton";
 import Link from "next/link";
 import { getTheme } from "@/lib/theme";

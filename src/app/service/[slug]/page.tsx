@@ -1,6 +1,6 @@
 import { SEO_SERVICES } from "@/lib/seo-data";
 import { notFound } from "next/navigation";
-import { Phone, CheckCircle, ArrowRight, Car, ShieldCheck, Clock, Ambulance } from "lucide-react";
+import { Phone, CheckCircle, ArrowRight, ShieldCheck, Clock, Zap } from "lucide-react";
 import CallButton from "@/components/CallButton";
 import Link from "next/link";
 import { getTheme } from "@/lib/theme";
