@@ -33,7 +33,7 @@ export default function SolutionEntreprise() {
                                 Répondez aux obligations de la Loi LOM, offrez un service à vos collaborateurs et optimisez vos coûts fiscaux.
                             </p>
                         </div>
-                        <div className="lg:w-1/2 relative bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
+                        <div className="lg:w-1/2 relative bg-emerald-50 p-6 rounded-2xl border border-emerald-100" id="simulateur">
                             <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6">
                                 <h3 className="text-center font-bold text-lg mb-4 text-emerald-900">Devis Entreprise / Flotte</h3>
                                 <LeadForm city="France" domain="expertbornerecharge.com" targetType="ENTREPRISE" themeColor="emerald" />
@@ -117,7 +117,7 @@ export default function SolutionEntreprise() {
                             Nous déployons des infrastructures de recharge sur l'ensemble de vos sites en France, avec un interlocuteur unique.
                         </p>
                         <div className="flex flex-col gap-3">
-                            <a href="#top" className="w-full bg-emerald-600 text-white font-bold py-3 rounded-lg text-center hover:bg-emerald-700 transition">
+                            <a href="#simulateur" className="w-full bg-emerald-600 text-white font-bold py-3 rounded-lg text-center hover:bg-emerald-700 transition">
                                 Demander un audit flotte
                             </a>
                             <p className="text-xs text-center text-slate-400">Réponse sous 24h ouvrées</p>

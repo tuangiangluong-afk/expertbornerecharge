@@ -33,7 +33,7 @@ export default function SolutionCopro() {
                                 Découvrez les solutions sans reste à charge pour la copropriété grâce au pré-financement.
                             </p>
                         </div>
-                        <div className="lg:w-1/2 relative bg-purple-50 p-6 rounded-2xl border border-purple-100">
+                        <div className="lg:w-1/2 relative bg-purple-50 p-6 rounded-2xl border border-purple-100" id="simulateur">
                             <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6">
                                 <h3 className="text-center font-bold text-lg mb-4 text-purple-900">Étude & Devis Copropriété</h3>
                                 <LeadForm city="France" domain="expertbornerecharge.com" targetType="COPRO" themeColor="purple" />
@@ -151,9 +151,9 @@ export default function SolutionCopro() {
                             <li className="flex items-center gap-2"><CheckCircle size={16} className="text-purple-400" /> Dossier AG complet</li>
                             <li className="flex items-center gap-2"><CheckCircle size={16} className="text-purple-400" /> Solutions Tiers-Financées</li>
                         </ul>
-                        <button className="w-full bg-white text-purple-900 font-bold py-3 rounded-lg hover:bg-purple-50 transition">
+                        <a href="#simulateur" className="block w-full text-center bg-white text-purple-900 font-bold py-3 rounded-lg hover:bg-purple-50 transition">
                             Contacter un expert Copro
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>

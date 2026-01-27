@@ -40,7 +40,7 @@ export default function SolutionMaison() {
                         </div>
                         <div className="lg:w-1/2 relative">
                             {/* Lead Form Embedded as "Stickyr" or prominent element */}
-                            <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 relative z-10">
+                            <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 relative z-10" id="simulateur">
                                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">
                                     Devis Gratuit & Rapide
                                 </div>
@@ -224,7 +224,7 @@ export default function SolutionMaison() {
                                     <span>Aide État : <strong>-500€</strong></span>
                                 </li>
                             </ul>
-                            <a href="#top" className="block w-full text-center bg-white text-blue-900 font-bold py-3 px-4 rounded-lg mt-6 hover:bg-blue-50 transition">
+                            <a href="#simulateur" className="block w-full text-center bg-white text-blue-900 font-bold py-3 px-4 rounded-lg mt-6 hover:bg-blue-50 transition">
                                 Demander mon devis
                             </a>
                         </div>
