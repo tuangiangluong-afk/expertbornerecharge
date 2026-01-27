@@ -129,16 +129,30 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                             </div>
 
                             {/* H1 - COMPARATOR FOCUS (Distinct from Local Site) */}
-                            <h1
-                                className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight text-slate-900"
-                                dangerouslySetInnerHTML={{ __html: h1Content }}
-                            />
+                            {/* NEUILLY PREMIUM OVERRIDE */}
+                            {slugify(site.city) === 'neuilly-sur-seine' ? (
+                                <h1 className="text-4xl sm:text-5xl lg:text-5xl font-extrabold tracking-tight mb-6 leading-tight text-slate-900">
+                                    Installation de Bornes de Recharge <span className="text-blue-600">Premium</span> à Neuilly-sur-Seine <span className="block text-2xl mt-2 font-normal text-slate-500">(Copropriétés & Hôtels Particuliers)</span>
+                                </h1>
+                            ) : (
+                                <h1
+                                    className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight text-slate-900"
+                                    dangerouslySetInnerHTML={{ __html: h1Content }}
+                                />
+                            )}
 
                             {/* Subtitle - COMPARATOR FOCUS */}
                             <div
                                 className="text-xl mb-8 max-w-xl mx-auto lg:mx-0 text-slate-600"
                                 dangerouslySetInnerHTML={{ __html: introContent }}
                             />
+
+                            {/* NEUILLY NEIGHBORHOODS REASSURANCE */}
+                            {slugify(site.city) === 'neuilly-sur-seine' && (
+                                <p className="text-sm text-slate-500 mb-8 italic border-l-4 border-blue-200 pl-4">
+                                    Intervention rapide secteur <strong>Sablons, Saint-James, Bagatelle, Pont de Neuilly</strong>.
+                                </p>
+                            )}
 
                             {/* Certifications */}
                             <div className="flex flex-wrap gap-3 justify-center lg:justify-start mb-8">
@@ -162,6 +176,18 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                                     <Zap size={24} />
                                     {ctaPrimary}
                                 </a>
+
+                                {/* ANTI-SYNDIC CTA - PREMIUM ONLY */}
+                                {slugify(site.city) === 'neuilly-sur-seine' && (
+                                    <div className="mt-4 sm:mt-0 p-4 bg-purple-50 rounded-xl border border-purple-100 max-w-sm">
+                                        <p className="text-sm text-purple-900 font-medium mb-1">
+                                            <strong>Locataire ou Propriétaire en Copropriété ?</strong>
+                                        </p>
+                                        <p className="text-xs text-purple-700">
+                                            Nous gérons le dossier administratif et la relation avec votre Syndic. Dossier technique remis sous 48h.
+                                        </p>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -171,7 +197,14 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                                 <div className="p-1 bg-gradient-to-r from-blue-600 to-blue-500"></div>
                                 <div className="p-6">
                                     <div className="text-center mb-6">
-                                        <h3 className="text-lg font-bold text-neutral-900">Testez votre éligibilité</h3>
+                                        {/* DYNAMIC FORM TITLE INJECTION */}
+                                        <h3 className="text-lg font-bold text-neutral-900">
+                                            {slugify(site.city) === 'neuilly-sur-seine' ? (
+                                                <>Étude de faisabilité offerte pour votre immeuble à <span className="text-blue-600">{site.city}</span></>
+                                            ) : (
+                                                "Testez votre éligibilité"
+                                            )}
+                                        </h3>
                                         <p className="text-sm text-neutral-500">Réponse immédiate • Gratuit • Sans engagement</p>
                                     </div>
                                     <LeadForm

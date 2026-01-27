@@ -175,7 +175,7 @@ const _neuillyConfig: SiteConfig = {
     targetType: 'MAISON',
     priceRange: 'LUXE',
     theme: 'trust',
-    heroImage: "https://images.unsplash.com/photo-1565514020176-857de743ebc9?q=80&w=2940&auto=format&fit=crop",
+    heroImage: "https://images.unsplash.com/photo-1594535182308-8ff240fde6a6?q=80&w=2865&auto=format&fit=crop", // Porsche Taycan Charging vibe
     description: "Installation borne de recharge Neuilly-sur-Seine. Service premium.",
     meta: {
         title: "Borne de Recharge Neuilly-sur-Seine | Installation Premium",
@@ -185,7 +185,7 @@ const _neuillyConfig: SiteConfig = {
     aidesDisponibles: TEMPLATE_AIDES,
     features: ["Installation Discrète", "Marques Premium", "SAV Prioritaire"],
     localKeywords: ["borne recharge neuilly", "installateur 92", "borne tesla neuilly"],
-    quartiers: ["Sablons", "Saint-James", "Bagatelle"],
+    quartiers: ["Sablons", "Saint-James", "Bagatelle", "Pont de Neuilly"],
     coproprietes: [],
     centresCommerciaux: [],
     coordinates: { lat: 48.8846, lng: 2.2688 }
