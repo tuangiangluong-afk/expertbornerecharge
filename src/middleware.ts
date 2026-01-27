@@ -53,7 +53,14 @@ export default async function middleware(req: NextRequest) {
 
     if (isHub) {
         // HUB Logic
-        if (path.startsWith("/admin") || path.startsWith("/home") || path.startsWith("/login") || path.startsWith("/api") || path.startsWith("/guides") || path.startsWith("/outils") || path.startsWith("/vehicules") || path.startsWith("/ville") || path.startsWith("/solutions") || path.startsWith("/service") || path.startsWith("/quartier") || path.startsWith("/departement") || path.startsWith("/poi") || path.startsWith("/demo")) {
+
+        // Redirect /home/* to /* to prevent duplicate content
+        if (cleanPath.startsWith("/home") && cleanPath !== "/home/sitemap.xml") {
+            const cleanUrl = cleanPath.replace("/home", "") || "/";
+            return applySecurityHeaders(NextResponse.redirect(new URL(cleanUrl + url.search, req.url), 301));
+        }
+
+        if (path.startsWith("/admin") || path.startsWith("/login") || path.startsWith("/api") || path.startsWith("/guides") || path.startsWith("/outils") || path.startsWith("/vehicules") || path.startsWith("/ville") || path.startsWith("/solutions") || path.startsWith("/service") || path.startsWith("/quartier") || path.startsWith("/departement") || path.startsWith("/poi") || path.startsWith("/demo")) {
             response = NextResponse.next();
         } else {
             response = NextResponse.rewrite(
