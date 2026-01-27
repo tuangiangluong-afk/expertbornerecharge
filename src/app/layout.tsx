@@ -12,38 +12,54 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: {
-    template: "%s | Expert Borne Recharge",
-    default: "Expert Borne Recharge - Installation IRVE Particuliers & Pros",
-  },
-  description: "Installation de bornes de recharge pour véhicules électriques. Réseau d'installateurs certifiés IRVE partout en France. Devis gratuit en 24h.",
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+import { headers } from "next/headers";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const domain = headersList.get("x-irve-domain") || "expertbornerecharge.com";
+  const path = headersList.get("x-irve-path") || "";
+
+  const canonicalUrl = `https://${domain}${path}`;
+
+  return {
+    title: {
+      template: "%s | Expert Borne Recharge",
+      default: "Expert Borne Recharge - Installation Bornes IRVE",
+    },
+    description: "Installation de bornes de recharge électriques. Réseau d'installateurs certifiés IRVE. Devis gratuit sous 24h.",
+    metadataBase: new URL(`https://${domain}`),
+    alternates: {
+      canonical: path || "/",
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-  openGraph: {
-    siteName: "Expert Borne Recharge",
-    locale: "fr_FR",
-    type: "website",
-  },
-  icons: {
-    icon: "/icon.png",
-    shortcut: "/favicon.png",
-    apple: "/icon.png",
-  },
-};
+    openGraph: {
+      siteName: "Expert Borne Recharge",
+      locale: "fr_FR",
+      type: "website",
+      url: `https://${domain}${path}`,
+    },
+    icons: {
+      icon: "/icon.png",
+      shortcut: "/favicon.png",
+      apple: "/icon.png",
+    },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#1d4ed8",
 };
+
 
 export default function RootLayout({
   children,

@@ -244,7 +244,7 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
                                 <div className={`p-1 bg-gradient-to-r ${palette.gradient}`}></div>
                                 <div className="p-6">
                                     <div className="text-center mb-6">
-                                        <h3 className="text-lg font-bold text-neutral-900">Testez votre éligibilité</h3>
+                                        <h2 className="text-lg font-bold text-neutral-900">Testez votre éligibilité</h2>
                                         <p className="text-sm text-neutral-500">Réponse immédiate • Gratuit • Sans engagement</p>
                                     </div>
                                     <LeadForm

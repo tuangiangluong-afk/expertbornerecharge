@@ -21,64 +21,69 @@ export default async function middleware(req: NextRequest) {
 
     // Get the path
     const searchParams = req.nextUrl.searchParams.toString();
-    const path = `${url.pathname}${searchParams.length > 0 ? `?${searchParams}` : ""}`;
+    const cleanPath = url.pathname;
+    const path = `${cleanPath}${searchParams.length > 0 ? `?${searchParams}` : ""}`;
 
-    let response: NextResponse;
+    // Helper to apply security headers
+    const applySecurityHeaders = (res: NextResponse) => {
+        res.headers.set("X-Frame-Options", "DENY");
+        res.headers.set("X-Content-Type-Options", "nosniff");
+        res.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+        res.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+        return res;
+    };
 
     // 1. Sitemap Rewrite
     if (path === "/sitemap.xml") {
         if (isHub) {
-            return NextResponse.rewrite(new URL("/home/sitemap.xml", req.url));
+            return applySecurityHeaders(NextResponse.rewrite(new URL("/home/sitemap.xml", req.url)));
         }
-        // Satellites serve their own sitemap at /[domain]/sitemap.xml
-        // Note: For now, we'll rewrite to a generic satellite sitemap generator if needed, 
-        // or just let it fall through to the dynamic route if we implement it there.
-        // Actually, we'll implement a dynamic sitemap in [domain]/sitemap.ts
-        return NextResponse.rewrite(new URL(`/${hostname}/sitemap.xml`, req.url));
+        return applySecurityHeaders(NextResponse.rewrite(new URL(`/${hostname}/sitemap.xml`, req.url)));
     }
 
-    // 2. Main Hub Logic
+    // 2. Routing Logic
+    let response: NextResponse;
+
     if (isHub) {
-        // Admin and specific routes pass through
+        // HUB Logic
         if (path.startsWith("/admin") || path.startsWith("/home") || path.startsWith("/login") || path.startsWith("/api") || path.startsWith("/guides") || path.startsWith("/outils") || path.startsWith("/vehicules") || path.startsWith("/ville") || path.startsWith("/solutions") || path.startsWith("/demo")) {
             response = NextResponse.next();
         } else {
-            // Rewrite to /home
             response = NextResponse.rewrite(
                 new URL(`/home${path === "/" ? "" : path}`, req.url)
             );
         }
     } else {
-        // 3. Satellite Domain Logic
-        let domainKey = hostname;
+        // SATELLITE Logic
 
-        // Handle localhost development (bornerechargeparis.localhost -> bornerechargeparis)
+        // Whitelist shared routes (serve from root app)
+        if (path.startsWith("/guides") || path.startsWith("/vehicules") || path.startsWith("/solutions") || path.startsWith("/ville") || path.startsWith("/api") || path.startsWith("/outils") || path.startsWith("/login") || path.startsWith("/admin")) {
+            return applySecurityHeaders(NextResponse.next());
+        }
+
+        let domainKey = hostname;
         if (hostname.includes(".localhost")) {
             domainKey = hostname.split(".")[0];
             if (domainKey === "www") domainKey = hostname.split(".")[1];
         }
 
-        // Remove www for routing
         if (domainKey.startsWith("www.")) {
             domainKey = domainKey.replace("www.", "");
         }
 
-        // Rewrite to [domain] route - use domainKey for localhost, hostname for production
         const routeParam = hostname.includes(".localhost") ? domainKey : hostname;
         response = NextResponse.rewrite(
             new URL(`/${routeParam}${path}`, req.url)
         );
 
-        // Inject headers for the page to read
         response.headers.set("x-irve-domain", hostname);
         response.headers.set("x-irve-city", domainKey);
     }
 
-    // Security Headers (Applied to ALL responses)
-    response.headers.set("X-Frame-Options", "DENY");
-    response.headers.set("X-Content-Type-Options", "nosniff");
-    response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-    response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+    // Global Path injection for canonicals
+    response.headers.set("x-irve-path", cleanPath);
 
-    return response;
+    return applySecurityHeaders(response);
 }
+
+

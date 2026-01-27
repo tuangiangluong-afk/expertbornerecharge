@@ -1,13 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Phone, Loader2, CheckCircle, Calendar, Clock, ShieldCheck, MessageSquare } from "lucide-react";
+import { Zap, Loader2, CheckCircle, ShieldCheck, Mail, User, Phone } from "lucide-react";
 import { CityConfig } from "@/lib/db";
-import { useLoadScript } from "@react-google-maps/api";
-import { AddressAutocomplete } from "./AddressAutocomplete";
-
-const LIBRARIES: ("places")[] = ["places"];
-
 import { getTheme } from "@/lib/theme";
 
 interface BookingWidgetProps {
@@ -19,64 +14,29 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
     const theme = getTheme(city.slug);
     const classes = theme.classes;
 
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY || "",
-        libraries: LIBRARIES,
-    });
-
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
-    const [priceEstimate, setPriceEstimate] = useState<string | null>(null);
 
-    // Form Stats
-    const [date, setDate] = useState("");
-    const [time, setTime] = useState("");
-    const [pickup, setPickup] = useState("");
-    const [dropoff, setDropoff] = useState("");
+    // Form States
+    const [projectType, setProjectType] = useState("maison");
+    const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
-
-    // Simple Price Estimator Logic (Psychology)
-    const checkPrice = (start: string, end: string) => {
-        const s = start.toLowerCase();
-        const e = end.toLowerCase();
-
-        // Logic: if Airport or Station involved -> Show fixed price badge
-        if (s.includes("aéroport") || e.includes("aéroport") || s.includes("airport") || e.includes("airport") || s.includes("marignane") || e.includes("hyères") || e.includes("orly") || e.includes("roissy")) {
-            setPriceEstimate("~55€ - 85€ (Forfait Aéroport)");
-        } else if (s.includes("gare") || e.includes("gare") || s.includes("tgv") || e.includes("train")) {
-            setPriceEstimate("~25€ - 45€ (Forfait Gare)");
-        } else {
-            setPriceEstimate(null);
-        }
-    };
-
-    const handleLocationSelect = (type: 'pickup' | 'dropoff', address: string) => {
-        if (type === 'pickup') {
-            setPickup(address);
-            checkPrice(address, dropoff);
-        } else {
-            setDropoff(address);
-            checkPrice(pickup, address);
-        }
-    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
 
         const payload = {
-            clientName: "Client Web",
+            name,
             phone,
-            pickupLocation: pickup,
-            dropoffLocation: dropoff,
-            pickupTime: `${date}T${time}:00`,
-            price: priceEstimate,
-            tenantId: city.slug, // Add tenant ID for DB
-            domain: city.domain // Add domain for context
+            projectType,
+            city: city.city,
+            domain: city.domain,
+            timestamp: new Date().toISOString()
         };
 
         try {
-            const res = await fetch("/api/lead", {
+            const res = await fetch("/api/leads", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
@@ -97,102 +57,62 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
 
     if (success) {
         return (
-            <div id="book" className="bg-white p-8 rounded-3xl shadow-xl border border-green-100 relative overflow-hidden h-full flex flex-col items-center justify-center text-center">
+            <div id="estimate" className="bg-white p-8 rounded-3xl shadow-xl border border-green-100 relative overflow-hidden h-full flex flex-col items-center justify-center text-center">
                 <div className="absolute top-0 left-0 w-full h-2 bg-green-500 rounded-t-3xl"></div>
                 <div className="h-20 w-20 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-6 animate-bounce">
                     <CheckCircle size={40} />
                 </div>
                 <h3 className="text-2xl font-bold mb-2 text-neutral-900">Demande Reçue !</h3>
                 <p className="text-neutral-500 mb-6">
-                    Votre chauffeur a reçu la course. Vous allez recevoir une confirmation par SMS/WhatsApp dans quelques instants.
+                    Un expert IRVE vous contactera sous 24h pour votre projet à {city.city}.
                 </p>
                 <button
                     onClick={() => setSuccess(false)}
                     className="text-sm text-neutral-400 hover:text-neutral-900 underline"
                 >
-                    Nouvelle demande
+                    Nouveau projet
                 </button>
             </div>
         );
     }
 
     return (
-        <div id="book" className={`bg-white rounded-3xl shadow-xl border border-neutral-100 relative overflow-hidden ${compact ? 'p-4' : 'p-6 sm:p-8'}`}>
+        <div id="estimate" className={`bg-white rounded-3xl shadow-xl border border-neutral-100 relative overflow-hidden ${compact ? 'p-4' : 'p-6 sm:p-8'}`}>
             <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${classes.gradientFrom} ${classes.gradientTo} rounded-t-3xl`}></div>
 
-            <div className="mb-6">
-                <h3 className="text-2xl font-bold text-neutral-900">Réserver un chauffeur</h3>
-                <p className="text-neutral-500 text-sm">Réponse immédiate • Prix fixe</p>
+            <div className="mb-6 text-center">
+                <h3 className="text-2xl font-bold text-neutral-900">Devis Express IRVE</h3>
+                <p className="text-neutral-500 text-sm">Réponse sous 24h • 100% Gratuit</p>
             </div>
 
-            {/* Trust Header - FOMO - Hidden in compact mode to save space */}
-            {!compact && (
-                <div className="mb-6 flex items-center justify-between rounded-lg bg-green-50 px-4 py-2.5 border border-green-100">
-                    <div className="flex items-center gap-2 text-xs font-bold text-green-700">
-                        <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                        </span>
-                        3 chauffeurs dispo
-                    </div>
-                    <div className="text-xs text-green-600 font-medium">
-                        Réponse &lt; 5 min
-                    </div>
-                </div>
-            )}
-
             <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Locations */}
-                {isLoaded ? (
-                    <>
-                        <AddressAutocomplete
-                            label="Départ"
-                            placeholder="Adresse, Gare, Aéroport..."
-                            value={pickup}
-                            onChange={(val) => setPickup(val)}
-                            onSelect={(addr) => handleLocationSelect('pickup', addr)}
-                            theme={theme}
-                        />
-                        <AddressAutocomplete
-                            label="Arrivée"
-                            placeholder="Destination..."
-                            value={dropoff}
-                            onChange={(val) => setDropoff(val)}
-                            onSelect={(addr) => handleLocationSelect('dropoff', addr)}
-                            theme={theme}
-                        />
-                    </>
-                ) : (
-                    <div className="text-center py-4 text-neutral-400 text-sm">Chargement de Google Maps...</div>
-                )}
+                {/* Project Type */}
+                <div>
+                    <label className="block text-sm font-medium text-neutral-700 mb-2">Type de projet</label>
+                    <select
+                        value={projectType}
+                        onChange={(e) => setProjectType(e.target.value)}
+                        className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-neutral-900 focus:border-blue-500 focus:ring-blue-500/20 outline-none transition"
+                    >
+                        <option value="maison">Maison Individuelle</option>
+                        <option value="copropriete">Copropriété</option>
+                        <option value="entreprise">Entreprise / Pro</option>
+                    </select>
+                </div>
 
-                {/* Date/Time */}
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <label className="block text-sm font-medium text-neutral-700 mb-1">Date</label>
-                        <div className="relative">
-                            <input
-                                type="date"
-                                required
-                                value={date}
-                                onChange={(e) => setDate(e.target.value)}
-                                className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 pl-10 text-neutral-900 focus:border-yellow-400 focus:ring-yellow-400"
-                            />
-                            <Calendar className="absolute left-3 top-3.5 h-5 w-5 text-neutral-400" />
-                        </div>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-neutral-700 mb-1">Heure</label>
-                        <div className="relative">
-                            <input
-                                type="time"
-                                required
-                                value={time}
-                                onChange={(e) => setTime(e.target.value)}
-                                className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 pl-10 text-neutral-900 focus:border-yellow-400 focus:ring-yellow-400"
-                            />
-                            <Clock className="absolute left-3 top-3.5 h-5 w-5 text-neutral-400" />
-                        </div>
+                {/* Name */}
+                <div>
+                    <label className="block text-sm font-medium text-neutral-700 mb-1">Nom complet</label>
+                    <div className="relative">
+                        <input
+                            type="text"
+                            required
+                            placeholder="Jean Dupont"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 pl-10 text-neutral-900 focus:border-blue-500 focus:ring-blue-500/20 outline-none transition"
+                        />
+                        <User className="absolute left-3 top-3.5 h-5 w-5 text-neutral-400" />
                     </div>
                 </div>
 
@@ -206,24 +126,11 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
                             placeholder="06 12 34 56 78"
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
-                            className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 pl-10 text-neutral-900 focus:border-yellow-400 focus:ring-yellow-400"
+                            className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 pl-10 text-neutral-900 focus:border-blue-500 focus:ring-blue-500/20 outline-none transition"
                         />
                         <Phone className="absolute left-3 top-3.5 h-5 w-5 text-neutral-400" />
                     </div>
                 </div>
-
-                {/* Estimate */}
-                {priceEstimate && (
-                    <div className="bg-yellow-50 border border-yellow-100 rounded-xl p-3 flex items-start gap-3">
-                        <div className="p-1.5 bg-yellow-100 rounded-full text-yellow-700 mt-0.5">
-                            <CheckCircle size={16} />
-                        </div>
-                        <div>
-                            <p className="text-sm font-bold text-yellow-800">Estimation : {priceEstimate}</p>
-                            <p className="text-xs text-yellow-600">Le prix exact vous sera confirmé par SMS.</p>
-                        </div>
-                    </div>
-                )}
 
                 <button
                     type="submit"
@@ -236,26 +143,30 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
                             Envoi en cours...
                         </>
                     ) : (
-                        "Commander mon Chauffeur"
+                        <span className="flex items-center gap-2">
+                            <Zap size={18} />
+                            Obtenir mon Devis
+                        </span>
                     )}
                 </button>
 
-                <p className="text-xs text-center text-neutral-400 mt-4">
-                    Paiement à bord (CB/Espèces). Annulation gratuite.
+                <p className="text-[10px] text-center text-neutral-400 mt-4 leading-relaxed">
+                    Vos données sont protégées. En validant, vous acceptez d'être recontacté pour votre projet de borne.
                 </p>
 
                 {/* Trust Badges */}
                 <div className="mt-4 flex items-center justify-center gap-4 text-xs text-neutral-500">
                     <span className="flex items-center gap-1.5">
                         <ShieldCheck size={14} className="text-green-500" />
-                        Pas de prépaiement
+                        Certifié IRVE
                     </span>
                     <span className="flex items-center gap-1.5">
-                        <MessageSquare size={14} className="text-blue-500" />
-                        Confirmation SMS
+                        <Mail size={14} className="text-blue-500" />
+                        Étude par email
                     </span>
                 </div>
             </form>
         </div>
     );
 }
+

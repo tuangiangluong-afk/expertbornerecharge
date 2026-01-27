@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: "Mentions Légales - Expert Borne Recharge",
     description: "Mentions légales, éditeur, hébergement et politique de confidentialité du réseau Expert Borne Recharge.",
     alternates: {
-        canonical: "https://taxifrance.fr/mentions-legales",
+        canonical: "https://expertbornerecharge.com/mentions-legales",
     },
 };
 
@@ -38,7 +38,7 @@ export default function MentionsLegales() {
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className="mb-4 text-2xl font-bold text-blue-900">1. Éditeur du Site</h2>
                         <p>
-                            Le site <strong>Expert Borne Recharge</strong> (taxifrance.fr) est édité par la société <strong>MEDIASHMAN</strong>.
+                            Le site <strong>Expert Borne Recharge</strong> (expertbornerecharge.com) est édité par la société <strong>MEDIASHMAN</strong>.
                         </p>
                         <ul className="list-none space-y-2 pl-0">
                             <li><strong>Forme juridique :</strong> Société (SASU/SARL selon Kbis)</li>

@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         title: `Taxi ${quartier.name} - ${quartier.city} | Réservation Immédiate`,
         description: `Commandez votre taxi pour ${quartier.name} à ${quartier.city}. Chauffeur local, arrivée rapide, prix fixe. Service disponible 24h/24.`,
         alternates: {
-            canonical: `https://taxifrance.fr/quartier/${resolvedParams.slug}`,
+            canonical: `https://expertbornerecharge.com/quartier/${resolvedParams.slug}`,
         }
     };
 }

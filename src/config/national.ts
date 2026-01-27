@@ -2,34 +2,35 @@ import { CityConfig } from "@/lib/db";
 
 export const NATIONAL_CONFIG: CityConfig = {
     slug: "home",
-    domain: "taxifrance.fr",
+    domain: "expertbornerecharge.com",
     name: "Expert Borne Recharge",
-    city: "Paris", // Default center for logic/SEO
-    phoneNumber: "09 72 50 12 50",
-    email: "contact@taxifrance.fr",
-    heroImage: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2940&auto=format&fit=crop",
-    description: "Le 1er réseau de chauffeurs de taxi indépendants et VTC en France. Réservation directe sans commission. Gares, Aéroports et Médical.",
+    city: "France",
+    phoneNumber: "01 84 80 00 00",
+    email: "contact@expertbornerecharge.com",
+    heroImage: "/images/generated/modern-home.png",
+    description: "Le réseau n°1 d'installateurs de bornes de recharge en France. Devis gratuit, installation rapide, certifié Qualifelec IRVE.",
     meta: {
-        title: "Expert Borne Recharge | Réseau National de Chauffeurs Indépendants",
-        description: "Réservez votre taxi partout en France. Chauffeurs locaux, tarifs réglementés et service de qualité. Gare, Aéroport et Transport Médical."
+        title: "Expert Borne Recharge | Installation Bornes IRVE partout en France",
+        description: "Installation de bornes de recharge pour véhicules électriques. Réseau d'installateurs certifiés IRVE. Devis gratuit en 24h."
     },
     features: [
-        "Réseau National Indépendant",
-        "Zéro Commission",
-        "Chauffeurs Locaux",
-        "Transport Médical Agréé"
+        "Installation Certifiée IRVE",
+        "Devis Gratuit 24h",
+        "Aides & Subventions ADVENIR",
+        "Garantie Décennale"
     ],
     pricing: {
-        base: "Prix Fixe",
-        description: "Tarifs réglementés ou forfaits convenus à l'avance"
+        base: "Sur Devis",
+        description: "Devis gratuit personnalisé selon votre installation"
     },
-    hospitals: [], // Not relevant for national hub
+    hospitals: [],
     stations: [],
     neighborhoods: [],
     points_of_interest: {
-        hotels: ["Hôtel Ritz Paris", "Negresco Nice", "InterContinental Lyon"],
-        nightlife: ["Moulin Rouge", "Opéra Garnier", "Disneyland Paris", "Stade de France"],
-        monuments: ["Tour Eiffel", "Château de Versailles", "Mont Saint-Michel", "Notre-Dame de la Garde"],
-        parking_difficulty: "Variable"
+        hotels: [],
+        nightlife: [],
+        monuments: [],
+        parking_difficulty: "N/A"
     }
 };
+

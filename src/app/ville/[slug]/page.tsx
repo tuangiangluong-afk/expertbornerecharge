@@ -198,13 +198,13 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                                 <div className="p-6">
                                     <div className="text-center mb-6">
                                         {/* DYNAMIC FORM TITLE INJECTION */}
-                                        <h3 className="text-lg font-bold text-neutral-900">
+                                        <h2 className="text-lg font-bold text-neutral-900">
                                             {slugify(site.city) === 'neuilly-sur-seine' ? (
                                                 <>Étude de faisabilité offerte pour votre immeuble à <span className="text-blue-600">{site.city}</span></>
                                             ) : (
                                                 "Testez votre éligibilité"
                                             )}
-                                        </h3>
+                                        </h2>
                                         <p className="text-sm text-neutral-500">Réponse immédiate • Gratuit • Sans engagement</p>
                                     </div>
                                     <LeadForm

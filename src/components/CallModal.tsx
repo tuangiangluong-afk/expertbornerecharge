@@ -80,10 +80,10 @@ export default function CallModal({
                             <Phone size={32} className="text-white fill-current" />
                         </div>
                         <h3 className="text-2xl font-bold text-white">
-                            Taxi {cityName}
+                            Expert IRVE {cityName}
                         </h3>
                         <p className="text-white/90 font-medium">
-                            Centrale de réservation
+                            Installation & Devis gratuit
                         </p>
                     </div>
 
@@ -99,8 +99,8 @@ export default function CallModal({
                                 <Clock size={20} className={`${theme.classes.text}`} />
                             </div>
                             <div>
-                                <p className="text-sm font-semibold text-neutral-900">Disponible 24h/24 & 7j/7</p>
-                                <p className="text-xs text-neutral-500">Temps d'attente estimé: &lt; 5 min</p>
+                                <p className="text-sm font-semibold text-neutral-900">Devis Rapide sous 24h</p>
+                                <p className="text-xs text-neutral-500">Étude technique & aides d'État</p>
                             </div>
                         </div>
 
@@ -109,10 +109,11 @@ export default function CallModal({
                                 <ShieldCheck size={20} className={`${theme.classes.text}`} />
                             </div>
                             <div>
-                                <p className="text-sm font-semibold text-neutral-900">Chauffeurs Agréés</p>
-                                <p className="text-xs text-neutral-500">Service officiel & sécurisé</p>
+                                <p className="text-sm font-semibold text-neutral-900">Installateurs Certifiés</p>
+                                <p className="text-xs text-neutral-500">Service certifié IRVE & Qualifelec</p>
                             </div>
                         </div>
+
                     </div>
 
                     <div className="space-y-3">

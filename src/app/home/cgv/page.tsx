@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: "Conditions Générales de Vente - Expert Borne Recharge",
     description: "Consultez les CGV du réseau Expert Borne Recharge : réservation de taxis et VTC, tarifs réglementés, annulations et responsabilités.",
     alternates: {
-        canonical: "https://taxifrance.fr/cgv",
+        canonical: "https://expertbornerecharge.com/cgv",
     },
 };
 

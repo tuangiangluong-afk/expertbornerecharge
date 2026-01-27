@@ -4,7 +4,7 @@ import { SEO_GARES } from '@/lib/seo-gares';
 
 export async function GET() {
     const INDEXNOW_KEY = "451408f3764b4c80b96839be70de0056";
-    const HOST = "taxifrance.fr";
+    const HOST = "expertbornerecharge.com";
     const KEY_LOCATION = `https://${HOST}/${INDEXNOW_KEY}.txt`;
 
     // Collect all URLs to ping

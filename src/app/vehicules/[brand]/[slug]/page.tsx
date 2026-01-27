@@ -120,7 +120,7 @@ export default async function VehiclePage({ params }: { params: Promise<{ slug: 
                                         <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-slate-100 opacity-50">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
-                                                    <img src="https://api.iconify.design/mdi:power-socket-eu.svg" className="w-6 h-6 opacity-50" alt="Prise" />
+                                                    <img src="https://api.iconify.design/mdi:power-socket-eu.svg" width="24" height="24" className="w-6 h-6 opacity-50" alt="Prise" />
                                                 </div>
                                                 <span className="font-medium text-slate-600">Prise domestique (2.3kW)</span>
                                             </div>

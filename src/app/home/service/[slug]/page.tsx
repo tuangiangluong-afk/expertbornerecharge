@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         title: `${service.title} - Service National | Expert Borne Recharge`,
         description: `${service.description}. Service disponible dans toute la France avec notre réseau de chauffeurs partenaires.`,
         alternates: {
-            canonical: `https://taxifrance.fr/service/${resolvedParams.slug}`,
+            canonical: `https://expertbornerecharge.com/service/${resolvedParams.slug}`,
         }
     };
 }
@@ -211,10 +211,11 @@ export default async function NationalServicePage({ params }: { params: Promise<
                                     <ShieldCheck size={120} />
                                 </div>
                                 <div className="relative z-10">
-                                    <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                                    <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
                                         <ShieldCheck className="text-emerald-400" />
                                         La Sécurité avant tout
-                                    </h3>
+                                    </h2>
+
                                     <ul className="space-y-4 text-neutral-300">
                                         <li className="flex items-start gap-3">
                                             <CheckCircle className="text-emerald-500 shrink-0 mt-1" size={18} />
@@ -279,7 +280,7 @@ export default async function NationalServicePage({ params }: { params: Promise<
                 <div className="grid md:grid-cols-3 gap-12">
                     <div className="md:col-span-2">
                         <div className="prose prose-lg prose-neutral max-w-none text-neutral-600">
-                            <h2 className="text-3xl font-bold text-neutral-900 mb-6">Pourquoi choisir Expert Borne Recharge pour {service.title.toLowerCase()} ?</h2>
+                            <h2 className="text-3xl font-bold text-neutral-900 mb-6">Pourquoi choisir Expert Borne Recharge ?</h2>
                             <p>
                                 Notre service de <strong>{service.title}</strong> est conçu pour répondre aux besoins des particuliers et des professionnels exigeants.
                                 Grâce à notre maillage national, nous pouvons vous garantir une prise en charge rapide, où que vous soyez.
@@ -336,7 +337,7 @@ export default async function NationalServicePage({ params }: { params: Promise<
                         <div className="sticky top-24">
                             <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-neutral-100">
                                 <div className="bg-neutral-900 p-4 text-white text-center">
-                                    <p className="font-bold">Commander un Taxi</p>
+                                    <p className="font-bold">Comparer les Bornes</p>
                                 </div>
                                 <div className="p-4">
                                     <BookingWidget city={city} compact={true} />

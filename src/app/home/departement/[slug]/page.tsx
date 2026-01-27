@@ -16,9 +16,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const dept = DEPARTMENTS[resolvedParams.slug];
     if (!dept) return { title: "Département introuvable" };
 
-    return {
-        title: `Taxi ${dept.name} (${dept.code}) | Réseau Expert Borne Recharge`,
-        description: `Trouvez un taxi officiel dans le ${dept.code}. Réseau de chauffeurs indépendants à ${dept.name}. Réservation directe sans commission.`,
+    title: `Installation Borne de Recharge ${dept.name} (${dept.code}) | Expert Borne Recharge`,
+        description: `Installateur IRVE certifié dans le ${dept.code} (${dept.name}). Devis gratuit pour borne de recharge électrique sous 24h.`,
     };
 }
 
@@ -42,21 +41,16 @@ export default async function DepartmentPage({ params }: Props) {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Accueil",
-                "item": "https://taxifrance.fr/home"
+                "item": "https://expertbornerecharge.com"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
-                "name": "Île-de-France",
-                "item": "https://taxifrance.fr/home/reserver-taxi-ile-de-france"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
                 "name": dept.name,
-                "item": `https://taxifrance.fr/home/departement/${dept.slug}`
+                "item": `https://expertbornerecharge.com/home/departement/${dept.slug}`
             }
         ]
+
     };
 
     return (
@@ -90,7 +84,7 @@ export default async function DepartmentPage({ params }: Props) {
                                 Département {dept.code}
                             </span>
                             <h1 className="text-5xl font-black tracking-tight sm:text-7xl mb-6 shadow-black drop-shadow-lg">
-                                Taxis <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">{dept.name}</span>
+                                Installation Borne <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">{dept.name}</span>
                             </h1>
                             <p className="text-xl text-neutral-300 mb-10 leading-relaxed max-w-xl">
                                 {dept.description}
@@ -126,8 +120,8 @@ export default async function DepartmentPage({ params }: Props) {
                                 Villes du réseau {dept.name}
                             </h2>
                             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-                                Sélectionnez votre ville de départ pour accéder directement au chauffeur local.
-                                <span className="font-semibold text-slate-800"> Réservation en direct, 0% commission.</span>
+                                Sélectionnez votre ville pour trouver l'installateur certifié IRVE le plus proche.
+                                <span className="font-semibold text-slate-800"> Devis gratuit sous 24h.</span>
                             </p>
                         </div>
 
@@ -147,12 +141,15 @@ export default async function DepartmentPage({ params }: Props) {
                                                 src={
                                                     city.heroImage && !city.heroImage.startsWith("/")
                                                         ? city.heroImage
-                                                        : "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2940&auto=format&fit=crop"
+                                                        : "/images/generated/modern-home.png"
                                                 }
-                                                alt={`Taxi ${city.city} (${dept.code}) - Réservation VTC & Taxi`}
+                                                alt={`Installation borne recharge ${city.city} (${dept.code}) - Expert IRVE`}
+                                                width="400"
+                                                height="200"
                                                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 filter brightness-[0.6]"
                                                 loading="lazy"
                                             />
+
                                             {/* Gradient Overlay */}
                                             <div className={`absolute inset-0 bg-gradient-to-t ${dept.heroColor} opacity-60 mix-blend-multiply`} />
 
@@ -184,8 +181,8 @@ export default async function DepartmentPage({ params }: Props) {
 
                                             <div className="mt-auto">
                                                 <div className="w-full flex items-center justify-center gap-3 rounded-2xl bg-slate-900 px-6 py-4 text-sm font-bold text-white transition-all duration-300 group-hover:bg-blue-600 shadow-xl shadow-slate-900/10 group-hover:shadow-blue-600/30">
-                                                    <Phone size={18} />
-                                                    Commander un Taxi
+                                                    <Zap size={18} />
+                                                    Comparer les Devis
                                                 </div>
                                             </div>
                                         </div>
@@ -199,8 +196,8 @@ export default async function DepartmentPage({ params }: Props) {
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-900 mb-2">Zone en cours de déploiement</h3>
                                 <p className="text-slate-500 mb-8">Aucun taxi partenaire référencé sur cette zone pour le moment.</p>
-                                <a href="mailto:contact@taxifrance.fr" className="inline-flex items-center font-bold text-blue-600 hover:text-blue-800 transition">
-                                    Devenir le premier partenaire sur le {dept.code} <ArrowUpRight size={16} className="ml-1" />
+                                <a href="mailto:contact@expertbornerecharge.com" className="inline-flex items-center font-bold text-blue-600 hover:text-blue-800 transition">
+                                    Devenir partenaire sur le {dept.code} <ArrowUpRight size={16} className="ml-1" />
                                 </a>
                             </div>
                         )}

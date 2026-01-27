@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         title: `Taxi ${poi} - Réservation & Transfert | Expert Borne Recharge`,
         description: `Réservez votre taxi pour ${poi}. Chauffeur privé, berline confortable et prix fixe. Service national disponible 24h/24.`,
         alternates: {
-            canonical: `https://taxifrance.fr/guides/${resolvedParams.slug}`,
+            canonical: `https://expertbornerecharge.com/guides/${resolvedParams.slug}`,
         }
     };
 }
@@ -106,11 +106,11 @@ export default async function NationalGuidePage({ params }: { params: Promise<{ 
                         Destination Populaire
                     </span>
                     <h1 className="text-4xl md:text-6xl font-black mb-6">
-                        Taxi pour <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">{poi}</span>
+                        Borne de recharge à <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">{poi}</span>
                     </h1>
                     <p className="text-xl text-neutral-300 max-w-2xl mx-auto">
-                        Votre chauffeur vous dépose au pied de votre destination.
-                        Service porte-à-porte premium partout en France.
+                        Installation certifiée IRVE pour votre véhicule électrique.
+                        Expertise locale partout en France.
                     </p>
                 </div>
             </header>
@@ -122,24 +122,25 @@ export default async function NationalGuidePage({ params }: { params: Promise<{ 
                         <div className="bg-white rounded-3xl p-8 shadow-xl border border-neutral-100">
                             <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                                 <MapPin className="text-blue-600" />
-                                Se rendre à {poi} en Taxi
+                                Installation de borne à {poi}
                             </h2>
                             <div className="prose prose-neutral max-w-none text-neutral-600">
                                 <p>
-                                    Vous prévoyez de vous rendre à <strong>{poi}</strong> ? Évitez le stress des transports en commun et du stationnement.
-                                    Le réseau Expert Borne Recharge vous garantit une arrivée en toute sérénité.
+                                    Vous habitez ou travaillez à proximité de <strong>{poi}</strong> ? Équipez-vous d'une solution de recharge performante.
+                                    Le réseau Expert Borne Recharge vous accompagne de l'étude technique à la pose.
                                 </p>
                                 <p>
-                                    Nos chauffeurs partenaires connaissent parfaitement les accès pour <strong>{poi}</strong> et vous déposeront au plus près de l'entrée.
-                                    Que vous veniez d'une gare, d'un aéroport ou de votre domicile, nous assurons la liaison.
+                                    Nos techniciens partenaires interviennent rapidement à <strong>{poi}</strong> pour installer votre borne (maison, copropriété ou entreprise).
+                                    Profitez des aides de l'État pour votre installation IRVE.
                                 </p>
-                                <h3 className="font-bold text-neutral-900 mt-6 mb-3">Les avantages Expert Borne Recharge</h3>
+                                <h2 className="text-xl font-bold text-neutral-900 mt-6 mb-3">Les avantages Expert Borne Recharge</h2>
                                 <ul className="space-y-2">
-                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Accès prioritaire (voies de bus)</li>
-                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Dépose-minute au plus près</li>
-                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Coffre spacieux pour vos bagages</li>
+                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Électriciens Certifiés IRVE</li>
+                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Devis Gratuit sous 24h</li>
+                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Garantie Matériel & Main d'œuvre</li>
                                 </ul>
                             </div>
+
                         </div>
 
                         {/* Reviews mockup for this POI */}
@@ -178,8 +179,8 @@ export default async function NationalGuidePage({ params }: { params: Promise<{ 
                         <div className="sticky top-24 space-y-6">
                             <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-neutral-100">
                                 <div className="bg-blue-600 p-4 text-white text-center">
-                                    <p className="font-bold">Réserver votre chauffeur</p>
-                                    <p className="text-xs opacity-80">Confirmation immédiate par SMS</p>
+                                    <p className="font-bold">Votre Devis Gratuit</p>
+                                    <p className="text-xs opacity-80">Réponse immédiate en ligne</p>
                                 </div>
                                 <div className="p-4">
                                     <BookingWidget city={city} compact={true} />
