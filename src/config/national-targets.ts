@@ -377,7 +377,7 @@ export function getTargetAsCityConfig(slug: string): CityConfig | undefined {
         city: target.name,
         name: `Expert Borne ${target.name}`,
         domain: `expertbornerecharge.com/ville/${target.slug}`,
-        heroImage: target.heroImage || "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=2672&auto=format&fit=crop",
+        heroImage: target.heroImage || "/images/generated/city-street.png",
 
         postalCode: target.zip,
         department: target.zip.substring(0, 2),

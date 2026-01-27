@@ -60,7 +60,11 @@ export function getNearbyCities(currentSlug: string, limit: number = 4): SiteCon
     // Sort by distance ASC
     measured.sort((a, b) => a.distance - b.distance);
 
-    return measured.slice(0, limit);
+    // Filter by distance (max 100km)
+    const nearby = measured.filter(c => c.distance < 100);
+
+    // Return top N
+    return nearby.slice(0, limit);
 }
 
 function getFallbackCities(currentSlug: string, limit: number): SiteConfig[] {

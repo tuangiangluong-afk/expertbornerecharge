@@ -103,7 +103,7 @@ const _hubConfig: SiteConfig = {
     targetType: 'MIXED',
     priceRange: 'STANDARD',
     theme: 'premium', // Vaisseau Mère = Dark/Tech
-    heroImage: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=2944&auto=format&fit=crop",
+    heroImage: "/images/generated/modern-home.png",
     description: "Le réseau n°1 d'installateurs de bornes de recharge en France. Devis gratuit, installation rapide, certifié Qualifelec IRVE.",
     meta: {
         title: "Expert Borne Recharge | Installation Borne de Recharge France",
@@ -144,7 +144,7 @@ const _parisConfig: SiteConfig = {
     targetType: 'COPRO',
     priceRange: 'PREMIUM',
     theme: 'trust',
-    heroImage: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2946&auto=format&fit=crop",
+    heroImage: "/images/generated/city-street.png",
     description: "Installation borne de recharge Paris. Expert copropriété et parking souterrain.",
     meta: {
         title: "Installation Borne de Recharge Paris | Devis Gratuit Copropriété",

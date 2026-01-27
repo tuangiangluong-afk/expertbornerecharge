@@ -17,9 +17,9 @@ export default function SolutionCopro() {
             <Header isHub={true} variant="default" />
 
             {/* HERO */}
-            <section className="relative pt-24 pb-16 bg-white overflow-hidden">
+            <section className="relative pt-20 pb-12 lg:pt-24 bg-white overflow-hidden">
                 <div className="container mx-auto px-4">
-                    <div className="flex flex-col lg:flex-row gap-12 items-center">
+                    <div className="flex flex-col lg:flex-row gap-12 items-start pt-8">
                         <div className="lg:w-1/2">
                             <div className="inline-flex items-center rounded-full bg-purple-100 px-4 py-1.5 text-sm font-bold text-purple-800 mb-6 border border-purple-200">
                                 <Building2 size={16} className="mr-2" />

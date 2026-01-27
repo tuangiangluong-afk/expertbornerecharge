@@ -54,6 +54,7 @@ export default function Header({
                     {/* Desktop Navigation (Hub Only) */}
                     {isHub && (
                         <div className={`hidden md:flex items-center gap-6 text-sm font-medium ${variant === "light" ? "text-slate-300" : "text-slate-600"}`}>
+                            <Link href="/vehicules" className="hover:text-blue-500 transition">Véhicules</Link>
                             <Link href="/guides" className="hover:text-blue-500 transition">Guides</Link>
                             <Link href="/outils/generateur-lettre-syndic" className="hover:text-blue-500 transition">Outils</Link>
                         </div>

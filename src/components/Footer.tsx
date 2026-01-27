@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SITES } from "@/lib/sites-config"; // Import SITES
 import { CityConfig } from "@/lib/db";
 import { SiteConfig } from "@/lib/sites-config";
 import { slugify } from "@/lib/slugify";
@@ -35,7 +36,7 @@ export function Footer({ config }: FooterProps) {
                 </p>
 
                 <div className="border-t border-white/10 pt-12 mt-12">
-                    <div className="grid md:grid-cols-3 gap-12 text-left max-w-6xl mx-auto">
+                    <div className="grid md:grid-cols-4 gap-8 text-left max-w-7xl mx-auto">
                         {/* Column 1: Zones / Quartiers */}
                         <div>
                             <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Zones d'Intervention</h5>
@@ -54,7 +55,109 @@ export function Footer({ config }: FooterProps) {
                             </ul>
                         </div>
 
-                        {/* Column 2: Services EV */}
+                        {/* Column 2: Smart Network (New SEO Mesh) */}
+                        <div>
+                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">
+                                {(() => {
+                                    if (config.slug === 'home') return 'Notre Réseau';
+
+                                    // RE-USE EXACT LOGIC as below to determine title
+                                    const uniqueSitesMap = new Map();
+                                    Object.values(SITES).forEach(site => {
+                                        if (site.slug !== 'home' && site.slug !== config.slug) {
+                                            uniqueSitesMap.set(site.slug, site);
+                                        }
+                                    });
+                                    const uniqueSites = Array.from(uniqueSitesMap.values());
+                                    const currentSite = config as SiteConfig;
+
+                                    // DEBUG: Why is Lille seeing neighbors?
+                                    // Filter sites that match strictly
+                                    const strictNeighbors = uniqueSites.filter(s => {
+                                        if (!s.department || !currentSite.department) return false; // Safety
+                                        const sameDept = s.department === currentSite.department;
+                                        const sameRegion = s.region && currentSite.region && s.region === currentSite.region;
+                                        return sameDept || sameRegion;
+                                    });
+
+                                    const hasLocal = strictNeighbors.length > 0;
+
+                                    if (config.slug === 'bornerechargelille') {
+                                        console.log(`[FOOTER DEBUG] Lille Neighbors Found: ${strictNeighbors.length}`);
+                                        if (strictNeighbors.length > 0) {
+                                            console.log(`[FOOTER DEBUG] Neighbors: ${strictNeighbors.map(s => s.slug).join(', ')}`);
+                                        }
+                                    }
+
+                                    return hasLocal ? 'À proximité' : 'Notre Réseau';
+                                })()}
+                            </h5>
+                            <ul className="space-y-3 text-sm">
+                                {(() => {
+                                    // 1. Get UNIQUE sites
+                                    const uniqueSitesMap = new Map();
+                                    Object.values(SITES).forEach(site => {
+                                        if (site.slug !== 'home' && site.slug !== config.slug) {
+                                            uniqueSitesMap.set(site.slug, site);
+                                        }
+                                    });
+                                    const uniqueSites = Array.from(uniqueSitesMap.values());
+
+                                    let nearbySites = [];
+                                    const currentSite = config as SiteConfig;
+
+                                    if (config.slug === 'home') {
+                                        // HUB: Top Cities
+                                        const topSlugs = ['bornerechargeparis', 'bornerechargelyon', 'bornerechargebordeaux', 'bornerechargetoulouse', 'bornerechargenice'];
+                                        nearbySites = uniqueSites.filter(s => topSlugs.includes(s.slug));
+                                    } else {
+                                        // LOCAL Attempt
+                                        const sameDept = uniqueSites.filter(s => s.department === currentSite.department);
+                                        const sameRegion = uniqueSites.filter(s => s.region === currentSite.region && s.department !== currentSite.department);
+
+                                        const hasTrueLocal = sameDept.length > 0 || sameRegion.length > 0;
+
+                                        if (hasTrueLocal) {
+                                            // Normal "Nearby" behavior
+                                            const combined = [...sameDept, ...sameRegion, ...uniqueSites];
+                                            const seen = new Set();
+                                            for (const s of combined) {
+                                                if (!seen.has(s.slug) && nearbySites.length < 5) {
+                                                    seen.add(s.slug);
+                                                    nearbySites.push(s);
+                                                }
+                                            }
+                                        } else {
+                                            // ISOLATED CITY (e.g. Lille) -> Fallback to National Top Cities
+                                            // This ensures we don't show "À proximité" title with unrelated cities
+                                            const topSlugs = ['bornerechargeparis', 'bornerechargelyon', 'bornerechargebordeaux', 'bornerechargetoulouse', 'bornerechargenice'];
+                                            nearbySites = uniqueSites.filter(s => topSlugs.includes(s.slug));
+
+                                            // If we still need more, fill with randoms
+                                            if (nearbySites.length < 5) {
+                                                const others = uniqueSites.filter(s => !topSlugs.includes(s.slug)).slice(0, 5 - nearbySites.length);
+                                                nearbySites = [...nearbySites, ...others];
+                                            }
+                                        }
+                                    }
+
+                                    return nearbySites.map((site) => (
+                                        <li key={site.slug}>
+                                            <Link href={`https://${site.domain}`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                                <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
+                                                {/* If National Network (Hub or Isolated), display "Installateur [City]" */}
+                                                {/* If Local Neighbor, display "Agence [City]" */}
+                                                {(config.slug === 'home' || (site.department !== (config as SiteConfig).department && site.region !== (config as SiteConfig).region))
+                                                    ? `Installation borne recharge ${site.city}`
+                                                    : `Agence ${site.city}`}
+                                            </Link>
+                                        </li>
+                                    ));
+                                })()}
+                            </ul>
+                        </div>
+
+                        {/* Column 3: Services EV */}
                         <div>
                             <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Nos Solutions</h5>
                             <ul className="space-y-3 text-sm">
@@ -77,34 +180,24 @@ export function Footer({ config }: FooterProps) {
                                     </Link>
                                 </li>
                                 <li>
+                                    <Link href="/vehicules" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                        <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
+                                        Véhicules & Modèles
+                                    </Link>
+                                </li>
+                                <li>
                                     <Link href="/contact" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Devenir Installateur Partenaire
+                                        Devenir Partenaire
                                     </Link>
                                 </li>
                             </ul>
                         </div>
 
-                        {/* Column 3: Contact */}
+                        {/* Column 4: Contact */}
                         <div>
                             <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Contact</h5>
                             <ul className="space-y-6">
-                                <li>
-                                    <CallButton
-                                        phoneNumber={config.phoneNumber}
-                                        cityName={config.city}
-                                        theme={theme}
-                                        className="flex items-start gap-4 text-neutral-400 hover:text-white transition group text-left"
-                                    >
-                                        <div className={`p-2 rounded-lg bg-white/5 group-hover:${theme.classes.bg} transition group-hover:text-neutral-900`}>
-                                            <Phone size={20} />
-                                        </div>
-                                        <div>
-                                            <span className="block text-white font-bold text-lg mb-1">{config.phoneNumber}</span>
-                                            <span className="text-xs text-neutral-500 uppercase tracking-widest font-semibold">Disponible 24h/7j</span>
-                                        </div>
-                                    </CallButton>
-                                </li>
                                 <li>
                                     <Link href="/contact" className="flex items-start gap-4 text-neutral-400 hover:text-white transition group text-left">
                                         <div className={`p-2 rounded-lg bg-white/5 group-hover:${theme.classes.bg} transition group-hover:text-neutral-900`}>
@@ -112,7 +205,7 @@ export function Footer({ config }: FooterProps) {
                                         </div>
                                         <div>
                                             <span className="block text-white font-bold text-lg mb-1">Nous écrire</span>
-                                            <span className="text-xs text-neutral-500 uppercase tracking-widest font-semibold">Réponse rapide</span>
+                                            <span className="text-xs text-neutral-500 uppercase tracking-widest font-semibold">Réponse sous 12h</span>
                                         </div>
                                     </Link>
                                 </li>

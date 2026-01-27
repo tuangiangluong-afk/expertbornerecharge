@@ -1,10 +1,11 @@
+
 import { getCity } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { getTheme } from "@/lib/theme";
 import ContactForm from "@/components/ContactForm";
 import CallButton from "@/components/CallButton";
 import Link from "next/link";
-import { Phone, Mail, MapPin, ArrowLeft } from "lucide-react";
+import { Phone, Mail, MapPin, ArrowLeft, Zap } from "lucide-react";
 import type { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: Promise<{ domain: string }> }): Promise<Metadata> {
@@ -13,8 +14,8 @@ export async function generateMetadata({ params }: { params: Promise<{ domain: s
     if (!city) return {};
 
     return {
-        title: `Contactez Taxi ${city.city} | Devis & Réservation`,
-        description: `Contactez-nous pour réserver votre taxi à ${city.city}. Devis gratuit, Compte pro et Partenariat chauffeur. Réponse sous 24h.`,
+        title: `Contact Borne Recharge ${city.city} | Devis Gratuit`,
+        description: `Contactez votre installateur IRVE à ${city.city}. Devis gratuit pour maison, copropriété et entreprise. Réponse sous 48h.`,
         alternates: {
             canonical: `https://${city.domain}/contact`,
         }
@@ -41,7 +42,10 @@ export default async function ContactPage({ params }: { params: Promise<{ domain
                         <ArrowLeft size={16} />
                         Retour
                     </Link>
-                    <div className="font-bold text-lg">{city.name}</div>
+                    <div className="font-bold text-lg flex items-center gap-2">
+                        <Zap className={`w-5 h-5 ${theme.text}`} />
+                        {city.name}
+                    </div>
                     <CallButton
                         phoneNumber={city.phoneNumber}
                         cityName={city.city}
@@ -56,11 +60,12 @@ export default async function ContactPage({ params }: { params: Promise<{ domain
             <main className="container mx-auto max-w-5xl px-4 py-12">
                 <div className="text-center mb-12">
                     <h1 className="text-4xl font-extrabold tracking-tight text-neutral-900 mb-4">
-                        Contactez-nous
+                        Contactez votre expert à {city.city}
                     </h1>
                     <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-                        Une question sur votre réservation ou un besoin spécifique ?
-                        Notre équipe est à votre écoute 24h/24 et 7j/7.
+                        Vous avez un projet d'installation ? Une question sur les aides ?
+                        <br />
+                        Nos électriciens certifiés IRVE vous répondent.
                     </p>
                 </div>
 
@@ -78,7 +83,7 @@ export default async function ContactPage({ params }: { params: Promise<{ domain
                                     <div>
                                         <p className="text-xs text-neutral-500 font-bold uppercase tracking-wider mb-1">Téléphone</p>
                                         <p className="font-bold text-lg">{city.phoneNumber}</p>
-                                        <p className="text-sm text-neutral-500">Appel non surtaxé</p>
+                                        <p className="text-sm text-neutral-500">Lundi - Samedi, 9h-19h</p>
                                     </div>
                                 </div>
 
@@ -89,7 +94,7 @@ export default async function ContactPage({ params }: { params: Promise<{ domain
                                     <div>
                                         <p className="text-xs text-neutral-500 font-bold uppercase tracking-wider mb-1">Email</p>
                                         <p className="font-medium">Via formulaire</p>
-                                        <p className="text-sm text-neutral-500">Réponse sous 24h</p>
+                                        <p className="text-sm text-neutral-500">Réponse sous 48h</p>
                                     </div>
                                 </div>
 
@@ -99,8 +104,8 @@ export default async function ContactPage({ params }: { params: Promise<{ domain
                                     </div>
                                     <div>
                                         <p className="text-xs text-neutral-500 font-bold uppercase tracking-wider mb-1">Zone d'intervention</p>
-                                        <p className="font-medium">{city.city} et alentours</p>
-                                        <p className="text-sm text-neutral-500">Départ ou Arrivée</p>
+                                        <p className="font-medium">{city.city} et agglomération</p>
+                                        <p className="text-sm text-neutral-500">Déplacement gratuit</p>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +113,7 @@ export default async function ContactPage({ params }: { params: Promise<{ domain
                             <hr className="my-8 border-neutral-100" />
 
                             <div className="bg-neutral-50 rounded-xl p-4 text-sm text-neutral-600">
-                                Pour les urgences (départ imminent), privilégiez l'appel téléphonique pour une prise en charge immédiate.
+                                Pour une étude complète (copropriété ou entreprise), n'hésitez pas à joindre des photos de votre tableau électrique via le formulaire.
                             </div>
                         </div>
                     </div>
@@ -116,7 +121,7 @@ export default async function ContactPage({ params }: { params: Promise<{ domain
                     {/* Right: Form */}
                     <div className="lg:col-span-2">
                         <div className="bg-white rounded-3xl p-8 shadow-xl border border-neutral-100">
-                            <h2 className="text-2xl font-bold mb-6">Envoyer un message</h2>
+                            <h2 className="text-2xl font-bold mb-6">Demander un devis gratuit</h2>
                             <ContactForm domain={city.domain} city={city.city} theme={theme} />
                         </div>
                     </div>

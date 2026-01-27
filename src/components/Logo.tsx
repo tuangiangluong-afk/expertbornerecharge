@@ -85,9 +85,9 @@ export default function Logo({
                 src="/logo-local-pin-v2.png"
                 alt="Borne Recharge"
                 width={80}
-                height={s.height * 1.5}
-                className="h-auto object-contain"
-                style={{ height: s.height * 1.5, width: 'auto' }}
+                height={s.height * 1.8}
+                className={`h-auto object-contain ${variant === 'light' ? 'brightness-0 invert' : ''}`}
+                style={{ height: s.height * 1.8, width: 'auto' }}
                 priority
             />
 

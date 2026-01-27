@@ -94,5 +94,5 @@
 }
 /* Spintax Highlight */
 .spintax-highlight {
-  @apply text-blue-600 font-bold;
+  @apply font-bold;
 }

@@ -27,7 +27,7 @@ export async function POST(req: Request) {
         }
 
         const data = await resend.emails.send({
-            from: 'TaxiFrance <onboarding@resend.dev>', // Update this with your verified domain later
+            from: 'Expert Borne Recharge <onboarding@resend.dev>', // Update this with your verified domain later
             to: ['compareandcash@gmail.com'],
             replyTo: email,
             subject: `[${city}] Contact: ${subject} - ${name}`,

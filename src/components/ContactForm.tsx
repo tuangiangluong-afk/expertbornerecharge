@@ -103,12 +103,14 @@ export default function ContactForm({ domain, city, theme }: ContactFormProps) {
                     id="subject"
                     className={inputClasses}
                 >
-                    <option value="reservation">Réservation / Devis</option>
-                    <option value="partnership">Partenariat Chauffeur</option>
-                    <option value="business">Compte Entreprise</option>
-                    <option value="other">Autre demande</option>
+                    <option value="devis_particulier">Devis Particulier (Maison/Copro)</option>
+                    <option value="devis_pro">Devis Entreprise / Flotte</option>
+                    <option value="partenariat_installateur">Devenir Installateur Partenaire</option>
+                    <option value="autre">Autre demande</option>
                 </select>
             </div>
+            {/* Honeypot for bots */}
+            <input type="text" name="b_name" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
 
             <div className="space-y-2">
                 <label htmlFor="message" className="text-sm font-medium text-neutral-700">Message</label>

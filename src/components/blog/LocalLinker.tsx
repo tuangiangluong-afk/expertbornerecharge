@@ -1,18 +1,62 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { MapPin, ArrowRight, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { findLocalSite } from '@/app/actions/find-local-site';
+import { useRouter } from 'next/navigation';
+
+// Hardcoded safe list of top cities for autocomplete (Client Side)
+// In a real app we'd fetch this or pass it as props
+const SUGGESTIONS = [
+    { name: "Paris (75)", slug: "bornerechargeparis" },
+    { name: "Lyon (69)", slug: "bornerechargevolyon" },
+    { name: "Marseille (13)", slug: "bornerechargemarseille" },
+    { name: "Nice (06)", slug: "bornerechargenice" },
+    { name: "Bordeaux (33)", slug: "bornerechargebordeaux" },
+    { name: "Toulouse (31)", slug: "bornerechargetoulouse" },
+    { name: "Nantes (44)", slug: "bornerechargenantes" },
+    { name: "Lille (59)", slug: "bornerechargelille" },
+    { name: "Strasbourg (67)", slug: "bornerechargestrasbourg" },
+    { name: "Cannes (06)", slug: "bornerechargecannes" },
+    { name: "Neuilly-sur-Seine (92)", slug: "bornerechargeneuilly" },
+    { name: "Aix-en-Provence (13)", slug: "bornerechargeaix" },
+    { name: "Annecy (74)", slug: "bornerechargeannecy" },
+    { name: "Boulogne-Billancourt (92)", slug: "bornerechargeboulogne" },
+    { name: "Montpellier (34)", slug: "bornerechargemontpellier" },
+    { name: "Rennes (35)", slug: "bornerechargerennes" },
+    { name: "Toulon (83)", slug: "bornerechargetoulon" },
+    { name: "Saint-Germain-en-Laye (78)", slug: "bornerechargestgermain" }
+];
 
 export default function LocalLinker() {
+    const router = useRouter();
     const [query, setQuery] = useState('');
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'not-found'>('idle');
     const [result, setResult] = useState<{ url: string; city: string } | null>(null);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+
+    // Filter suggestions
+    const filteredSuggestions = useMemo(() => {
+        if (!query || query.length < 2) return [];
+        const lower = query.toLowerCase();
+        return SUGGESTIONS.filter(s => s.name.toLowerCase().includes(lower));
+    }, [query]);
+
+    const handleSelect = (slug: string, name: string) => {
+        setQuery(name);
+        setShowSuggestions(false);
+        // Direct jump
+        setStatus('loading');
+        // Simulate navigation or check
+        // Ideally we redirect to the city page directly
+        router.push(`/ville/${slug}`);
+    };
 
     const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!query.trim()) return;
 
+        setShowSuggestions(false);
         setStatus('loading');
         try {
             const match = await findLocalSite(query);
@@ -29,7 +73,7 @@ export default function LocalLinker() {
     };
 
     return (
-        <div className="bg-slate-900 text-white p-6 rounded-2xl shadow-xl ring-1 ring-white/10">
+        <div className="bg-slate-900 text-white p-6 rounded-2xl shadow-xl ring-1 ring-white/10 relative z-50">
             <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shrink-0">
                     <MapPin className="text-white" size={20} />
@@ -40,17 +84,21 @@ export default function LocalLinker() {
                 </div>
             </div>
 
-            <form onSubmit={handleSearch} className="mb-4">
+            <form onSubmit={handleSearch} className="mb-4 relative">
                 <div className="relative">
                     <input
                         type="text"
                         value={query}
                         onChange={(e) => {
                             setQuery(e.target.value);
+                            setShowSuggestions(true);
                             if (status !== 'idle') setStatus('idle');
                         }}
-                        placeholder="Code postal ou Ville..."
+                        onFocus={() => setShowSuggestions(true)}
+                        onBlur={() => setTimeout(() => setShowSuggestions(false), 200)} // Delay to allow click
+                        placeholder="Ville (ex: Paris, Lyon...)"
                         className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 pl-10 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition placeholder:text-slate-500"
+                        autoComplete="off"
                     />
                     <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
 
@@ -66,6 +114,26 @@ export default function LocalLinker() {
                         )}
                     </button>
                 </div>
+
+                {/* Autocomplete Dropdown */}
+                {showSuggestions && filteredSuggestions.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200">
+                        <ul className="py-1">
+                            {filteredSuggestions.map((s) => (
+                                <li key={s.slug}>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleSelect(s.slug, s.name)}
+                                        className="w-full text-left px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition flex items-center justify-between group"
+                                    >
+                                        <span className="font-medium">{s.name}</span>
+                                        <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity text-blue-500" />
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
             </form>
 
             {status === 'success' && result && (

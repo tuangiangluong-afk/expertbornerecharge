@@ -84,7 +84,7 @@ export function getSpintaxContent(type: SpintaxType, site: BaseConfig | SiteConf
             ],
             LOCAL: [
                 "Installation Borne de Recharge {city} | Expert Local",
-                "Votre Électricien IRVE à {city} - Devis en 24h",
+                "Votre Électricien IRVE à {city} - Devis en 48h",
                 "Pose de Borne Électrique {city} | Certifié Qualifelec",
                 "Installateur Agréé Borne de Recharge {city}"
             ]
@@ -119,7 +119,7 @@ export function getSpintaxContent(type: SpintaxType, site: BaseConfig | SiteConf
                 "Mise en concurrence des meilleurs électriciens de {city}. Service gratuit et sans engagement."
             ],
             LOCAL: [
-                "Comparez les meilleurs artisans locaux certifiés IRVE. Devis gratuits sous 24h.",
+                "Comparez les meilleurs artisans locaux certifiés IRVE. Devis gratuits sous 48h.",
                 "Mise en relation directe avec les installateurs agréés de votre région."
             ]
         },

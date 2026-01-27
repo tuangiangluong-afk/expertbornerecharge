@@ -11,6 +11,8 @@ import Header from "@/components/Header";
 import FAQ from "@/components/FAQ";
 import SchemaJSON from "@/components/SchemaJSON";
 import Reviews from "@/components/Reviews";
+import { Footer } from "@/components/Footer";
+import { InternalMesh } from "@/components/InternalMesh";
 
 // ============================================
 // METADATA
@@ -150,6 +152,9 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
     const palette = colors[themeColor];
     const isPremium = site.theme === 'premium'; // Dark mode header check remains
 
+    // Inject Theme Color into Spintax Highlight
+    const coloredH1Content = h1Content.replace(/spintax-highlight/g, `spintax-highlight ${palette.text}`);
+
     return (
         <div className="min-h-screen font-sans text-neutral-900 bg-neutral-50">
             {/* ============================================ */}
@@ -171,7 +176,7 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
             {/* ============================================ */}
             {/* HERO - Trust/Locale Style */}
             {/* ============================================ */}
-            <section className="relative pt-20 pb-12 lg:pt-32 lg:pb-32 overflow-hidden">
+            <section className="relative pt-20 pb-12 lg:pt-24 lg:pb-32 overflow-hidden">
                 {/* Background */}
                 <div className="absolute inset-0 -z-10 bg-slate-900">
                     <div className={`absolute inset-0 z-10 bg-gradient-to-b ${isPremium ? "from-neutral-900/90 via-neutral-900/80 to-neutral-900" : "from-white/95 via-white/80 to-white"}`} />
@@ -186,12 +191,12 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
                 </div>
 
                 <div className="container mx-auto px-4 relative z-20">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                    <div className="grid lg:grid-cols-2 gap-12 items-start pt-8">
                         {/* Left: Content */}
                         <div className="text-center lg:text-left">
 
                             {/* Trust Badge */}
-                            <div className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-bold mb-6 border ${isPremium ? "border-amber-500/30 bg-amber-500/10 text-amber-500" : "border-blue-200 bg-blue-50 text-blue-700"}`}>
+                            <div className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-bold mb-6 border ${isPremium ? "border-amber-500/30 bg-amber-500/10 text-amber-500" : `${palette.border} ${palette.light} ${palette.text}`}`}>
                                 <CheckCircle size={16} className="mr-2" />
                                 {badgeContent}
                             </div>
@@ -199,7 +204,7 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
                             {/* H1 */}
                             <h1
                                 className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight ${isPremium ? "text-white" : "text-neutral-900"}`}
-                                dangerouslySetInnerHTML={{ __html: h1Content }}
+                                dangerouslySetInnerHTML={{ __html: coloredH1Content }}
                             />
 
                             {/* Subtitle */}
@@ -236,7 +241,7 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
                         {/* Right: Lead Form - STRATEGIC PLACEMENT HIGH CONVERSION */}
                         <div className="hidden lg:block w-full max-w-md mx-auto relative z-30">
                             <div id="simulateur" className="bg-white rounded-3xl shadow-2xl shadow-blue-900/20 overflow-hidden border border-neutral-100">
-                                <div className="p-1 bg-gradient-to-r from-blue-600 to-blue-500"></div>
+                                <div className={`p-1 bg-gradient-to-r ${palette.gradient}`}></div>
                                 <div className="p-6">
                                     <div className="text-center mb-6">
                                         <h3 className="text-lg font-bold text-neutral-900">Testez votre éligibilité</h3>
@@ -545,13 +550,18 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
             {/* ============================================ */}
             {/* REVIEWS SECTION */}
             {/* ============================================ */}
-            <Reviews site={site} />
+            {/* REVIEWS SECTION */}
+            {/* ============================================ */}
+            <Reviews site={site} themeColor={themeColor} />
 
             {/* ============================================ */}
             {/* FAQ SECTION */}
             {/* ============================================ */}
-            <FAQ />
+            <FAQ themeColor={themeColor} />
 
+            {/* ============================================ */}
+            {/* LOCAL SEO SECTION */}
+            {/* ============================================ */}
             {/* ============================================ */}
             {/* LOCAL SEO SECTION */}
             {/* ============================================ */}
@@ -576,58 +586,13 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
                 </section>
             )}
 
+            {/* Internal Linking Mesh */}
+            <InternalMesh city={site.city} config={site} />
+
             {/* ============================================ */}
             {/* FOOTER */}
             {/* ============================================ */}
-            <footer className="bg-neutral-900 text-white py-12">
-                <div className="container mx-auto px-4">
-                    <div className="grid md:grid-cols-4 gap-8 mb-8">
-                        <div>
-                            <Logo
-                                city={isHub ? null : site.city}
-                                isHub={isHub}
-                                size="sm"
-                                variant="light"
-                                className="mb-4"
-                            />
-                            <p className="text-sm text-neutral-400">
-                                Comparateur indépendant d'installateurs de bornes de recharge certifiés IRVE.
-                            </p>
-                        </div>
-                        <div>
-                            <h4 className="font-bold mb-4">Contact</h4>
-                            <ul className="space-y-2 text-sm text-neutral-400">
-                                <li className="flex items-center gap-2">
-                                    <MapPin size={14} />
-                                    {site.city}, France
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="font-bold mb-4">Certifications</h4>
-                            <ul className="space-y-2 text-sm text-neutral-400">
-                                {site.certifications.map((cert, i) => (
-                                    <li key={i} className="flex items-center gap-2">
-                                        <Award size={14} className="text-yellow-500" />
-                                        {cert}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="font-bold mb-4">Légal</h4>
-                            <ul className="space-y-2 text-sm text-neutral-400">
-                                <li><a href="/mentions-legales" className="hover:text-white transition">Mentions légales</a></li>
-                                <li><a href="/cgv" className="hover:text-white transition">CGV</a></li>
-                                <li><a href="/politique-confidentialite" className="hover:text-white transition">Politique de confidentialité</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="border-t border-neutral-800 pt-8 text-center text-sm text-neutral-500">
-                        © {new Date().getFullYear()} {site.name}. Tous droits réservés.
-                    </div>
-                </div>
-            </footer>
+            <Footer config={site} />
 
             {/* ============================================ */}
             {/* MOBILE STICKY CTA */}

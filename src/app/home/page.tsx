@@ -9,6 +9,7 @@ import Header from "@/components/Header";
 import FAQ from "@/components/FAQ";
 import LeadForm from "@/components/LeadForm";
 import { CityCards } from "@/components/CityCards";
+import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
     title: "Comparez les Devis Borne de Recharge | Expert Borne Recharge",
@@ -91,7 +92,7 @@ export default function HomePage() {
                                 {[
                                     { value: "50+", label: "Villes" },
                                     { value: "5 000+", label: "Devis envoyés" },
-                                    { value: "24h", label: "Réponse" },
+                                    { value: "48h", label: "Réponse" },
                                 ].map((stat, i) => (
                                     <div key={i} className="text-center">
                                         <div className="text-2xl font-bold text-slate-900">{stat.value}</div>
@@ -325,7 +326,7 @@ export default function HomePage() {
                         Prêt à passer à l'électrique ?
                     </h2>
                     <p className="text-slate-400 text-lg mb-8 max-w-xl mx-auto">
-                        Obtenez votre devis gratuit en 24h et découvrez les aides auxquelles vous avez droit.
+                        Obtenez votre devis gratuit en 48h et découvrez les aides auxquelles vous avez droit.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <a
@@ -342,21 +343,10 @@ export default function HomePage() {
             {/* ============================================ */}
             {/* FOOTER */}
             {/* ============================================ */}
-            <footer className="bg-slate-900 text-white py-12 border-t border-slate-800">
-                <div className="container mx-auto px-4">
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                        <Logo isHub={true} size="sm" variant="light" />
-                        <div className="flex gap-6 text-sm text-slate-400">
-                            <a href="/mentions-legales" className="hover:text-white transition">Mentions légales</a>
-                            <a href="/cgv" className="hover:text-white transition">CGV</a>
-                            <a href="/politique-confidentialite" className="hover:text-white transition">Confidentialité</a>
-                        </div>
-                    </div>
-                    <div className="mt-8 text-center text-sm text-slate-500">
-                        © {new Date().getFullYear()} Expert Borne Recharge. Tous droits réservés.
-                    </div>
-                </div>
-            </footer>
+            {/* ============================================ */}
+            {/* FOOTER */}
+            {/* ============================================ */}
+            <Footer config={hub} />
         </div>
     );
 }

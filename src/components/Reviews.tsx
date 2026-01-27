@@ -5,9 +5,10 @@ import { SiteConfig } from "@/lib/sites-config";
 
 interface ReviewsProps {
     site: SiteConfig;
+    themeColor?: 'blue' | 'emerald' | 'amber' | 'purple';
 }
 
-export default function Reviews({ site }: ReviewsProps) {
+export default function Reviews({ site, themeColor = 'blue' }: ReviewsProps) {
     const reviews = [
         {
             id: 1,
@@ -32,6 +33,15 @@ export default function Reviews({ site }: ReviewsProps) {
         }
     ];
 
+    const themeStyles = {
+        blue: "text-blue-600",
+        emerald: "text-emerald-600",
+        amber: "text-amber-600",
+        purple: "text-purple-600"
+    };
+
+    const highlightClass = themeStyles[themeColor] || themeStyles.blue;
+
     return (
         <section className="bg-white py-16 border-y border-neutral-100">
             <div className="container mx-auto max-w-5xl px-4">
@@ -39,7 +49,7 @@ export default function Reviews({ site }: ReviewsProps) {
                 <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-4">
                     <div>
                         <h2 className="text-2xl font-bold text-neutral-900">
-                            Avis Clients à <span className="text-blue-600">{site.city}</span>
+                            Avis Clients à <span className={highlightClass}>{site.city}</span>
                         </h2>
                         <p className="text-sm text-neutral-500 mt-1">
                             Retours vérifiés de nos clients récents.

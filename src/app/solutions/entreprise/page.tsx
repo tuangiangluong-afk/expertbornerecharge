@@ -1,4 +1,4 @@
-import { Briefcase, BarChart3, TrendingUp, ShieldCheck, Zap, Globe, FileCheck } from "lucide-react";
+import { Briefcase, BarChart3, TrendingUp, ShieldCheck, Zap, Globe, FileCheck, CheckCircle } from "lucide-react";
 import LeadForm from "@/components/LeadForm";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -17,9 +17,9 @@ export default function SolutionEntreprise() {
             <Header isHub={true} variant="default" />
 
             {/* HERO */}
-            <section className="relative pt-24 pb-16 bg-white overflow-hidden">
+            <section className="relative pt-20 pb-12 lg:pt-24 bg-white overflow-hidden">
                 <div className="container mx-auto px-4">
-                    <div className="flex flex-col lg:flex-row gap-12 items-center">
+                    <div className="flex flex-col lg:flex-row gap-12 items-start pt-8">
                         <div className="lg:w-1/2">
                             <div className="inline-flex items-center rounded-full bg-emerald-100 px-4 py-1.5 text-sm font-bold text-emerald-800 mb-6 border border-emerald-200">
                                 <Briefcase size={16} className="mr-2" />
@@ -56,7 +56,7 @@ export default function SolutionEntreprise() {
                         <div className="p-4 bg-slate-100 rounded-xl">
                             <FileCheck className="text-emerald-600 mb-3" size={28} />
                             <h4 className="font-bold text-slate-900 mb-2">Conformité Loi LOM</h4>
-                            <p className="text-xs text-slate-600">Obligation d'équiper 20% des places pour les parkings > 20 places (bâtiments non résidentiels).</p>
+                            <p className="text-xs text-slate-600">Obligation d'équiper 20% des places pour les parkings &gt; 20 places (bâtiments non résidentiels).</p>
                         </div>
                         <div className="p-4 bg-slate-100 rounded-xl">
                             <TrendingUp className="text-emerald-600 mb-3" size={28} />

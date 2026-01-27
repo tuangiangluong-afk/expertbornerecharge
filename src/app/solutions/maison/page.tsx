@@ -18,9 +18,9 @@ export default function SolutionMaison() {
             <Header isHub={true} variant="default" />
 
             {/* HERO SECTION - CONTENT FOCUSED */}
-            <section className="relative pt-24 pb-16 bg-white overflow-hidden">
+            <section className="relative pt-20 pb-12 lg:pt-24 bg-white overflow-hidden">
                 <div className="container mx-auto px-4">
-                    <div className="flex flex-col lg:flex-row gap-12 items-center">
+                    <div className="flex flex-col lg:flex-row gap-12 items-start pt-8">
                         <div className="lg:w-1/2">
                             <div className="inline-flex items-center rounded-full bg-blue-100 px-4 py-1.5 text-sm font-bold text-blue-800 mb-6 border border-blue-200">
                                 <Zap size={16} className="mr-2" />
@@ -129,7 +129,7 @@ export default function SolutionMaison() {
                     <h3>Quelle puissance choisir ?</h3>
                     <p>
                         Pour 90% des maisons en France, la <strong>Wallbox 7.4kW (Monophasé)</strong> est le choix roi.
-                        Elle permet de recharger n'importe quelle voiture en une nuit (20h -> 7h).
+                        Elle permet de recharger n'importe quelle voiture en une nuit (20h -&gt; 7h).
                         Le 22kW nécessite une installation électrique en Triphasé, ce qui est rare chez les particuliers et coûte plus cher en abonnement électrique.
                     </p>
 
