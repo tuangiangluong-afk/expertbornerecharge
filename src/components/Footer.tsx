@@ -141,15 +141,30 @@ export function Footer({ config }: FooterProps) {
                                         }
                                     }
 
-                                    return nearbySites.map((site) => (
+                                    // 2. Varied Anchor Logic (Prevent Over-Optimization)
+                                    const getVariedFooterAnchor = (cityName: string, index: number, isLocal: boolean) => {
+                                        if (isLocal) return `Agence ${cityName}`;
+
+                                        const variations = [
+                                            `Installation borne ${cityName}`,
+                                            `Expert IRVE ${cityName}`,
+                                            `Borne recharge ${cityName}`,
+                                            `Installateur ${cityName}`,
+                                            `Agence ${cityName}`
+                                        ];
+                                        return variations[index % variations.length];
+                                    };
+
+                                    return nearbySites.map((site, index) => (
                                         <li key={site.slug}>
                                             <Link href={`/ville/${slugify(site.city)}`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                                 <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                                {/* If National Network (Hub or Isolated), display "Installateur [City]" */}
-                                                {/* If Local Neighbor, display "Agence [City]" */}
-                                                {(config.slug === 'home' || (site.department !== (config as SiteConfig).department && site.region !== (config as SiteConfig).region))
-                                                    ? `Installation borne recharge ${site.city}`
-                                                    : `Agence ${site.city}`}
+                                                {/* Smart Mesh Logic in Footer */}
+                                                {getVariedFooterAnchor(
+                                                    site.city,
+                                                    index,
+                                                    (config.slug !== 'home' && site.department === (config as SiteConfig).department)
+                                                )}
                                             </Link>
                                         </li>
                                     ));
