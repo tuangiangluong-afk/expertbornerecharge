@@ -41,7 +41,7 @@ export default function HubContactPage() {
                             </div>
                             <h3 className="font-bold text-slate-900 text-lg mb-2">Service Commercial</h3>
                             <p className="text-slate-500 text-sm mb-4">Lundi - Vendredi, 9h-18h</p>
-                            <a href="tel:0184800000" className="text-xl font-bold text-blue-600 hover:underline">01 84 80 00 00</a>
+                            <span className="text-lg font-bold text-blue-600">Via le formulaire ci-dessous</span>
                         </div>
 
                         {/* Card 2: Email */}
@@ -51,7 +51,7 @@ export default function HubContactPage() {
                             </div>
                             <h3 className="font-bold text-slate-900 text-lg mb-2">Support & Partenaires</h3>
                             <p className="text-slate-500 text-sm mb-4">Réponse sous 24h ouvrées</p>
-                            <a href="mailto:contact@expertbornerecharge.com" className="font-bold text-blue-600 hover:underline">contact@expertbornerecharge.com</a>
+                            <span className="font-bold text-blue-600">Via le formulaire ci-dessous</span>
                         </div>
 
                         {/* Card 3: Siege */}

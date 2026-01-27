@@ -535,7 +535,8 @@ export default function LeadForm({
                     ) : (
                         <div className="w-full">
                             <button
-                                type="submit"
+                                type="button"
+                                onClick={handleSubmit}
                                 disabled={status === 'loading'}
                                 className={`
                                         w-full py-4 px-6 rounded-xl text-lg font-bold text-white shadow-xl transition-all
