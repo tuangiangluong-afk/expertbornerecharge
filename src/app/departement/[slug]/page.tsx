@@ -48,7 +48,7 @@ export default async function DepartmentPage({ params }: Props) {
                 "@type": "ListItem",
                 "position": 2,
                 "name": dept.name,
-                "item": `https://expertbornerecharge.com/home/departement/${dept.slug}`
+                "item": `https://expertbornerecharge.com/departement/${dept.slug}`
             }
         ]
 
@@ -63,10 +63,10 @@ export default async function DepartmentPage({ params }: Props) {
             {/* Navbar simple pour le Hub */}
             <nav className="border-b border-white/10 bg-neutral-900 px-6 py-4 sticky top-0 z-50 shadow-md backdrop-blur-md bg-neutral-900/90 text-white">
                 <div className="mx-auto flex max-w-7xl items-center justify-between">
-                    <Link href="/home" className="text-2xl font-bold tracking-tighter">
+                    <Link href="/" className="text-2xl font-bold tracking-tighter">
                         Expert Borne Recharge<span className="text-blue-500">.</span>
                     </Link>
-                    <Link href="/home" className="text-sm font-medium text-neutral-400 hover:text-white transition">
+                    <Link href="/" className="text-sm font-medium text-neutral-400 hover:text-white transition">
                         ← Retour à l'accueil
                     </Link>
                 </div>

@@ -43,7 +43,7 @@ export function Footer({ config }: FooterProps) {
                             <ul className="space-y-3 text-sm">
                                 {neighborhoods.slice(0, 6).map((zone: string) => (
                                     <li key={zone}>
-                                        <Link href={`/ville/${config.slug}#simulateur`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                        <Link href={config.slug === 'home' ? `/ville/${config.slug}#simulateur` : `#simulateur`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                             <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                             {zone}
                                         </Link>
@@ -157,7 +157,10 @@ export function Footer({ config }: FooterProps) {
 
                                     return nearbySites.map((site, index) => (
                                         <li key={site.slug}>
-                                            <Link href={`/ville/${slugify(site.city)}`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                            <Link
+                                                href={site.domain ? `https://${site.domain}/` : `https://expertbornerecharge.com/ville/${site.slug}`}
+                                                className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"
+                                            >
                                                 <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                                 {/* Smart Mesh Logic in Footer */}
                                                 {getVariedFooterAnchor(
@@ -177,31 +180,31 @@ export function Footer({ config }: FooterProps) {
                             <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Nos Solutions</h5>
                             <ul className="space-y-3 text-sm">
                                 <li>
-                                    <Link href="/guides/installation-borne-recharge-copropriete" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="https://expertbornerecharge.com/guides/installation-borne-recharge-copropriete" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                         Borne en Copropriété
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/guides/cout-installation-borne-recharge" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="https://expertbornerecharge.com/guides/cout-installation-borne-recharge" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                         Tarifs Installation
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/guides/aides-subventions-borne-recharge" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="https://expertbornerecharge.com/guides/aides-subventions-borne-recharge" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                         Aides & Subventions
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/vehicules" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="https://expertbornerecharge.com/vehicules" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                         Véhicules & Modèles
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/contact" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="https://expertbornerecharge.com/contact" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                         Devenir Partenaire
                                     </Link>

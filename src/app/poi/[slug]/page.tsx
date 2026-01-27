@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         title: `Installation Borne ${poi} - Devis & Expert IRVE | Expert Borne Recharge`,
         description: `Besoin d'une borne de recharge à ${poi} ? Électricien certifié IRVE, installation rapide et devis gratuit sous 24h. Service national.`,
         alternates: {
-            canonical: `https://expertbornerecharge.com/guides/${resolvedParams.slug}`,
+            canonical: `https://expertbornerecharge.com/poi/${resolvedParams.slug}`,
         }
     };
 }
@@ -77,7 +77,7 @@ export default async function NationalGuidePage({ params }: { params: Promise<{ 
             <nav className="sticky top-0 z-40 w-full border-b border-neutral-200 bg-white/80 px-4 py-3 backdrop-blur-md">
                 <div className="container mx-auto flex items-center justify-between">
                     <Link
-                        href="/home"
+                        href="/"
                         className={`flex items-center gap-2 text-xl font-black tracking-tighter text-neutral-900 hover:text-blue-600 transition`}
                     >
                         Expert Borne Recharge<span className="text-blue-600">.</span>

@@ -573,12 +573,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             {/* Internal Linking Mesh - Contextual */}
             <InternalMesh city={site.city} config={site} />
 
-            {/* ============================================ */}
-            {/* FOOTER */}
-            {/* ============================================ */}
-            <footer className="bg-slate-900 text-white py-12">
-                <Footer config={site} />
-            </footer>
+            <Footer config={site} />
 
             {/* ============================================ */}
             {/* MOBILE STICKY CTA */}

@@ -768,19 +768,19 @@ export const SITES: Record<string, SiteConfig> = {
     "www.bornerechargeparis.fr": _parisConfig,
     "paris": _parisConfig,
 
-    // 2. Neuilly
     "bornerechargeneuilly.fr": _neuillyConfig,
     "www.bornerechargeneuilly.fr": _neuillyConfig,
     "neuilly-sur-seine": _neuillyConfig,
+    "neuilly": _neuillyConfig,
 
     // 3. Lyon
     "bornerechargelyon.fr": _lyonConfig,
     "www.bornerechargelyon.fr": _lyonConfig,
     "lyon": _lyonConfig,
 
-    // 4. Boulogne
     "bornerechargeboulogne.fr": _boulogneConfig,
     "boulogne-billancourt": _boulogneConfig,
+    "boulogne": _boulogneConfig,
 
     // 5. Bordeaux
     "bornerechargebordeaux.fr": _bordeauxConfig,
@@ -794,9 +794,10 @@ export const SITES: Record<string, SiteConfig> = {
     "bornerechargeannecy.fr": _annecyConfig,
     "annecy": _annecyConfig,
 
-    // 8. Saint-Germain
     "bornerechargestgermain.fr": _stgermainConfig,
     "saint-germain-en-laye": _stgermainConfig,
+    "saint-germain": _stgermainConfig,
+    "st-germain": _stgermainConfig,
 
     // 9. Nice
     "bornerechargenice.fr": _niceConfig,
@@ -806,9 +807,9 @@ export const SITES: Record<string, SiteConfig> = {
     "bornerechargenantes.fr": _nantesConfig,
     "nantes": _nantesConfig,
 
-    // 11. Aix
     "bornerechargeaix.fr": _aixConfig,
     "aix-en-provence": _aixConfig,
+    "aix": _aixConfig,
 
     // 12. Strasbourg
     "bornerechargestrasbourg.fr": _strasbourgConfig,
@@ -826,13 +827,14 @@ export const SITES: Record<string, SiteConfig> = {
     "bornerechargeversailles.fr": _versaillesConfig,
     "versailles": _versaillesConfig,
 
-    // 16. Saint-Maur
     "bornerechargestmaur.fr": _stmaurConfig,
     "saint-maur-des-fosses": _stmaurConfig,
+    "saint-maur": _stmaurConfig,
+    "st-maur": _stmaurConfig,
 
-    // 17. Levallois
     "bornerechargelevallois.fr": _levalloisConfig,
     "levallois-perret": _levalloisConfig,
+    "levallois": _levalloisConfig,
 
     // 18. Rennes
     "bornerechargerennes.fr": _rennesConfig,

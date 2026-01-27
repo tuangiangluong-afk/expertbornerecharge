@@ -77,7 +77,10 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
                         <ul className="space-y-3">
                             {nearbyCities.slice(0, 5).map((city, i) => (
                                 <li key={city.slug}>
-                                    <Link href={`/ville/${slugify(city.city)}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
+                                    <Link
+                                        href={city.domain ? `https://${city.domain}/` : `https://expertbornerecharge.com/ville/${city.slug}`}
+                                        className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2"
+                                    >
                                         <span className="w-1 h-1 bg-emerald-500 rounded-full"></span>
                                         {getVariedAnchor(city.city, i)}
                                     </Link>
@@ -112,7 +115,10 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
                             {nearbyCities.length > 0 ? (
                                 nearbyCities.map((city, i) => (
                                     <li key={city.slug}>
-                                        <Link href={`/ville/${slugify(city.city)}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
+                                        <Link
+                                            href={city.domain ? `https://${city.domain}/` : `https://expertbornerecharge.com/ville/${city.slug}`}
+                                            className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2"
+                                        >
                                             <span className="w-1 h-1 bg-blue-500 rounded-full"></span>
                                             {getVariedAnchor(city.city, i + 5)}
                                         </Link>
@@ -120,11 +126,17 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
                                 ))
                             ) : (
                                 // Fallback if no specific nearby cities (e.g. on National page)
-                                SEO_ROUTES.slice(0, 5).map(route => (
-                                    <li key={route.slug}>
-                                        <Link href={`/trajet/${route.slug}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
+                                [
+                                    { label: "Maison Individuelle", href: "https://expertbornerecharge.com/solutions/maison" },
+                                    { label: "Borne en Copropriété", href: "https://expertbornerecharge.com/solutions/copropriete" },
+                                    { label: "Borne en Entreprise", href: "https://expertbornerecharge.com/solutions/entreprise" },
+                                    { label: "Prix & Tarifs 2026", href: "https://expertbornerecharge.com/guides/cout-installation-borne-recharge" },
+                                    { label: "Aides & Subventions", href: "https://expertbornerecharge.com/guides/aides-subventions-borne-recharge" }
+                                ].map((link, i) => (
+                                    <li key={i}>
+                                        <Link href={link.href} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
                                             <span className="w-1 h-1 bg-gray-500 rounded-full"></span>
-                                            {route.start} ↔ {route.end}
+                                            {link.label}
                                         </Link>
                                     </li>
                                 ))

@@ -43,25 +43,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.9, // High priority - main money pages
     }));
 
-    // ========================================
-    // 3. GARES (Train Station SEO Pages)
-    // ========================================
-    const gareRoutes: MetadataRoute.Sitemap = SEO_GARES.map((gare) => ({
-        url: `${baseUrl}/gare/${gare.slug}`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.9, // High priority - immediate intent
-    }));
-
-    // ========================================
-    // 4. LONG DISTANCE ROUTES (Trajet Pages)
-    // ========================================
-    const trajetRoutes: MetadataRoute.Sitemap = SEO_ROUTES.map((route) => ({
-        url: `${baseUrl}/trajet/${route.slug}`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
-    }));
 
     // ========================================
     // 5. SERVICE PAGES
@@ -83,18 +64,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ];
 
     const guideRoutes: MetadataRoute.Sitemap = allPois.map((poi) => ({
-        url: `${baseUrl}/guides/${slugify(poi)}`,
+        url: `${baseUrl}/poi/${slugify(poi)}`,
         lastModified: new Date(),
         changeFrequency: 'monthly' as const,
         priority: 0.6,
     }));
 
+    // ========================================
+    // 7. HUB WHITESPACE
+    // ========================================
+    const extraRoutes: MetadataRoute.Sitemap = [
+        { url: `${baseUrl}/vehicules`, lastModified: new Date(), priority: 0.8 },
+        { url: `${baseUrl}/guides`, lastModified: new Date(), priority: 0.8 },
+        { url: `${baseUrl}/solutions/maison`, lastModified: new Date(), priority: 0.7 },
+        { url: `${baseUrl}/solutions/copropriete`, lastModified: new Date(), priority: 0.7 },
+        { url: `${baseUrl}/solutions/entreprise`, lastModified: new Date(), priority: 0.7 },
+    ];
+
     return [
         ...coreRoutes,
         ...cityRoutes,
-        ...gareRoutes,
-        ...trajetRoutes,
         ...serviceRoutes,
         ...guideRoutes,
+        ...extraRoutes,
     ];
 }
