@@ -17,7 +17,7 @@ export default function MentionsLegales() {
             <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-slate-900/90 px-4 py-3 backdrop-blur-md text-white">
                 <div className="container mx-auto flex items-center justify-between">
                     <Link
-                        href="/home"
+                        href="/"
                         className="flex items-center gap-2 text-sm font-bold hover:text-blue-400 transition"
                     >
                         <ArrowLeft size={16} />

@@ -69,5 +69,8 @@ export default async function sitemap(props?: Props): Promise<MetadataRoute.Site
         });
     });
 
-    return routes;
+    return routes.map(item => ({
+        ...item,
+        url: item.url.toLowerCase()
+    }));
 }

@@ -22,7 +22,7 @@ export default function DroitALaPrisePage() {
             {/* Hero Article */}
             <section className="pt-32 pb-12 lg:pt-40 lg:pb-20 px-6 bg-white">
                 <div className="container mx-auto max-w-4xl">
-                    <Link href="/home" className="inline-flex items-center text-sm font-bold text-slate-500 hover:text-blue-600 mb-8 transition-colors">
+                    <Link href="/" className="inline-flex items-center text-sm font-bold text-slate-500 hover:text-blue-600 mb-8 transition-colors">
                         <ArrowLeft size={16} className="mr-2" /> Retour Accueil
                     </Link>
 

@@ -87,5 +87,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ...serviceRoutes,
         ...guideRoutes,
         ...extraRoutes,
-    ];
+    ].map(item => ({
+        ...item,
+        url: item.url.toLowerCase()
+    }));
 }

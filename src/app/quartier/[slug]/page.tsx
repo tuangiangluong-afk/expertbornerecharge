@@ -82,7 +82,7 @@ export default async function QuartierPage({ params }: { params: Promise<{ slug:
             <nav className="sticky top-0 z-40 w-full border-b border-neutral-200 bg-white/80 px-4 py-3 backdrop-blur-md">
                 <div className="container mx-auto flex items-center justify-between">
                     <Link
-                        href="/home"
+                        href="/"
                         className={`flex items-center gap-2 text-xl font-black tracking-tighter text-neutral-900 hover:text-blue-600 transition`}
                     >
                         Expert Borne Recharge<span className="text-blue-600">.</span>

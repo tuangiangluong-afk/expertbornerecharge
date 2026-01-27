@@ -58,11 +58,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     const cityRoutes = Array.from(uniqueSites.values()).map((site) => ({
         // Use clean URL: /ville/neuilly-sur-seine
-        url: `${BASE_URL}/ville/${slugify(site.city)}`,
+        url: `${BASE_URL}/ville/${slugify(site.city).toLowerCase()}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.9,
     }));
 
-    return [...routes, ...guideRoutes, ...vehicleRoutes, ...cityRoutes];
+    return [...routes, ...guideRoutes, ...vehicleRoutes, ...cityRoutes].map(item => ({
+        ...item,
+        url: item.url.toLowerCase()
+    }));
 }

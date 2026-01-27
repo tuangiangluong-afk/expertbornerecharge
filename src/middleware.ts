@@ -30,8 +30,15 @@ export default async function middleware(req: NextRequest) {
         res.headers.set("X-Content-Type-Options", "nosniff");
         res.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
         res.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+        res.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
         return res;
     };
+
+    // 0. Path Normalization (Lowercase & No Trailing Slash handled by next.config `trailingSlash: false`)
+    if (cleanPath !== cleanPath.toLowerCase()) {
+        const lowercaseUrl = new URL(url.origin + url.pathname.toLowerCase() + url.search);
+        return applySecurityHeaders(NextResponse.redirect(lowercaseUrl, 301));
+    }
 
     // 1. Sitemap Rewrite
     if (path === "/sitemap.xml") {

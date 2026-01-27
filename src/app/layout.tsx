@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: "Installation de bornes de recharge électriques. Réseau d'installateurs certifiés IRVE. Devis gratuit sous 24h.",
     metadataBase: new URL(`https://${domain}`),
     alternates: {
-      canonical: path || "/",
+      canonical: `${path.toLowerCase()}` || "/",
     },
     robots: {
       index: true,
