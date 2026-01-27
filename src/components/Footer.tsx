@@ -39,18 +39,35 @@ export function Footer({ config }: FooterProps) {
                     <div className="grid md:grid-cols-4 gap-8 text-left max-w-7xl mx-auto">
                         {/* Column 1: Zones / Quartiers */}
                         <div>
-                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Zones d'Intervention</h5>
+                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">
+                                {config.slug === 'home' ? 'Nos Régions' : 'Zones d\'Intervention'}
+                            </h5>
                             <ul className="space-y-3 text-sm">
-                                {neighborhoods.slice(0, 6).map((zone: string) => (
-                                    <li key={zone}>
-                                        <Link href={config.slug === 'home' ? `/ville/${config.slug}#simulateur` : `#simulateur`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
-                                            <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                            {zone}
-                                        </Link>
-                                    </li>
-                                ))}
-                                {neighborhoods.length === 0 && (
-                                    <li className="text-neutral-500 italic">Tout {config.city} et agglomération</li>
+                                {config.slug === 'home' ? (
+                                    // HUB: Show main regions
+                                    <>
+                                        <li><Link href="/ville/paris" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Île-de-France</Link></li>
+                                        <li><Link href="/ville/lyon" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Auvergne-Rhône-Alpes</Link></li>
+                                        <li><Link href="/ville/marseille" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Provence-Alpes-Côte d'Azur</Link></li>
+                                        <li><Link href="/ville/bordeaux" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Nouvelle-Aquitaine</Link></li>
+                                        <li><Link href="/ville/toulouse" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Occitanie</Link></li>
+                                        <li><Link href="/ville/nantes" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Pays de la Loire</Link></li>
+                                    </>
+                                ) : (
+                                    // LOCAL: Show neighborhoods
+                                    <>
+                                        {neighborhoods.slice(0, 6).map((zone: string) => (
+                                            <li key={zone}>
+                                                <Link href={`#simulateur`} className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                                    <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
+                                                    {zone}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                        {neighborhoods.length === 0 && (
+                                            <li className="text-neutral-500 italic">Tout {config.city} et agglomération</li>
+                                        )}
+                                    </>
                                 )}
                             </ul>
                         </div>
@@ -108,7 +125,7 @@ export function Footer({ config }: FooterProps) {
 
                                     if (config.slug === 'home') {
                                         // HUB: Top Cities
-                                        const topSlugs = ['bornerechargeparis', 'bornerechargemarseille', 'bornerechargelyon', 'bornerechargebordeaux', 'bornerechargenice'];
+                                        const topSlugs = ['paris', 'marseille', 'lyon', 'bordeaux', 'nice'];
                                         nearbySites = uniqueSites.filter(s => topSlugs.includes(s.slug));
                                     } else {
                                         // LOCAL Attempt
@@ -130,7 +147,7 @@ export function Footer({ config }: FooterProps) {
                                         } else {
                                             // ISOLATED CITY (e.g. Lille) -> Fallback to National Top Cities
                                             // This ensures we don't show "À proximité" title with unrelated cities
-                                            const topSlugs = ['bornerechargeparis', 'bornerechargelyon', 'bornerechargebordeaux', 'bornerechargetoulouse', 'bornerechargenice'];
+                                            const topSlugs = ['paris', 'lyon', 'bordeaux', 'toulouse', 'nice'];
                                             nearbySites = uniqueSites.filter(s => topSlugs.includes(s.slug));
 
                                             // If we still need more, fill with randoms
@@ -222,8 +239,7 @@ export function Footer({ config }: FooterProps) {
                                             <Mail size={20} />
                                         </div>
                                         <div>
-                                            <span className="block text-white font-bold text-lg mb-1">Nous écrire</span>
-                                            <span className="text-xs text-neutral-500 uppercase tracking-widest font-semibold">Réponse sous 12h</span>
+                                            <span className="block text-white font-bold text-lg">Nous écrire</span>
                                         </div>
                                     </Link>
                                 </li>

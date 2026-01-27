@@ -71,11 +71,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
 
     // ========================================
-    // 7. HUB WHITESPACE
+    // 7. HUB WHITESPACE + GUIDES
     // ========================================
     const extraRoutes: MetadataRoute.Sitemap = [
         { url: `${baseUrl}/vehicules`, lastModified: new Date(), priority: 0.8 },
         { url: `${baseUrl}/guides`, lastModified: new Date(), priority: 0.8 },
+        { url: `${baseUrl}/guides/prix-installation-borne-recharge`, lastModified: new Date(), priority: 0.9 },
+        { url: `${baseUrl}/guides/wallbox-vs-prise-renforcee`, lastModified: new Date(), priority: 0.9 },
+        { url: `${baseUrl}/guides/droit-a-la-prise-borne-recharge`, lastModified: new Date(), priority: 0.9 },
         { url: `${baseUrl}/solutions/maison`, lastModified: new Date(), priority: 0.7 },
         { url: `${baseUrl}/solutions/copropriete`, lastModified: new Date(), priority: 0.7 },
         { url: `${baseUrl}/solutions/entreprise`, lastModified: new Date(), priority: 0.7 },
