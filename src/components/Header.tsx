@@ -44,6 +44,12 @@ export default function Header({
             ? "bg-neutral-900/95 backdrop-blur border-white/10 text-white"
             : "bg-white/95 backdrop-blur border-slate-200 text-slate-900";
 
+
+    // Navigation Logic
+    const homePath = customLink || "/";
+    const isHome = pathname === homePath;
+    const simulatorHref = isHome ? "#simulateur" : `${homePath}#simulateur`;
+
     return (
         <nav className={`fixed top-0 z-50 w-full transition-all duration-300 border-b ${bgClass} py-3`}>
             <div className="container mx-auto px-4 flex items-center justify-between">
@@ -69,15 +75,16 @@ export default function Header({
                     )}
 
                     {/* CTA Devis (Replaces Phone) - Hidden on mobile to avoid redundancy with sticky CTA */}
-                    <a
-                        href="#simulateur"
+                    <Link
+                        href={simulatorHref}
                         className={`hidden md:flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white shadow-lg transition transform hover:-translate-y-0.5 ${btnClass}`}
                     >
                         <Zap size={16} fill="currentColor" />
                         <span>Devis Gratuit</span>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </nav>
+
     );
 }
