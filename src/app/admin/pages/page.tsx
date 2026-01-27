@@ -7,7 +7,7 @@ import { Save, Loader2, LayoutTemplate, FileText } from "lucide-react";
 
 // Define editable fields for the "Home" page
 const HOME_FIELDS = [
-    { key: "hero_title", label: "Titre Hero (H1)", type: "text", placeholder: "Réservez votre Taxi à..." },
+    { key: "hero_title", label: "Titre Hero (H1)", type: "text", placeholder: "Installation Borne à..." },
     { key: "hero_subtitle", label: "Sous-titre Hero", type: "textarea", placeholder: "Service disponible 24/7..." },
     { key: "cta_button", label: "Texte CTA Button", type: "text", placeholder: "Demander un devis" },
     { key: "about_title", label: "Titre 'À Propos'", type: "text", placeholder: "Pourquoi nous choisir ?" },

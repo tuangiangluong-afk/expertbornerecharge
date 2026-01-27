@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     return {
         title: `${service.title} - Service National | Expert Borne Recharge`,
-        description: `${service.description}. Service disponible dans toute la France avec notre réseau de chauffeurs partenaires.`,
+        description: `${service.description}. Service disponible dans toute la France avec notre réseau d'installateurs partenaires.`,
         alternates: {
             canonical: `https://expertbornerecharge.com/service/${resolvedParams.slug}`,
         }
@@ -101,7 +101,7 @@ export default async function NationalServicePage({ params }: { params: Promise<
                                 className={`inline-flex items-center justify-center gap-2 rounded-xl py-3 px-6 font-bold text-white shadow-lg transition-all hover:scale-105 ${classes.bg}`}
                             >
                                 <Phone size={20} />
-                                Commander
+                                Devis Gratuit
                             </CallButton>
                         </div>
                     </div>
@@ -123,7 +123,7 @@ export default async function NationalServicePage({ params }: { params: Promise<
                                         <ShieldCheck size={24} className="text-emerald-400" />
                                         <div>
                                             <div className="font-bold text-white">Sécurité Garantie</div>
-                                            <div className="text-sm">Chauffeurs vérifiés</div>
+                                            <div className="text-sm">Pros certifiés IRVE</div>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-4 text-neutral-300">
@@ -165,28 +165,28 @@ export default async function NationalServicePage({ params }: { params: Promise<
                                 <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600">
                                     <ShieldCheck size={22} />
                                 </div>
-                                Documents à présenter au chauffeur
+                                Documents à préparer pour votre projet
                             </h3>
                             <div className="grid md:grid-cols-3 gap-8">
                                 <div className="flex flex-col gap-4 p-4 rounded-xl bg-neutral-50 border border-neutral-100">
                                     <div className="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg">1</div>
                                     <div>
                                         <strong className="block text-lg mb-2">Prescription Médicale</strong>
-                                        <p className="text-sm text-neutral-500">Bon de transport signé par le médecin, daté d'avant le transport.</p>
+                                        <p className="text-sm text-neutral-500">Plan de masse ou photos de l'emplacement souhaité.</p>
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-4 p-4 rounded-xl bg-neutral-50 border border-neutral-100">
                                     <div className="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg">2</div>
                                     <div>
                                         <strong className="block text-lg mb-2">Carte Vitale</strong>
-                                        <p className="text-sm text-neutral-500">À jour. Elle permet la télétransmission directe à la CPAM.</p>
+                                        <p className="text-sm text-neutral-500">Pour identifier le point de livraison et la puissance souscrite.</p>
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-4 p-4 rounded-xl bg-neutral-50 border border-neutral-100">
                                     <div className="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg">3</div>
                                     <div>
                                         <strong className="block text-lg mb-2">Attestation de Droits</strong>
-                                        <p className="text-sm text-neutral-500">Uniquement si vos droits ne sont pas lisibles sur la carte (rare).</p>
+                                        <p className="text-sm text-neutral-500">Accord éventuel du syndic (pour les copropriétés).</p>
                                     </div>
                                 </div>
                             </div>
@@ -219,7 +219,7 @@ export default async function NationalServicePage({ params }: { params: Promise<
                                     <ul className="space-y-4 text-neutral-300">
                                         <li className="flex items-start gap-3">
                                             <CheckCircle className="text-emerald-500 shrink-0 mt-1" size={18} />
-                                            <span><strong>Chauffeurs Identifiés :</strong> Tous nos chauffeurs sont des professionnels licenciés en préfecture.</span>
+                                            <span><strong>Électriciens Qualifiés :</strong> Tous nos installateurs sont certifiés IRVE.</span>
                                         </li>
                                         <li className="flex items-start gap-3">
                                             <CheckCircle className="text-emerald-500 shrink-0 mt-1" size={18} />
@@ -227,7 +227,7 @@ export default async function NationalServicePage({ params }: { params: Promise<
                                         </li>
                                         <li className="flex items-start gap-3">
                                             <CheckCircle className="text-emerald-500 shrink-0 mt-1" size={18} />
-                                            <span><strong>Pas de surprise :</strong> Compteur horokilométrique officiel ou forfait aéroport.</span>
+                                            <span><strong>Pas de surprise :</strong> Devis détaillé et ferme avant le début des travaux.</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -235,7 +235,7 @@ export default async function NationalServicePage({ params }: { params: Promise<
 
                             {/* Quick Use Cases */}
                             <div className="bg-white border border-neutral-200 p-8 rounded-3xl shadow-lg">
-                                <h3 className="font-bold text-lg mb-6">Pourquoi commander ?</h3>
+                                <h3 className="font-bold text-lg mb-6">Pourquoi franchir le pas ?</h3>
                                 <ul className="space-y-4">
                                     <li className="flex items-center gap-3">
                                         <div className="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">
@@ -286,7 +286,7 @@ export default async function NationalServicePage({ params }: { params: Promise<
                                 Grâce à notre maillage national, nous pouvons vous garantir une prise en charge rapide, où que vous soyez.
                             </p>
                             <p>
-                                Que ce soit pour un transfert gare/aéroport, un rendez-vous médical ou un déplacement longue distance, nous sélectionnons le chauffeur le plus adapté à votre demande.
+                                Que ce soit pour une maison, une copropriété ou une entreprise, nous sélectionnons l'installateur le plus adapté à votre projet.
                             </p>
 
                             <div className="my-8 grid sm:grid-cols-2 gap-4 not-prose">
@@ -312,12 +312,12 @@ export default async function NationalServicePage({ params }: { params: Promise<
                                         </span>
                                     </summary>
                                     <p className="mt-4 leading-relaxed text-neutral-600 text-sm">
-                                        Les tarifs respectent la réglementation préfectorale en vigueur (taximètre) ou sont fixés à l'avance sous forme de forfait (notamment pour les VTC et les transferts aéroports).
+                                        Les tarifs sont fixés par devis après étude technique, prenant en compte la complexité du raccordement et le matériel choisi.
                                     </p>
                                 </details>
                                 <details className="group bg-white rounded-xl border border-neutral-200 p-4 [&_summary::-webkit-details-marker]:hidden">
                                     <summary className="flex items-center justify-between cursor-pointer font-medium text-neutral-900">
-                                        Acceptez-vous les animaux ?
+                                        Quels sont les délais d'installation ?
                                         <span className="shrink-0 ml-1.5 p-1.5 text-neutral-900 bg-white rounded-full group-open:-rotate-180 transition">
                                             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                                                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -325,7 +325,7 @@ export default async function NationalServicePage({ params }: { params: Promise<
                                         </span>
                                     </summary>
                                     <p className="mt-4 leading-relaxed text-neutral-600 text-sm">
-                                        Oui, la plupart de nos chauffeurs acceptent les animaux de compagnie (chiens, chats) en caisse de transport. Merci de le préciser lors de la réservation.
+                                        Nos bornes sont compatibles avec toutes les marques de véhicules électriques (Tesla, Renault, Peugeot, Hyundai, etc.).
                                     </p>
                                 </details>
                             </div>

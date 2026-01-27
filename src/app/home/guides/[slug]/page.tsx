@@ -53,8 +53,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     if (!poi) return {};
 
     return {
-        title: `Taxi ${poi} - Réservation & Transfert | Expert Borne Recharge`,
-        description: `Réservez votre taxi pour ${poi}. Chauffeur privé, berline confortable et prix fixe. Service national disponible 24h/24.`,
+        title: `Installation Borne ${poi} - Devis & Expert IRVE | Expert Borne Recharge`,
+        description: `Besoin d'une borne de recharge à ${poi} ? Électricien certifié IRVE, installation rapide et devis gratuit sous 24h. Service national.`,
         alternates: {
             canonical: `https://expertbornerecharge.com/guides/${resolvedParams.slug}`,
         }
@@ -146,7 +146,7 @@ export default async function NationalGuidePage({ params }: { params: Promise<{ 
                         {/* Reviews mockup for this POI */}
                         <div className="bg-white rounded-3xl p-8 shadow-sm border border-neutral-100">
                             <div className="flex items-center justify-between mb-6">
-                                <h3 className="text-lg font-bold">Derniers trajets vers {poi}</h3>
+                                <h3 className="text-lg font-bold">Dernières installations à {poi}</h3>
                                 <div className="flex text-yellow-400 gap-1">
                                     <Star size={16} fill="currentColor" />
                                     <Star size={16} fill="currentColor" />
@@ -159,16 +159,16 @@ export default async function NationalGuidePage({ params }: { params: Promise<{ 
                                 <div className="p-4 bg-neutral-50 rounded-xl">
                                     <div className="flex justify-between text-xs text-neutral-500 mb-2">
                                         <span>Marc D. - Il y a 2 jours</span>
-                                        <span>Trajet Gare → {poi}</span>
+                                        <span>Installation Maison → {poi}</span>
                                     </div>
-                                    <p className="text-sm italic text-neutral-700">"Chauffeur ponctuel et très sympa. Arrivée rapide malgré la circulation."</p>
+                                    <p className="text-sm italic text-neutral-700">"Installateur ponctuel et très compétent. Mise en service rapide et explications claires."</p>
                                 </div>
                                 <div className="p-4 bg-neutral-50 rounded-xl">
                                     <div className="flex justify-between text-xs text-neutral-500 mb-2">
                                         <span>Sophie L. - Semaine dernière</span>
-                                        <span>Trajet Aéroport → {poi}</span>
+                                        <span>Installation Copropriété → {poi}</span>
                                     </div>
-                                    <p className="text-sm italic text-neutral-700">"Service impeccable, voiture propre. Je recommande."</p>
+                                    <p className="text-sm italic text-neutral-700">"Droit à la prise respecté, installation propre dans mon parking souterrain. Je recommande."</p>
                                 </div>
                             </div>
                         </div>
@@ -190,7 +190,7 @@ export default async function NationalGuidePage({ params }: { params: Promise<{ 
                             <div className="bg-neutral-900 rounded-3xl p-6 text-white text-center">
                                 <Phone size={32} className="mx-auto mb-4 text-blue-400" />
                                 <h3 className="font-bold text-lg mb-2">Besoin d'aide ?</h3>
-                                <p className="text-sm text-neutral-400 mb-4">Notre standard national est disponible 24h/7j pour vos demandes spécifiques.</p>
+                                <p className="text-sm text-neutral-400 mb-4">Nos experts sont disponibles du lundi au vendredi pour répondre à vos questions techniques.</p>
                                 <CallButton
                                     phoneNumber={city.phoneNumber}
                                     cityName={city.name}

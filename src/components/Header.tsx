@@ -68,10 +68,10 @@ export default function Header({
                         </div>
                     )}
 
-                    {/* CTA Devis (Replaces Phone) */}
+                    {/* CTA Devis (Replaces Phone) - Hidden on mobile to avoid redundancy with sticky CTA */}
                     <a
                         href="#simulateur"
-                        className={`flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white shadow-lg transition transform hover:-translate-y-0.5 ${btnClass}`}
+                        className={`hidden md:flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white shadow-lg transition transform hover:-translate-y-0.5 ${btnClass}`}
                     >
                         <Zap size={16} fill="currentColor" />
                         <span>Devis Gratuit</span>

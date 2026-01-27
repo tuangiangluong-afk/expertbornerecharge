@@ -9,6 +9,7 @@ import Header from "@/components/Header";
 import FAQ from "@/components/FAQ";
 import LeadForm from "@/components/LeadForm";
 import { CityCards } from "@/components/CityCards";
+import MobileStickyCTA from "@/components/MobileStickyCTA";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -78,7 +79,7 @@ export default function HomePage() {
 
                             {/* H1 - Lead Gen Focus */}
                             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-                                Le 1er Réseau d'Installateurs <span className="text-blue-600">Certifiés</span>. Comparez 3 devis.
+                                Le 1er Réseau d'Installateurs <span className="text-blue-600">Certifiés</span>. Obtenez votre devis.
                             </h1>
 
                             {/* Subtitle */}
@@ -117,7 +118,7 @@ export default function HomePage() {
 
                         {/* Right: Lead Form - STRATEGIC PLACEMENT HIGH CONVERSION */}
                         <div className="w-full max-w-md mx-auto relative z-30">
-                            <div id="devis" className="bg-white rounded-3xl shadow-2xl shadow-blue-900/20 overflow-hidden border border-neutral-100">
+                            <div id="simulateur" className="bg-white rounded-3xl shadow-2xl shadow-blue-900/20 overflow-hidden border border-neutral-100">
                                 <div className="p-1 bg-gradient-to-r from-blue-600 to-blue-500"></div>
                                 <div className="p-6">
                                     <div className="text-center mb-6">
@@ -330,7 +331,7 @@ export default function HomePage() {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <a
-                            href="#devis"
+                            href="#simulateur"
                             className="flex items-center justify-center gap-3 rounded-2xl bg-blue-600 px-8 py-4 text-lg font-bold text-white shadow-xl hover:bg-blue-700 transition"
                         >
                             <Zap size={24} />
@@ -346,7 +347,13 @@ export default function HomePage() {
             {/* ============================================ */}
             {/* FOOTER */}
             {/* ============================================ */}
+            {/* ============================================ */}
+            {/* FOOTER */}
+            {/* ============================================ */}
             <Footer config={hub} />
+
+            {/* Mobile Sticky CTA */}
+            <MobileStickyCTA themeColor="blue" />
         </div>
     );
 }

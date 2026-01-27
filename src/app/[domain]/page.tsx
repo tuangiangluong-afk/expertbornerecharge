@@ -8,6 +8,7 @@ import Image from "next/image";
 import LeadForm from "@/components/LeadForm";
 import Logo from "@/components/Logo";
 import Header from "@/components/Header";
+import MobileStickyCTA from "@/components/MobileStickyCTA";
 import FAQ from "@/components/FAQ";
 import SchemaJSON from "@/components/SchemaJSON";
 import Reviews from "@/components/Reviews";
@@ -239,7 +240,7 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
                         </div>
 
                         {/* Right: Lead Form - STRATEGIC PLACEMENT HIGH CONVERSION */}
-                        <div className="hidden lg:block w-full max-w-md mx-auto relative z-30">
+                        <div className="w-full max-w-md mx-auto relative z-30">
                             <div id="simulateur" className="bg-white rounded-3xl shadow-2xl shadow-blue-900/20 overflow-hidden border border-neutral-100">
                                 <div className={`p-1 bg-gradient-to-r ${palette.gradient}`}></div>
                                 <div className="p-6">
@@ -597,17 +598,7 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
             {/* ============================================ */}
             {/* MOBILE STICKY CTA */}
             {/* ============================================ */}
-            <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-neutral-900/95 backdrop-blur-lg border-t border-white/10 p-4">
-                <div className="flex gap-3">
-                    <a
-                        href="#simulateur"
-                        className={`flex-[2] flex items-center justify-center gap-2 bg-gradient-to-r ${palette.gradient} text-white rounded-xl py-3 font-bold shadow-lg ${palette.shadow}`}
-                    >
-                        <Zap size={18} />
-                        Devis gratuit
-                    </a>
-                </div>
-            </div>
+            <MobileStickyCTA themeColor={themeColor} />
         </div>
     );
 }

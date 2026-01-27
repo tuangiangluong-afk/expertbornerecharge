@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ domain: s
 
     return {
         title: `Conditions Générales de Vente - ${city.name}`,
-        description: `Retrouvez nos Conditions Générales de Vente (CGV) pour la réservation de taxis et VTC : tarifs, annulations, responsabilités et litiges.`,
+        description: `Retrouvez nos Conditions Générales de Vente (CGV) pour la mise en relation avec des installateurs IRVE : devis, responsabilités et litiges.`,
         alternates: {
             canonical: `https://${city.domain}/cgv`,
         },
@@ -66,7 +66,7 @@ export default async function CGV({ params }: { params: Promise<{ domain: string
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className={`mb-4 text-2xl font-bold ${theme.text}`}>1. Objet et Acceptation</h2>
                         <p>
-                            Le service proposé est la mise en relation avec des chauffeurs de taxi et VTC professionnels exerçant sur la commune de <strong>{city.city}</strong>. L'utilisation du formulaire de réservation ou l'appel téléphonique via le site implique l'acceptation sans réserve des présentes CGV.
+                            Le service proposé est la mise en relation avec des électriciens professionnels certifiés IRVE (Infrastructure de Recharge pour Véhicules Électriques) exerçant sur la commune de <strong>{city.city}</strong>. L'utilisation du formulaire de demande de devis ou l'appel téléphonique via le site implique l'acceptation sans réserve des présentes CGV.
                         </p>
                     </div>
 
@@ -75,7 +75,7 @@ export default async function CGV({ params }: { params: Promise<{ domain: string
                         <ul className="list-disc pl-5 space-y-2">
                             <li><strong>Réservation Immédiate :</strong> Elle est confirmée uniquement après validation téléphonique ou par SMS par un chauffeur partenaire.</li>
                             <li><strong>Réservation à l'avance :</strong> Elle est recommandée 24h à l'avance pour garantir la disponibilité.</li>
-                            <li><strong>Tarification :</strong> Les tarifs communiqués sont estimatifs ({city.pricing.base} environ pour une course locale). Le prix final est déterminé par le compteur horokilométrique (Taxi) ou le bon de commande préalable (VTC), conformément à la réglementation en vigueur.</li>
+                            <li><strong>Tarification :</strong> Le service de mise en relation et l'établissement des devis par nos partenaires sont gratuits pour l'utilisateur. Le prix final de l'installation est déterminé par l'installateur partenaire après visite technique.</li>
                         </ul>
                     </div>
 

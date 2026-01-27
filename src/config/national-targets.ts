@@ -20,7 +20,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
     // 👑 TIER 1: BIG 5 (60% du CA)
     // ========================================
     {
-        slug: "bornerechargeparis",
+        slug: "paris",
         name: "Paris",
         heroTitle: "Installateur Borne Recharge Paris (75)",
         geo: { lat: 48.856, lng: 2.352 },
@@ -31,7 +31,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=2672&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargevolyon",
+        slug: "lyon",
         name: "Lyon",
         heroTitle: "Installation Borne Recharge Lyon",
         geo: { lat: 45.764, lng: 4.835 },
@@ -42,7 +42,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargemarseille",
+        slug: "marseille",
         name: "Marseille",
         heroTitle: "Pose Borne Électrique Marseille",
         geo: { lat: 43.296, lng: 5.369 },
@@ -53,7 +53,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1559825481-12a05cc00018?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargenice",
+        slug: "nice",
         name: "Nice",
         heroTitle: "Installateur IRVE Nice",
         geo: { lat: 43.710, lng: 7.262 },
@@ -64,7 +64,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargebordeaux",
+        slug: "bordeaux",
         name: "Bordeaux",
         heroTitle: "Expert Borne Recharge Bordeaux",
         geo: { lat: 44.837, lng: -0.579 },
@@ -75,7 +75,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://Images.unsplash.com/photo-1559087867-ce4c91325525?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargetoulouse",
+        slug: "toulouse",
         name: "Toulouse",
         heroTitle: "Installation Wallbox Toulouse",
         geo: { lat: 43.604, lng: 1.444 },
@@ -90,7 +90,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
     // 💎 TIER 2: GOLDEN CITIES (Pouvoir d'achat Élevé)
     // ========================================
     {
-        slug: "bornerechargecannes",
+        slug: "cannes",
         name: "Cannes",
         heroTitle: "Borne de Recharge Cannes & Mougins",
         geo: { lat: 43.552, lng: 7.017 },
@@ -101,7 +101,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargeaix",
+        slug: "aix-en-provence",
         name: "Aix-en-Provence",
         heroTitle: "Installation Borne Aix & Luberon",
         geo: { lat: 43.529, lng: 5.447 },
@@ -112,7 +112,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1596422846543-75c6fc197825?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargeantibes",
+        slug: "antibes",
         name: "Antibes",
         heroTitle: "Borne Recharge Antibes & Sophia",
         geo: { lat: 43.580, lng: 7.125 },
@@ -123,7 +123,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1534258936925-c58bed479fcb?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargeneuilly",
+        slug: "neuilly-sur-seine",
         name: "Neuilly-sur-Seine",
         heroTitle: "Installation Borne Neuilly 92",
         geo: { lat: 48.884, lng: 2.268 },
@@ -134,7 +134,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1551101968-3e414168c818?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargelille",
+        slug: "lille",
         name: "Lille",
         heroTitle: "Installateur Borne IRVE Lille",
         geo: { lat: 50.629, lng: 3.057 },
@@ -145,7 +145,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1577866068998-24bc8d46db6d?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargestrasbourg",
+        slug: "strasbourg",
         name: "Strasbourg",
         heroTitle: "Borne Électrique Strasbourg",
         geo: { lat: 48.573, lng: 7.752 },
@@ -156,7 +156,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1574158622682-e40e69881006?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargenantes",
+        slug: "nantes",
         name: "Nantes",
         heroTitle: "Installation Borne Nantes",
         geo: { lat: 47.218, lng: -1.553 },
@@ -167,7 +167,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1609671188873-b3a01e77d59c?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargerennes",
+        slug: "rennes",
         name: "Rennes",
         heroTitle: "Borne Recharge Rennes",
         geo: { lat: 48.117, lng: -1.677 },
@@ -178,7 +178,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1580657018950-e16b6d6db77c?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargemontpellier",
+        slug: "montpellier",
         name: "Montpellier",
         heroTitle: "Installation Borne Montpellier",
         geo: { lat: 43.611, lng: 3.877 },
@@ -189,7 +189,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1593259037804-f6e9b11adceb?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargeannecy",
+        slug: "annecy",
         name: "Annecy",
         heroTitle: "Borne Recharge Annecy & 74",
         geo: { lat: 45.899, lng: 6.129 },
@@ -200,7 +200,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1601461953939-36fbe4ed0b16?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargetoulon",
+        slug: "toulon",
         name: "Toulon",
         heroTitle: "Installateur Borne Recharge Toulon",
         geo: { lat: 43.124, lng: 5.928 },
@@ -211,7 +211,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1576494231340-2e9d3a98e0df?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargeavignon",
+        slug: "avignon",
         name: "Avignon",
         heroTitle: "Installation Borne Avignon & Vaucluse",
         geo: { lat: 43.949, lng: 4.805 },
@@ -222,7 +222,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1557171611-9b5377d4c3b0?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargereims",
+        slug: "reims",
         name: "Reims",
         heroTitle: "Borne de Recharge Reims",
         geo: { lat: 49.258, lng: 4.031 },
@@ -233,7 +233,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargedijon",
+        slug: "dijon",
         name: "Dijon",
         heroTitle: "Installation Borne Dijon & 21",
         geo: { lat: 47.322, lng: 5.041 },
@@ -244,7 +244,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargerouen",
+        slug: "rouen",
         name: "Rouen",
         heroTitle: "Installateur IRVE Rouen",
         geo: { lat: 49.443, lng: 1.099 },
@@ -259,7 +259,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
     // ✈️ TIER 4: STRATEGIC SPOTS (Zones Périurbaines Riches)
     // ========================================
     {
-        slug: "bornerechargeroissy",
+        slug: "roissy-en-france",
         name: "Roissy-en-France",
         heroTitle: "Installation Borne Roissy & 95",
         geo: { lat: 49.009, lng: 2.547 },
@@ -270,7 +270,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargeorly",
+        slug: "orly",
         name: "Orly",
         heroTitle: "Borne Recharge Orly & Sud 94",
         geo: { lat: 48.726, lng: 2.365 },
@@ -281,7 +281,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1474302770737-173ee21bab63?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargebeauvais",
+        slug: "beauvais",
         name: "Beauvais",
         heroTitle: "Installateur Borne Beauvais",
         geo: { lat: 49.455, lng: 2.113 },
@@ -292,7 +292,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1606768666853-403c90a981ad?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargestexupery",
+        slug: "saint-exupery",
         name: "Saint-Exupéry",
         heroTitle: "Installation Borne Est Lyonnais",
         geo: { lat: 45.723, lng: 5.081 },
@@ -303,7 +303,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargecagnes",
+        slug: "cagnes-sur-mer",
         name: "Cagnes-sur-Mer",
         heroTitle: "Borne Recharge Cagnes & St-Laurent",
         geo: { lat: 43.666, lng: 7.215 },
@@ -314,7 +314,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1558979158-65a1eaa08691?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargepaysgex",
+        slug: "pays-de-gex",
         name: "Pays de Gex",
         heroTitle: "Installation Borne Frontière Suisse",
         geo: { lat: 46.238, lng: 6.109 },
@@ -325,7 +325,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1580477371194-e8de0a57a04a?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargemulhouse",
+        slug: "mulhouse",
         name: "Mulhouse",
         heroTitle: "Borne Recharge Mulhouse & 3 Frontières",
         geo: { lat: 47.590, lng: 7.529 },
@@ -336,7 +336,7 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         heroImage: "https://images.unsplash.com/photo-1515861461893-af66afaf3f1f?q=80&w=2670&auto=format&fit=crop"
     },
     {
-        slug: "bornerechargemarnevallee",
+        slug: "marne-la-vallee",
         name: "Marne-la-Vallée",
         heroTitle: "Installation Borne Marne-la-Vallée",
         geo: { lat: 48.876, lng: 2.779 },

@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Conditions Générales de Vente - Expert Borne Recharge",
-    description: "Consultez les CGV du réseau Expert Borne Recharge : réservation de taxis et VTC, tarifs réglementés, annulations et responsabilités.",
+    description: "Consultez les CGV du réseau Expert Borne Recharge : mise en relation avec des installateurs IRVE, devis gratuits et conditions d'intervention.",
     alternates: {
         canonical: "https://expertbornerecharge.com/cgv",
     },
@@ -38,57 +38,54 @@ export default function CGV() {
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <p className="text-sm text-neutral-500">Dernière mise à jour : 25/01/2026</p>
                         <p>
-                            Les présentes Conditions Générales de Vente régissent les relations contractuelles entre la société <strong>MEDIASHMAN</strong>, sise au 91 RUE DU FAUBOURG SAINT-HONORE, 75008 PARIS (SIREN 509 987 681), ci-après &quot;L&apos;Éditeur&quot;, et toute personne utilisant le site <strong>Expert Borne Recharge</strong> pour la mise en relation avec le réseau national de chauffeurs.
+                            Les présentes Conditions Générales de Vente régissent les relations contractuelles entre la société <strong>WELINK TECH</strong>, sise au 6 RUE DES BATELIERS, 92110 CLICHY (SIREN 984 800 136), ci-après &quot;L&apos;Éditeur&quot;, et toute personne utilisant le site <strong>Expert Borne Recharge</strong> pour la mise en relation avec des installateurs de bornes de recharge certifiés.
                         </p>
                     </div>
 
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className="mb-4 text-2xl font-bold text-blue-900">1. Objet et Acceptation</h2>
                         <p>
-                            Le service proposé est la mise en relation avec des chauffeurs de taxi et VTC professionnels exerçant sur l&apos;ensemble du territoire national. L&apos;utilisation du service implique l&apos;acceptation sans réserve des présentes CGV.
+                            Le service proposé est la mise en relation avec des électriciens professionnels certifiés IRVE (Infrastructure de Recharge pour Véhicules Électriques) exerçant sur l&apos;ensemble du territoire national. L&apos;utilisation du service implique l&apos;acceptation sans réserve des présentes CGV.
                         </p>
                     </div>
 
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
-                        <h2 className="mb-4 text-2xl font-bold text-blue-900">2. Réservations et Tarifs</h2>
+                        <h2 className="mb-4 text-2xl font-bold text-blue-900">2. Demandes de Devis et Tarifs</h2>
                         <ul className="list-disc pl-5 space-y-2">
-                            <li><strong>Réservation Immédiate :</strong> Sous réserve de disponibilité des chauffeurs partenaires dans votre secteur.</li>
-                            <li><strong>Réservation à l&apos;avance :</strong> Recommandée 24h à l&apos;avance pour les trajets gares et aéroports.</li>
-                            <li><strong>Tarification :</strong> Le prix final est déterminé par le compteur horokilométrique (Taxi) ou le forfait convenu (VTC/Approche), conformément à la réglementation. L&apos;estimation donnée par le site est indicative.</li>
+                            <li><strong>Demande de mise en relation :</strong> L'utilisateur remplit un formulaire précisant son besoin (maison, copropriété, entreprise).</li>
+                            <li><strong>Devis gratuit :</strong> Le service de mise en relation et l'établissement des devis par nos partenaires sont gratuits pour l'utilisateur.</li>
+                            <li><strong>Tarification des travaux :</strong> Le prix final de l'installation est déterminé par l'installateur partenaire après visite technique si nécessaire. Les estimations fournies sur le site sont purement indicatives.</li>
                         </ul>
                     </div>
 
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
-                        <h2 className="mb-4 text-2xl font-bold text-blue-900">3. Annulation et Responsabilité</h2>
+                        <h2 className="mb-4 text-2xl font-bold text-blue-900">3. Responsabilité</h2>
                         <p>
-                            Toute annulation doit être notifiée dès que possible. En cas de &quot;No Show&quot; (client absent), le chauffeur est en droit de réclamer une indemnité correspondant à l&apos;approche effectuée.
-                        </p>
-                        <p className="mt-4">
-                            MEDIASHMAN agit en qualité d&apos;intermédiaire technologique. La responsabilité du transport incombe exclusivement au chauffeur exécutant la course, qui doit être assuré et en règle.
+                            <strong>WELINK TECH</strong> agit en qualité d&apos;intermédiaire technologique. La responsabilité de l'installation, de la conformité aux normes IRVE et des assurances décennales incombe exclusivement à l'installateur partenaire ayant effectué les travaux.
                         </p>
                     </div>
 
                     {/* BROKER PROTECTION - Critical Legal Shield */}
-                    <div className="mb-8 rounded-2xl border-2 border-red-200 bg-red-50 p-8 shadow-sm">
-                        <h2 className="mb-4 text-2xl font-bold text-red-900">4. Nature du Service - Mise en Relation</h2>
-                        <p className="font-semibold text-red-800">
-                            Taxi France est une <strong>plateforme de mise en relation technique</strong> entre les utilisateurs et des chauffeurs professionnels indépendants.
+                    <div className="mb-8 rounded-2xl border-2 border-blue-200 bg-blue-50 p-8 shadow-sm">
+                        <h2 className="mb-4 text-2xl font-bold text-blue-900">4. Nature du Service - Mise en Relation</h2>
+                        <p className="font-semibold text-blue-800">
+                            Expert Borne Recharge est une <strong>plateforme de mise en relation technique</strong> entre les utilisateurs et des installateurs électriciens indépendants.
                         </p>
-                        <p className="mt-4 text-red-700">
-                            <strong>Taxi France n&apos;est pas transporteur.</strong> Les prestations de transport sont effectuées par des chauffeurs indépendants ou des sociétés tierces, dûment autorisés et assurés.
+                        <p className="mt-4 text-blue-700">
+                            <strong>Expert Borne Recharge n&apos;est pas une entreprise d&apos;installation.</strong> Les prestations de pose sont effectuées par des professionnels indépendants ou des sociétés tierces, dûment certifiés IRVE et assurés.
                         </p>
-                        <p className="mt-4 text-red-700">
-                            En conséquence, <strong>Taxi France décline toute responsabilité</strong> en cas de litige lié à l&apos;exécution de la course, incluant mais non limité à : retards, accidents, perte ou détérioration de bagages, comportement du chauffeur, ou tout dommage survenu pendant le transport.
+                        <p className="mt-4 text-blue-700">
+                            En conséquence, <strong>WELINK TECH décline toute responsabilité</strong> en cas de litige lié à l&apos;exécution des travaux, incluant mais non limité à : malfaçons, retards de chantier, non-conformité technique ou tout dommage survenu pendant l'installation.
                         </p>
-                        <p className="mt-4 text-sm text-red-600">
-                            L&apos;utilisateur reconnaît que sa relation contractuelle pour le transport est établie directement avec le chauffeur ou la société de transport exécutant la course.
+                        <p className="mt-4 text-sm text-blue-600">
+                            L&apos;utilisateur reconnaît que sa relation contractuelle pour les travaux est établie directement avec l'entreprise d'installation sélectionnée.
                         </p>
                     </div>
 
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className="mb-4 text-2xl font-bold text-blue-900">5. Loi Applicable</h2>
                         <p>
-                            Les présentes CGV sont soumises au droit français. Tout litige relève des tribunaux compétents de Paris.
+                            Les présentes CGV sont soumises au droit français. Tout litige relève des tribunaux compétents de Nanterre.
                         </p>
                     </div>
                 </div>

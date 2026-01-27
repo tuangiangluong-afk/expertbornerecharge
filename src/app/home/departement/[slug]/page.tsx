@@ -1,7 +1,7 @@
 
 import { CITIES } from "@/lib/db";
 import Link from "next/link";
-import { Phone, ArrowUpRight, MapPin, ShieldCheck, Star } from "lucide-react";
+import { Phone, ArrowUpRight, MapPin, ShieldCheck, Star, Zap } from "lucide-react";
 import { DepartmentMap } from "@/components/DepartmentMap";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -16,7 +16,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const dept = DEPARTMENTS[resolvedParams.slug];
     if (!dept) return { title: "Département introuvable" };
 
-    title: `Installation Borne de Recharge ${dept.name} (${dept.code}) | Expert Borne Recharge`,
+    return {
+        title: `Installation Borne de Recharge ${dept.name} (${dept.code}) | Expert Borne Recharge`,
         description: `Installateur IRVE certifié dans le ${dept.code} (${dept.name}). Devis gratuit pour borne de recharge électrique sous 24h.`,
     };
 }
@@ -27,7 +28,7 @@ export default async function DepartmentPage({ params }: Props) {
 
     if (!dept) return notFound();
 
-    // FILTRE INTELLIGENT : On récupère toutes les villes qui match le code postal dans le nom (ex: "Taxi Plaisir 78")
+    // FILTRE INTELLIGENT : On récupère toutes les villes qui match le code postal dans le nom
     const citiesInDept = Object.values(CITIES).filter(city =>
         city.name.includes(` ${dept.code}`)
     );
@@ -65,8 +66,8 @@ export default async function DepartmentPage({ params }: Props) {
                     <Link href="/home" className="text-2xl font-bold tracking-tighter">
                         Expert Borne Recharge<span className="text-blue-500">.</span>
                     </Link>
-                    <Link href="/home/reserver-taxi-ile-de-france" className="text-sm font-medium text-neutral-400 hover:text-white transition">
-                        ← Changer de zone
+                    <Link href="/home" className="text-sm font-medium text-neutral-400 hover:text-white transition">
+                        ← Retour à l'accueil
                     </Link>
                 </div>
             </nav>
@@ -93,11 +94,11 @@ export default async function DepartmentPage({ params }: Props) {
                             <div className="flex flex-wrap gap-4">
                                 <div className="flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur border border-white/10 rounded-lg text-sm font-medium text-neutral-200">
                                     <ShieldCheck size={16} className="text-emerald-400" />
-                                    Chauffeurs Vérifiés
+                                    Installateurs IRVE Certifiés
                                 </div>
                                 <div className="flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur border border-white/10 rounded-lg text-sm font-medium text-neutral-200">
                                     <Star size={16} className="text-yellow-400" />
-                                    Top Notation
+                                    Top Notation 2026
                                 </div>
                             </div>
                         </div>
@@ -160,7 +161,7 @@ export default async function DepartmentPage({ params }: Props) {
                                                 </h3>
                                             </div>
                                             <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-white border border-white/20 uppercase tracking-widest z-10">
-                                                Taxi Officiel
+                                                Expert IRVE
                                             </div>
                                         </div>
 
@@ -168,7 +169,7 @@ export default async function DepartmentPage({ params }: Props) {
                                             <div className="flex justify-between items-start mb-6">
                                                 <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
                                                     <MapPin size={12} />
-                                                    {dept.code} — {city.name}
+                                                    {dept.code} — {city.city}
                                                 </div>
                                                 <div className="bg-slate-50 p-2 rounded-full text-slate-400 group-hover:text-blue-600 group-hover:bg-blue-50 transition-colors">
                                                     <ArrowUpRight size={18} />
@@ -195,7 +196,7 @@ export default async function DepartmentPage({ params }: Props) {
                                     <MapPin size={32} />
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-900 mb-2">Zone en cours de déploiement</h3>
-                                <p className="text-slate-500 mb-8">Aucun taxi partenaire référencé sur cette zone pour le moment.</p>
+                                <p className="text-slate-500 mb-8">Aucun installateur partenaire référencé sur cette zone pour le moment.</p>
                                 <a href="mailto:contact@expertbornerecharge.com" className="inline-flex items-center font-bold text-blue-600 hover:text-blue-800 transition">
                                     Devenir partenaire sur le {dept.code} <ArrowUpRight size={16} className="ml-1" />
                                 </a>

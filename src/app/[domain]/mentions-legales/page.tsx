@@ -73,10 +73,10 @@ export default async function MentionsLegales({ params }: { params: Promise<{ do
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className={`mb-4 text-2xl font-bold ${theme.text}`}>2. Service Proposé</h2>
                         <p>
-                            Le Site a pour objet de fournir une plateforme de mise en relation et de réservation de services de transport en taxi et VTC sur la commune de <strong>{city.city}</strong> et ses environs ({city.neighborhoods.join(", ") || "agglomération"}).
+                            Le Site a pour objet de fournir une plateforme de mise en relation et d'obtention de devis pour l'installation de bornes de recharge électrique sur la commune de <strong>{city.city}</strong> et ses environs ({city.neighborhoods.join(", ") || "agglomération"}).
                         </p>
                         <p>
-                            Les services de transport sont assurés par des chauffeurs indépendants ou salariés, titulaires des autorisations administratives nécessaires (Carte Professionnelle, Licence Taxi ou Licence VTC).
+                            Les services d'installation sont assurés par des électriciens indépendants ou des sociétés spécialisées, titulaires des certifications IRVE (Infrastructure de Recharge pour Véhicules Électriques) et des assurances obligatoires.
                         </p>
                     </div>
 

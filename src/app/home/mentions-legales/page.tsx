@@ -38,13 +38,14 @@ export default function MentionsLegales() {
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className="mb-4 text-2xl font-bold text-blue-900">1. Éditeur du Site</h2>
                         <p>
-                            Le site <strong>Expert Borne Recharge</strong> (expertbornerecharge.com) est édité par la société <strong>MEDIASHMAN</strong>.
+                            Le site <strong>Expert Borne Recharge</strong> (expertbornerecharge.com) est édité par la société <strong>WELINK TECH</strong>.
                         </p>
                         <ul className="list-none space-y-2 pl-0">
-                            <li><strong>Forme juridique :</strong> Société (SASU/SARL selon Kbis)</li>
-                            <li><strong>Siège social :</strong> 91 RUE DU FAUBOURG SAINT-HONORE, 75008 PARIS</li>
-                            <li><strong>SIREN :</strong> 509 987 681 R.C.S. PARIS</li>
-                            <li><strong>Responsable de publication :</strong> Direction MEDIASHMAN</li>
+                            <li><strong>Forme juridique :</strong> SASU</li>
+                            <li><strong>Siège social :</strong> 6 RUE DES BATELIERS, 92110 CLICHY</li>
+                            <li><strong>SIREN :</strong> 984 800 136</li>
+                            <li><strong>SIRET :</strong> 984 800 136 00017</li>
+                            <li><strong>Responsable de publication :</strong> Direction WELINK TECH</li>
                             <li><strong>Contact :</strong> <Link href="/contact" className="underline text-blue-600">Formulaire de contact</Link></li>
                         </ul>
                     </div>
@@ -52,7 +53,7 @@ export default function MentionsLegales() {
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className="mb-4 text-2xl font-bold text-blue-900">2. Service Proposé</h2>
                         <p>
-                            Expert Borne Recharge est une plateforme nationale regroupant des artisans taxis et des sociétés de transport VTC indépendants. Le site facilite la mise en relation entre les usagers et les professionnels du transport.
+                            Expert Borne Recharge est une plateforme nationale de mise en relation entre les particuliers, les copropriétés ou les entreprises et des électriciens certifiés IRVE (Infrastructure de Recharge pour Véhicules Électriques).
                         </p>
                     </div>
 
@@ -77,7 +78,7 @@ export default function MentionsLegales() {
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className="mb-4 text-2xl font-bold text-blue-900">5. Données Personnelles (RGPD)</h2>
                         <p>
-                            Les données collectées (nom, téléphone, trajet) sont utilisées uniquement pour l&apos;exécution de la prestation de transport. Elles sont transmises au chauffeur partenaire sélectionné.
+                            Les données collectées (nom, téléphone, adresse d'installation, type de borne) sont utilisées uniquement pour l'établissement de devis et la mise en relation avec nos partenaires installateurs certifiés.
                         </p>
                         <p>
                             Vous disposez d&apos;un droit d&apos;accès, de rectification et de suppression de vos données. Pour l&apos;exercer, contactez-nous via la page contact.

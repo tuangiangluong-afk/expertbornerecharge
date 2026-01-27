@@ -131,7 +131,7 @@ const _hubConfig: SiteConfig = {
 
 // 1. Paris (Volume)
 const _parisConfig: SiteConfig = {
-    slug: "bornerechargeparis",
+    slug: "paris",
     domain: "bornerechargeparis.fr",
     aliases: ["borne-recharge-paris.fr"],
     city: "Paris",
@@ -162,7 +162,7 @@ const _parisConfig: SiteConfig = {
 
 // 2. Neuilly-sur-Seine (Luxe)
 const _neuillyConfig: SiteConfig = {
-    slug: "bornerechargeneuilly",
+    slug: "neuilly-sur-seine",
     domain: "bornerechargeneuilly.fr",
     aliases: ["borne-recharge-neuilly.fr"],
     city: "Neuilly-sur-Seine",
@@ -193,7 +193,7 @@ const _neuillyConfig: SiteConfig = {
 
 // 3. Lyon (Capitale Province)
 const _lyonConfig: SiteConfig = {
-    slug: "bornerechargeLyon",
+    slug: "lyon",
     domain: "bornerechargelyon.fr",
     aliases: ["borne-recharge-lyon.fr"],
     city: "Lyon",
@@ -224,7 +224,7 @@ const _lyonConfig: SiteConfig = {
 
 // 4. Boulogne-Billancourt (Roi de la Copro)
 const _boulogneConfig: SiteConfig = {
-    slug: "bornerechargeboulogne",
+    slug: "boulogne-billancourt",
     domain: "bornerechargeboulogne.fr",
     city: "Boulogne-Billancourt",
     postalCode: "92100",
@@ -254,7 +254,7 @@ const _boulogneConfig: SiteConfig = {
 
 // 5. Bordeaux (Bobos Riches)
 const _bordeauxConfig: SiteConfig = {
-    slug: "bornerechargebordeaux",
+    slug: "bordeaux",
     domain: "bornerechargebordeaux.fr",
     city: "Bordeaux",
     postalCode: "33000",
@@ -284,7 +284,7 @@ const _bordeauxConfig: SiteConfig = {
 
 // 6. Toulouse (Aéronautique)
 const _toulouseConfig: SiteConfig = {
-    slug: "bornerechargetoulouse",
+    slug: "toulouse",
     domain: "bornerechargetoulouse.fr",
     city: "Toulouse",
     postalCode: "31000",
@@ -313,7 +313,7 @@ const _toulouseConfig: SiteConfig = {
 
 // 7. Annecy (Frontaliers Suisses - Cash) - Remplacement Toulouse #2
 const _annecyConfig: SiteConfig = {
-    slug: "bornerechargeannecy",
+    slug: "annecy",
     domain: "bornerechargeannecy.fr",
     city: "Annecy",
     postalCode: "74000",
@@ -343,7 +343,7 @@ const _annecyConfig: SiteConfig = {
 
 // 8. Saint-Germain-en-Laye (78 Riche) - Remplacement Toulouse #3
 const _stgermainConfig: SiteConfig = {
-    slug: "bornerechargestgermain",
+    slug: "saint-germain-en-laye",
     domain: "bornerechargestgermain.fr",
     city: "Saint-Germain-en-Laye",
     postalCode: "78100",
@@ -372,7 +372,7 @@ const _stgermainConfig: SiteConfig = {
 
 // 9. Nice (PACA Luxe)
 const _niceConfig: SiteConfig = {
-    slug: "bornerechargenice",
+    slug: "nice",
     domain: "bornerechargenice.fr",
     city: "Nice",
     postalCode: "06000",
@@ -402,7 +402,7 @@ const _niceConfig: SiteConfig = {
 
 // 10. Nantes (Maisons individuelles)
 const _nantesConfig: SiteConfig = {
-    slug: "bornerechargenantes",
+    slug: "nantes",
     domain: "bornerechargenantes.fr",
     city: "Nantes",
     postalCode: "44000",
@@ -432,7 +432,7 @@ const _nantesConfig: SiteConfig = {
 
 // 11. Aix-en-Provence (PACA Luxe)
 const _aixConfig: SiteConfig = {
-    slug: "bornerechargeaix",
+    slug: "aix-en-provence",
     domain: "bornerechargeaix.fr",
     city: "Aix-en-Provence",
     postalCode: "13100",
@@ -462,7 +462,7 @@ const _aixConfig: SiteConfig = {
 
 // 12. Strasbourg (L'Est riche)
 const _strasbourgConfig: SiteConfig = {
-    slug: "bornerechargestrasbourg",
+    slug: "strasbourg",
     domain: "bornerechargestrasbourg.fr",
     city: "Strasbourg",
     postalCode: "67000",
@@ -491,7 +491,7 @@ const _strasbourgConfig: SiteConfig = {
 
 // 13. Lille (Le Nord riche)
 const _lilleConfig: SiteConfig = {
-    slug: "bornerechargelille",
+    slug: "lille",
     domain: "bornerechargelille.fr",
     city: "Lille",
     postalCode: "59000",
@@ -521,7 +521,7 @@ const _lilleConfig: SiteConfig = {
 
 // 14. Montpellier (Croissance)
 const _montpellierConfig: SiteConfig = {
-    slug: "bornerechargemontpellier",
+    slug: "montpellier",
     domain: "bornerechargemontpellier.fr",
     city: "Montpellier",
     postalCode: "34000",
@@ -550,7 +550,7 @@ const _montpellierConfig: SiteConfig = {
 
 // 15. Versailles (Patrimoine)
 const _versaillesConfig: SiteConfig = {
-    slug: "bornerechargeversailles",
+    slug: "versailles",
     domain: "bornerechargeversailles.fr",
     city: "Versailles",
     postalCode: "78000",
@@ -579,7 +579,7 @@ const _versaillesConfig: SiteConfig = {
 
 // 16. Saint-Maur-des-Fossés (Volume Maison)
 const _stmaurConfig: SiteConfig = {
-    slug: "bornerechargestmaur",
+    slug: "saint-maur-des-fosses",
     domain: "bornerechargestmaur.fr",
     city: "Saint-Maur-des-Fossés",
     postalCode: "94100",
@@ -608,7 +608,7 @@ const _stmaurConfig: SiteConfig = {
 
 // 17. Levallois (Business + Copro)
 const _levalloisConfig: SiteConfig = {
-    slug: "bornerechargelevallois",
+    slug: "levallois-perret",
     domain: "bornerechargelevallois.fr",
     city: "Levallois-Perret",
     postalCode: "92300",
@@ -637,7 +637,7 @@ const _levalloisConfig: SiteConfig = {
 
 // 18. Rennes
 const _rennesConfig: SiteConfig = {
-    slug: "bornerechargerennes",
+    slug: "rennes",
     domain: "bornerechargerennes.fr",
     city: "Rennes",
     postalCode: "35000",
@@ -666,7 +666,7 @@ const _rennesConfig: SiteConfig = {
 
 // 19. Cannes (Résidences secondaires)
 const _cannesConfig: SiteConfig = {
-    slug: "bornerechargecannes",
+    slug: "cannes",
     domain: "bornerechargecannes.fr",
     city: "Cannes",
     postalCode: "06400",
@@ -696,7 +696,7 @@ const _cannesConfig: SiteConfig = {
 
 // 20. Biarritz (Le 16ème sur la plage)
 const _biarritzConfig: SiteConfig = {
-    slug: "bornerechargebiarritz",
+    slug: "biarritz",
     domain: "bornerechargebiarritz.fr",
     city: "Biarritz",
     postalCode: "64200",
@@ -726,7 +726,7 @@ const _biarritzConfig: SiteConfig = {
 
 // 21. Marseille (Le Sud + Solaire + Carport)
 const _marseilleConfig: SiteConfig = {
-    slug: "bornerechargemarseille",
+    slug: "marseille",
     domain: "bornerechargemarseille.fr",
     city: "Marseille",
     postalCode: "13000",
@@ -766,85 +766,85 @@ export const SITES: Record<string, SiteConfig> = {
     // 1. Paris
     "bornerechargeparis.fr": _parisConfig,
     "www.bornerechargeparis.fr": _parisConfig,
-    "bornerechargeparis": _parisConfig,
+    "paris": _parisConfig,
 
     // 2. Neuilly
     "bornerechargeneuilly.fr": _neuillyConfig,
     "www.bornerechargeneuilly.fr": _neuillyConfig,
-    "bornerechargeneuilly": _neuillyConfig,
+    "neuilly-sur-seine": _neuillyConfig,
 
     // 3. Lyon
     "bornerechargelyon.fr": _lyonConfig,
     "www.bornerechargelyon.fr": _lyonConfig,
-    "bornerechargeLyon": _lyonConfig,
+    "lyon": _lyonConfig,
 
     // 4. Boulogne
     "bornerechargeboulogne.fr": _boulogneConfig,
-    "bornerechargeboulogne": _boulogneConfig,
+    "boulogne-billancourt": _boulogneConfig,
 
     // 5. Bordeaux
     "bornerechargebordeaux.fr": _bordeauxConfig,
-    "bornerechargebordeaux": _bordeauxConfig,
+    "bordeaux": _bordeauxConfig,
 
     // 6. Toulouse
     "bornerechargetoulouse.fr": _toulouseConfig,
-    "bornerechargetoulouse": _toulouseConfig,
+    "toulouse": _toulouseConfig,
 
     // 7. Annecy
     "bornerechargeannecy.fr": _annecyConfig,
-    "bornerechargeannecy": _annecyConfig,
+    "annecy": _annecyConfig,
 
     // 8. Saint-Germain
     "bornerechargestgermain.fr": _stgermainConfig,
-    "bornerechargestgermain": _stgermainConfig,
+    "saint-germain-en-laye": _stgermainConfig,
 
     // 9. Nice
     "bornerechargenice.fr": _niceConfig,
-    "bornerechargenice": _niceConfig,
+    "nice": _niceConfig,
 
     // 10. Nantes
     "bornerechargenantes.fr": _nantesConfig,
-    "bornerechargenantes": _nantesConfig,
+    "nantes": _nantesConfig,
 
     // 11. Aix
     "bornerechargeaix.fr": _aixConfig,
-    "bornerechargeaix": _aixConfig,
+    "aix-en-provence": _aixConfig,
 
     // 12. Strasbourg
     "bornerechargestrasbourg.fr": _strasbourgConfig,
-    "bornerechargestrasbourg": _strasbourgConfig,
+    "strasbourg": _strasbourgConfig,
 
     // 13. Lille
     "bornerechargelille.fr": _lilleConfig,
-    "bornerechargelille": _lilleConfig,
+    "lille": _lilleConfig,
 
     // 14. Montpellier
     "bornerechargemontpellier.fr": _montpellierConfig,
-    "bornerechargemontpellier": _montpellierConfig,
+    "montpellier": _montpellierConfig,
 
     // 15. Versailles
     "bornerechargeversailles.fr": _versaillesConfig,
-    "bornerechargeversailles": _versaillesConfig,
+    "versailles": _versaillesConfig,
 
     // 16. Saint-Maur
     "bornerechargestmaur.fr": _stmaurConfig,
-    "bornerechargestmaur": _stmaurConfig,
+    "saint-maur-des-fosses": _stmaurConfig,
 
     // 17. Levallois
     "bornerechargelevallois.fr": _levalloisConfig,
-    "bornerechargelevallois": _levalloisConfig,
+    "levallois-perret": _levalloisConfig,
 
     // 18. Rennes
     "bornerechargerennes.fr": _rennesConfig,
-    "bornerechargerennes": _rennesConfig,
+    "rennes": _rennesConfig,
 
     // 19. Cannes
     "bornerechargecannes.fr": _cannesConfig,
-    "bornerechargecannes": _cannesConfig,
+    "cannes": _cannesConfig,
 
     // 20. Biarritz
     "bornerechargebiarritz.fr": _biarritzConfig,
-    "bornerechargebiarritz": _biarritzConfig,
+    "biarritz": _biarritzConfig,
 
     // 21. Marseille
     "bornerechargemarseille.fr": _marseilleConfig,

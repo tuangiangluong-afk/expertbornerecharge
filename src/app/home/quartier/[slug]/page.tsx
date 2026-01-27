@@ -58,8 +58,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     if (!quartier) return {};
 
     return {
-        title: `Taxi ${quartier.name} - ${quartier.city} | Réservation Immédiate`,
-        description: `Commandez votre taxi pour ${quartier.name} à ${quartier.city}. Chauffeur local, arrivée rapide, prix fixe. Service disponible 24h/24.`,
+        title: `Installation Borne ${quartier.name} - ${quartier.city} | Devis Gratuit`,
+        description: `Installation de borne de recharge électrique à ${quartier.name} (${quartier.city}). Expert IRVE local, devis gratuit sous 24h, matériel garanti.`,
         alternates: {
             canonical: `https://expertbornerecharge.com/quartier/${resolvedParams.slug}`,
         }
@@ -111,12 +111,10 @@ export default async function QuartierPage({ params }: { params: Promise<{ slug:
                         Quartier & Zone Locale
                     </span>
                     <h1 className="text-4xl md:text-6xl font-black mb-6">
-                        Taxi <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">{quartier.name}</span>
+                        Installation Borne <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">{quartier.name}</span>
                     </h1>
-                    <p className="text-xl text-neutral-300 max-w-2xl mx-auto">
-                        Service de transport prioritaire secteur {quartier.name} à {quartier.city}.
-                        <br />Votre chauffeur arrive en moins de 10 minutes.
-                    </p>
+                    Installation certifiée IRVE dans votre quartier à {quartier.name}, {quartier.city}.
+                    <br />Devis gratuit et étude technique sous 24h.
                 </div>
             </header>
 
@@ -131,17 +129,17 @@ export default async function QuartierPage({ params }: { params: Promise<{ slug:
                             </h2>
                             <div className="prose prose-neutral max-w-none text-neutral-600">
                                 <p>
-                                    Vous habitez ou visitez le quartier <strong>{quartier.name}</strong> ?
-                                    Expert Borne Recharge met à votre disposition une flotte de chauffeurs dédiés à cette zone pour réduire les temps d'attente.
+                                    Vous habitez ou travaillez dans le quartier <strong>{quartier.name}</strong> ?
+                                    Expert Borne Recharge vous met en relation avec des installateurs certifiés IRVE locaux pour votre projet.
                                 </p>
                                 <p>
-                                    Que ce soit pour un départ immédiat vers la gare, l'aéroport ou une consultation médicale, nous connaissons les moindres recoins de {quartier.name} pour éviter les bouchons.
+                                    Que ce soit pour une maison individuelle, une copropriété ou un local commercial, nous maîtrisons les contraintes techniques du secteur {quartier.name}.
                                 </p>
                                 <h3 className="font-bold text-neutral-900 mt-6 mb-3">Service de proximité</h3>
                                 <ul className="space-y-2">
-                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-emerald-500" /> Disponibilité max dans le secteur</li>
-                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-emerald-500" /> Connaissance parfaite des raccourcis</li>
-                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-emerald-500" /> Approche gratuite si réservation</li>
+                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-emerald-500" /> Étude technique offerte</li>
+                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-emerald-500" /> Matériel certifié (Wallbox, Hager, etc.)</li>
+                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-emerald-500" /> Éligible aides ADVENIR / Crédit impôt</li>
                                 </ul>
                             </div>
                         </div>
@@ -152,7 +150,7 @@ export default async function QuartierPage({ params }: { params: Promise<{ slug:
                                 <h3 className="text-lg font-bold">Avis clients {quartier.name}</h3>
                                 <div className="text-xs font-bold bg-green-100 text-green-700 px-2 py-1 rounded">Vérifié</div>
                             </div>
-                            <p className="text-neutral-600 italic">"Très pratique d'avoir un taxi qui connait vraiment le quartier {quartier.name}. Pas besoin d'expliquer le chemin." - <span className="not-italic font-bold text-neutral-900">Thomas P.</span></p>
+                            <p className="text-neutral-600 italic">"Très satisfait de l'installation de ma borne à {quartier.name}. Travail propre et équipe très réactive." - <span className="not-italic font-bold text-neutral-900">Thomas P.</span></p>
                         </div>
                     </div>
 
@@ -161,7 +159,7 @@ export default async function QuartierPage({ params }: { params: Promise<{ slug:
                         <div className="sticky top-24 space-y-6">
                             <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-neutral-100">
                                 <div className="bg-emerald-600 p-4 text-white text-center">
-                                    <p className="font-bold">Commander Zone {quartier.name}</p>
+                                    <p className="font-bold">Devis Borne {quartier.name}</p>
                                 </div>
                                 <div className="p-4">
                                     <BookingWidget city={cityConfig} compact={true} />
