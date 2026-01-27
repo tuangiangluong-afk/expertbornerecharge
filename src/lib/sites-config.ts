@@ -724,6 +724,35 @@ const _biarritzConfig: SiteConfig = {
     coordinates: { lat: 43.4832, lng: -1.5586 }
 };
 
+// 21. Marseille (Le Sud + Solaire + Carport)
+const _marseilleConfig: SiteConfig = {
+    slug: "bornerechargemarseille",
+    domain: "bornerechargemarseille.fr",
+    city: "Marseille",
+    postalCode: "13000",
+    department: "13",
+    region: "Provence-Alpes-Côte d'Azur",
+    name: "Borne Recharge Marseille",
+    phoneNumber: "04 91 80 13 00",
+    email: "marseille@expertbornerecharge.com",
+    targetType: 'MAISON', // On vise les villas et le Solaire
+    priceRange: 'PREMIUM', // On monte en gamme pour l'upsell Solaire
+    theme: 'trust',
+    heroImage: "https://images.unsplash.com/photo-1559441142-e1d51a665243?q=80&w=2940&auto=format&fit=crop", // Vieux Port ou Calanques
+    description: "Installation borne de recharge et Carport Solaire à Marseille, Cassis, Carry. Roulez gratuit au soleil.",
+    meta: {
+        title: "Installation Borne Recharge & Carport Solaire Marseille | 13",
+        description: "Expert Borne & Solaire Marseille. Transformez votre parking en centrale verte. Spécialiste Villas 8ème, Cassis, Carry. Devis Carport Solaire."
+    },
+    certifications: [...TEMPLATE_CERTIFICATIONS, "Expert Solaire", "RGE QualiPV"],
+    aidesDisponibles: [...TEMPLATE_AIDES, "Aide Département 13"],
+    features: ["Carport Solaire (Upsell)", "Ombrières Photovoltaïques", "Villas & Piscines", "Installation Extérieure"],
+    localKeywords: ["borne recharge marseille", "carport solaire marseille", "borne solaire 13", "cassis borne recharge", "carry le rouet"],
+    quartiers: ["Le Prado", "Périer", "Roucas-Blanc", "La Corniche", "Cassis", "Carry-le-Rouet"], // La Ceinture Dorée
+    coproprietes: [],
+    centresCommerciaux: []
+};
+
 // ============================================
 // CITIES REGISTRY
 // ============================================
@@ -816,6 +845,10 @@ export const SITES: Record<string, SiteConfig> = {
     // 20. Biarritz
     "bornerechargebiarritz.fr": _biarritzConfig,
     "bornerechargebiarritz": _biarritzConfig,
+
+    // 21. Marseille
+    "bornerechargemarseille.fr": _marseilleConfig,
+    "bornerechargemarseille": _marseilleConfig,
 };
 
 // ============================================
