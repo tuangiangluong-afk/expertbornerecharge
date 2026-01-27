@@ -50,6 +50,22 @@ export function getAllGuides() {
             date: '2026-01-26',
             category: 'Copropriété',
             readTime: '5 min'
+        },
+        {
+            slug: 'prix-installation-borne-recharge',
+            title: "Combien Coûte l'Installation d'une Borne de Recharge ?",
+            description: "Prix réels 2026, aides disponibles (crédit impôt, ADVENIR) et devis. Guide complet pour maison et copropriété.",
+            date: '2026-01-27',
+            category: 'Prix & Aides',
+            readTime: '8 min'
+        },
+        {
+            slug: 'wallbox-vs-prise-renforcee',
+            title: "Wallbox vs Prise Renforcée : Le Comparatif 2026",
+            description: "Temps de charge, prix, sécurité... Quelle solution choisir pour votre voiture électrique ? Le duel complet.",
+            date: '2026-01-27',
+            category: 'Comparatif',
+            readTime: '6 min'
         }
     ];
 
