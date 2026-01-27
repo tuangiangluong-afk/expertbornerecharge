@@ -3,8 +3,8 @@ import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Mentions Légales - Taxi de France",
-    description: "Mentions légales, éditeur, hébergement et politique de confidentialité du réseau Taxi de France.",
+    title: "Mentions Légales - Expert Borne Recharge",
+    description: "Mentions légales, éditeur, hébergement et politique de confidentialité du réseau Expert Borne Recharge.",
     alternates: {
         canonical: "https://taxifrance.fr/mentions-legales",
     },
@@ -24,7 +24,7 @@ export default function MentionsLegales() {
                         Retour Accueil
                     </Link>
                     <span className="text-sm font-bold">
-                        Taxi de France<span className="text-blue-500">.</span>
+                        Expert Borne Recharge<span className="text-blue-500">.</span>
                     </span>
                 </div>
             </nav>
@@ -38,7 +38,7 @@ export default function MentionsLegales() {
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className="mb-4 text-2xl font-bold text-blue-900">1. Éditeur du Site</h2>
                         <p>
-                            Le site <strong>Taxi de France</strong> (taxifrance.fr) est édité par la société <strong>MEDIASHMAN</strong>.
+                            Le site <strong>Expert Borne Recharge</strong> (taxifrance.fr) est édité par la société <strong>MEDIASHMAN</strong>.
                         </p>
                         <ul className="list-none space-y-2 pl-0">
                             <li><strong>Forme juridique :</strong> Société (SASU/SARL selon Kbis)</li>
@@ -52,7 +52,7 @@ export default function MentionsLegales() {
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className="mb-4 text-2xl font-bold text-blue-900">2. Service Proposé</h2>
                         <p>
-                            Taxi de France est une plateforme nationale regroupant des artisans taxis et des sociétés de transport VTC indépendants. Le site facilite la mise en relation entre les usagers et les professionnels du transport.
+                            Expert Borne Recharge est une plateforme nationale regroupant des artisans taxis et des sociétés de transport VTC indépendants. Le site facilite la mise en relation entre les usagers et les professionnels du transport.
                         </p>
                     </div>
 
@@ -70,7 +70,7 @@ export default function MentionsLegales() {
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className="mb-4 text-2xl font-bold text-blue-900">4. Propriété Intellectuelle</h2>
                         <p>
-                            L&apos;ensemble des contenus (textes, images, base de données, marque &quot;Taxi de France&quot;) est protégé par le droit de la propriété intellectuelle. Toute reproduction non autorisée est interdite.
+                            L&apos;ensemble des contenus (textes, images, base de données, marque &quot;Expert Borne Recharge&quot;) est protégé par le droit de la propriété intellectuelle. Toute reproduction non autorisée est interdite.
                         </p>
                     </div>
 

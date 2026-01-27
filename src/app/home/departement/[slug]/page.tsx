@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!dept) return { title: "Département introuvable" };
 
     return {
-        title: `Taxi ${dept.name} (${dept.code}) | Réseau Taxi de France`,
+        title: `Taxi ${dept.name} (${dept.code}) | Réseau Expert Borne Recharge`,
         description: `Trouvez un taxi officiel dans le ${dept.code}. Réseau de chauffeurs indépendants à ${dept.name}. Réservation directe sans commission.`,
     };
 }
@@ -69,7 +69,7 @@ export default async function DepartmentPage({ params }: Props) {
             <nav className="border-b border-white/10 bg-neutral-900 px-6 py-4 sticky top-0 z-50 shadow-md backdrop-blur-md bg-neutral-900/90 text-white">
                 <div className="mx-auto flex max-w-7xl items-center justify-between">
                     <Link href="/home" className="text-2xl font-bold tracking-tighter">
-                        Taxi de France<span className="text-blue-500">.</span>
+                        Expert Borne Recharge<span className="text-blue-500">.</span>
                     </Link>
                     <Link href="/home/reserver-taxi-ile-de-france" className="text-sm font-medium text-neutral-400 hover:text-white transition">
                         ← Changer de zone

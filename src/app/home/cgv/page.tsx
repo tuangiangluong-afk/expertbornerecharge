@@ -3,8 +3,8 @@ import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Conditions Générales de Vente - Taxi de France",
-    description: "Consultez les CGV du réseau Taxi de France : réservation de taxis et VTC, tarifs réglementés, annulations et responsabilités.",
+    title: "Conditions Générales de Vente - Expert Borne Recharge",
+    description: "Consultez les CGV du réseau Expert Borne Recharge : réservation de taxis et VTC, tarifs réglementés, annulations et responsabilités.",
     alternates: {
         canonical: "https://taxifrance.fr/cgv",
     },
@@ -24,7 +24,7 @@ export default function CGV() {
                         Retour Accueil
                     </Link>
                     <span className="text-sm font-bold">
-                        Taxi de France<span className="text-blue-500">.</span>
+                        Expert Borne Recharge<span className="text-blue-500">.</span>
                     </span>
                 </div>
             </nav>
@@ -38,7 +38,7 @@ export default function CGV() {
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <p className="text-sm text-neutral-500">Dernière mise à jour : 25/01/2026</p>
                         <p>
-                            Les présentes Conditions Générales de Vente régissent les relations contractuelles entre la société <strong>MEDIASHMAN</strong>, sise au 91 RUE DU FAUBOURG SAINT-HONORE, 75008 PARIS (SIREN 509 987 681), ci-après &quot;L&apos;Éditeur&quot;, et toute personne utilisant le site <strong>Taxi de France</strong> pour la mise en relation avec le réseau national de chauffeurs.
+                            Les présentes Conditions Générales de Vente régissent les relations contractuelles entre la société <strong>MEDIASHMAN</strong>, sise au 91 RUE DU FAUBOURG SAINT-HONORE, 75008 PARIS (SIREN 509 987 681), ci-après &quot;L&apos;Éditeur&quot;, et toute personne utilisant le site <strong>Expert Borne Recharge</strong> pour la mise en relation avec le réseau national de chauffeurs.
                         </p>
                     </div>
 

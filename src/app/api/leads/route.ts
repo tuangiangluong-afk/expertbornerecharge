@@ -28,7 +28,7 @@ export async function POST(request: Request) {
         // Envoi via Resend
         const { data, error } = await resend.emails.send({
             from: 'Expert Borne Recharge <onboarding@resend.dev>', // Il faudra valider un domaine plus tard
-            to: ['theappsfactory@gmail.com'],
+            to: ['hello@expertbornerecharge.com'],
             subject: `🔥 Nouveau Lead [${city}] - ${name}`,
             html: `
                 <h1>Nouveau Lead Entrant</h1>

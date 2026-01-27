@@ -1,4 +1,5 @@
 import CookieBanner from "@/components/CookieBanner";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export default function HomeLayout({
     children,
@@ -7,8 +8,9 @@ export default function HomeLayout({
 }) {
     return (
         <>
+            <GoogleAnalytics GA_MEASUREMENT_ID="G-3S88LL4FC5" />
             {children}
-            <CookieBanner slug="home" cityName="Taxi de France" />
+            <CookieBanner slug="home" cityName="Expert Borne Recharge" />
         </>
     );
 }

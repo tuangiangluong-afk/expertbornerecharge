@@ -130,9 +130,26 @@ export default function AdminLeadsPage() {
                                             </span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold capitalize ${getStatusColor(lead.status)}`}>
-                                                {lead.status}
-                                            </span>
+                                            <select
+                                                value={lead.status}
+                                                onChange={async (e) => {
+                                                    const newStatus = e.target.value;
+                                                    try {
+                                                        const { updateLeadStatus } = await import("@/app/actions/leads");
+                                                        await updateLeadStatus(lead.id, newStatus);
+                                                        // Update local state
+                                                        setLeads(prev => prev.map(l => l.id === lead.id ? { ...l, status: newStatus } : l));
+                                                    } catch (err) {
+                                                        alert("Erreur lors de la mise à jour du statut");
+                                                    }
+                                                }}
+                                                className={`text-xs font-bold px-2 py-1 rounded-full border-0 cursor-pointer focus:ring-2 focus:ring-blue-500 ${getStatusColor(lead.status)}`}
+                                            >
+                                                <option value="new">New</option>
+                                                <option value="contacted">Contacted</option>
+                                                <option value="converted">Converted</option>
+                                                <option value="lost">Lost</option>
+                                            </select>
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex flex-col">

@@ -85,7 +85,7 @@ export default async function QuartierPage({ params }: { params: Promise<{ slug:
                         href="/home"
                         className={`flex items-center gap-2 text-xl font-black tracking-tighter text-neutral-900 hover:text-blue-600 transition`}
                     >
-                        Taxi de France<span className="text-blue-600">.</span>
+                        Expert Borne Recharge<span className="text-blue-600">.</span>
                     </Link>
                     <CallButton
                         phoneNumber={cityConfig.phoneNumber}
@@ -132,7 +132,7 @@ export default async function QuartierPage({ params }: { params: Promise<{ slug:
                             <div className="prose prose-neutral max-w-none text-neutral-600">
                                 <p>
                                     Vous habitez ou visitez le quartier <strong>{quartier.name}</strong> ?
-                                    Taxi de France met à votre disposition une flotte de chauffeurs dédiés à cette zone pour réduire les temps d'attente.
+                                    Expert Borne Recharge met à votre disposition une flotte de chauffeurs dédiés à cette zone pour réduire les temps d'attente.
                                 </p>
                                 <p>
                                     Que ce soit pour un départ immédiat vers la gare, l'aéroport ou une consultation médicale, nous connaissons les moindres recoins de {quartier.name} pour éviter les bouchons.

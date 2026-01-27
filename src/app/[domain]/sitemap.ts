@@ -1,40 +1,24 @@
 import { MetadataRoute } from "next";
-import { getCity } from "@/lib/db";
-import { SEO_DESTINATIONS, SEO_SERVICES } from "@/lib/seo-data";
-import { headers } from "next/headers";
+import { SITES } from "@/lib/sites-config";
+import { slugify } from "@/lib/slugify";
 
 type Props = {
     params: Promise<{ domain: string }>;
 }
 
 export default async function sitemap(props?: Props): Promise<MetadataRoute.Sitemap> {
-    let domain: string | undefined;
+    const resolved = props?.params ? await props.params : null;
+    const domain = resolved?.domain;
 
-    // Try to get domain from params
-    if (props && props.params) {
-        const resolved = await props.params;
-        domain = resolved.domain;
-    }
+    if (!domain) return [];
 
-    // Fallback: Headers (since we rewrite in middleware, Host header should be correct)
-    if (!domain) {
-        const headersList = await headers();
-        const host = headersList.get("host"); // e.g. taxisversailles.com:3000
-        if (host) {
-            domain = host.split(":")[0];
-        }
-    }
+    // Get config for this domain
+    const config = SITES[domain] || SITES[`www.${domain}`];
+    if (!config) return [];
 
-    const city = domain ? getCity(domain) : null;
+    const baseUrl = `https://${config.domain}`;
 
-    if (!city) {
-        return [];
-    }
-
-    // baseUrl must match legitimate domain
-    const baseUrl = `https://${city.domain}`;
-
-    // Core Static Pages
+    // 1. Core Pages
     const routes: MetadataRoute.Sitemap = [
         {
             url: baseUrl,
@@ -43,109 +27,47 @@ export default async function sitemap(props?: Props): Promise<MetadataRoute.Site
             priority: 1.0,
         },
         {
+            url: `${baseUrl}/contact`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.8,
+        },
+        {
             url: `${baseUrl}/mentions-legales`,
             lastModified: new Date(),
             changeFrequency: 'monthly',
-            priority: 0.5,
+            priority: 0.3,
         },
         {
             url: `${baseUrl}/cgv`,
             lastModified: new Date(),
             changeFrequency: 'monthly',
-            priority: 0.5,
-        },
-        {
-            url: `${baseUrl}/transport-medical`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/gare-aeroport`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/longue-distance`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.8,
-        },
+            priority: 0.3,
+        }
     ];
 
-    // Neighborhoods (from DB)
-    if (city.neighborhoods) {
-        for (const neighborhood of city.neighborhoods) {
-            const slug = neighborhood.toLowerCase()
-                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                .replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-");
+    // 2. Local Quarters / Neighborhoods (SEO Long Tail)
+    if (config.quartiers && config.quartiers.length > 0) {
+        config.quartiers.forEach(q => {
             routes.push({
-                url: `${baseUrl}/quartier/${slug}`,
-                lastModified: new Date(),
-                changeFrequency: 'monthly',
-                priority: 0.6,
-            });
-        }
-    }
-
-    // Programmatic SEO: Tarif Pages
-    const tarifRoutes = SEO_DESTINATIONS.map((dest) => ({
-        url: `${baseUrl}/tarif/${dest.slug}`,
-        lastModified: new Date(),
-        changeFrequency: "weekly" as const, // Prices/Estimates might change
-        priority: 0.8,
-    }));
-
-    // Programmatic SEO: Service Pages
-    // Special handling for shortcuts defined in middleware
-    const SHORTCUTS = ['conventionne-cpam', 'van-minibus', 'nuit'];
-
-    const serviceRoutes = SEO_SERVICES.map((serv) => {
-        const isShortcut = SHORTCUTS.includes(serv.slug);
-        return {
-            url: isShortcut ? `${baseUrl}/${serv.slug}` : `${baseUrl}/service/${serv.slug}`,
-            lastModified: new Date(),
-            changeFrequency: "monthly" as const,
-            priority: 0.8,
-        };
-    });
-
-    // Programmatic SEO: Guides (POIs)
-    if (city.points_of_interest) {
-        const allPois = [
-            ...city.points_of_interest.hotels,
-            ...city.points_of_interest.nightlife,
-            ...city.points_of_interest.monuments
-        ];
-
-        for (const poi of allPois) {
-            const slug = poi.toLowerCase()
-                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                .replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-");
-            routes.push({
-                url: `${baseUrl}/guides/${slug}`,
-                lastModified: new Date(),
-                changeFrequency: 'monthly',
-                priority: 0.7,
-            });
-        }
-    }
-
-    // Programmatic SEO: Transport Medical (Hospitals)
-    if (city.hospitals) {
-        for (const hospital of city.hospitals) {
-            const slug = hospital.toLowerCase()
-                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                .replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-");
-            routes.push({
-                url: `${baseUrl}/transport-medical/${slug}`,
+                url: `${baseUrl}/quartier/${slugify(q)}`,
                 lastModified: new Date(),
                 changeFrequency: 'weekly',
-                priority: 0.9, // High priority (Business/Medical)
+                priority: 0.7,
             });
-        }
+        });
     }
 
-    return [...routes, ...tarifRoutes, ...serviceRoutes];
+    // 3. Solutions (Filtered by site target)
+    const solutions = ['copropriete', 'maison', 'entreprise'];
+    solutions.forEach(s => {
+        routes.push({
+            url: `${baseUrl}/solutions/${s}`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.6,
+        });
+    });
+
+    return routes;
 }

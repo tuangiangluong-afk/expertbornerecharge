@@ -27,7 +27,14 @@ export default async function middleware(req: NextRequest) {
 
     // 1. Sitemap Rewrite
     if (path === "/sitemap.xml") {
-        return NextResponse.rewrite(new URL("/home/sitemap.xml", req.url));
+        if (isHub) {
+            return NextResponse.rewrite(new URL("/home/sitemap.xml", req.url));
+        }
+        // Satellites serve their own sitemap at /[domain]/sitemap.xml
+        // Note: For now, we'll rewrite to a generic satellite sitemap generator if needed, 
+        // or just let it fall through to the dynamic route if we implement it there.
+        // Actually, we'll implement a dynamic sitemap in [domain]/sitemap.ts
+        return NextResponse.rewrite(new URL(`/${hostname}/sitemap.xml`, req.url));
     }
 
     // 2. Main Hub Logic

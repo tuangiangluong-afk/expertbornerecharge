@@ -34,10 +34,15 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     type: "website",
   },
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/favicon.png",
+    apple: "/icon.png",
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0f172a",
+  themeColor: "#1d4ed8",
 };
 
 export default function RootLayout({

@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     if (!poi) return {};
 
     return {
-        title: `Taxi ${poi} - Réservation & Transfert | Taxi de France`,
+        title: `Taxi ${poi} - Réservation & Transfert | Expert Borne Recharge`,
         description: `Réservez votre taxi pour ${poi}. Chauffeur privé, berline confortable et prix fixe. Service national disponible 24h/24.`,
         alternates: {
             canonical: `https://taxifrance.fr/guides/${resolvedParams.slug}`,
@@ -80,7 +80,7 @@ export default async function NationalGuidePage({ params }: { params: Promise<{ 
                         href="/home"
                         className={`flex items-center gap-2 text-xl font-black tracking-tighter text-neutral-900 hover:text-blue-600 transition`}
                     >
-                        Taxi de France<span className="text-blue-600">.</span>
+                        Expert Borne Recharge<span className="text-blue-600">.</span>
                     </Link>
                     <CallButton
                         phoneNumber={city.phoneNumber}
@@ -127,13 +127,13 @@ export default async function NationalGuidePage({ params }: { params: Promise<{ 
                             <div className="prose prose-neutral max-w-none text-neutral-600">
                                 <p>
                                     Vous prévoyez de vous rendre à <strong>{poi}</strong> ? Évitez le stress des transports en commun et du stationnement.
-                                    Le réseau Taxi de France vous garantit une arrivée en toute sérénité.
+                                    Le réseau Expert Borne Recharge vous garantit une arrivée en toute sérénité.
                                 </p>
                                 <p>
                                     Nos chauffeurs partenaires connaissent parfaitement les accès pour <strong>{poi}</strong> et vous déposeront au plus près de l'entrée.
                                     Que vous veniez d'une gare, d'un aéroport ou de votre domicile, nous assurons la liaison.
                                 </p>
-                                <h3 className="font-bold text-neutral-900 mt-6 mb-3">Les avantages Taxi de France</h3>
+                                <h3 className="font-bold text-neutral-900 mt-6 mb-3">Les avantages Expert Borne Recharge</h3>
                                 <ul className="space-y-2">
                                     <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Accès prioritaire (voies de bus)</li>
                                     <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Dépose-minute au plus près</li>

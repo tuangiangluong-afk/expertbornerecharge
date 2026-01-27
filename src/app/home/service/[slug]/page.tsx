@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     if (!service) return {};
 
     return {
-        title: `${service.title} - Service National | Taxi de France`,
+        title: `${service.title} - Service National | Expert Borne Recharge`,
         description: `${service.description}. Service disponible dans toute la France avec notre réseau de chauffeurs partenaires.`,
         alternates: {
             canonical: `https://taxifrance.fr/service/${resolvedParams.slug}`,
@@ -61,7 +61,7 @@ export default async function NationalServicePage({ params }: { params: Promise<
                         href="/home"
                         className={`flex items-center gap-2 text-xl font-black tracking-tighter text-neutral-900 hover:text-blue-600 transition`}
                     >
-                        Taxi de France<span className="text-blue-600">.</span>
+                        Expert Borne Recharge<span className="text-blue-600">.</span>
                     </Link>
                     <CallButton
                         phoneNumber={city.phoneNumber}
@@ -279,7 +279,7 @@ export default async function NationalServicePage({ params }: { params: Promise<
                 <div className="grid md:grid-cols-3 gap-12">
                     <div className="md:col-span-2">
                         <div className="prose prose-lg prose-neutral max-w-none text-neutral-600">
-                            <h2 className="text-3xl font-bold text-neutral-900 mb-6">Pourquoi choisir Taxi de France pour {service.title.toLowerCase()} ?</h2>
+                            <h2 className="text-3xl font-bold text-neutral-900 mb-6">Pourquoi choisir Expert Borne Recharge pour {service.title.toLowerCase()} ?</h2>
                             <p>
                                 Notre service de <strong>{service.title}</strong> est conçu pour répondre aux besoins des particuliers et des professionnels exigeants.
                                 Grâce à notre maillage national, nous pouvons vous garantir une prise en charge rapide, où que vous soyez.
