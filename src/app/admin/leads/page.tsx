@@ -15,8 +15,11 @@ interface Lead {
     name: string;
     email: string;
     phone: string;
-    company?: string;
-    city?: string;
+    company: string | null;
+    city: string | null;
+    message: string | null;
+    postal_code: string | null;
+    housing_type: string | null;
     created_at: string;
 }
 
