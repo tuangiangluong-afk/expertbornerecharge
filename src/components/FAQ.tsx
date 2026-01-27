@@ -5,6 +5,7 @@ import { ChevronDown, HelpCircle } from "lucide-react";
 
 interface FAQProps {
     city?: string;
+    type?: string;
     themeColor?: 'blue' | 'emerald' | 'amber' | 'purple';
 }
 
