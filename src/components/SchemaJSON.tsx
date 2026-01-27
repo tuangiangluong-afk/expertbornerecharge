@@ -8,17 +8,26 @@ interface SchemaJSONProps {
     vehicle?: Vehicle;
 }
 
+import { slugify } from "@/lib/slugify";
+
 export default function SchemaJSON({ type, site, vehicle }: SchemaJSONProps) {
     let schema = {};
 
     if (type === "LocalBusiness" && site) {
+        // CLEAN URL LOGIC:
+        // Use /ville/[slug] for local sites, and https://expertbornerecharge.com for Hub
+        const baseUrl = "https://expertbornerecharge.com";
+        const canonicalUrl = site.slug === 'home' || site.slug === 'expertbornerecharge.com'
+            ? baseUrl
+            : `${baseUrl}/ville/${slugify(site.city)}`;
+
         schema = {
             "@context": "https://schema.org",
             "@type": "LocalBusiness", // or Electrician
             "name": site.name,
             "image": site.heroImage,
-            "@id": `https://${site.domain}`,
-            "url": `https://${site.domain}`,
+            "@id": canonicalUrl,
+            "url": canonicalUrl,
             "telephone": site.phoneNumber,
             "address": {
                 "@type": "PostalAddress",
