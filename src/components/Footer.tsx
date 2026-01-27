@@ -108,7 +108,7 @@ export function Footer({ config }: FooterProps) {
 
                                     if (config.slug === 'home') {
                                         // HUB: Top Cities
-                                        const topSlugs = ['bornerechargeparis', 'bornerechargelyon', 'bornerechargebordeaux', 'bornerechargetoulouse', 'bornerechargenice'];
+                                        const topSlugs = ['bornerechargeparis', 'bornerechargemarseille', 'bornerechargelyon', 'bornerechargebordeaux', 'bornerechargenice'];
                                         nearbySites = uniqueSites.filter(s => topSlugs.includes(s.slug));
                                     } else {
                                         // LOCAL Attempt
