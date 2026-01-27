@@ -3,12 +3,13 @@ import { SEO_SERVICES } from "@/lib/seo-data";
 import { SEO_ROUTES } from "@/lib/seo-routes";
 import { NATIONAL_CONFIG } from "@/config/national";
 import { slugify } from "@/lib/slugify";
+import { SiteConfig } from "@/lib/sites-config";
 import { CityConfig } from "@/lib/db";
 import { getNearbyCities } from "@/lib/geo";
 
 interface InternalMeshProps {
     city?: string;
-    config?: CityConfig;
+    config?: CityConfig | SiteConfig;
 }
 
 export function InternalMesh({ city, config }: InternalMeshProps) {
@@ -19,12 +20,15 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
     const finalRoutes = filteredRoutes.length > 0 ? filteredRoutes : SEO_ROUTES.slice(0, 8);
 
     // 2. Contextual POIs (Local Monuments vs National Fallback)
-    const monuments = config?.points_of_interest?.monuments.length
-        ? config.points_of_interest.monuments.slice(0, 5) // Show top 5 local monuments
+    const poi = (config as any)?.points_of_interest || {};
+    const neighborhoods = (config as any)?.neighborhoods || (config as any)?.quartiers || [];
+
+    const monuments = poi.monuments?.length
+        ? poi.monuments.slice(0, 5) // Show top 5 local monuments
         : NATIONAL_CONFIG.points_of_interest.monuments.slice(0, 5); // Fallback to Paris monuments if no local data
 
-    const secondaryPois = config?.neighborhoods?.length
-        ? config.neighborhoods.slice(0, 3)
+    const secondaryPois = neighborhoods.length
+        ? neighborhoods.slice(0, 3)
         : NATIONAL_CONFIG.points_of_interest.nightlife.slice(0, 3);
 
     // 3. Deep Mesh (Geo-Spatial) & Deduplication
@@ -76,7 +80,7 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
                             {config ? `Quartiers de ${config.city}` : "Zones d'intervention"}
                         </h4>
                         <ul className="space-y-3">
-                            {(config?.neighborhoods || []).slice(0, 8).map(quartier => (
+                            {neighborhoods.slice(0, 8).map((quartier: string) => (
                                 <li key={quartier}>
                                     <a href="#simulateur" className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
                                         <span className="w-1 h-1 bg-yellow-500 rounded-full"></span>
