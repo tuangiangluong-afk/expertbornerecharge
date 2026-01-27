@@ -40,6 +40,18 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
         return true;
     });
 
+    // Varied Anchor Logic
+    function getVariedAnchor(name: string, index: number) {
+        const variations = [
+            `Borne recharge ${name}`,
+            `Installation à ${name}`,
+            `Électricien ${name}`,
+            `${name} (IRVE)`,
+            `Devis borne ${name}`
+        ];
+        return variations[index % variations.length];
+    }
+
     return (
         <section className="bg-neutral-900 border-t border-white/5 py-16 px-6">
             <div className="mx-auto max-w-7xl">
@@ -63,11 +75,11 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
                     <div>
                         <h4 className="text-white font-bold mb-6 text-lg">Installateurs à Proximité</h4>
                         <ul className="space-y-3">
-                            {nearbyCities.slice(0, 5).map(city => (
+                            {nearbyCities.slice(0, 5).map((city, i) => (
                                 <li key={city.slug}>
-                                    <Link href={`/ville/${city.slug}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
+                                    <Link href={`/ville/${slugify(city.city)}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
                                         <span className="w-1 h-1 bg-emerald-500 rounded-full"></span>
-                                        Installation borne recharge {city.city}
+                                        {getVariedAnchor(city.city, i)}
                                     </Link>
                                 </li>
                             ))}
@@ -80,11 +92,11 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
                             {config ? `Quartiers de ${config.city}` : "Zones d'intervention"}
                         </h4>
                         <ul className="space-y-3">
-                            {neighborhoods.slice(0, 8).map((quartier: string) => (
+                            {neighborhoods.slice(0, 8).map((quartier: string, i: number) => (
                                 <li key={quartier}>
                                     <a href="#simulateur" className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
                                         <span className="w-1 h-1 bg-yellow-500 rounded-full"></span>
-                                        Borne {quartier}
+                                        {getVariedAnchor(quartier, i + 2)} {/* Offset index for variation */}
                                     </a>
                                 </li>
                             ))}
@@ -98,11 +110,11 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
                         </h4>
                         <ul className="space-y-3">
                             {nearbyCities.length > 0 ? (
-                                nearbyCities.map(city => (
+                                nearbyCities.map((city, i) => (
                                     <li key={city.slug}>
-                                        <Link href={`/ville/${city.slug}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
+                                        <Link href={`/ville/${slugify(city.city)}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
                                             <span className="w-1 h-1 bg-blue-500 rounded-full"></span>
-                                            Borne Recharge {city.city}
+                                            {getVariedAnchor(city.city, i + 5)}
                                         </Link>
                                     </li>
                                 ))

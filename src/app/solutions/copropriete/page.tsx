@@ -90,6 +90,23 @@ export default function SolutionCopro() {
                         "C'est la solution zéro souci : pas de frais pour la copro, maintenance gérée par l'opérateur, et valorisation immédiate de l'immeuble."
                     </blockquote>
 
+                    <div className="bg-blue-600 text-white p-8 rounded-2xl shadow-xl my-10 not-prose flex flex-col md:flex-row items-center gap-6">
+                        <div className="flex-1">
+                            <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
+                                <FileText /> Syndic réticent ?
+                            </h3>
+                            <p className="text-blue-100">
+                                La loi est de votre côté. Téléchargez notre <strong>modèle de lettre juridique</strong> à envoyer à votre syndic pour mettre le sujet à l'ordre du jour de la prochaine AG.
+                            </p>
+                        </div>
+                        <a
+                            href="#simulateur"
+                            className="bg-white text-blue-900 font-bold py-3 px-6 rounded-xl hover:bg-blue-50 transition shadow-lg whitespace-nowrap"
+                        >
+                            Recevoir le modèle
+                        </a>
+                    </div>
+
                     <h2>Les aides ADVENIR 2026</h2>
                     <p>
                         Le programme ADVENIR subventionne lourdement les installations en résidentiel collectif.

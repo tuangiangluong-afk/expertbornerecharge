@@ -160,6 +160,25 @@ export default function SolutionMaison() {
                         </p>
                     </div>
 
+                    <div className="not-prose my-12">
+                        <h3 className="font-bold text-2xl text-slate-900 mb-6 text-center">Les marques que nous installons</h3>
+                        <p className="text-center text-slate-600 mb-8 max-w-xl mx-auto">
+                            Nous ne travaillons qu'avec les leaders mondiaux pour garantir sécurité et longévité.
+                        </p>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            {[
+                                { name: "Tesla", color: "bg-slate-900 text-white" },
+                                { name: "Wallbox", color: "bg-green-600 text-white" },
+                                { name: "Hager", color: "bg-blue-600 text-white" },
+                                { name: "Schneider", color: "bg-green-700 text-white" }
+                            ].map((brand, i) => (
+                                <div key={i} className={`h-16 rounded-xl flex items-center justify-center font-bold text-lg shadow-sm ${brand.color}`}>
+                                    {brand.name}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                     <h2>3. Les étapes de l'installation</h2>
                     <ol>
                         <li>

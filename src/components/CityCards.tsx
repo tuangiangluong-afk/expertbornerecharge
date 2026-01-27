@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { MapPin, ArrowRight } from "lucide-react";
+import { slugify } from "@/lib/slugify";
 
 interface CityCardProps {
     cities: {
@@ -18,7 +19,7 @@ export function CityCards({ cities }: CityCardProps) {
             {cities.map((city, i) => (
                 <Link
                     key={i}
-                    href={city.available ? `/ville/${city.slug}` : "#"}
+                    href={city.available ? `/ville/${slugify(city.name)}` : "#"}
                     className={`
                         block relative bg-white rounded-2xl p-6 border-2 transition-all
                         ${city.available

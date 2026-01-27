@@ -78,7 +78,7 @@ export default function HomePage() {
 
                             {/* H1 - Lead Gen Focus */}
                             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-                                Comparez les <span className="text-blue-600">devis</span> pour votre borne de recharge
+                                Le 1er Réseau d'Installateurs <span className="text-blue-600">Certifiés</span>. Comparez 3 devis.
                             </h1>
 
                             {/* Subtitle */}

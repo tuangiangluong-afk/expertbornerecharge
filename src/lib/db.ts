@@ -59,8 +59,14 @@ export function getCity(domain: string): CityConfig | null {
     return null;
 }
 
+import { slugify } from "@/lib/slugify";
+
 export function getCityBySlug(slug: string): CityConfig | null {
     return Object.values(CITIES).find(c => c.slug === slug) || null;
+}
+
+export function getCityByCleanSlug(cleanSlug: string): CityConfig | null {
+    return Object.values(CITIES).find(c => slugify(c.city) === cleanSlug) || null;
 }
 
 // ========================================

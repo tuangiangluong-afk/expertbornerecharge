@@ -1,4 +1,4 @@
-import { getCityBySlug, CITIES } from "@/lib/db";
+import { getCityByCleanSlug, CITIES } from "@/lib/db";
 import { getSpintaxContent } from "@/lib/spintax";
 import { Phone, CheckCircle, Zap, TrendingDown, Home, Building2, Briefcase, MapPin, Award, ArrowRight, Shield, Calendar } from "lucide-react";
 import { notFound } from "next/navigation";
@@ -13,10 +13,11 @@ import Reviews from "@/components/Reviews";
 import Logo from "@/components/Logo";
 import { InternalMesh } from "@/components/InternalMesh";
 import { Footer } from "@/components/Footer";
+import { slugify } from "@/lib/slugify";
 
 // Dynamically generate for ALL cities (Owned + Partner)
 export async function generateStaticParams() {
-    return Object.values(CITIES).map(city => ({ slug: city.slug }));
+    return Object.values(CITIES).map(city => ({ slug: slugify(city.city) }));
 }
 
 
@@ -30,11 +31,13 @@ export async function generateMetadata({
     params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
     const resolvedParams = await params;
-    const site = getCityBySlug(resolvedParams.slug);
+    const site = getCityByCleanSlug(resolvedParams.slug);
 
     if (!site) {
         return {};
     }
+
+    const cleanSlug = slugify(site.city);
 
     // Dynamic Meta via Spintax
     const spintaxTitle = getSpintaxContent("meta_title", site, 'HUB');
@@ -44,12 +47,12 @@ export async function generateMetadata({
         title: spintaxTitle,
         description: spintaxDesc,
         alternates: {
-            canonical: `https://expertbornerecharge.com/ville/${site.slug}`,
+            canonical: `https://expertbornerecharge.com/ville/${cleanSlug}`,
         },
         openGraph: {
             title: spintaxTitle,
             description: spintaxDesc,
-            url: `https://expertbornerecharge.com/ville/${site.slug}`,
+            url: `https://expertbornerecharge.com/ville/${cleanSlug}`,
             siteName: site.name,
             images: [
                 {
@@ -70,13 +73,12 @@ export async function generateMetadata({
 
 export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
     const resolvedParams = await params;
-    const site = getCityBySlug(resolvedParams.slug);
+    const site = getCityByCleanSlug(resolvedParams.slug);
 
     if (!site) {
         return notFound();
     }
 
-    // Spintax Generation
     // Spintax Generation
     const h1Content = getSpintaxContent("hero_title", site, 'HUB');
     const subtitleContent = getSpintaxContent("hero_subtitle", site, 'HUB');
