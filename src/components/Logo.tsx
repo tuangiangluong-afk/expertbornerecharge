@@ -14,6 +14,8 @@ interface LogoProps {
     themeColor?: 'blue' | 'emerald' | 'amber' | 'purple';
     /** Additional className */
     className?: string;
+    /** Custom URL override (useful for demo/preview) */
+    customLink?: string;
 }
 
 /**
@@ -28,7 +30,8 @@ export default function Logo({
     size = "md",
     variant = "default",
     themeColor = 'blue',
-    className = ""
+    className = "",
+    customLink
 }: LogoProps) {
     // Size mappings
     const sizes = {
@@ -63,7 +66,7 @@ export default function Logo({
         const isFooter = variant === "light";
 
         return (
-            <Link href="/" className={`flex items-center ${className}`}>
+            <Link href={customLink || "/"} className={`flex items-center ${className}`}>
                 <Image
                     src="/logo-expertbornerecharge.png"
                     alt="Expert Borne Recharge"
@@ -79,7 +82,7 @@ export default function Logo({
 
     // Satellite sites: New Pin Icon + Dynamic City Name
     return (
-        <Link href="/" className={`flex items-center gap-3 ${className}`}>
+        <Link href={customLink || "/"} className={`flex items-center gap-3 ${className}`}>
             {/* Icon: New Pin from User */}
             <Image
                 src="/logo-local-pin-v2.png"

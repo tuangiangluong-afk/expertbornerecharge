@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
 import { Phone, Zap } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 interface HeaderProps {
     isHub?: boolean;
@@ -19,6 +20,12 @@ export default function Header({
     variant = "default",
     themeColor = 'blue'
 }: HeaderProps) {
+    const pathname = usePathname();
+
+    // DEMO MODE FIX: If we are in /demo/ route, the logo should stay on the demo page
+    // Extract: /demo/bornerechargeneuilly
+    const demoMatch = pathname?.match(/^(\/demo\/[^\/]+)/);
+    const customLink = demoMatch ? demoMatch[1] : undefined;
 
     // Color Mapping
     const buttonColors = {
@@ -47,6 +54,7 @@ export default function Header({
                     size="md"
                     variant={variant === "light" ? "light" : "default"}
                     themeColor={themeColor}
+                    customLink={customLink}
                 />
 
                 {/* RIGHT ACTIONS */}
