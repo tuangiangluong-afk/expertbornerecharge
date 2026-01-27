@@ -67,12 +67,23 @@ export default function Logo({
 
         return (
             <Link href={customLink || "/"} className={`flex items-center ${className}`}>
+                {/* Default logo (for light mode) */}
                 <Image
                     src="/logo-expertbornerecharge.png"
                     alt="Expert Borne Recharge"
                     width={220}
                     height={s.height * 1.4}
-                    className={`h-auto object-contain ${isFooter ? 'brightness-0 invert' : 'dark:brightness-0 dark:invert'}`}
+                    className={`h-auto object-contain ${isFooter ? 'hidden' : 'dark:hidden'}`}
+                    style={{ height: s.height * 1.4, width: 'auto' }}
+                    priority
+                />
+                {/* White logo (for dark mode and footer) */}
+                <Image
+                    src="/logo-expertbornerecharge-white.png"
+                    alt="Expert Borne Recharge"
+                    width={220}
+                    height={s.height * 1.4}
+                    className={`h-auto object-contain ${isFooter ? 'block' : 'hidden dark:block'}`}
                     style={{ height: s.height * 1.4, width: 'auto' }}
                     priority
                 />
