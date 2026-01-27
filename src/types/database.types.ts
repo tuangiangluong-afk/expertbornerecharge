@@ -207,6 +207,87 @@ export type Database = {
                 }
                 Relationships: []
             }
+            leads: {
+                Row: {
+                    id: string
+                    tenant_id: string
+                    status: string
+                    type: string
+                    name: string
+                    email: string
+                    phone: string
+                    company: string | null
+                    message: string | null
+                    city: string | null
+                    postal_code: string | null
+                    housing_type: string | null
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    tenant_id: string
+                    status?: string
+                    type: string
+                    name: string
+                    email: string
+                    phone: string
+                    company?: string | null
+                    message?: string | null
+                    city?: string | null
+                    postal_code?: string | null
+                    housing_type?: string | null
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    tenant_id?: string
+                    status?: string
+                    type?: string
+                    name?: string
+                    email?: string
+                    phone?: string
+                    company?: string | null
+                    message?: string | null
+                    city?: string | null
+                    postal_code?: string | null
+                    housing_type?: string | null
+                    created_at?: string
+                }
+                Relationships: []
+            }
+            reviews: {
+                Row: {
+                    id: string
+                    tenant_id: string
+                    author_name: string
+                    rating: number
+                    content: string
+                    source: string
+                    is_active: boolean
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    tenant_id: string
+                    author_name: string
+                    rating?: number
+                    content: string
+                    source?: string
+                    is_active?: boolean
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    tenant_id?: string
+                    author_name?: string
+                    rating?: number
+                    content?: string
+                    source?: string
+                    is_active?: boolean
+                    created_at?: string
+                }
+                Relationships: []
+            }
         }
         Views: {
             [_ in never]: never
