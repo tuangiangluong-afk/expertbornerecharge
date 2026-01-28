@@ -12,19 +12,21 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+import { getCurrentYearSEO } from "@/lib/date";
 import { headers } from "next/headers";
 
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
   const domain = headersList.get("x-irve-domain") || "expertbornerecharge.com";
   const path = headersList.get("x-irve-path") || "";
+  const year = getCurrentYearSEO();
 
   const canonicalUrl = `https://${domain}${path}`;
 
   return {
     title: {
-      template: "%s | Expert Borne Recharge",
-      default: "Expert Borne Recharge - Installation Bornes IRVE",
+      template: `%s | Expert Borne Recharge ${year}`,
+      default: `Expert Borne Recharge - Prix & Installation ${year}`,
     },
     description: "Installation de bornes de recharge électriques. Réseau d'installateurs certifiés IRVE. Devis gratuit sous 24h.",
     metadataBase: new URL(`https://${domain}`),

@@ -11,6 +11,8 @@ import LeadForm from "@/components/LeadForm";
 import { CityCards } from "@/components/CityCards";
 import MobileStickyCTA from "@/components/MobileStickyCTA";
 import { Footer } from "@/components/Footer";
+import RealizationsGrid from "@/components/RealizationsGrid";
+import PersonaSelector from "@/components/PersonaSelector";
 
 export const metadata: Metadata = {
     title: "Comparez les Devis Borne de Recharge | Expert Borne Recharge",
@@ -136,6 +138,11 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
+
+            {/* ============================================ */}
+            {/* PERSONA SELECTOR (Waat Strategy) */}
+            {/* ============================================ */}
+            <PersonaSelector />
 
             {/* ============================================ */}
             {/* AIDES SECTION */}
@@ -287,6 +294,11 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
+
+            {/* ============================================ */}
+            {/* REALIZATIONS GRID (Bornetik Strategy) */}
+            {/* ============================================ */}
+            <RealizationsGrid />
 
             {/* ============================================ */}
             {/* CITIES GRID */}

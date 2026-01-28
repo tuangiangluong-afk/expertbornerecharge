@@ -36,7 +36,7 @@ export default function SolutionCopro() {
                         <div className="lg:w-1/2 relative bg-purple-50 p-6 rounded-2xl border border-purple-100" id="simulateur">
                             <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6">
                                 <h3 className="text-center font-bold text-lg mb-4 text-purple-900">Étude & Devis Copropriété</h3>
-                                <LeadForm city="France" domain="expertbornerecharge.com" targetType="COPRO" themeColor="purple" />
+                                <LeadForm city="France" domain="expertbornerecharge.com" targetType="COPRO" themeColor="purple" initialProjectType="copro" />
                             </div>
                         </div>
                     </div>

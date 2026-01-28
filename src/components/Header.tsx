@@ -74,6 +74,12 @@ export default function Header({
                         </div>
                     )}
 
+                    {/* IRVE Badge (Desktop) */}
+                    <div className="hidden lg:flex items-center gap-2 bg-green-500/10 border border-green-500/20 px-3 py-1.5 rounded-full">
+                        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span className="text-xs font-bold text-green-600">Certifié IRVE</span>
+                    </div>
+
                     {/* CTA Devis (Replaces Phone) - Hidden on mobile to avoid redundancy with sticky CTA */}
                     <Link
                         href={simulatorHref}

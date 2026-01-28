@@ -573,6 +573,11 @@ export default function LeadForm({
                     <span>•</span>
                     <span>Sans engagement</span>
                     <span>•</span>
+                    <div className="flex items-center gap-1 font-bold text-green-600">
+                        <Zap size={14} fill="currentColor" />
+                        Certifié IRVE
+                    </div>
+                    <span>•</span>
                     <span>Réponse en 24h</span>
                 </div>
             </div>

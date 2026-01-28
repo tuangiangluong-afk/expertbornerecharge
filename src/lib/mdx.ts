@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-
+import { getCurrentYearSEO } from './date';
 
 const GUIDES_PATH = path.join(process.cwd(), 'src/content/guides');
 
@@ -42,30 +42,39 @@ export function getAllGuides() {
     });
 
     // Manually inject custom React pages (that are not MDX)
+    const year = getCurrentYearSEO();
     const customGuides = [
         {
             slug: 'droit-a-la-prise-borne-recharge',
             title: 'Droit à la Prise : Installez votre borne en copropriété',
             description: 'Tout savoir sur le droit à la prise en copropriété. Délais, notification syndic, installation borne de recharge. Modèle de lettre gratuit.',
-            date: '2026-01-26',
+            date: `${year}-01-26`,
             category: 'Copropriété',
             readTime: '5 min'
         },
         {
             slug: 'prix-installation-borne-recharge',
             title: "Combien Coûte l'Installation d'une Borne de Recharge ?",
-            description: "Prix réels 2026, aides disponibles (crédit impôt, ADVENIR) et devis. Guide complet pour maison et copropriété.",
-            date: '2026-01-27',
+            description: `Prix réels ${year}, aides disponibles (crédit impôt, ADVENIR) et devis. Guide complet pour maison et copropriété.`,
+            date: `${year}-01-27`,
             category: 'Prix & Aides',
             readTime: '8 min'
         },
         {
             slug: 'wallbox-vs-prise-renforcee',
-            title: "Wallbox vs Prise Renforcée : Le Comparatif 2026",
+            title: `Wallbox vs Prise Renforcée : Le Comparatif ${year}`,
             description: "Temps de charge, prix, sécurité... Quelle solution choisir pour votre voiture électrique ? Le duel complet.",
-            date: '2026-01-27',
+            date: `${year}-01-27`,
             category: 'Comparatif',
             readTime: '6 min'
+        },
+        {
+            slug: 'meilleures-bornes-recharge-2026',
+            title: `Top 10 Meilleures Bornes de Recharge ${year} : Le Comparatif Ultime`,
+            description: `Quelle borne choisir en ${year} ? Wallbox, Tesla, Hager... Notre classement après 500+ installations. Avis d'experts, prix réels et comparatif.`,
+            date: `${year}-01-28`,
+            category: 'Comparatif',
+            readTime: '10 min'
         }
     ];
 
