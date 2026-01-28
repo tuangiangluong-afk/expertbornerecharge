@@ -24,6 +24,12 @@ import {
     Sun
 } from "lucide-react";
 
+declare global {
+    interface Window {
+        dataLayer: any[];
+    }
+}
+
 interface LeadFormProps {
     city: string;
     domain: string;
@@ -126,6 +132,15 @@ export default function LeadForm({
     };
 
     const handleOptionSelect = (field: keyof FormData, value: string) => {
+        // Track form_start when selecting project type on step 1
+        if (step === 1 && field === 'projectType') {
+            if (typeof window !== 'undefined' && window.dataLayer) {
+                window.dataLayer.push({
+                    event: 'form_start',
+                    lead_category: value
+                });
+            }
+        }
         setFormData(prev => ({ ...prev, [field]: value }));
     };
 
@@ -184,6 +199,17 @@ export default function LeadForm({
 
             if (!res.ok) {
                 throw new Error('Erreur lors de l\'envoi');
+            }
+
+            // GTM: Track Conversion
+            if (typeof window !== 'undefined' && window.dataLayer) {
+                window.dataLayer.push({
+                    event: 'generate_lead',
+                    lead_category: formData.projectType,
+                    lead_city: city,
+                    value: 50.00,
+                    currency: 'EUR'
+                });
             }
 
             setStatus('success');
