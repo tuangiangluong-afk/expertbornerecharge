@@ -14,6 +14,7 @@ import SchemaJSON from "@/components/SchemaJSON";
 import Reviews from "@/components/Reviews";
 import { Footer } from "@/components/Footer";
 import { InternalMesh } from "@/components/InternalMesh";
+import RealizationsGrid from "@/components/RealizationsGrid";
 
 // ============================================
 // METADATA
@@ -72,16 +73,28 @@ export async function generateMetadata({
 // PAGE COMPONENT
 // ============================================
 
-export default async function SitePage({ params }: { params: Promise<{ domain: string }> }) {
+// Add props type
+interface SitePageProps {
+    params: Promise<{ domain: string }>;
+    basePath?: string; // Optional for Demo Mode
+}
+
+export default async function SitePage({ params, basePath }: SitePageProps) {
     const resolvedParams = await params;
 
     // DEBUG
     console.log("========= [domain] PAGE DEBUG =========");
     console.log("Received domain param:", resolvedParams.domain);
+    console.log("Base Path:", basePath);
 
-    const site = getSiteConfig(resolvedParams.domain);
+    let site = getSiteConfig(resolvedParams.domain);
     console.log("getSiteConfig result:", site ? site.slug : "NULL");
     console.log("========================================");
+
+    if (site && basePath) {
+        // Inject basePath for Demo Mode Links
+        site = { ...site, basePath } as any;
+    }
 
     if (!site) {
         return notFound();
@@ -262,229 +275,235 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
             </section>
 
             {/* ============================================ */}
-            {/* AIDES SECTION (Gradient) */}
+            {/* AIDES SECTION (Gradient) - HUB ONLY or High Value */}
             {/* ============================================ */}
-            <section className={`py-20 bg-gradient-to-b ${palette.gradient} text-white`}>
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                            Jusqu'à <span className="text-yellow-400">2 460€</span> d'aides cumulables
-                        </h2>
-                        <p className="text-blue-100 text-lg">
-                            Profitez de toutes les aides disponibles en 2026
-                        </p>
-                    </div>
-
-                    <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-                        {[
-                            { label: "Prime ADVENIR", value: "960€", detail: "Copropriétés" },
-                            { label: "Crédit d'Impôt", value: "500€", detail: "75% plafonné" },
-                            { label: "TVA Réduite", value: "5.5%", detail: "Au lieu de 20%" },
-                            { label: "MaPrimeRénov'", value: "1000€", detail: "Sous conditions" },
-                        ].map((aide, i) => (
-                            <div key={i} className="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20">
-                                <div className="text-3xl font-bold text-yellow-400 mb-2">{aide.value}</div>
-                                <div className="font-semibold mb-1">{aide.label}</div>
-                                <div className="text-sm text-blue-200">{aide.detail}</div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* ============================================ */}
-            {/* COST COMPARATOR - THE KILLER */}
-            {/* ============================================ */}
-            <section className="py-20 bg-neutral-50">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 rounded-full px-4 py-2 text-sm font-bold mb-4">
-                            <TrendingDown size={18} />
-                            Économies garanties
+            {isHub && (
+                <section className={`py-20 bg-gradient-to-b ${palette.gradient} text-white`}>
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+                                Jusqu'à <span className="text-yellow-400">2 460€</span> d'aides cumulables
+                            </h2>
+                            <p className="text-blue-100 text-lg">
+                                Profitez de toutes les aides disponibles en 2026
+                            </p>
                         </div>
-                        <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-4">
-                            Essence vs Recharge à domicile
-                        </h2>
-                        <p className="text-neutral-600 text-lg max-w-2xl mx-auto">
-                            Rechargez votre véhicule à la maison et économisez jusqu'à <strong>1 500€ par an</strong>
-                        </p>
-                    </div>
 
-                    <div className="max-w-4xl mx-auto">
-                        <div className="bg-white rounded-3xl shadow-2xl border border-neutral-200">
-                            <div className="grid md:grid-cols-2">
-                                {/* Essence Column */}
-                                <div className="p-8 bg-red-50 border-b md:border-b-0 md:border-r border-red-100 rounded-t-3xl md:rounded-tr-none md:rounded-l-3xl">
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                                            <span className="text-2xl">⛽</span>
-                                        </div>
-                                        <div>
-                                            <h3 className="font-bold text-lg text-red-900">Essence / Diesel</h3>
-                                            <p className="text-sm text-red-600">Coût mensuel moyen</p>
-                                        </div>
-                                    </div>
-                                    <div className="space-y-4">
-                                        <div className="flex justify-between items-center py-3 border-b border-red-100">
-                                            <span className="text-neutral-700">Consommation</span>
-                                            <span className="font-semibold">6L/100km</span>
-                                        </div>
-                                        <div className="flex justify-between items-center py-3 border-b border-red-100">
-                                            <span className="text-neutral-700">Distance/mois</span>
-                                            <span className="font-semibold">1 500 km</span>
-                                        </div>
-                                        <div className="flex justify-between items-center py-3 border-b border-red-100">
-                                            <span className="text-neutral-700">Prix au litre</span>
-                                            <span className="font-semibold">1.85€</span>
-                                        </div>
-                                        <div className="flex justify-between items-center pt-4">
-                                            <span className="font-bold text-neutral-900">Total mensuel</span>
-                                            <span className="text-3xl font-bold text-red-600">167€</span>
-                                        </div>
-                                    </div>
+                        <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                            {[
+                                { label: "Prime ADVENIR", value: "960€", detail: "Copropriétés" },
+                                { label: "Crédit d'Impôt", value: "500€", detail: "75% plafonné" },
+                                { label: "TVA Réduite", value: "5.5%", detail: "Au lieu de 20%" },
+                                { label: "MaPrimeRénov'", value: "1000€", detail: "Sous conditions" },
+                            ].map((aide, i) => (
+                                <div key={i} className="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20">
+                                    <div className="text-3xl font-bold text-yellow-400 mb-2">{aide.value}</div>
+                                    <div className="font-semibold mb-1">{aide.label}</div>
+                                    <div className="text-sm text-blue-200">{aide.detail}</div>
                                 </div>
-
-                                {/* Electric Column */}
-                                <div className="p-8 bg-green-50 relative rounded-b-3xl md:rounded-bl-none md:rounded-r-3xl">
-                                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg z-10">
-                                        RECOMMANDÉ
-                                    </div>
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                                            <Zap className="text-green-600" size={24} />
-                                        </div>
-                                        <div>
-                                            <h3 className="font-bold text-lg text-green-900">Recharge domicile</h3>
-                                            <p className="text-sm text-green-600">Coût mensuel moyen</p>
-                                        </div>
-                                    </div>
-                                    <div className="space-y-4">
-                                        <div className="flex justify-between items-center py-3 border-b border-green-100">
-                                            <span className="text-neutral-700">Consommation</span>
-                                            <span className="font-semibold">15kWh/100km</span>
-                                        </div>
-                                        <div className="flex justify-between items-center py-3 border-b border-green-100">
-                                            <span className="text-neutral-700">Distance/mois</span>
-                                            <span className="font-semibold">1 500 km</span>
-                                        </div>
-                                        <div className="flex justify-between items-center py-3 border-b border-green-100">
-                                            <span className="text-neutral-700">Prix kWh HC*</span>
-                                            <span className="font-semibold">0.18€</span>
-                                        </div>
-                                        <div className="flex justify-between items-center pt-4">
-                                            <span className="font-bold text-neutral-900">Total mensuel</span>
-                                            <span className="text-3xl font-bold text-green-600">41€</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Savings Banner */}
-                            <div className="bg-gradient-to-r from-green-600 to-emerald-600 p-6 text-white text-center">
-                                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                                    <div>
-                                        <span className="text-green-200">Économie mensuelle:</span>
-                                        <span className="text-3xl font-bold ml-2">126€</span>
-                                    </div>
-                                    <div className="hidden sm:block w-px h-10 bg-white/30"></div>
-                                    <div>
-                                        <span className="text-green-200">Économie annuelle:</span>
-                                        <span className="text-3xl font-bold ml-2">1 512€</span>
-                                    </div>
-                                </div>
-                                <p className="text-sm text-green-200 mt-3">
-                                    *Tarif heures creuses EDF. La borne programme automatiquement la recharge aux heures les moins chères.
-                                </p>
-                            </div>
+                            ))}
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
 
             {/* ============================================ */}
-            {/* SERVICES GRID */}
+            {/* COST COMPARATOR - THE KILLER (HUB ONLY) */}
             {/* ============================================ */}
-            <section className="py-20 bg-white">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-4">
-                            Types d'installations & Prix Moyens
-                        </h2>
-                        <p className="text-neutral-600 text-lg">
-                            Comparez les devis pour maison, copro et professionnels
-                        </p>
+            {isHub && (
+                <section className="py-20 bg-neutral-50">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 rounded-full px-4 py-2 text-sm font-bold mb-4">
+                                <TrendingDown size={18} />
+                                Économies garanties
+                            </div>
+                            <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-4">
+                                Essence vs Recharge à domicile
+                            </h2>
+                            <p className="text-neutral-600 text-lg max-w-2xl mx-auto">
+                                Rechargez votre véhicule à la maison et économisez jusqu'à <strong>1 500€ par an</strong>
+                            </p>
+                        </div>
+
+                        <div className="max-w-4xl mx-auto">
+                            <div className="bg-white rounded-3xl shadow-2xl border border-neutral-200">
+                                <div className="grid md:grid-cols-2">
+                                    {/* Essence Column */}
+                                    <div className="p-8 bg-red-50 border-b md:border-b-0 md:border-r border-red-100 rounded-t-3xl md:rounded-tr-none md:rounded-l-3xl">
+                                        <div className="flex items-center gap-3 mb-6">
+                                            <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                                                <span className="text-2xl">⛽</span>
+                                            </div>
+                                            <div>
+                                                <h3 className="font-bold text-lg text-red-900">Essence / Diesel</h3>
+                                                <p className="text-sm text-red-600">Coût mensuel moyen</p>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-4">
+                                            <div className="flex justify-between items-center py-3 border-b border-red-100">
+                                                <span className="text-neutral-700">Consommation</span>
+                                                <span className="font-semibold">6L/100km</span>
+                                            </div>
+                                            <div className="flex justify-between items-center py-3 border-b border-red-100">
+                                                <span className="text-neutral-700">Distance/mois</span>
+                                                <span className="font-semibold">1 500 km</span>
+                                            </div>
+                                            <div className="flex justify-between items-center py-3 border-b border-red-100">
+                                                <span className="text-neutral-700">Prix au litre</span>
+                                                <span className="font-semibold">1.85€</span>
+                                            </div>
+                                            <div className="flex justify-between items-center pt-4">
+                                                <span className="font-bold text-neutral-900">Total mensuel</span>
+                                                <span className="text-3xl font-bold text-red-600">167€</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Electric Column */}
+                                    <div className="p-8 bg-green-50 relative rounded-b-3xl md:rounded-bl-none md:rounded-r-3xl">
+                                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg z-10">
+                                            RECOMMANDÉ
+                                        </div>
+                                        <div className="flex items-center gap-3 mb-6">
+                                            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                                <Zap className="text-green-600" size={24} />
+                                            </div>
+                                            <div>
+                                                <h3 className="font-bold text-lg text-green-900">Recharge domicile</h3>
+                                                <p className="text-sm text-green-600">Coût mensuel moyen</p>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-4">
+                                            <div className="flex justify-between items-center py-3 border-b border-green-100">
+                                                <span className="text-neutral-700">Consommation</span>
+                                                <span className="font-semibold">15kWh/100km</span>
+                                            </div>
+                                            <div className="flex justify-between items-center py-3 border-b border-green-100">
+                                                <span className="text-neutral-700">Distance/mois</span>
+                                                <span className="font-semibold">1 500 km</span>
+                                            </div>
+                                            <div className="flex justify-between items-center py-3 border-b border-green-100">
+                                                <span className="text-neutral-700">Prix kWh HC*</span>
+                                                <span className="font-semibold">0.18€</span>
+                                            </div>
+                                            <div className="flex justify-between items-center pt-4">
+                                                <span className="font-bold text-neutral-900">Total mensuel</span>
+                                                <span className="text-3xl font-bold text-green-600">41€</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Savings Banner */}
+                                <div className="bg-gradient-to-r from-green-600 to-emerald-600 p-6 text-white text-center">
+                                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                                        <div>
+                                            <span className="text-green-200">Économie mensuelle:</span>
+                                            <span className="text-3xl font-bold ml-2">126€</span>
+                                        </div>
+                                        <div className="hidden sm:block w-px h-10 bg-white/30"></div>
+                                        <div>
+                                            <span className="text-green-200">Économie annuelle:</span>
+                                            <span className="text-3xl font-bold ml-2">1 512€</span>
+                                        </div>
+                                    </div>
+                                    <p className="text-sm text-green-200 mt-3">
+                                        *Tarif heures creuses EDF. La borne programme automatiquement la recharge aux heures les moins chères.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </section>
+            )}
 
-                    <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                        {[
-                            {
-                                icon: Home,
-                                title: "Maison Individuelle",
-                                description: "Pour les particuliers. Borne 7kW à 22kW. Garage ou extérieur.",
-                                features: ["Installation sous 48h", "Éligible Crédit Impôt", "Devis gratuits"],
-                                color: "blue",
-                                href: "/solutions/maison"
-                            },
-                            {
-                                icon: Building2,
-                                title: "Copropriété",
-                                description: "Pour syndics et résidents. Droit à la prise ou infrastructure collective.",
-                                features: ["Étude technique offerte", "Dossier AG clé en main", "Aides ADVENIR"],
-                                color: "purple",
-                                highlight: true,
-                                href: "/solutions/copropriete"
-                            },
-                            {
-                                icon: Briefcase,
-                                title: "Entreprise / Flotte",
-                                description: "Pour parkings pro. Supervision, facturation et gestion de flotte.",
-                                features: ["Conformité Loi LOM", "Gestion à distance", "Facturation auto"],
-                                color: "emerald",
-                                href: "/solutions/entreprise"
-                            }
-                        ].map((service, i) => (
-                            <Link key={i} href={service.href} className="block group h-full">
-                                <div
-                                    className={`
+            {/* ============================================ */}
+            {/* SERVICES GRID - HUB ONLY (Simplify Local) */}
+            {/* ============================================ */}
+            {isHub && (
+                <section className="py-20 bg-white">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-4">
+                                Types d'installations & Prix Moyens
+                            </h2>
+                            <p className="text-neutral-600 text-lg">
+                                Comparez les devis pour maison, copro et professionnels
+                            </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                            {[
+                                {
+                                    icon: Home,
+                                    title: "Maison Individuelle",
+                                    description: "Pour les particuliers. Borne 7kW à 22kW. Garage ou extérieur.",
+                                    features: ["Installation sous 48h", "Éligible Crédit Impôt", "Devis gratuits"],
+                                    color: "blue",
+                                    href: "/solutions/maison"
+                                },
+                                {
+                                    icon: Building2,
+                                    title: "Copropriété",
+                                    description: "Pour syndics et résidents. Droit à la prise ou infrastructure collective.",
+                                    features: ["Étude technique offerte", "Dossier AG clé en main", "Aides ADVENIR"],
+                                    color: "purple",
+                                    highlight: true,
+                                    href: "/solutions/copropriete"
+                                },
+                                {
+                                    icon: Briefcase,
+                                    title: "Entreprise / Flotte",
+                                    description: "Pour parkings pro. Supervision, facturation et gestion de flotte.",
+                                    features: ["Conformité Loi LOM", "Gestion à distance", "Facturation auto"],
+                                    color: "emerald",
+                                    href: "/solutions/entreprise"
+                                }
+                            ].map((service, i) => (
+                                <Link key={i} href={service.href} className="block group h-full">
+                                    <div
+                                        className={`
                                         relative h-full p-8 rounded-3xl border-2 transition-all duration-300
                                         ${service.highlight
-                                            ? 'border-purple-500 bg-purple-50 shadow-xl shadow-purple-500/10 group-hover:scale-[1.02]'
-                                            : 'border-neutral-200 bg-white hover:border-blue-500 hover:shadow-xl group-hover:scale-[1.02]'
-                                        }
+                                                ? 'border-purple-500 bg-purple-50 shadow-xl shadow-purple-500/10 group-hover:scale-[1.02]'
+                                                : 'border-neutral-200 bg-white hover:border-blue-500 hover:shadow-xl group-hover:scale-[1.02]'
+                                            }
                                     `}
-                                >
-                                    {service.highlight && (
-                                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-600 text-white text-xs font-bold px-4 py-1 rounded-full">
-                                            PROJET LE PLUS DEMANDÉ
-                                        </div>
-                                    )}
-                                    <div className={`
+                                    >
+                                        {service.highlight && (
+                                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-600 text-white text-xs font-bold px-4 py-1 rounded-full">
+                                                PROJET LE PLUS DEMANDÉ
+                                            </div>
+                                        )}
+                                        <div className={`
                                         w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110
                                         ${service.color === 'blue' ? 'bg-blue-100 text-blue-600' : ''}
                                         ${service.color === 'purple' ? 'bg-purple-100 text-purple-600' : ''}
                                         ${service.color === 'emerald' ? 'bg-emerald-100 text-emerald-600' : ''}
                                     `}>
-                                        <service.icon size={28} />
+                                            <service.icon size={28} />
+                                        </div>
+                                        <h3 className="text-xl font-bold text-neutral-900 mb-3 group-hover:text-blue-600 transition-colors">{service.title}</h3>
+                                        <p className="text-neutral-600 mb-6">{service.description}</p>
+                                        <ul className="space-y-2 mb-6">
+                                            {service.features.map((feature, j) => (
+                                                <li key={j} className="flex items-center gap-2 text-sm text-neutral-700">
+                                                    <CheckCircle size={16} className="text-green-500" />
+                                                    {feature}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        <div className="text-blue-600 font-bold inline-flex items-center mt-auto">
+                                            Comparer les prix <ArrowRight size={16} className="ml-2" />
+                                        </div>
                                     </div>
-                                    <h3 className="text-xl font-bold text-neutral-900 mb-3 group-hover:text-blue-600 transition-colors">{service.title}</h3>
-                                    <p className="text-neutral-600 mb-6">{service.description}</p>
-                                    <ul className="space-y-2 mb-6">
-                                        {service.features.map((feature, j) => (
-                                            <li key={j} className="flex items-center gap-2 text-sm text-neutral-700">
-                                                <CheckCircle size={16} className="text-green-500" />
-                                                {feature}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                    <div className="text-blue-600 font-bold inline-flex items-center mt-auto">
-                                        Comparer les prix <ArrowRight size={16} className="ml-2" />
-                                    </div>
-                                </div>
-                            </Link>
-                        ))}
+                                </Link>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
 
             {/* ============================================ */}
             {/* PROCESS SECTION */}
@@ -548,8 +567,68 @@ export default async function SitePage({ params }: { params: Promise<{ domain: s
                 </div>
             </section>
 
+
+
             {/* ============================================ */}
-            {/* REVIEWS SECTION */}
+            {/* REALIZATIONS GRID - VISUAL PROOF (WAR ARCHITECTURE) */}
+            {/* ============================================ */}
+            <RealizationsGrid />
+
+            {/* ============================================ */}
+            {/* MAINTENANCE & SAV SECTION (ADTSI STRATEGY) */}
+            {/* ============================================ */}
+            <section className="py-16 bg-white border-t border-neutral-100">
+                <div className="container mx-auto px-4">
+                    <div className="flex flex-col md:flex-row items-center gap-12 max-w-5xl mx-auto">
+                        <div className="flex-1">
+                            <div className="inline-flex items-center gap-2 bg-red-50 text-red-600 px-4 py-2 rounded-full text-sm font-bold mb-4">
+                                <span className="relative flex h-3 w-3">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                                </span>
+                                Urgence & Dépannage
+                            </div>
+                            <h2 className="text-3xl font-bold text-neutral-900 mb-4">
+                                Une panne ? On intervient en <span className="text-red-500">48h</span>
+                            </h2>
+                            <p className="text-lg text-neutral-600 mb-6">
+                                Parce que votre mobilité n'attend pas, nos techniciens locaux à <strong>{site.city}</strong> assurent le SAV et la maintenance de votre borne, même si elle n'a pas été installée par nous.
+                            </p>
+                            <ul className="space-y-3 mb-8">
+                                <li className="flex items-center gap-3 text-neutral-700">
+                                    <CheckCircle size={20} className="text-green-500" />
+                                    <span>Diagnostic à distance gratuit</span>
+                                </li>
+                                <li className="flex items-center gap-3 text-neutral-700">
+                                    <CheckCircle size={20} className="text-green-500" />
+                                    <span>Pièces détachées en stock (Câbles, Cartes)</span>
+                                </li>
+                                <li className="flex items-center gap-3 text-neutral-700">
+                                    <CheckCircle size={20} className="text-green-500" />
+                                    <span>Mise à jour logiciel borne & supervision</span>
+                                </li>
+                            </ul>
+                            <a href="#simulateur" className="text-red-600 font-bold hover:underline flex items-center gap-2">
+                                Demander un dépannage <ArrowRight size={16} />
+                            </a>
+                        </div>
+                        <div className="w-full md:w-1/3">
+                            <div className="bg-neutral-900 text-white rounded-2xl p-8 text-center shadow-xl relative overflow-hidden">
+                                <div className="absolute top-0 right-0 p-4 opacity-10">
+                                    <Shield size={120} />
+                                </div>
+                                <h3 className="text-xl font-bold mb-2">Contrat Maintenance</h3>
+                                <div className="text-3xl font-bold text-yellow-400 mb-4">15€<span className="text-sm text-neutral-400 font-normal">/mois</span></div>
+                                <p className="text-sm text-neutral-300 mb-6">Tranquillité d'esprit totale. Visite annuelle et main d'œuvre incluse.</p>
+                                <button className="w-full bg-white text-neutral-900 font-bold py-3 rounded-xl hover:bg-neutral-100 transition">
+                                    En savoir plus
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* ============================================ */}
             {/* REVIEWS SECTION */}
             {/* ============================================ */}

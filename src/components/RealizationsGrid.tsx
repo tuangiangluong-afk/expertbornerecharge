@@ -2,9 +2,9 @@ import Image from "next/image";
 
 const projects = [
     { city: "Paris 16", car: "Tesla Model Y", type: "Parking Souterrain", img: "/images/realizations/parking-box.png" },
-    { city: "Neuilly", car: "Porsche Taycan", type: "Villa", img: "/images/realizations/outdoor-villa.png" },
+    { city: "Neuilly", car: "Porsche Taycan", type: "Villa", img: "/images/realizations/porsche-villa.png" },
     { city: "Boulogne", car: "Zoé", type: "Copropriété", img: "/images/realizations/garage-cables.png" },
-    { city: "Levallois", car: "BMW i4", type: "Box Fermé", img: "/images/realizations/parking-box.png" }, // Re-using parking-box for consistency
+    { city: "Levallois", car: "BMW i4", type: "Box Fermé", img: "/images/realizations/bmw-box.png" },
 ];
 
 export default function RealizationsGrid() {

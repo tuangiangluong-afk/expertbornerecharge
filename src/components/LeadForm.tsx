@@ -20,7 +20,8 @@ import {
     Shield,
     Phone,
     Mail,
-    User2
+    User2,
+    Sun
 } from "lucide-react";
 
 interface LeadFormProps {
@@ -36,6 +37,7 @@ interface FormData {
     ownerStatus: 'proprietaire' | 'locataire' | null;
     vehicleStatus: 'livre' | 'commande' | 'reflexion' | null;
     meterDistance: 'moins10m' | 'plus10m' | 'nesaispas' | null;
+    solarInterest: boolean;
     name: string;
     email: string;
     phone: string;
@@ -56,6 +58,7 @@ export default function LeadForm({
         ownerStatus: null,
         vehicleStatus: null,
         meterDistance: null,
+        solarInterest: false,
         name: "",
         email: "",
         phone: ""
@@ -118,6 +121,7 @@ export default function LeadForm({
         if (formData.vehicleStatus === 'livre') score += 25;
         if (formData.vehicleStatus === 'commande') score += 20;
         if (formData.meterDistance === 'moins10m') score += 10;
+        if (formData.solarInterest) score += 40; // HIGH VALUE LEAD
         return score;
     };
 
@@ -435,6 +439,43 @@ export default function LeadForm({
                                 sublabel="Un technicien évaluera sur place"
                             />
                         </div>
+                        {/* CROSS SELL SOLAR */}
+                        <div className="mt-8 pt-6 border-t border-neutral-100">
+                            <div
+                                onClick={() => setFormData(prev => ({ ...prev, solarInterest: !prev.solarInterest }))}
+                                className={`
+                                    cursor-pointer p-4 rounded-xl border-2 transition-all duration-200 flex items-center gap-4
+                                    ${formData.solarInterest
+                                        ? 'border-yellow-400 bg-yellow-50 shadow-md'
+                                        : 'border-neutral-200 hover:border-yellow-200 hover:bg-yellow-50/50'
+                                    }
+                                `}
+                            >
+                                <div className={`
+                                    w-10 h-10 rounded-full flex items-center justify-center shrink-0
+                                    ${formData.solarInterest ? 'bg-yellow-400 text-white' : 'bg-yellow-100 text-yellow-600'}
+                                `}>
+                                    <Sun size={20} />
+                                </div>
+                                <div className="flex-1">
+                                    <h5 className="font-bold text-neutral-900 text-sm">
+                                        Rouler gratuitement au solaire ?
+                                    </h5>
+                                    <p className="text-xs text-neutral-600">
+                                        Je souhaite aussi une étude pour des panneaux solaires (Option rentable).
+                                    </p>
+                                </div>
+                                <div className={`
+                                    w-6 h-6 rounded-full border-2 flex items-center justify-center transition
+                                    ${formData.solarInterest
+                                        ? 'border-yellow-500 bg-yellow-500'
+                                        : 'border-neutral-300'
+                                    }
+                                `}>
+                                    {formData.solarInterest && <CheckCircle size={14} className="text-white" />}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 )}
 
@@ -565,22 +606,16 @@ export default function LeadForm({
                 </div>
 
                 {/* Trust footer */}
-                <div className="mt-6 pt-6 border-t border-neutral-100 flex items-center justify-center gap-4 text-xs text-neutral-400">
-                    <div className="flex items-center gap-1">
-                        <Shield size={14} />
-                        Données sécurisées
-                    </div>
-                    <span>•</span>
-                    <span>Sans engagement</span>
-                    <span>•</span>
-                    <div className="flex items-center gap-1 font-bold text-green-600">
-                        <Zap size={14} fill="currentColor" />
-                        Certifié IRVE
-                    </div>
-                    <span>•</span>
-                    <span>Réponse en 24h</span>
+                <div className="flex flex-wrap justify-center sm:justify-between gap-3 mt-6 pt-6 border-t border-neutral-100 text-[10px] sm:text-xs text-slate-400 font-medium uppercase tracking-wide">
+                    <span className="flex items-center gap-1.5"><Shield size={12} className="text-green-500" /> Données sécurisées</span>
+                    <span className="hidden sm:inline">•</span>
+                    <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Sans engagement</span>
+                    <span className="hidden sm:inline">•</span>
+                    <span className="flex items-center gap-1.5"><Zap size={12} className="text-amber-500" fill="currentColor" /> Certifié IRVE</span>
+                    <span className="hidden sm:inline">•</span>
+                    <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-slate-400"></div> Réponse 24h</span>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

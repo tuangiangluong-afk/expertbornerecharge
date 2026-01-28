@@ -152,6 +152,34 @@ export default async function VehiclePage({ params }: { params: Promise<{ slug: 
                                         )}
                                     </div>
 
+
+                                    {/* MISTER EV STRATEGY: CABLE CROSS-SELL */}
+                                    <h3 className="mt-12">Câble de Recharge : L'indispensable secours</h3>
+                                    <div className="bg-amber-50 p-6 rounded-2xl border border-amber-100 mb-8">
+                                        <div className="flex flex-col md:flex-row gap-6 items-center">
+                                            <div className="flex-1">
+                                                <h4 className="text-amber-900 font-bold text-lg mb-2">Pas de borne à destination ?</h4>
+                                                <p className="text-amber-800 text-sm mb-4">
+                                                    Pour recharger votre {vehicle.brand} sur les bornes publiques ou au travail, un câble Type 2 est obligatoire (souvent non fourni par le constructeur).
+                                                </p>
+                                                <ul className="space-y-2 mb-4">
+                                                    <li className="flex items-center gap-2 text-sm text-amber-900">
+                                                        <CheckCircle size={16} className="text-amber-600" />
+                                                        Compatible 100% des bornes publiques
+                                                    </li>
+                                                    <li className="flex items-center gap-2 text-sm text-amber-900">
+                                                        <CheckCircle size={16} className="text-amber-600" />
+                                                        Sac de transport inclus
+                                                    </li>
+                                                </ul>
+                                                <a href="https://www.mister-ev.com/cables-de-recharge?aff=expertbornerecharge" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white px-5 py-2.5 rounded-xl font-bold transition-colors">
+                                                    Voir les câbles pour {vehicle.brand} <ArrowRight size={16} />
+                                                </a>
+                                            </div>
+                                            {/* Image placeholder or generic cable icon could go here if available */}
+                                        </div>
+                                    </div>
+
                                     <h3>Pourquoi choisir un installateur IRVE ?</h3>
                                     <p>
                                         Pour recharger votre <strong>{vehicle.brand}</strong> en toute sécurité, la loi impose le recours à un technicien qualifié IRVE pour toute installation supérieure à 3.7kW.

@@ -3,7 +3,7 @@ import { isMainHub } from "@/lib/sites-config";
 
 export const config = {
     matcher: [
-        "/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)",
+        "/((?!api/|_next/|_static/|_vercel|images/|[\\w-]+\\.\\w+).*)",
         "/sitemap.xml",
         "/robots.txt"
     ],
@@ -60,7 +60,7 @@ export default async function middleware(req: NextRequest) {
             return applySecurityHeaders(NextResponse.redirect(new URL(cleanUrl + url.search, req.url), 301));
         }
 
-        if (path.startsWith("/admin") || path.startsWith("/login") || path.startsWith("/api") || path.startsWith("/guides") || path.startsWith("/outils") || path.startsWith("/vehicules") || path.startsWith("/ville") || path.startsWith("/solutions") || path.startsWith("/service") || path.startsWith("/quartier") || path.startsWith("/departement") || path.startsWith("/poi") || path.startsWith("/demo") || path.startsWith("/installation")) {
+        if (path.startsWith("/admin") || path.startsWith("/login") || path.startsWith("/api") || path.startsWith("/guides") || path.startsWith("/outils") || path.startsWith("/vehicules") || path.startsWith("/ville") || path.startsWith("/solutions") || path.startsWith("/service") || path.startsWith("/quartier") || path.startsWith("/departement") || path.startsWith("/poi") || path.startsWith("/demo") || path.startsWith("/installation") || path.startsWith("/images")) {
             response = NextResponse.next();
         } else {
             response = NextResponse.rewrite(

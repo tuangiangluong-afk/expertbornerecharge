@@ -13,6 +13,7 @@ import MobileStickyCTA from "@/components/MobileStickyCTA";
 import { Footer } from "@/components/Footer";
 import RealizationsGrid from "@/components/RealizationsGrid";
 import PersonaSelector from "@/components/PersonaSelector";
+import LogoCloud from "@/components/LogoCloud";
 
 export const metadata: Metadata = {
     title: "Comparez les Devis Borne de Recharge | Expert Borne Recharge",
@@ -139,6 +140,11 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
+
+            {/* ============================================ */}
+            {/* TRUST SIGNALS (Hello Watt Style) */}
+            {/* ============================================ */}
+            <LogoCloud />
 
             {/* ============================================ */}
             {/* PERSONA SELECTOR (Waat Strategy) */}
@@ -367,6 +373,6 @@ export default function HomePage() {
 
             {/* Mobile Sticky CTA */}
             <MobileStickyCTA themeColor="blue" />
-        </div>
+        </div >
     );
 }

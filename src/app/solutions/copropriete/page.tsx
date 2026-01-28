@@ -21,21 +21,40 @@ export default function SolutionCopro() {
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col lg:flex-row gap-12 items-start pt-8">
                         <div className="lg:w-1/2">
-                            <div className="inline-flex items-center rounded-full bg-purple-100 px-4 py-1.5 text-sm font-bold text-purple-800 mb-6 border border-purple-200">
-                                <Building2 size={16} className="mr-2" />
-                                Spécial Copropriété & Syndic
+                            <div className="flex flex-wrap gap-3 mb-6">
+                                <div className="inline-flex items-center rounded-full bg-purple-100 px-4 py-1.5 text-sm font-bold text-purple-800 border border-purple-200">
+                                    <Building2 size={16} className="mr-2" />
+                                    Spécial Syndic & Copropriété
+                                </div>
+                                <div className="inline-flex items-center rounded-full bg-green-100 px-4 py-1.5 text-sm font-bold text-green-800 border border-green-200">
+                                    <Euro size={16} className="mr-2" />
+                                    0€ pour la Copropriété
+                                </div>
                             </div>
                             <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-                                Installer des bornes en <span className="text-purple-600">copropriété</span> : Le mode d'emploi
+                                Installer des bornes en <span className="text-purple-600">copropriété</span> sans frais pour l'immeuble.
                             </h1>
                             <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-                                Syndics, conseils syndicaux ou résidents : l'équipement des parkings est devenu un enjeu majeur.
-                                Découvrez les solutions sans reste à charge pour la copropriété grâce au pré-financement.
+                                La solution Tiers-Investisseur certifiée ADVENIR : Nous finançons l'infrastructure à 100%.
+                                <br />
+                                <strong>Le Syndic ne paie rien. Les résidents non-utilisateurs ne paient rien.</strong>
                             </p>
+
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <a href="#simulateur" className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl shadow-sm text-white bg-purple-600 hover:bg-purple-700">
+                                    Devis Infrastructure (Gratuit)
+                                </a>
+                                <a href="#espace-syndic" className="inline-flex items-center justify-center px-6 py-3 border border-slate-200 text-base font-medium rounded-xl text-slate-700 bg-white hover:bg-slate-50">
+                                    Accès Syndic / Bailleur
+                                </a>
+                            </div>
                         </div>
                         <div className="lg:w-1/2 relative bg-purple-50 p-6 rounded-2xl border border-purple-100" id="simulateur">
                             <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6">
-                                <h3 className="text-center font-bold text-lg mb-4 text-purple-900">Étude & Devis Copropriété</h3>
+                                <div className="text-center mb-6">
+                                    <h3 className="font-bold text-xl text-purple-900">Étude & Devis Copropriété</h3>
+                                    <p className="text-sm text-slate-500">Réponse sous 24h ouvrées</p>
+                                </div>
                                 <LeadForm city="France" domain="expertbornerecharge.com" targetType="COPRO" themeColor="purple" initialProjectType="copro" />
                             </div>
                         </div>
@@ -156,7 +175,7 @@ export default function SolutionCopro() {
                     </div>
                 </article>
 
-                <div className="hidden lg:block space-y-6 sticky top-24 h-fit">
+                <div className="hidden lg:block space-y-6 sticky top-24 h-fit" id="espace-syndic">
                     <div className="bg-purple-900 text-white p-6 rounded-xl shadow-xl">
                         <h4 className="font-bold mb-4">Syndics & Conseils Syndicaux</h4>
                         <p className="text-sm text-purple-200 mb-6">

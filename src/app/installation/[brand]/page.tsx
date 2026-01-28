@@ -4,6 +4,9 @@ import { brands } from '@/data/brands';
 import { getCurrentYearSEO } from '@/lib/date';
 import Link from 'next/link';
 import { CheckCircle, Zap, Shield, Info, ArrowRight, Settings } from 'lucide-react';
+import Header from '@/components/Header';
+import { Footer } from '@/components/Footer';
+import { getHubConfig } from '@/lib/sites-config';
 import LeadForm from '@/components/LeadForm';
 import CrossLinker from '@/components/CrossLinker';
 
@@ -60,6 +63,9 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+            <Header isHub={true} variant="default" />
+
+
             {/* Hero */}
             <div className="bg-slate-900 text-white pt-32 pb-20 px-6">
                 <div className="mx-auto max-w-4xl text-center">
@@ -222,6 +228,8 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
                 </div>
 
             </div>
+
+            <Footer config={getHubConfig()} />
         </div>
     );
 }

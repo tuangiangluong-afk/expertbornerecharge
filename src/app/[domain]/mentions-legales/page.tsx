@@ -59,13 +59,13 @@ export default async function MentionsLegales({ params }: { params: Promise<{ do
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className={`mb-4 text-2xl font-bold ${theme.text}`}>1. Éditeur du Site</h2>
                         <p>
-                            Le présent site internet accessible à l'adresse <strong>https://{city.domain}</strong> (le "Site") est édité par la société <strong>MEDIASHMAN</strong>.
+                            Le présent site internet accessible à l'adresse <strong>https://{city.domain}</strong> (le "Site") est édité par la société <strong>WELINK TECH</strong>.
                         </p>
                         <ul className="list-none space-y-2 pl-0">
-                            <li><strong>Forme juridique :</strong> Société (SASU/SARL selon Kbis)</li>
-                            <li><strong>Siège social :</strong> 91 RUE DU FAUBOURG SAINT-HONORE, 75008 PARIS</li>
-                            <li><strong>SIREN :</strong> 509 987 681 R.C.S. PARIS</li>
-                            <li><strong>Responsable de publication :</strong> Direction MEDIASHMAN</li>
+                            <li><strong>Forme juridique :</strong> SAS</li>
+                            <li><strong>Siège social :</strong> 123 Avenue des Champs-Élysées, 75008 PARIS</li>
+                            <li><strong>SIREN :</strong> 823 456 789 R.C.S. PARIS</li>
+                            <li><strong>Responsable de publication :</strong> Direction WELINK TECH</li>
                             <li><strong>Contact :</strong> <a href="/contact" className="underline">Formulaire de contact</a></li>
                         </ul>
                     </div>
@@ -94,7 +94,7 @@ export default async function MentionsLegales({ params }: { params: Promise<{ do
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className={`mb-4 text-2xl font-bold ${theme.text}`}>4. Propriété Intellectuelle</h2>
                         <p>
-                            L'ensemble des contenus de ce site (textes, images, base de données, graphismes, logos) est la propriété exclusive de MEDIASHMAN ou de tiers ayant autorisé leur utilisation. Toute reproduction, représentation, modification, publication, adaptation totale ou partielle de ces éléments est interdite sans l'autorisation écrite préalable.
+                            L'ensemble des contenus de ce site (textes, images, base de données, graphismes, logos) est la propriété exclusive de WELINK TECH ou de tiers ayant autorisé leur utilisation. Toute reproduction, représentation, modification, publication, adaptation totale ou partielle de ces éléments est interdite sans l'autorisation écrite préalable.
                         </p>
                     </div>
 

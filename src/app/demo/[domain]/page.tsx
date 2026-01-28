@@ -4,14 +4,17 @@ import SitePage, { generateMetadata as sourceMeta } from "../../[domain]/page";
 // This allows viewing the "Standalone Site" version via /demo/[domain] 
 // bypassing variables subdomains on Vercel Preview.
 
-export default SitePage;
+export default async function DemoPage({ params }: { params: Promise<{ domain: string }> }) {
+    const { domain } = await params;
+    return <SitePage params={params} basePath={`/demo/${domain}`} />;
+}
 
 // OVERRIDE: Force noindex for demo routes
 export async function generateMetadata(props: any) {
     const meta = await sourceMeta(props);
     return {
         ...meta,
-        title: `[DEMO] ${meta.title}`,
+        title: `[DEMO] ${meta?.title || 'Expert Borne Recharge'}`,
         robots: {
             index: false,
             follow: false,
@@ -19,9 +22,6 @@ export async function generateMetadata(props: any) {
                 index: false,
                 follow: false
             }
-        },
-        alternates: {
-            canonical: undefined // Remove canonical to avoid confusion or point to real site? Ideally remove.
         }
     };
 }
