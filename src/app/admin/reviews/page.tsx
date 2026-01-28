@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { supabaseBrowser } from "@/lib/supabase-browser";
 import { Star, Plus, Trash2, Edit2, Save, X, CheckCircle, MessageSquare } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import { useToast } from "@/components/admin/Toast";
 
 interface Review {
     id: string;
@@ -24,6 +25,7 @@ export default function AdminReviewsPage() {
     const [loading, setLoading] = useState(true);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [showForm, setShowForm] = useState(false);
+    const { showToast } = useToast();
 
     // Form state
     const [formData, setFormData] = useState({
@@ -87,8 +89,9 @@ export default function AdminReviewsPage() {
         }
 
         if (error) {
-            alert("Erreur: " + error.message);
+            showToast("Erreur: " + error.message, "error");
         } else {
+            showToast(editingId ? "Avis modifié !" : "Avis ajouté !", "success");
             resetForm();
             fetchReviews();
         }

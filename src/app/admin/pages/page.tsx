@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { supabaseBrowser } from "@/lib/supabase-browser";
 import { Save, Loader2, LayoutTemplate, FileText } from "lucide-react";
+import { useToast } from "@/components/admin/Toast";
 
 // Define editable fields for the "Home" page
 const HOME_FIELDS = [
@@ -21,6 +22,7 @@ export default function AdminPagesPage() {
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
     const [contentMap, setContentMap] = useState<Record<string, string>>({});
+    const { showToast } = useToast();
 
     const fetchContent = useCallback(async () => {
         if (!tenantId) return;
@@ -66,9 +68,9 @@ export default function AdminPagesPage() {
             .upsert(updates, { onConflict: 'tenant_id, path, section, key' });
 
         if (error) {
-            alert("Erreur sauvegarde: " + error.message);
+            showToast("Erreur sauvegarde: " + error.message, "error");
         } else {
-            // success feedback
+            showToast("Contenu enregistré !", "success");
         }
         setSaving(false);
     }

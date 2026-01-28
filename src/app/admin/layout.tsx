@@ -4,6 +4,7 @@ import { TenantSwitcher } from "@/components/admin/TenantSwitcher";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { redirect } from "next/navigation";
 import { LogoutButton } from "@/components/admin/LogoutButton";
+import { AdminClientWrapper } from "@/components/admin/AdminClientWrapper";
 
 export default async function AdminLayout({
     children,
@@ -48,6 +49,10 @@ export default async function AdminLayout({
                     <Link href="/admin/leads" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition">
                         <Users size={18} />
                         Leads (Devis)
+                    </Link>
+                    <Link href="/admin/partners" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition">
+                        <Users size={18} />
+                        Partenaires
                     </Link>
                     <Link href="/admin/reviews" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition">
                         <MessageCircle size={18} />
@@ -103,7 +108,9 @@ export default async function AdminLayout({
 
                 {/* Page Content */}
                 <main className="flex-1 overflow-auto p-8">
-                    {children}
+                    <AdminClientWrapper>
+                        {children}
+                    </AdminClientWrapper>
                 </main>
             </div>
         </div>

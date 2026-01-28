@@ -255,6 +255,70 @@ export type Database = {
                 }
                 Relationships: []
             }
+            lead_assignments: {
+                Row: {
+                    id: string
+                    lead_id: string
+                    partner_id: string
+                    assigned_at: string
+                    status: string
+                }
+                Insert: {
+                    id?: string
+                    lead_id: string
+                    partner_id: string
+                    assigned_at?: string
+                    status?: string
+                }
+                Update: {
+                    id?: string
+                    lead_id?: string
+                    partner_id?: string
+                    assigned_at?: string
+                    status?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "lead_assignments_lead_id_fkey"
+                        columns: ["lead_id"]
+                        referencedRelation: "leads"
+                        referencedColumns: ["id"]
+                    },
+                    {
+                        foreignKeyName: "lead_assignments_partner_id_fkey"
+                        columns: ["partner_id"]
+                        referencedRelation: "partners"
+                        referencedColumns: ["id"]
+                    }
+                ]
+            }
+            partners: {
+                Row: {
+                    id: string
+                    name: string
+                    email: string
+                    phone: string | null
+                    company_info: Json | null
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    name: string
+                    email: string
+                    phone?: string | null
+                    company_info?: Json | null
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    name?: string
+                    email?: string
+                    phone?: string | null
+                    company_info?: Json | null
+                    created_at?: string
+                }
+                Relationships: []
+            }
             reviews: {
                 Row: {
                     id: string
