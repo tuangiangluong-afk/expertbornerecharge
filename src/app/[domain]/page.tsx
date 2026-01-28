@@ -618,11 +618,17 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                                     <Shield size={120} />
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">Contrat Maintenance</h3>
-                                <div className="text-3xl font-bold text-yellow-400 mb-4">15€<span className="text-sm text-neutral-400 font-normal">/mois</span></div>
+                                <div className="text-3xl font-bold text-yellow-400 mb-4">
+                                    <span className="text-sm text-neutral-400 font-normal mr-1 italic">À partir de</span>
+                                    15€<span className="text-sm text-neutral-400 font-normal">/mois</span>
+                                </div>
                                 <p className="text-sm text-neutral-300 mb-6">Tranquillité d'esprit totale. Visite annuelle et main d'œuvre incluse.</p>
-                                <button className="w-full bg-white text-neutral-900 font-bold py-3 rounded-xl hover:bg-neutral-100 transition">
+                                <a
+                                    href="#simulateur"
+                                    className="block w-full bg-white text-neutral-900 font-bold py-3 rounded-xl hover:bg-neutral-100 transition text-center"
+                                >
                                     En savoir plus
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
