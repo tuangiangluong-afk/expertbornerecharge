@@ -43,13 +43,15 @@ export default function LocalLinker() {
     }, [query]);
 
     const handleSelect = (slug: string, name: string) => {
+        // We need the DOMAIN, usually found in suggestions if we enhanced them, 
+        // but for now, the slug in SUGGESTIONS is the KEY.
+        // Let's assume SUGGESTIONS slug is actually the domain prefix or we map it.
+        // Actually the SUGGESTIONS list had 'bornerechargeparis' as slug.
+
+        // QUICK FIX: Construct domain from slug for known pattern or use findLocalSite
+        // To be safe, let's trigger the search logic which resolves the domain correctly
         setQuery(name);
-        setShowSuggestions(false);
-        // Direct jump
-        setStatus('loading');
-        // Simulate navigation or check
-        // Ideally we redirect to the city page directly
-        router.push(`/ville/${slug}`);
+        handleSearch({ preventDefault: () => { } } as React.FormEvent);
     };
 
     const handleSearch = async (e: React.FormEvent) => {
@@ -61,7 +63,15 @@ export default function LocalLinker() {
         try {
             const match = await findLocalSite(query);
             if (match.found && match.domain && match.city) {
-                setResult({ url: match.domain, city: match.city });
+                // CORRECT URL CONSTRUCTION LOGIC
+                // Local: /demo/bornerechargeparis.fr
+                // Prod: https://bornerechargeparis.fr
+                const isLocal = window.location.hostname.includes("localhost");
+                const finalUrl = isLocal
+                    ? `/demo/${match.domain}`
+                    : `https://${match.domain}`;
+
+                setResult({ url: finalUrl, city: match.city });
                 setStatus('success');
             } else {
                 setStatus('not-found');

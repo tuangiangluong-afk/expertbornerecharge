@@ -47,37 +47,11 @@ export async function findLocalSite(query: string): Promise<LocalMatch> {
         }
 
         if (score > bestMatch.score) {
-            // Env-aware URL construction
-            const isDev = process.env.NODE_ENV === 'development';
-            // In dev, we use subdomains of localhost:3000? No, usually ports or just different hostnames mapped
-            // For now, let's assume the component will handle the absolute URL logic, or we return the domain
-
-            // Actually, in the project user has `bornerechargeparis.localhost:3000` set up.
-            // Let's return the simplified domain for display and the full URL.
-
-            // Assuming localhost mapping: bornerechargeparis.fr -> bornerechargeparis.localhost:3000
-            // But slug is "bornerechargeparis"
-
-            let url = `https://${site.domain}`;
-            if (isDev) {
-                // If the user setup follows standard Next.js multi-tenant on localhost
-                // It's likely http://[slug].localhost:3000
-                url = `http://${site.slug}.localhost:3000`;
-            }
-
-            // ADDING TRACKING: We add UTMs to know the lead comes from the Hub
-            const trackingParams = new URLSearchParams({
-                utm_source: 'expertbornerecharge',
-                utm_medium: 'local_bridge',
-                utm_campaign: 'hub_to_satellite',
-                utm_content: cleanQuery // We track which Zip/City triggered the click
-            });
-
-            url = `${url}?${trackingParams.toString()}`;
-
+            // Return raw data, let the client handle environment-specific URL construction
+            // This prevents server-side mismatch with localhost ports/subdomains
             bestMatch = {
                 found: true,
-                domain: url,
+                domain: site.domain, // e.g. "bornerechargeparis.fr"
                 city: site.city,
                 score
             };
