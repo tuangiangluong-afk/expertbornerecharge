@@ -39,6 +39,7 @@ export default function HomePage() {
         name: site.city,
         department: site.department,
         slug: site.slug,
+        domain: site.domain,
         available: true // All configured sites are available
     }));
 
