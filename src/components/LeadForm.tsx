@@ -198,7 +198,8 @@ export default function LeadForm({
             });
 
             if (!res.ok) {
-                throw new Error('Erreur lors de l\'envoi');
+                const errorData = await res.json();
+                throw new Error(errorData.error || 'Erreur lors de l\'envoi');
             }
 
             // GTM: Track Conversion
@@ -214,6 +215,7 @@ export default function LeadForm({
 
             setStatus('success');
         } catch (error: any) {
+            console.error("Submission Error:", error);
             setStatus('error');
             setErrorMessage(error.message || 'Une erreur est survenue');
         }

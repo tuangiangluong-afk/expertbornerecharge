@@ -6,6 +6,7 @@ import { createSupabaseAdmin } from '@/lib/supabase-server';
 export async function POST(request: Request) {
     try {
         const body = await request.json();
+        console.log("📥 [API/LEADS] Received body:", body);
         const { name, email, phone, city, domain, projectType, ownerStatus, vehicleStatus, meterDistance, solarInterest } = body;
 
         // Validation basique
@@ -57,6 +58,7 @@ export async function POST(request: Request) {
         }
 
         // 2. SEND EMAIL (Resend)
+        console.log("📨 [API/LEADS] Sending email via Resend...");
         const { data, error } = await resend.emails.send({
             from: 'Expert Borne Recharge <contact@expertbornerecharge.com>',
             to: ['hello@expertbornerecharge.com'],
