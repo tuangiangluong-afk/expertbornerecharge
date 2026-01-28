@@ -5,6 +5,9 @@ import { SEO_SERVICES } from '@/lib/seo-data';
 import { SEO_GARES } from '@/lib/seo-gares';
 import { NATIONAL_CONFIG } from '@/config/national';
 import { slugify } from '@/lib/slugify';
+import { brands } from '@/data/brands';
+import { getAllVehicles } from '@/data/vehicles';
+import { getAllGuides } from '@/lib/mdx';
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = 'https://expertbornerecharge.com';
@@ -30,6 +33,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified: new Date(),
             changeFrequency: 'monthly',
             priority: 0.3,
+        },
+        {
+            url: `${baseUrl}/contact`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.5,
         },
     ];
 
@@ -63,7 +72,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ...NATIONAL_CONFIG.points_of_interest.monuments
     ];
 
-    const guideRoutes: MetadataRoute.Sitemap = allPois.map((poi) => ({
+    const poiRoutes: MetadataRoute.Sitemap = allPois.map((poi) => ({
         url: `${baseUrl}/poi/${slugify(poi)}`,
         lastModified: new Date(),
         changeFrequency: 'monthly' as const,
@@ -71,14 +80,43 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
 
     // ========================================
-    // 7. HUB WHITESPACE + GUIDES
+    // 7. INSTALLATION BRAND PAGES (NEW)
+    // ========================================
+    const installationRoutes: MetadataRoute.Sitemap = brands.map((brand) => ({
+        url: `${baseUrl}/installation/${brand.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+    }));
+
+    // ========================================
+    // 8. VEHICLE PAGES (NEW)
+    // ========================================
+    const vehicles = getAllVehicles();
+    const vehicleRoutes: MetadataRoute.Sitemap = vehicles.map((vehicle) => ({
+        url: `${baseUrl}/vehicules/${vehicle.brand.toLowerCase()}/${vehicle.id}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.7,
+    }));
+
+    // ========================================
+    // 9. BLOG GUIDES (Dynamic)
+    // ========================================
+    const guides = getAllGuides();
+    const guideRoutes: MetadataRoute.Sitemap = guides.map((guide) => ({
+        url: `${baseUrl}/guides/${guide.slug}`,
+        lastModified: new Date(guide.date),
+        changeFrequency: 'weekly' as const,
+        priority: 0.7,
+    }));
+
+    // ========================================
+    // 10. HUB WHITESPACE
     // ========================================
     const extraRoutes: MetadataRoute.Sitemap = [
         { url: `${baseUrl}/vehicules`, lastModified: new Date(), priority: 0.8 },
         { url: `${baseUrl}/guides`, lastModified: new Date(), priority: 0.8 },
-        { url: `${baseUrl}/guides/prix-installation-borne-recharge`, lastModified: new Date(), priority: 0.9 },
-        { url: `${baseUrl}/guides/wallbox-vs-prise-renforcee`, lastModified: new Date(), priority: 0.9 },
-        { url: `${baseUrl}/guides/droit-a-la-prise-borne-recharge`, lastModified: new Date(), priority: 0.9 },
         { url: `${baseUrl}/solutions/maison`, lastModified: new Date(), priority: 0.7 },
         { url: `${baseUrl}/solutions/copropriete`, lastModified: new Date(), priority: 0.7 },
         { url: `${baseUrl}/solutions/entreprise`, lastModified: new Date(), priority: 0.7 },
@@ -88,6 +126,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ...coreRoutes,
         ...cityRoutes,
         ...serviceRoutes,
+        ...poiRoutes,
+        ...installationRoutes,
+        ...vehicleRoutes,
         ...guideRoutes,
         ...extraRoutes,
     ].map(item => ({
