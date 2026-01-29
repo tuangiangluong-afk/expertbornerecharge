@@ -4,7 +4,7 @@ import { Phone, Calendar, CheckCircle, Star, Zap, Shield, Award, TrendingDown, H
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import SafeImage from "@/components/SafeImage";
 import LeadForm from "@/components/LeadForm";
 import Logo from "@/components/Logo";
 import Header from "@/components/Header";
@@ -15,6 +15,11 @@ import Reviews from "@/components/Reviews";
 import { Footer } from "@/components/Footer";
 import { InternalMesh } from "@/components/InternalMesh";
 import RealizationsGrid from "@/components/RealizationsGrid";
+// Stitch Design Components
+import ChargerComparison from "@/components/ChargerComparison";
+import GrantsCalculator from "@/components/GrantsCalculator";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import FloatingCTA from "@/components/FloatingCTA";
 
 // ============================================
 // METADATA
@@ -190,83 +195,102 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
             {/* ============================================ */}
             {/* HERO - Trust/Locale Style */}
             {/* ============================================ */}
-            <section className="relative pt-20 pb-12 lg:pt-24 lg:pb-32 overflow-hidden">
-                {/* Background */}
-                <div className="absolute inset-0 -z-10 bg-slate-900">
-                    <div className={`absolute inset-0 z-10 bg-gradient-to-b ${isPremium ? "from-neutral-900/90 via-neutral-900/80 to-neutral-900" : "from-white/95 via-white/80 to-white"}`} />
-                    <Image
-                        src={site.heroImage}
-                        alt={`Installation borne de recharge à ${site.city}`}
-                        fill
-                        priority
-                        className="object-cover opacity-30"
-                        sizes="100vw"
-                    />
-                </div>
-
+            {/* ============================================ */}
+            {/* HERO - Trust/Locale Style (New Design) */}
+            {/* ============================================ */}
+            <section className="relative pt-32 pb-16 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
                 <div className="container mx-auto px-4 relative z-20">
-                    <div className="grid lg:grid-cols-2 gap-12 items-start pt-8">
-                        {/* Left: Content */}
-                        <div className="text-center lg:text-left">
+                    <div className="grid lg:grid-cols-12 gap-12 items-center">
 
-                            {/* Trust Badge */}
-                            <div className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-bold mb-6 border ${isPremium ? "border-amber-500/30 bg-amber-500/10 text-amber-500" : `${palette.border} ${palette.light} ${palette.text}`}`}>
-                                <CheckCircle size={16} className="mr-2" />
-                                {badgeContent}
+                        {/* Left: Content + Lead Form */}
+                        <div className="lg:col-span-7 flex flex-col gap-8 text-center lg:text-left">
+
+                            <div className="space-y-6">
+                                {/* Local Badge */}
+                                <div className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-bold border mx-auto lg:mx-0 ${isPremium ? "border-amber-500/30 bg-amber-500/10 text-amber-500" : `${palette.border} ${palette.light} ${palette.text}`}`}>
+                                    <CheckCircle size={16} className="mr-2" />
+                                    {badgeContent}
+                                </div>
+
+                                {/* H1 (Spintax) */}
+                                <h1
+                                    className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight ${isPremium ? "text-white" : "text-neutral-900"}`}
+                                    dangerouslySetInnerHTML={{ __html: coloredH1Content }}
+                                />
+
+                                {/* Subtitle (Spintax) */}
+                                <div
+                                    className={`text-xl max-w-xl mx-auto lg:mx-0 ${isPremium ? "text-neutral-400" : "text-neutral-600"}`}
+                                    dangerouslySetInnerHTML={{ __html: introContent }}
+                                />
                             </div>
 
-                            {/* H1 */}
-                            <h1
-                                className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight ${isPremium ? "text-white" : "text-neutral-900"}`}
-                                dangerouslySetInnerHTML={{ __html: coloredH1Content }}
-                            />
-
-                            {/* Subtitle */}
-                            <div
-                                className={`text-xl mb-8 max-w-xl mx-auto lg:mx-0 ${isPremium ? "text-neutral-400" : "text-neutral-600"}`}
-                                dangerouslySetInnerHTML={{ __html: introContent }}
-                            />
-
-                            {/* Certifications */}
-                            <div className="flex flex-wrap gap-3 justify-center lg:justify-start mb-8">
-                                {(site.features || ["Qualifelec", "IRVE"]).slice(0, 3).map((feat, i) => (
-                                    <div
-                                        key={i}
-                                        className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm border shadow-sm ${isPremium ? "bg-neutral-800 text-neutral-300 border-neutral-700" : "bg-white text-neutral-700 border-neutral-200"}`}
-                                    >
-                                        <Award size={14} className="text-yellow-500" />
-                                        {feat}
+                            {/* LEAD FORM - Integrated Here (Left Side) */}
+                            <div className="w-full max-w-xl mx-auto lg:mx-0 relative z-30 text-left">
+                                <div id="simulateur" className="bg-white rounded-2xl shadow-xl shadow-blue-900/10 overflow-hidden border border-slate-200">
+                                    <div className={`p-1 bg-gradient-to-r ${palette.gradient}`}></div>
+                                    <div className="p-6 md:p-8">
+                                        <div className="mb-6">
+                                            <h3 className="text-lg font-bold text-slate-900">Testez votre éligibilité</h3>
+                                            <p className="text-sm text-slate-500">Réponse immédiate • Gratuit • Sans engagement</p>
+                                        </div>
+                                        <LeadForm
+                                            city={site.city}
+                                            domain={site.domain}
+                                            targetType={site.targetType}
+                                            themeColor={themeColor}
+                                        />
                                     </div>
-                                ))}
-                            </div>
-
-                            {/* CTA Buttons */}
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                                <a
-                                    href="#simulateur"
-                                    className={`flex items-center justify-center gap-3 rounded-2xl px-8 py-4 text-lg font-bold text-white shadow-xl transition-all hover:-translate-y-1 bg-gradient-to-r ${palette.gradient} ${palette.shadow}`}
-                                >
-                                    <Zap size={24} />
-                                    {ctaPrimary}
-                                </a>
+                                </div>
                             </div>
                         </div>
 
-                        {/* Right: Lead Form - STRATEGIC PLACEMENT HIGH CONVERSION */}
-                        <div className="w-full max-w-md mx-auto relative z-30">
-                            <div id="simulateur" className="bg-white rounded-3xl shadow-2xl shadow-blue-900/20 overflow-hidden border border-neutral-100">
-                                <div className={`p-1 bg-gradient-to-r ${palette.gradient}`}></div>
-                                <div className="p-6">
-                                    <div className="text-center mb-6">
-                                        <h2 className="text-lg font-bold text-neutral-900">Testez votre éligibilité</h2>
-                                        <p className="text-sm text-neutral-500">Réponse immédiate • Gratuit • Sans engagement</p>
+                        {/* Right: Large Hero Image + Trust Badges */}
+                        <div className="lg:col-span-5 hidden lg:block relative w-full">
+                            <div className="relative h-[640px] w-full mb-8">
+                                <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/20 border border-slate-100 bg-white p-2">
+                                    <div className="relative w-full h-full rounded-xl overflow-hidden">
+                                        <SafeImage
+                                            src={site.heroImage || "/images/generated/modern-home.png"}
+                                            fallbackSrc="/images/generated/modern-home.png"
+                                            alt={`Installation borne recharge ${site.city}`}
+                                            fill
+                                            className="object-cover hover:scale-105 transition-transform duration-700"
+                                            sizes="(max-width: 1024px) 100vw, 50vw"
+                                            priority
+                                        />
+                                        {/* Overlay Gradient */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+
+                                        {/* Image Caption/Badge */}
+                                        <div className="absolute bottom-8 left-8 right-8 z-20">
+                                            <div className="bg-white/95 backdrop-blur rounded-xl p-5 shadow-xl border border-white/50 flex items-center gap-4 cursor-default">
+                                                <div className="bg-green-100 p-3 rounded-full shrink-0">
+                                                    <CheckCircle className="w-6 h-6 text-green-600" />
+                                                </div>
+                                                <div>
+                                                    <div className="font-bold text-lg text-slate-900">Installation Conforme</div>
+                                                    <div className="text-sm font-medium text-slate-500">Norme NFC 15-100</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <LeadForm
-                                        city={site.city}
-                                        domain={site.domain}
-                                        targetType={site.targetType}
-                                        themeColor={themeColor}
-                                    />
+                                </div>
+                            </div>
+
+                            {/* Trust Elements relocated - Right Column */}
+                            <div className="flex flex-wrap items-center gap-4 justify-center px-4">
+                                <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
+                                    <Award size={24} className="text-yellow-500 fill-yellow-500" />
+                                    <span className="font-bold text-slate-900 text-base">Qualifelec</span>
+                                </div>
+                                <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
+                                    <Award size={24} className="text-blue-500 fill-blue-500" />
+                                    <span className="font-bold text-slate-900 text-base">RGE</span>
+                                </div>
+                                <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
+                                    <CheckCircle size={24} className="text-green-500 fill-green-100" />
+                                    <span className="font-bold text-slate-900 text-base">Garantie décennale</span>
                                 </div>
                             </div>
                         </div>
@@ -570,6 +594,16 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
 
 
             {/* ============================================ */}
+            {/* CHARGER COMPARISON - NEW STITCH COMPONENT */}
+            {/* ============================================ */}
+            <ChargerComparison themeColor={themeColor} />
+
+            {/* ============================================ */}
+            {/* GRANTS CALCULATOR - NEW STITCH COMPONENT (HUB ONLY) */}
+            {/* ============================================ */}
+            {isHub && <GrantsCalculator themeColor={themeColor} />}
+
+            {/* ============================================ */}
             {/* REALIZATIONS GRID - VISUAL PROOF (WAR ARCHITECTURE) */}
             {/* ============================================ */}
             <RealizationsGrid />
@@ -636,6 +670,11 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
             </section>
 
             {/* ============================================ */}
+            {/* TESTIMONIALS MAP - NEW STITCH COMPONENT (HUB ONLY) */}
+            {/* ============================================ */}
+            {isHub && <TestimonialsSection />}
+
+            {/* ============================================ */}
             {/* REVIEWS SECTION */}
             {/* ============================================ */}
             <Reviews site={site} themeColor={themeColor} />
@@ -684,6 +723,11 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
             {/* MOBILE STICKY CTA */}
             {/* ============================================ */}
             <MobileStickyCTA themeColor={themeColor} />
+
+            {/* ============================================ */}
+            {/* FLOATING CTA - NEW STITCH COMPONENT */}
+            {/* ============================================ */}
+            <FloatingCTA label="Devis gratuit" />
         </div>
     );
 }

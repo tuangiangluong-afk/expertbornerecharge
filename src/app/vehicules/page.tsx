@@ -18,7 +18,7 @@ export default function VehiclesIndexPage() {
             {/* Navbar */}
             <Header isHub={true} variant="default" />
 
-            <main className="container mx-auto px-4 py-12">
+            <main className="container mx-auto px-4 py-12 pt-32">
                 <div className="text-center mb-16">
                     <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">
                         Trouvez la borne pour <span className="text-blue-600">votre voiture</span>

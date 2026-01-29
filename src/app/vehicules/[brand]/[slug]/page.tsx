@@ -1,6 +1,6 @@
 import { getAllVehicles, getVehicleById } from "@/data/vehicles";
 import { notFound } from "next/navigation";
-import Image from "next/image";
+import SafeImage from "@/components/SafeImage";
 import Link from "next/link";
 import { Zap, Clock, Battery, CheckCircle, ArrowRight, ArrowLeft } from "lucide-react";
 import SimulatorWidget from "@/components/blog/SimulatorWidget";
@@ -68,8 +68,9 @@ export default async function VehiclePage({ params }: { params: Promise<{ slug: 
 
                         <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mb-12">
                             <div className="relative h-64 md:h-96 w-full">
-                                <Image
+                                <SafeImage
                                     src={vehicle.image}
+                                    fallbackSrc="/images/generated/installation-borne-hero.png"
                                     alt={`Recharge ${vehicle.brand} ${vehicle.model}`}
                                     fill
                                     className="object-cover"

@@ -45,7 +45,7 @@ export const VEHICLES: Vehicle[] = [
         connector: "Type 2",
         maxAC: 22,
         battery: 52,
-        image: "https://images.unsplash.com/photo-1609529669235-c07e4e1bd6e9?q=80&w=2940&auto=format&fit=crop"
+        image: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=2940&auto=format&fit=crop" // Generic Charging
     },
     {
         id: "renault-5-e-tech",

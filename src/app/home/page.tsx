@@ -14,6 +14,11 @@ import { Footer } from "@/components/Footer";
 import RealizationsGrid from "@/components/RealizationsGrid";
 import PersonaSelector from "@/components/PersonaSelector";
 import LogoCloud from "@/components/LogoCloud";
+// Stitch Design Components
+import ChargerComparison from "@/components/ChargerComparison";
+import GrantsCalculator from "@/components/GrantsCalculator";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import FloatingCTA from "@/components/FloatingCTA";
 
 export const metadata: Metadata = {
     title: "Comparez les Devis Borne de Recharge | Expert Borne Recharge",
@@ -72,68 +77,94 @@ export default function HomePage() {
                 </div>
 
                 <div className="container mx-auto px-4 relative z-20">
-                    <div className="grid lg:grid-cols-2 gap-12 items-start pt-8">
-                        {/* Left: Content */}
-                        <div className="text-center lg:text-left">
-                            {/* Trust Badge */}
-                            <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-bold text-blue-700 mb-6">
-                                <CheckCircle size={16} className="mr-2" />
-                                Réseau National Certifié IRVE
+                    <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center pt-8">
+                        {/* Left: Content & Form */}
+                        <div className="lg:col-span-7 flex flex-col gap-8 text-center lg:text-left">
+                            <div>
+                                {/* Trust Badge */}
+                                <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-bold text-blue-700 mb-6">
+                                    <CheckCircle size={16} className="mr-2" />
+                                    Réseau National Certifié IRVE
+                                </div>
+
+                                {/* H1 */}
+                                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
+                                    Le 1er Réseau d'Installateurs <span className="text-blue-600">Certifiés</span>. Obtenez votre devis.
+                                </h1>
+
+                                {/* Subtitle */}
+                                <p className="text-xl text-slate-600 mb-4 max-w-xl mx-auto lg:mx-0">
+                                    <strong className="text-slate-900">Recevez jusqu'à 3 devis gratuits</strong> d'installateurs certifiés près de chez vous.
+                                </p>
                             </div>
 
-                            {/* H1 - Lead Gen Focus */}
-                            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-                                Le 1er Réseau d'Installateurs <span className="text-blue-600">Certifiés</span>. Obtenez votre devis.
-                            </h1>
-
-                            {/* Subtitle */}
-                            <p className="text-xl text-slate-600 mb-8 max-w-xl mx-auto lg:mx-0">
-                                <strong className="text-slate-900">Recevez jusqu'à 3 devis gratuits</strong> d'installateurs certifiés près de chez vous.
-                                Comparez les prix et économisez jusqu'à <strong className="text-green-600">2 460€</strong> grâce aux aides.
-                            </p>
-
-                            {/* Stats */}
-                            <div className="flex flex-wrap gap-6 justify-center lg:justify-start mb-8">
-                                {[
-                                    { value: "50+", label: "Villes" },
-                                    { value: "5 000+", label: "Devis envoyés" },
-                                    { value: "48h", label: "Réponse" },
-                                ].map((stat, i) => (
-                                    <div key={i} className="text-center">
-                                        <div className="text-2xl font-bold text-slate-900">{stat.value}</div>
-                                        <div className="text-sm text-slate-500">{stat.label}</div>
+                            {/* LEAD FORM - Integrated Here */}
+                            <div className="w-full max-w-xl mx-auto lg:mx-0 relative z-30 text-left">
+                                <div id="simulateur" className="bg-white rounded-2xl shadow-xl shadow-blue-900/10 overflow-hidden border border-slate-200">
+                                    <div className="p-1 bg-gradient-to-r from-blue-600 to-blue-500"></div>
+                                    <div className="p-6 md:p-8">
+                                        <div className="mb-6">
+                                            <h3 className="text-lg font-bold text-slate-900">Testez votre éligibilité</h3>
+                                            <p className="text-sm text-slate-500">Réponse immédiate • Gratuit • Sans engagement</p>
+                                        </div>
+                                        <LeadForm
+                                            city="France"
+                                            domain="expertbornerecharge.com"
+                                            targetType="MIXED"
+                                        />
                                     </div>
-                                ))}
+                                </div>
                             </div>
 
-                            {/* Certifications */}
-                            <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-                                {hub.certifications.slice(0, 3).map((cert, i) => (
-                                    <div
-                                        key={i}
-                                        className="flex items-center gap-2 bg-white rounded-full px-4 py-2 text-sm text-slate-700 border border-slate-200 shadow-sm"
-                                    >
-                                        <Award size={14} className="text-yellow-500" />
-                                        {cert}
-                                    </div>
-                                ))}
-                            </div>
+
                         </div>
 
-                        {/* Right: Lead Form - STRATEGIC PLACEMENT HIGH CONVERSION */}
-                        <div className="w-full max-w-md mx-auto relative z-30">
-                            <div id="simulateur" className="bg-white rounded-3xl shadow-2xl shadow-blue-900/20 overflow-hidden border border-neutral-100">
-                                <div className="p-1 bg-gradient-to-r from-blue-600 to-blue-500"></div>
-                                <div className="p-6">
-                                    <div className="text-center mb-6">
-                                        <h3 className="text-lg font-bold text-neutral-900">Testez votre éligibilité</h3>
-                                        <p className="text-sm text-neutral-500">Réponse immédiate • Gratuit • Sans engagement</p>
+                        {/* Right: Large Hero Image */}
+                        {/* Right: Large Hero Image + Trust Badges */}
+                        <div className="lg:col-span-5 hidden lg:block relative w-full">
+                            <div className="relative h-[640px] w-full mb-8">
+                                <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/20 border border-slate-100 bg-white p-2">
+                                    <div className="relative w-full h-full rounded-xl overflow-hidden">
+                                        <Image
+                                            src={hub.heroImage}
+                                            alt="Borne de recharge installée"
+                                            fill
+                                            className="object-cover hover:scale-105 transition-transform duration-700"
+                                            sizes="(max-width: 1024px) 100vw, 50vw"
+                                            priority
+                                        />
+                                        {/* Overlay Gradient */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                                        
+                                        {/* Image Caption/Badge */}
+                                        <div className="absolute bottom-8 left-8 right-8 z-20">
+                                            <div className="bg-white/95 backdrop-blur rounded-xl p-5 shadow-xl border border-white/50 flex items-center gap-4 cursor-default">
+                                                <div className="bg-green-100 p-3 rounded-full shrink-0">
+                                                    <CheckCircle className="w-6 h-6 text-green-600" />
+                                                </div>
+                                                <div>
+                                                    <div className="font-bold text-lg text-slate-900">Installation Conforme</div>
+                                                    <div className="text-sm font-medium text-slate-500">Norme NFC 15-100 garantie</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <LeadForm
-                                        city="France"
-                                        domain="expertbornerecharge.com"
-                                        targetType="MIXED"
-                                    />
+                                </div>
+                            </div>
+
+                            {/* Trust Elements relocated - Right Column */}
+                            <div className="flex flex-wrap items-center gap-4 justify-center px-4">
+                                <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
+                                    <Award size={24} className="text-yellow-500 fill-yellow-500" />
+                                    <span className="font-bold text-slate-900 text-base">Qualifelec</span>
+                                </div>
+                                <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
+                                    <Award size={24} className="text-blue-500 fill-blue-500" />
+                                    <span className="font-bold text-slate-900 text-base">RGE</span>
+                                </div>
+                                <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
+                                    <CheckCircle size={24} className="text-green-500 fill-green-100" />
+                                    <span className="font-bold text-slate-900 text-base">Garantie décennale</span>
                                 </div>
                             </div>
                         </div>
@@ -308,6 +339,21 @@ export default function HomePage() {
             <RealizationsGrid />
 
             {/* ============================================ */}
+            {/* CHARGER COMPARISON - NEW STITCH COMPONENT */}
+            {/* ============================================ */}
+            <ChargerComparison themeColor="blue" />
+
+            {/* ============================================ */}
+            {/* GRANTS CALCULATOR - NEW STITCH COMPONENT */}
+            {/* ============================================ */}
+            <GrantsCalculator themeColor="blue" />
+
+            {/* ============================================ */}
+            {/* TESTIMONIALS MAP - NEW STITCH COMPONENT */}
+            {/* ============================================ */}
+            <TestimonialsSection />
+
+            {/* ============================================ */}
             {/* CITIES GRID */}
             {/* ============================================ */}
             <section id="villes" className="py-20 bg-slate-50 scroll-mt-20">
@@ -373,6 +419,9 @@ export default function HomePage() {
 
             {/* Mobile Sticky CTA */}
             <MobileStickyCTA themeColor="blue" />
+
+            {/* Floating CTA */}
+            <FloatingCTA label="Devis gratuit" />
         </div >
     );
 }

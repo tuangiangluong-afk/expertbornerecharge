@@ -1,4 +1,4 @@
-import { Zap, CheckCircle, HelpCircle, TrendingDown, Shield, Clock, Info, Battery, Plug, Euro } from "lucide-react";
+import { Zap, CheckCircle, HelpCircle, TrendingDown, Shield, Clock, Info, Battery, Plug, Euro, Award } from "lucide-react";
 import LeadForm from "@/components/LeadForm";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -18,34 +18,93 @@ export default function SolutionMaison() {
             <Header isHub={true} variant="default" />
 
             {/* HERO SECTION - CONTENT FOCUSED */}
-            <section className="relative pt-20 pb-12 lg:pt-24 bg-white overflow-hidden">
+            {/* HERO SECTION - CONTENT FOCUSED (Updated Design) */}
+            <section className="relative pt-32 pb-16 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
                 <div className="container mx-auto px-4">
-                    <div className="flex flex-col lg:flex-row gap-12 items-start pt-8">
-                        <div className="lg:w-1/2">
-                            <div className="inline-flex items-center rounded-full bg-blue-100 px-4 py-1.5 text-sm font-bold text-blue-800 mb-6 border border-blue-200">
-                                <Zap size={16} className="mr-2" />
-                                Guide Complet 2026
+                    <div className="grid lg:grid-cols-12 gap-12 items-center">
+
+                        {/* Left: Content + Lead Form */}
+                        <div className="lg:col-span-7 flex flex-col gap-8">
+                            <div className="text-center lg:text-left space-y-6">
+                                <div className="inline-flex items-center rounded-full bg-blue-100 px-4 py-1.5 text-sm font-bold text-blue-800 border border-blue-200 mx-auto lg:mx-0">
+                                    <Zap size={16} className="mr-2" />
+                                    Guide Complet 2026
+                                </div>
+                                <h1 className="text-4xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
+                                    Installer une borne de recharge en <span className="text-blue-600">maison individuelle</span>
+                                </h1>
+                                <p className="text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                                    Finies les recharges lentes. Passez à la vitesse supérieure avec une Wallbox sécurisée.
+                                    Ce guide vous explique tout : choix du matériel, aides de l'État et coût d'installation.
+                                </p>
+                                <div className="flex items-center gap-4 text-sm font-medium text-slate-500 justify-center lg:justify-start">
+                                    <span className="flex items-center gap-1"><Clock size={16} /> Lecture : 8 min</span>
+                                    <span className="flex items-center gap-1"><CheckCircle size={16} className="text-green-500" /> Mis à jour Janvier 2026</span>
+                                </div>
                             </div>
-                            <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-                                Installer une borne de recharge en <span className="text-blue-600">maison individuelle</span>
-                            </h1>
-                            <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-                                Finies les recharges lentes sur prise domestique. Passez à la vitesse supérieure avec une Wallbox sécurisée.
-                                Ce guide vous explique tout : choix du matériel, aides de l'État et coût d'installation.
-                            </p>
-                            <div className="flex items-center gap-4 text-sm font-medium text-slate-500">
-                                <span className="flex items-center gap-1"><Clock size={16} /> Lecture : 8 min</span>
-                                <span className="flex items-center gap-1"><CheckCircle size={16} className="text-green-500" /> Mis à jour Janvier 2026</span>
+
+                            {/* LEAD FORM - Integrated Here */}
+                            <div className="w-full max-w-xl mx-auto lg:mx-0 relative z-30 text-left">
+                                <div id="simulateur" className="bg-white rounded-2xl shadow-xl shadow-blue-900/10 overflow-hidden border border-slate-200">
+                                    <div className="p-1 bg-gradient-to-r from-blue-600 to-blue-500"></div>
+                                    <div className="p-6 md:p-8">
+                                        <div className="mb-6">
+                                            <h3 className="text-lg font-bold text-slate-900">Testez votre éligibilité</h3>
+                                            <p className="text-sm text-slate-500">Réponse immédiate • Gratuit • Sans engagement</p>
+                                        </div>
+                                        <LeadForm city="France" domain="expertbornerecharge.com" targetType="MAISON" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="lg:w-1/2 relative">
-                            {/* Lead Form Embedded as "Stickyr" or prominent element */}
-                            <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 relative z-10" id="simulateur">
-                                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">
-                                    Devis Gratuit & Rapide
+
+                        {/* Right: Large Hero Image + Trust Badges */}
+                        <div className="lg:col-span-5 hidden lg:block relative w-full">
+                            <div className="relative h-[640px] w-full mb-8">
+                                <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/20 border border-slate-100 bg-white p-2">
+                                    <div className="relative w-full h-full rounded-xl overflow-hidden">
+                                        <Image
+                                            src={hub.heroImage}
+                                            alt="Borne de recharge maison"
+                                            fill
+                                            className="object-cover hover:scale-105 transition-transform duration-700"
+                                            sizes="(max-width: 1024px) 100vw, 50vw"
+                                            priority
+                                        />
+                                        {/* Overlay Gradient */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+
+                                        {/* Image Caption/Badge */}
+                                        <div className="absolute bottom-8 left-8 right-8 z-20">
+                                            <div className="bg-white/95 backdrop-blur rounded-xl p-5 shadow-xl border border-white/50 flex items-center gap-4 cursor-default">
+                                                <div className="bg-green-100 p-3 rounded-full shrink-0">
+                                                    <CheckCircle className="w-6 h-6 text-green-600" />
+                                                </div>
+                                                <div>
+                                                    <div className="font-bold text-lg text-slate-900">Installation Conforme</div>
+                                                    <div className="text-sm font-medium text-slate-500">Norme NFC 15-100 garantie</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <h3 className="text-center font-bold text-lg mb-4 mt-2">Votre projet d'installation</h3>
-                                <LeadForm city="France" domain="expertbornerecharge.com" targetType="MAISON" />
+                            </div>
+
+                            {/* Trust Elements relocated - Right Column */}
+                            <div className="flex flex-wrap items-center gap-4 justify-center px-4">
+                                <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
+                                    {/* Using Award/CheckCircle icons from lucide-react which are imported */}
+                                    <Award size={24} className="text-yellow-500 fill-yellow-500" />
+                                    <span className="font-bold text-slate-900 text-base">Qualifelec</span>
+                                </div>
+                                <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
+                                    <Award size={24} className="text-blue-500 fill-blue-500" />
+                                    <span className="font-bold text-slate-900 text-base">RGE</span>
+                                </div>
+                                <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
+                                    <CheckCircle size={24} className="text-green-500 fill-green-100" />
+                                    <span className="font-bold text-slate-900 text-base">Garantie décennale</span>
+                                </div>
                             </div>
                         </div>
                     </div>
