@@ -73,10 +73,9 @@ const TEMPLATE_CERTIFICATIONS = [
 ];
 
 const TEMPLATE_AIDES = [
-    "Prime ADVENIR jusqu'à 960€",
-    "Crédit d'Impôt 75% (max 500€)",
-    "TVA Réduite 5.5%",
-    "MaPrimeRénov'"
+    "Prime ADVENIR (Copropriété)",
+    "Crédit d'Impôt 500€",
+    "TVA Réduite 5.5%"
 ];
 
 const TEMPLATE_FEATURES = [

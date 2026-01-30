@@ -75,15 +75,15 @@ export default function GrantsCalculator({ themeColor = "blue", onCalculateClick
 
                     {/* Grant Items */}
                     <div className="flex flex-col gap-4 mt-4">
-                        {/* MaPrimeRénov & Advenir */}
+                        {/* Advenir Copro */}
                         <div className="flex gap-4 p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
                             <div className="bg-green-100 text-green-600 h-12 w-12 rounded-lg flex items-center justify-center shrink-0">
                                 <CheckCircle className="w-6 h-6" />
                             </div>
                             <div>
-                                <h3 className="font-bold text-slate-900 text-lg">MaPrimeRénov&apos; & Advenir</h3>
+                                <h3 className="font-bold text-slate-900 text-lg">Prime ADVENIR (Copropriété)</h3>
                                 <p className="text-slate-500 text-sm mt-1">
-                                    Jusqu&apos;à 960€ de subventions pour les copropriétés et parkings partagés.
+                                    Jusqu&apos;à 960€ de subventions pour les points de recharge en copropriété.
                                 </p>
                             </div>
                         </div>
@@ -94,9 +94,9 @@ export default function GrantsCalculator({ themeColor = "blue", onCalculateClick
                                 <Euro className="w-6 h-6" />
                             </div>
                             <div>
-                                <h3 className="font-bold text-slate-900 text-lg">Crédit d&apos;Impôt</h3>
+                                <h3 className="font-bold text-slate-900 text-lg">Crédit d&apos;Impôt (Particulier)</h3>
                                 <p className="text-slate-500 text-sm mt-1">
-                                    Bénéficiez d&apos;un crédit d&apos;impôt jusqu&apos;à 500€ par système de charge installé à votre résidence principale.
+                                    Crédit d&apos;impôt de 500€ par système de charge installé (résidence principale ou secondaire).
                                 </p>
                             </div>
                         </div>

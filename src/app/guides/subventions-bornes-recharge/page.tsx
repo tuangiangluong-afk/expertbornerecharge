@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
     return {
         title: `Guide des subventions pour bornes de recharge 2025 | ${config?.name || "Expert Borne Recharge"}`,
-        description: "Découvrez toutes les aides financières pour l'installation de votre borne de recharge : MaPrimeRénov', ADVENIR, Crédit d'impôt. Jusqu'à 960€ d'économies.",
+        description: "Découvrez toutes les aides financières pour l'installation de votre borne de recharge : Crédit d'impôt (500€), Prime ADVENIR, TVA réduite. Financez votre installation.",
     };
 }
 
@@ -26,34 +26,26 @@ interface Grant {
 
 const grants: Grant[] = [
     {
-        name: "Crédit d'impôt",
-        amount: "Jusqu'à 500€",
-        eligible: ["Résidence principale", "Propriétaires et locataires"],
-        description: "Le crédit d'impôt pour l'installation d'une borne de recharge permet de déduire jusqu'à 75% du coût de l'équipement et de la pose, dans la limite de 500€ par système de charge. Ce dispositif est accessible aux propriétaires, locataires et occupants à titre gratuit pour leur résidence principale.",
+        name: "Crédit d'impôt (CITE)",
+        amount: "500€ / borne",
+        eligible: ["Résidence principale", "Résidence secondaire", "Propriétaires et locataires"],
+        description: "Le crédit d'impôt pour la transition énergétique finance 75% du coût de l'équipement et de la pose, plafonné à 500€ par système de charge. Accessible à tous sans condition de revenus, pour résidence principale ou secondaire.",
         icon: <Euro className="w-6 h-6" />,
         color: "blue",
     },
     {
         name: "Prime ADVENIR",
         amount: "Jusqu'à 960€",
-        eligible: ["Copropriétés", "Parkings partagés", "Entreprises"],
-        description: "Le programme ADVENIR finance une partie du coût des bornes en copropriété ou sur des parkings d'entreprise ouverts au public. Le taux de prise en charge peut atteindre 50% du coût HT, avec un plafond de 960€ par point de recharge pour les particuliers en copropriété.",
+        eligible: ["Copropriétés", "Entreprises", "Flottes"],
+        description: "Le programme ADVENIR finance les infrastructures collectives. Pour les particuliers en copropriété, l'aide peut atteindre 50% du coût (max 960€). Pour les entreprises, les barèmes varient selon le type de point de recharge.",
         icon: <Building2 className="w-6 h-6" />,
         color: "green",
-    },
-    {
-        name: "MaPrimeRénov'",
-        amount: "Variable",
-        eligible: ["Logements de +15 ans", "Travaux de rénovation globale"],
-        description: "Dans le cadre de travaux de rénovation énergétique globale, MaPrimeRénov' peut également contribuer au financement de l'installation d'une borne de recharge. Les montants varient selon vos revenus et le type de travaux réalisés.",
-        icon: <Home className="w-6 h-6" />,
-        color: "purple",
     },
     {
         name: "TVA réduite 5,5%",
         amount: "Économie ~14%",
         eligible: ["Logements de +2 ans", "Installation par professionnel RGE"],
-        description: "Pour les logements achevés depuis plus de 2 ans, vous bénéficiez d'une TVA à 5,5% au lieu de 20% sur la pose d'une borne de recharge, à condition que l'installation soit réalisée par un professionnel qualifié.",
+        description: "Pour les logements achevés depuis plus de 2 ans, vous bénéficiez d'une TVA à 5,5% au lieu de 20% sur la pose ET la fourniture de la borne, à condition d'être installée par un professionnel certifié IRVE.",
         icon: <FileText className="w-6 h-6" />,
         color: "amber",
     },
@@ -87,7 +79,7 @@ export default async function GrantsGuidePage() {
                         Toutes les subventions pour votre borne de recharge
                     </h1>
                     <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
-                        Crédit d&apos;impôt, Prime ADVENIR, MaPrimeRénov&apos;... Découvrez comment économiser
+                        Crédit d&apos;impôt, Prime ADVENIR... Découvrez comment économiser
                         jusqu&apos;à <strong className="text-white">960€</strong> sur votre installation.
                     </p>
                     <Link

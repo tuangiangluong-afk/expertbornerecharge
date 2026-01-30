@@ -39,7 +39,7 @@ export default function FloatingCTA({
     if (!isVisible) return null;
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+        <div className="fixed bottom-6 right-6 z-50 hidden lg:flex flex-col gap-3">
             {/* Scroll to top button */}
             {showScrollTop && (
                 <button
