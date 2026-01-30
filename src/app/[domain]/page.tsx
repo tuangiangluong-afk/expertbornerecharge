@@ -20,9 +20,7 @@ import ChargerComparison from "@/components/ChargerComparison";
 import GrantsCalculator from "@/components/GrantsCalculator";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FloatingCTA from "@/components/FloatingCTA";
-import PricingTable from "@/components/PricingTable";
-import InstallationSteps from "@/components/InstallationSteps";
-import FAQSection from "@/components/FAQSection";
+
 
 // ============================================
 // METADATA
@@ -301,11 +299,7 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                 </div>
             </section>
 
-            {/* ============================================ */}
-            {/* SEO STRUCTURE: PRIX & ETAPES */}
-            {/* ============================================ */}
-            <PricingTable />
-            <InstallationSteps />
+
 
             {/* ============================================ */}
             {/* AIDES SECTION (Gradient) - HUB ONLY or High Value */}
@@ -691,7 +685,7 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
             {/* ============================================ */}
             {/* FAQ SECTION */}
             {/* ============================================ */}
-            <FAQSection />
+            <FAQ themeColor={themeColor} />
 
             {/* ============================================ */}
             {/* LOCAL SEO SECTION */}
