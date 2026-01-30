@@ -81,9 +81,9 @@ export default function GrantsCalculator({ themeColor = "blue", onCalculateClick
                                 <CheckCircle className="w-6 h-6" />
                             </div>
                             <div>
-                                <h3 className="font-bold text-slate-900 text-lg">Prime ADVENIR (Copropriété)</h3>
+                                <h3 className="font-bold text-slate-900 text-lg">Advenir & MaPrimeRénov&apos;</h3>
                                 <p className="text-slate-500 text-sm mt-1">
-                                    Jusqu&apos;à 960€ de subventions pour les points de recharge en copropriété.
+                                    Advenir (Copro) ou MaPrimeRénov&apos; (Rénovation globale uniquement).
                                 </p>
                             </div>
                         </div>

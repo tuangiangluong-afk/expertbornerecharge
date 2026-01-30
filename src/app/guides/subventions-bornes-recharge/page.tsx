@@ -49,6 +49,14 @@ const grants: Grant[] = [
         icon: <FileText className="w-6 h-6" />,
         color: "amber",
     },
+    {
+        name: "MaPrimeRénov' (Parcours Accompagné)",
+        amount: "Sur devis global",
+        eligible: ["Rénovation d'ampleur", "Audit énergétique obligatoire"],
+        description: "Financement possible uniquement si la borne est intégrée dans un projet de rénovation globale permettant un saut de 2 classes énergétiques. Le montant de l'aide correspond à un pourcentage du coût total des travaux (de 30% à 90% selon revenus).",
+        icon: <Home className="w-6 h-6" />,
+        color: "purple",
+    },
 ];
 
 export default async function GrantsGuidePage() {
