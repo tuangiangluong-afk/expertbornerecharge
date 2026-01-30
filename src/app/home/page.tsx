@@ -19,6 +19,9 @@ import ChargerComparison from "@/components/ChargerComparison";
 import GrantsCalculator from "@/components/GrantsCalculator";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FloatingCTA from "@/components/FloatingCTA";
+import PricingTable from "@/components/PricingTable";
+import InstallationSteps from "@/components/InstallationSteps";
+import FAQSection from "@/components/FAQSection";
 
 export const metadata: Metadata = {
     title: "Comparez les Devis Borne de Recharge | Expert Borne Recharge",
@@ -135,7 +138,7 @@ export default function HomePage() {
                                         />
                                         {/* Overlay Gradient */}
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-                                        
+
                                         {/* Image Caption/Badge */}
                                         <div className="absolute bottom-8 left-8 right-8 z-20">
                                             <div className="bg-white/95 backdrop-blur rounded-xl p-5 shadow-xl border border-white/50 flex items-center gap-4 cursor-default">
@@ -171,6 +174,12 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
+
+            {/* ============================================ */}
+            {/* SEO STRUCTURE: PRIX & ETAPES */}
+            {/* ============================================ */}
+            <PricingTable />
+            <InstallationSteps />
 
             {/* ============================================ */}
             {/* TRUST SIGNALS (Hello Watt Style) */}
@@ -379,7 +388,7 @@ export default function HomePage() {
                     </div>
 
                     {/* FAQ moved below City Cards */}
-                    <FAQ />
+                    <FAQSection />
                 </div>
             </section>
 
