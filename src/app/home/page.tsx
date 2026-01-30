@@ -178,8 +178,7 @@ export default function HomePage() {
             {/* ============================================ */}
             {/* SEO STRUCTURE: PRIX & ETAPES */}
             {/* ============================================ */}
-            <PricingTable />
-            <InstallationSteps />
+
 
             {/* ============================================ */}
             {/* TRUST SIGNALS (Hello Watt Style) */}
@@ -304,6 +303,12 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
+
+            {/* ============================================ */}
+            {/* SEO STRUCTURE: PRIX & ETAPES */}
+            {/* ============================================ */}
+            <PricingTable />
+            <InstallationSteps />
 
             {/* ============================================ */}
             {/* SERVICES */}
