@@ -40,6 +40,14 @@ export default async function middleware(req: NextRequest) {
         return applySecurityHeaders(NextResponse.redirect(lowercaseUrl, 301));
     }
 
+    // 0.1 Domain Normalization (www -> non-www)
+    if (hostname.startsWith("www.")) {
+        const newHostname = hostname.replace("www.", "");
+        const newUrl = new URL(req.url);
+        newUrl.hostname = newHostname;
+        return applySecurityHeaders(NextResponse.redirect(newUrl, 301));
+    }
+
     // 1. Sitemap Rewrite
     if (path === "/sitemap.xml") {
         if (isHub) {
