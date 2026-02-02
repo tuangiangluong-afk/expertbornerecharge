@@ -34,18 +34,27 @@ export default async function middleware(req: NextRequest) {
         return res;
     };
 
-    // 0. Path Normalization (Lowercase & No Trailing Slash handled by next.config `trailingSlash: false`)
-    if (cleanPath !== cleanPath.toLowerCase()) {
-        const lowercaseUrl = new URL(url.origin + url.pathname.toLowerCase() + url.search);
-        return applySecurityHeaders(NextResponse.redirect(lowercaseUrl, 301));
+    // 0. EXPLICIT DEAD ROUTES (GSC Cleanup)
+    if (cleanPath.startsWith("/gare")) {
+        return applySecurityHeaders(new NextResponse(null, { status: 410, statusText: "Gone" }));
     }
 
-    // 0.1 Domain Normalization (www -> non-www)
+    // 0.1 Path Normalization (Lowercase & No Trailing Slash handled by next.config `trailingSlash: false`)
+    if (cleanPath !== cleanPath.toLowerCase()) {
+        const lowercaseUrl = new URL(url.origin + url.pathname.toLowerCase() + url.search);
+        if (lowercaseUrl.href !== url.href) {
+            return applySecurityHeaders(NextResponse.redirect(lowercaseUrl, 301));
+        }
+    }
+
+    // 0.2 Domain Normalization (www -> non-www)
     if (hostname.startsWith("www.")) {
         const newHostname = hostname.replace("www.", "");
         const newUrl = new URL(req.url);
         newUrl.hostname = newHostname;
-        return applySecurityHeaders(NextResponse.redirect(newUrl, 301));
+        if (newUrl.href !== req.url) {
+            return applySecurityHeaders(NextResponse.redirect(newUrl, 301));
+        }
     }
 
     // 1. Sitemap Rewrite
@@ -65,7 +74,10 @@ export default async function middleware(req: NextRequest) {
         // Redirect /home/* to /* to prevent duplicate content
         if (cleanPath.startsWith("/home") && cleanPath !== "/home/sitemap.xml") {
             const cleanUrl = cleanPath.replace("/home", "") || "/";
-            return applySecurityHeaders(NextResponse.redirect(new URL(cleanUrl + url.search, req.url), 301));
+            const targetUrl = new URL(cleanUrl + url.search, req.url);
+            if (targetUrl.href !== req.url) {
+                return applySecurityHeaders(NextResponse.redirect(targetUrl, 301));
+            }
         }
 
         if (path.startsWith("/admin") || path.startsWith("/login") || path.startsWith("/api") || path.startsWith("/guides") || path.startsWith("/outils") || path.startsWith("/vehicules") || path.startsWith("/ville") || path.startsWith("/solutions") || path.startsWith("/service") || path.startsWith("/quartier") || path.startsWith("/departement") || path.startsWith("/poi") || path.startsWith("/demo") || path.startsWith("/installation") || path.startsWith("/images")) {
