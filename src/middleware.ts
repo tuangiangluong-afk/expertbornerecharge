@@ -47,15 +47,11 @@ export default async function middleware(req: NextRequest) {
         }
     }
 
-    // 0.2 Domain Normalization (www -> non-www)
-    if (hostname.startsWith("www.")) {
-        const newHostname = hostname.replace("www.", "");
-        const newUrl = new URL(req.url);
-        newUrl.hostname = newHostname;
-        if (newUrl.href !== req.url) {
-            return applySecurityHeaders(NextResponse.redirect(newUrl, 301));
-        }
-    }
+
+    // 0.2 Domain Normalization (Removed to prevent Vercel Loops)
+    // We rely on Vercel or Canonical Tags to handle this.
+    // if (hostname.startsWith("www.")) { ... }
+
 
     // 1. Sitemap Rewrite
     if (path === "/sitemap.xml") {
@@ -110,7 +106,7 @@ export default async function middleware(req: NextRequest) {
             new URL(`/${routeParam}${path}`, req.url)
         );
 
-        response.headers.set("x-irve-domain", hostname);
+        response.headers.set("x-irve-domain", domainKey);
         response.headers.set("x-irve-city", domainKey);
     }
 
