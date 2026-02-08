@@ -8,7 +8,6 @@ import { ArrowLeft, Clock, Calendar, Zap, ArrowRight } from 'lucide-react';
 import SimulatorWidget from '@/components/blog/SimulatorWidget';
 import LocalLinker from '@/components/blog/LocalLinker';
 import { createClient } from "@supabase/supabase-js";
-import { TableOfContents } from "@/components/blog/TableOfContents";
 
 // Initialize Supabase Client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -109,6 +108,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             dbPost = data;
             // Map DB post to Guide structure for the UI
             guide = {
+                slug: data.slug,
                 meta: {
                     title: data.title,
                     description: data.excerpt,
@@ -237,7 +237,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                                 </div>
                             </div>
                             <p className="text-slate-600 mb-4">
-                                Nos guides sont rédigés par des experts en mobilité électrique pour vous aider à comparer les meilleures solutions du marché. Les informations sur les aides (Advenir, Crédit d'Impôt) sont vérifiées régulièrement auprès des organismes officiels.
+                                Nos guides sont rédigés par des experts en mobilité électrique pour vous aider à comparer les meilleures solutions du marché. Les informations sur les aides (Advenir, Crédit d&apos;Impôt) sont vérifiées régulièrement auprès des organismes officiels.
                             </p>
                         </div>
                     </div>
