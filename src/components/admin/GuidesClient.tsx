@@ -2,10 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Database, Eye, Edit, Trash2, Loader2, Sparkles, X, Save, RefreshCw, Bot, Play, Settings, Newspaper, Image as ImageIcon, EyeOff, Upload } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
+import { Modal, Button, Label, Textarea } from "./AdminUI";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { useToast } from "@/components/admin/Toast";
@@ -417,7 +414,7 @@ export default function GuidesClient({ initialPosts }: { initialPosts: BlogPost[
                                 {posts.length === 0 ? (
                                     <tr>
                                         <td colSpan={4} className="px-6 py-12 text-center text-slate-400 italic">
-                                            Aucun article trouvé. Allez dans l'onglet "Idéation" pour en créer !
+                                            Aucun article trouvé. Allez dans l&apos;onglet &quot;Idéation&quot; pour en créer !
                                         </td>
                                     </tr>
                                 ) : posts.map((post) => (
@@ -474,11 +471,11 @@ export default function GuidesClient({ initialPosts }: { initialPosts: BlogPost[
                                             <button
                                                 onClick={async () => {
                                                     const newStatus = post.status === 'published' ? 'draft' : 'published';
-                                                    const { error } = await supabase.from('blog_posts').update({ status: newStatus }).eq('id', post.id);
+                                                    const { error } = await supabaseBrowser.from('blog_posts').update({ status: newStatus }).eq('id', post.id);
                                                     if (error) {
-                                                        toast.error("Erreur de mise à jour");
+                                                        showToast("Erreur de mise à jour", "error");
                                                     } else {
-                                                        toast.success(newStatus === 'published' ? "Article publié !" : "Article passé en brouillon");
+                                                        showToast(newStatus === 'published' ? "Article publié !" : "Article passé en brouillon", "success");
                                                         refetchPosts();
                                                     }
                                                 }}
@@ -503,63 +500,71 @@ export default function GuidesClient({ initialPosts }: { initialPosts: BlogPost[
                 </div>
             )}
 
-            {/* Image Regen Dialog */}
-            <Dialog open={imageDialogOpen} onOpenChange={setImageDialogOpen}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Régénérer l'Image : {articleToRewrite?.title}</DialogTitle>
-                        <DialogDescription>
-                            L'IA va créer une nouvelle image illustrative basée sur vos instructions.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <div className="space-y-4 py-4">
-                        <div className="space-y-2">
-                            <Label>Directives pour l'Image</Label>
-                            <Textarea
-                                placeholder="Ex: Photo réaliste, bornes de recharge en action..."
-                                value={imageInstructions}
-                                onChange={(e) => setImageInstructions(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    <DialogFooter>
+            {/* Image Regen Modal */}
+            <Modal 
+                isOpen={imageDialogOpen} 
+                onClose={() => setImageDialogOpen(false)}
+                title={`Régénérer l&apos;Image : ${articleToRewrite?.title}`}
+                description="L&apos;IA va créer une nouvelle image illustrative basée sur vos instructions."
+                footer={
+                    <>
                         <Button variant="outline" onClick={() => setImageDialogOpen(false)}>Annuler</Button>
-                        <Button onClick={handleConfirmImageRegen} className="bg-pink-600 hover:bg-pink-700">
-                            <ImageIcon className="w-4 h-4 mr-2" />
+                        <Button 
+                            onClick={handleConfirmImageRegen} 
+                            variant="primary"
+                            isLoading={isGenerating}
+                            leftIcon={<ImageIcon size={18} />}
+                            className="bg-pink-600 hover:bg-pink-700"
+                        >
                             Générer Nouvelle Image
                         </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
-
-            {/* Rewrite Dialog */}
-            <Dialog open={rewriteDialogOpen} onOpenChange={setRewriteDialogOpen}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Deep Rewrite : {articleToRewrite?.title}</DialogTitle>
-                        <DialogDescription>
-                            L'agent va critiquer et réécrire cet article.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <div className="space-y-4 py-4">
-                        <div className="space-y-2">
-                            <Label>Directives Spéciales</Label>
-                            <Textarea
-                                placeholder="Instructions pour l'agent..."
-                                value={rewriteInstructions}
-                                onChange={(e) => setRewriteInstructions(e.target.value)}
-                            />
-                        </div>
+                    </>
+                }
+            >
+                <div className="space-y-4">
+                    <div className="space-y-2">
+                        <Label>Directives pour l'Image</Label>
+                        <Textarea
+                            placeholder="Ex: Photo réaliste, bornes de recharge en action..."
+                            value={imageInstructions}
+                            onChange={(e) => setImageInstructions(e.target.value)}
+                        />
                     </div>
-                    <DialogFooter>
+                </div>
+            </Modal>
+
+            {/* Rewrite Modal */}
+            <Modal 
+                isOpen={rewriteDialogOpen} 
+                onClose={() => setRewriteDialogOpen(false)}
+                title={`Deep Rewrite : ${articleToRewrite?.title}`}
+                description="L&apos;agent va critiquer et réécrire cet article."
+                footer={
+                    <>
                         <Button variant="outline" onClick={() => setRewriteDialogOpen(false)}>Annuler</Button>
-                        <Button onClick={handleConfirmRewrite} className="bg-purple-600 hover:bg-purple-700">
-                            <Sparkles className="w-4 h-4 mr-2" />
+                        <Button 
+                            onClick={handleConfirmRewrite} 
+                            variant="primary"
+                            isLoading={isGenerating}
+                            leftIcon={<Sparkles size={18} />}
+                            className="bg-purple-600 hover:bg-purple-700"
+                        >
                             Lancer la Réécriture
                         </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+                    </>
+                }
+            >
+                <div className="space-y-4">
+                    <div className="space-y-2">
+                        <Label>Directives Spéciales</Label>
+                        <Textarea
+                            placeholder="Instructions pour l'agent..."
+                            value={rewriteInstructions}
+                            onChange={(e) => setRewriteInstructions(e.target.value)}
+                        />
+                    </div>
+                </div>
+            </Modal>
 
             {/* TAB: IDEATION */}
             {activeTab === 'ideation' && (
@@ -586,7 +591,7 @@ export default function GuidesClient({ initialPosts }: { initialPosts: BlogPost[
                              </div>
                              <div className="flex-1 overflow-y-auto p-4 space-y-4">
                                 {trends.length === 0 ? (
-                                    <div className="text-center text-slate-400 mt-10">Aucune tendance. Cliquez sur "Scanner".</div>
+                                    <div className="text-center text-slate-400 mt-10">Aucune tendance. Cliquez sur &quot;Scanner&quot;.</div>
                                 ) : trends.map(trend => (
                                     <div key={trend.id} className="border-b border-slate-100 pb-3 last:border-0 hover:bg-slate-50 p-2 rounded transition">
                                         <a href={trend.url} target="_blank" className="font-medium text-blue-600 hover:underline block mb-1 text-sm">{trend.title}</a>
@@ -606,7 +611,7 @@ export default function GuidesClient({ initialPosts }: { initialPosts: BlogPost[
                                 <div>
                                     <h3 className="font-bold text-white flex items-center gap-2">
                                         <Sparkles className="text-indigo-400" size={18} />
-                                        Générateur d'Idées AI
+                                        Générateur d&apos;Idées AI
                                     </h3>
                                     <p className="text-xs text-slate-400">Transforme les tendances en sujets de blog</p>
                                 </div>
@@ -622,8 +627,8 @@ export default function GuidesClient({ initialPosts }: { initialPosts: BlogPost[
                              <div className="flex-1 overflow-y-auto p-4 space-y-4">
                                 {ideas.length === 0 ? (
                                     <div className="text-center text-slate-500 mt-10">
-                                        L'AI n'a pas encore proposé d'idées.
-                                        <br/>Cliquez sur "Générer" pour commencer.
+                                        L&apos;AI n&apos;a pas encore proposé d&apos;idées.
+                                        <br/>Cliquez sur &quot;Générer&quot; pour commencer.
                                     </div>
                                 ) : ideas.map(idea => (
                                     <div key={idea.id} className="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-indigo-500/50 transition group relative">
@@ -647,7 +652,7 @@ export default function GuidesClient({ initialPosts }: { initialPosts: BlogPost[
                                             className="mt-4 w-full py-2 bg-white text-slate-900 rounded-lg text-sm font-bold hover:bg-indigo-50 transition flex items-center justify-center gap-2"
                                         >
                                             {isGenerating ? <Loader2 size={14} className="animate-spin" /> : <Edit size={14} />}
-                                            Rédiger l'article
+                                            Rédiger l&apos;article
                                         </button>
                                     </div>
                                 ))}
@@ -664,7 +669,7 @@ export default function GuidesClient({ initialPosts }: { initialPosts: BlogPost[
                         <div className="p-6 border-b border-slate-100">
                              <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
                                 <Bot className="text-pink-600" />
-                                Moteur d'Automatisation
+                                Moteur d&apos;Automatisation
                             </h2>
                             <p className="text-slate-500 text-sm">Configurez la création automatique de contenu sans intervention.</p>
                         </div>
@@ -675,7 +680,7 @@ export default function GuidesClient({ initialPosts }: { initialPosts: BlogPost[
                                 <div className="flex items-center justify-between p-4 border border-slate-100 rounded-xl bg-slate-50">
                                     <div>
                                         <div className="font-bold text-slate-900">Activation du Moteur</div>
-                                        <div className="text-sm text-slate-500">Le script s'exécutera automatiquement.</div>
+                                        <div className="text-sm text-slate-500">Le script s&apos;exécutera automatiquement.</div>
                                     </div>
                                     <button 
                                         onClick={() => handleSaveSettings({ is_active: !settings.is_active })}
@@ -752,7 +757,7 @@ export default function GuidesClient({ initialPosts }: { initialPosts: BlogPost[
                 <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
                     <div className="bg-white rounded-xl max-w-4xl w-full p-8 shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
                         <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-2xl font-bold text-slate-900">Éditer l'article</h2>
+                            <h2 className="text-2xl font-bold text-slate-900">Éditer l&apos;article</h2>
                             <button onClick={() => setEditingPost(null)} className="text-slate-400 hover:text-slate-600">
                                 <X size={24} />
                             </button>
