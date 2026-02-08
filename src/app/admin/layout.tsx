@@ -44,6 +44,10 @@ export default async function AdminLayout({
                         <FileText size={18} />
                         Pages & SEO
                     </Link>
+                    <Link href="/admin/guides" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition">
+                        <Database size={18} />
+                        Blog & Guides
+                    </Link>
 
                     <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-6 px-2">Business</div>
                     <Link href="/admin/leads" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition">
