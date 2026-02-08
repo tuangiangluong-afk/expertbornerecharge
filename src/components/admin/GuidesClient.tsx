@@ -10,7 +10,7 @@ import { supabaseBrowser } from "@/lib/supabase-browser";
 
 interface BlogPost {
     id: string;
-    tenant_id: string;
+
     title: string;
     slug: string;
     status: string;
