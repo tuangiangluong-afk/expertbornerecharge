@@ -204,7 +204,7 @@ serve(async (req) => {
                 ${landingPages?.map(p => `- Keyword: "${p.h1_title}" or "${p.sport} ${p.city}" -> URL: /installation-borne-${p.city.toLowerCase()}`).join('\n') || "No landing pages."}
                 
                 EXISTING BLOG POSTS (Link to these for internal authority):
-                ${existingPosts?.map(p => `- Title: "${p.title}" -> URL: /blog/${p.slug}`).join('\n') || "No blog posts."}
+                ${existingPosts?.map(p => `- Title: "${p.title}" -> URL: /guides/${p.slug}`).join('\n') || "No blog posts."}
                 
                 RULE: When you write the article, if you mention any of the above locations or topics, INSERT A HYPERLINK <a href="...">...</a> naturally.
                 `;

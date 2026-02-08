@@ -4,14 +4,51 @@ import Logo from '@/components/Logo';
 import Header from '@/components/Header';
 import { Calendar, Clock, ArrowRight, BookOpen } from 'lucide-react';
 import type { Metadata } from 'next';
+import { createClient } from "@supabase/supabase-js";
+
+// Initialize Supabase Client
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+export const revalidate = 60; // ISR 60 seconds
 
 export const metadata: Metadata = {
     title: "Guides et Conseils Borne de Recharge | Expert IRVE",
     description: "Tout comprendre sur l'installation de bornes de recharge. Guides experts pour copropriété, maison individuelle et entreprises.",
 };
 
-export default function GuidesIndex() {
-    const guides = getAllGuides();
+export default async function GuidesIndex() {
+    // 1. Fetch Static MDX Guides
+    const staticGuides = getAllGuides();
+
+    // 2. Fetch Dynamic Blog Posts from Supabase
+    const { data: dbPosts } = await supabase
+        .from('blog_posts')
+        .select(`
+            title, 
+            slug, 
+            excerpt, 
+            published_at, 
+            read_time_minutes,
+            category:blog_categories(name)
+        `)
+        .eq('status', 'published')
+        .order('published_at', { ascending: false });
+
+    // 3. Normalize & Merge
+    const dynamicGuides = (dbPosts || []).map((post: any) => ({
+        slug: post.slug,
+        title: post.title,
+        description: post.excerpt,
+        date: post.published_at,
+        category: post.category?.name || 'Guide',
+        readTime: post.read_time_minutes ? `${post.read_time_minutes} min` : '5 min'
+    }));
+
+    const guides = [...staticGuides, ...dynamicGuides].sort((a, b) => 
+        new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
 
     return (
         <div className="min-h-screen bg-neutral-50 font-sans text-slate-900">

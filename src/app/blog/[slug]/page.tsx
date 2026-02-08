@@ -7,6 +7,8 @@ import { ArrowLeft, Calendar, Clock, ChevronRight, User, Share2 } from "lucide-r
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { TableOfContents } from "@/components/blog/TableOfContents";
+import SimulatorWidget from '@/components/blog/SimulatorWidget';
+import LocalLinker from '@/components/blog/LocalLinker';
 
 // Initialize Supabase Client (No specific hook yet in this project structure)
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -232,6 +234,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                                 </div>
                             </div>
                         </div>
+
+                         {/* Widgets */}
+                         <div className="space-y-8">
+                            <SimulatorWidget />
+                            <LocalLinker />
+                         </div>
 
                          {/* TOC */}
                          <TableOfContents content={post.content} />

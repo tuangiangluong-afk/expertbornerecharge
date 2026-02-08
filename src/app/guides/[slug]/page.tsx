@@ -3,11 +3,19 @@ import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Link from 'next/link';
 import Image from 'next/image';
-import Logo from '@/components/Logo';
 import Header from '@/components/Header';
-import { ArrowLeft, Clock, Calendar, CheckCircle, Zap, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar, Zap, ArrowRight } from 'lucide-react';
 import SimulatorWidget from '@/components/blog/SimulatorWidget';
 import LocalLinker from '@/components/blog/LocalLinker';
+import { createClient } from "@supabase/supabase-js";
+import { TableOfContents } from "@/components/blog/TableOfContents";
+
+// Initialize Supabase Client
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+export const revalidate = 60;
 
 // ==========================================
 // COMPOSANTS MDX CUSTOM (Pour vendre dans le texte)
@@ -38,6 +46,7 @@ const components = {
 
 export async function generateStaticParams() {
     const guides = getAllGuides();
+    // We only statically generate filesystem guides. DB posts are ISR.
     return guides.map((guide: any) => ({
         slug: guide.slug,
     }));
@@ -46,12 +55,30 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
     const resolvedParams = await params;
     const guide = await getGuideBySlug(resolvedParams.slug);
-    if (!guide) return {};
+    
+    if (guide) {
+        return {
+            title: guide.meta.title,
+            description: guide.meta.description,
+        };
+    }
 
-    return {
-        title: guide.meta.title,
-        description: guide.meta.description,
-    };
+    // Try DB
+    const { data: post } = await supabase
+        .from('blog_posts')
+        .select('seo_title, title, seo_description, excerpt')
+        .eq('slug', resolvedParams.slug)
+        .eq('status', 'published')
+        .single();
+    
+    if (post) {
+         return {
+            title: post.seo_title || post.title,
+            description: post.seo_description || post.excerpt,
+        };
+    }
+
+    return {};
 }
 
 import rehypeSlug from 'rehype-slug';
@@ -60,21 +87,74 @@ import rehypeSlug from 'rehype-slug';
 
 export default async function GuidePage({ params }: { params: Promise<{ slug: string }> }) {
     const resolvedParams = await params;
-    const guide = await getGuideBySlug(resolvedParams.slug);
+    
+    // 1. Try Static Guide
+    let guide = await getGuideBySlug(resolvedParams.slug);
+    let dbPost = null;
+
+    // 2. Try Dynamic DB Post
+    if (!guide) {
+        const { data, error } = await supabase
+            .from('blog_posts')
+            .select(`
+                *,
+                category:blog_categories(name, slug),
+                author:blog_authors(name, slug, image_url, role)
+            `)
+            .eq('slug', resolvedParams.slug)
+            .eq('status', 'published')
+            .single();
+        
+        if (data && !error) {
+            dbPost = data;
+            // Map DB post to Guide structure for the UI
+            guide = {
+                meta: {
+                    title: data.title,
+                    description: data.excerpt,
+                    date: data.published_at,
+                    readTime: data.read_time_minutes ? `${data.read_time_minutes} min` : '5 min',
+                    image: data.featured_image_url,
+                    category: data.category?.name
+                },
+                content: data.content // HTML content
+            };
+        }
+    }
 
     if (!guide) return notFound();
 
     // Parse Headers for TOC
-    const headings = guide.content.match(/^#{1,3} .+/gm) || [];
-    const toc = headings.map((heading: string) => {
-        const level = heading.match(/^#+/)?.[0].length || 1;
-        const text = heading.replace(/^#+ /, '');
-        const id = text
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/(^-|-$)/g, '');
-        return { text, id, level };
-    });
+    let headings: string[] = [];
+    let toc: any[] = [];
+
+    if (dbPost) {
+        // HTML Parsing for TOC
+        const matches = guide.content.match(/<h2.*?>(.*?)<\/h2>/g);
+        if (matches) {
+            toc = matches.map((h: string) => {
+                 const text = h.replace(/<[^>]+>/g, '');
+                 const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                 return { text, id, level: 2 };
+            });
+            // Inject IDs into content
+            toc.forEach((h: any) => {
+                guide.content = guide.content.replace(`<h2>${h.text}</h2>`, `<h2 id="${h.id}">${h.text}</h2>`);
+            });
+        }
+    } else {
+        // MDX Parsing for TOC (Existing logic)
+        headings = guide.content.match(/^#{1,3} .+/gm) || [];
+        toc = headings.map((heading: string) => {
+            const level = heading.match(/^#+/)?.[0].length || 1;
+            const text = heading.replace(/^#+ /, '');
+            const id = text
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, '');
+            return { text, id, level };
+        });
+    }
 
     return (
         <div className="min-h-screen bg-white text-slate-900 font-sans">
@@ -128,18 +208,21 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                             </p>
                         </div>
 
-                        {/* Content MDX */}
+                        {/* Content Body */}
                         <article className="prose prose-lg prose-slate prose-headings:font-bold prose-headings:text-slate-900 prose-headings:scroll-mt-32 prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-img:rounded-2xl max-w-none">
-                            {/* On passe les composants custom ici */}
-                            <MDXRemote
-                                source={guide.content}
-                                components={components}
-                                options={{
-                                    mdxOptions: {
-                                        rehypePlugins: [rehypeSlug]
-                                    }
-                                }}
-                            />
+                            {dbPost ? (
+                                <div dangerouslySetInnerHTML={{ __html: guide.content }} />
+                            ) : (
+                                <MDXRemote
+                                    source={guide.content}
+                                    components={components}
+                                    options={{
+                                        mdxOptions: {
+                                            rehypePlugins: [rehypeSlug]
+                                        }
+                                    }}
+                                />
+                            )}
                         </article>
 
                         {/* Author Box (Améliorée) */}
