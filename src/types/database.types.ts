@@ -352,6 +352,326 @@ export type Database = {
                 }
                 Relationships: []
             }
+            blog_authors: {
+                Row: {
+                    id: string
+                    name: string
+                    slug: string
+                    role: string | null
+                    description: string | null
+                    obsession: string | null
+                    signature: string | null
+                    image_url: string | null
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    name: string
+                    slug: string
+                    role?: string | null
+                    description?: string | null
+                    obsession?: string | null
+                    signature?: string | null
+                    image_url?: string | null
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    name?: string
+                    slug?: string
+                    role?: string | null
+                    description?: string | null
+                    obsession?: string | null
+                    signature?: string | null
+                    image_url?: string | null
+                    created_at?: string
+                }
+                Relationships: []
+            }
+            blog_categories: {
+                Row: {
+                    id: string
+                    name: string
+                    slug: string
+                    description: string | null
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    name: string
+                    slug: string
+                    description?: string | null
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    name?: string
+                    slug?: string
+                    description?: string | null
+                    created_at?: string
+                }
+                Relationships: []
+            }
+            blog_posts: {
+                Row: {
+                    id: string
+                    title: string
+                    slug: string
+                    excerpt: string | null
+                    content: string | null
+                    featured_image_url: string | null
+                    status: string
+                    author_id: string | null
+                    category_id: string | null
+                    published_at: string | null
+                    updated_at: string
+                    seo_title: string | null
+                    seo_description: string | null
+                    read_time_minutes: number
+                    tags: string[] | null
+                    faq: Json | null
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    title: string
+                    slug: string
+                    excerpt?: string | null
+                    content?: string | null
+                    featured_image_url?: string | null
+                    status?: string
+                    author_id?: string | null
+                    category_id?: string | null
+                    published_at?: string | null
+                    updated_at?: string
+                    seo_title?: string | null
+                    seo_description?: string | null
+                    read_time_minutes?: number
+                    tags?: string[] | null
+                    faq?: Json | null
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    title?: string
+                    slug?: string
+                    excerpt?: string | null
+                    content?: string | null
+                    featured_image_url?: string | null
+                    status?: string
+                    author_id?: string | null
+                    category_id?: string | null
+                    published_at?: string | null
+                    updated_at?: string
+                    seo_title?: string | null
+                    seo_description?: string | null
+                    read_time_minutes?: number
+                    tags?: string[] | null
+                    faq?: Json | null
+                    created_at?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "blog_posts_author_id_fkey"
+                        columns: ["author_id"]
+                        referencedRelation: "blog_authors"
+                        referencedColumns: ["id"]
+                    },
+                    {
+                        foreignKeyName: "blog_posts_category_id_fkey"
+                        columns: ["category_id"]
+                        referencedRelation: "blog_categories"
+                        referencedColumns: ["id"]
+                    }
+                ]
+            }
+            seo_landing_pages: {
+                Row: {
+                    id: string
+                    slug: string
+                    sport: string
+                    city: string
+                    h1_title: string
+                    content: string | null
+                    meta_title: string | null
+                    meta_description: string | null
+                    status: string
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    slug: string
+                    sport: string
+                    city: string
+                    h1_title: string
+                    content?: string | null
+                    meta_title?: string | null
+                    meta_description?: string | null
+                    status?: string
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: {
+                    id?: string
+                    slug?: string
+                    sport?: string
+                    city?: string
+                    h1_title?: string
+                    content?: string | null
+                    meta_title?: string | null
+                    meta_description?: string | null
+                    status?: string
+                    created_at?: string
+                    updated_at?: string
+                }
+                Relationships: []
+            }
+            ai_agents: {
+                Row: {
+                    id: string
+                    name: string
+                    handler: string
+                    model_name: string | null
+                    system_prompt: string
+                    api_endpoint: string | null
+                    is_active: boolean
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    name: string
+                    handler: string
+                    model_name?: string | null
+                    system_prompt: string
+                    api_endpoint?: string | null
+                    is_active?: boolean
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    name?: string
+                    handler?: string
+                    model_name?: string | null
+                    system_prompt?: string
+                    api_endpoint?: string | null
+                    is_active?: boolean
+                    created_at?: string
+                }
+                Relationships: []
+            }
+            blog_trends: {
+                Row: {
+                    id: string
+                    query: string
+                    source: string | null
+                    title: string | null
+                    url: string | null
+                    snippet: string | null
+                    is_processed: boolean
+                    published_date: string | null
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    query: string
+                    source?: string | null
+                    title?: string | null
+                    url?: string | null
+                    snippet?: string | null
+                    is_processed?: boolean
+                    published_date?: string | null
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    query?: string
+                    source?: string | null
+                    title?: string | null
+                    url?: string | null
+                    snippet?: string | null
+                    is_processed?: boolean
+                    published_date?: string | null
+                    created_at?: string
+                }
+                Relationships: []
+            }
+            blog_ideas: {
+                Row: {
+                    id: string
+                    title: string
+                    slug: string | null
+                    category_id: string | null
+                    angle: string | null
+                    rationale: string | null
+                    status: string
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    title: string
+                    slug?: string | null
+                    category_id?: string | null
+                    angle?: string | null
+                    rationale?: string | null
+                    status?: string
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    title?: string
+                    slug?: string | null
+                    category_id?: string | null
+                    angle?: string | null
+                    rationale?: string | null
+                    status?: string
+                    created_at?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "blog_ideas_category_id_fkey"
+                        columns: ["category_id"]
+                        referencedRelation: "blog_categories"
+                        referencedColumns: ["id"]
+                    }
+                ]
+            }
+            automation_settings: {
+                Row: {
+                    id: string
+                    is_active: boolean
+                    frequency: string
+                    articles_per_run: number
+                    auto_publish: boolean
+                    last_run: string | null
+                    next_run: string | null
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    is_active?: boolean
+                    frequency?: string
+                    articles_per_run?: number
+                    auto_publish?: boolean
+                    last_run?: string | null
+                    next_run?: string | null
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: {
+                    id?: string
+                    is_active?: boolean
+                    frequency?: string
+                    articles_per_run?: number
+                    auto_publish?: boolean
+                    last_run?: string | null
+                    next_run?: string | null
+                    created_at?: string
+                    updated_at?: string
+                }
+                Relationships: []
+            }
         }
         Views: {
             [_ in never]: never
