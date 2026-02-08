@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 
 import { getCurrentYearSEO } from "@/lib/date";
 import { headers } from "next/headers";
+import StructuredData from "@/components/seo/StructuredData";
 
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
@@ -108,6 +109,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-neutral-900 text-neutral-50`}
       >
+        <StructuredData />
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
