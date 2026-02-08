@@ -14,7 +14,7 @@ interface BlogPost {
     title: string;
     slug: string;
     status: string;
-    published_at: string;
+    published_at: string | null;
     excerpt: string | null;
     content: string | null;
     featured_image_url: string | null;
@@ -83,7 +83,7 @@ export default function GuidesClient({ initialPosts }: { initialPosts: BlogPost[
             .from("blog_posts")
             .select("*, category:blog_categories(name)")
             .order("created_at", { ascending: false });
-        if (data) setPosts(data);
+        if (data) setPosts(data as unknown as BlogPost[]);
     }
 
     async function fetchIdeas() {
