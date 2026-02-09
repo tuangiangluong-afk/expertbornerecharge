@@ -16,9 +16,6 @@ export async function generateMetadata({ params }: { params: Promise<{ domain: s
     return {
         title: `Contact Borne Recharge ${city.city} | Devis Gratuit`,
         description: `Contactez votre installateur IRVE à ${city.city}. Devis gratuit pour maison, copropriété et entreprise. Réponse sous 48h.`,
-        alternates: {
-            canonical: `https://${city.domain}/contact`,
-        }
     };
 }
 
@@ -63,7 +60,7 @@ export default async function ContactPage({ params }: { params: Promise<{ domain
                         Contactez votre expert à {city.city}
                     </h1>
                     <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-                        Vous avez un projet d'installation ? Une question sur les aides ?
+                        Vous avez un projet d&apos;installation ? Une question sur les aides ?
                         <br />
                         Nos électriciens certifiés IRVE vous répondent.
                     </p>
@@ -103,7 +100,7 @@ export default async function ContactPage({ params }: { params: Promise<{ domain
                                         <MapPin size={24} />
                                     </div>
                                     <div>
-                                        <p className="text-xs text-neutral-500 font-bold uppercase tracking-wider mb-1">Zone d'intervention</p>
+                                        <p className="text-xs text-neutral-500 font-bold uppercase tracking-wider mb-1">Zone d&apos;intervention</p>
                                         <p className="font-medium">{city.city} et agglomération</p>
                                         <p className="text-sm text-neutral-500">Déplacement gratuit</p>
                                     </div>
@@ -113,7 +110,7 @@ export default async function ContactPage({ params }: { params: Promise<{ domain
                             <hr className="my-8 border-neutral-100" />
 
                             <div className="bg-neutral-50 rounded-xl p-4 text-sm text-neutral-600">
-                                Pour une étude complète (copropriété ou entreprise), n'hésitez pas à joindre des photos de votre tableau électrique via le formulaire.
+                                Pour une étude complète (copropriété ou entreprise), n&apos;hésitez pas à joindre des photos de votre tableau électrique via le formulaire.
                             </div>
                         </div>
                     </div>

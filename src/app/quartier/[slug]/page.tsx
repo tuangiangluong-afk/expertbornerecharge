@@ -60,9 +60,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {
         title: `Installation Borne ${quartier.name} - ${quartier.city} | Devis Gratuit`,
         description: `Installation de borne de recharge électrique à ${quartier.name} (${quartier.city}). Expert IRVE local, devis gratuit sous 24h, matériel garanti.`,
-        alternates: {
-            canonical: `https://expertbornerecharge.com/quartier/${resolvedParams.slug}`,
-        }
+        // Canonical is handled by root layout.tsx
     };
 }
 

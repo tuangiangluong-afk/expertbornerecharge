@@ -48,9 +48,6 @@ export async function generateMetadata({
             `borne ${city.department}`,
             `installateur borne ${city.departmentName}`,
         ],
-        alternates: {
-            canonical: `https://expertbornerecharge.com/installation/${city.slug}`,
-        },
         openGraph: {
             title,
             description,
@@ -149,7 +146,7 @@ export default async function CityInstallationPage({
                             {/* Subtitle - Educational */}
                             <p className="text-xl text-slate-600 mb-8 leading-relaxed">
                                 Vous habitez à <strong className="text-slate-900">{city.name}</strong> ({city.departmentName}) et souhaitez installer une borne de recharge ?
-                                Recevez jusqu'à <strong className="text-green-600">3 devis gratuits</strong> d'installateurs certifiés <strong>Qualifelec IRVE</strong> près de chez vous.
+                                Recevez jusqu&apos;à <strong className="text-green-600">3 devis gratuits</strong> d&apos;installateurs certifiés <strong>Qualifelec IRVE</strong> près de chez vous.
                             </p>
 
                             {/* Key Benefits */}
@@ -216,8 +213,8 @@ export default async function CityInstallationPage({
                             </div>
                             <h3 className="text-xl font-bold mb-3">Économies garanties</h3>
                             <p className="text-slate-600">
-                                Recharger à domicile coûte 3 à 4 fois moins cher qu'en station publique.
-                                À {city.name}, le prix moyen de l'électricité vous permet d'économiser <strong>126€/mois</strong> par rapport à l'essence.
+                                Recharger à domicile coûte 3 à 4 fois moins cher qu&apos;en station publique.
+                                À {city.name}, le prix moyen de l&apos;électricité vous permet d&apos;économiser <strong>126€/mois</strong> par rapport à l&apos;essence.
                             </p>
                         </div>
 

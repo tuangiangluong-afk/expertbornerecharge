@@ -5,9 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
     title: "Mentions Légales - Expert Borne Recharge",
     description: "Mentions légales, éditeur, hébergement et politique de confidentialité du réseau Expert Borne Recharge.",
-    alternates: {
-        canonical: "https://expertbornerecharge.com/mentions-legales",
-    },
+    // Canonical is handled by root layout.tsx
 };
 
 export default function MentionsLegales() {

@@ -1,12 +1,11 @@
 import { getSiteConfig } from "@/lib/sites-config";
 import { getSpintaxContent } from "@/lib/spintax";
-import { Phone, Calendar, CheckCircle, Star, Zap, Shield, Award, TrendingDown, Home, Building2, Briefcase, MapPin, ArrowRight } from "lucide-react";
+import { CheckCircle, Zap, TrendingDown, Home, Building2, Briefcase, Award, ArrowRight, Shield, Calendar } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
 import LeadForm from "@/components/LeadForm";
-import Logo from "@/components/Logo";
 import Header from "@/components/Header";
 import MobileStickyCTA from "@/components/MobileStickyCTA";
 import FAQ from "@/components/FAQ";
@@ -15,12 +14,10 @@ import Reviews from "@/components/Reviews";
 import { Footer } from "@/components/Footer";
 import { InternalMesh } from "@/components/InternalMesh";
 import RealizationsGrid from "@/components/RealizationsGrid";
-// Stitch Design Components
 import ChargerComparison from "@/components/ChargerComparison";
 import GrantsCalculator from "@/components/GrantsCalculator";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FloatingCTA from "@/components/FloatingCTA";
-
 
 // ============================================
 // METADATA
@@ -49,9 +46,7 @@ export async function generateMetadata({
         title: spintaxTitle,
         description: spintaxDesc,
         keywords: site.localKeywords,
-        alternates: {
-            canonical: `https://${site.domain}`,
-        },
+        // Canonical is handled by root layout.tsx
         openGraph: {
             title: spintaxTitle,
             description: spintaxDesc,
@@ -79,7 +74,6 @@ export async function generateMetadata({
 // PAGE COMPONENT
 // ============================================
 
-// Add props type
 interface SitePageProps {
     params: Promise<{ domain: string }>;
     basePath?: string; // Optional for Demo Mode
@@ -88,17 +82,9 @@ interface SitePageProps {
 export default async function SitePage({ params, basePath }: SitePageProps) {
     const resolvedParams = await params;
 
-    // DEBUG
-    console.log("========= [domain] PAGE DEBUG =========");
-    console.log("Received domain param:", resolvedParams.domain);
-    console.log("Base Path:", basePath);
-
     let site = getSiteConfig(resolvedParams.domain);
-    console.log("getSiteConfig result:", site ? site.slug : "NULL");
-    console.log("========================================");
 
     if (site && basePath) {
-        // Inject basePath for Demo Mode Links
         site = { ...site, basePath } as any;
     }
 
@@ -109,27 +95,17 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
     const isHub = site.slug === 'home';
 
     // Spintax Generation
-    // Spintax Generation
     const h1Content = getSpintaxContent("hero_title", site, 'LOCAL');
-    const subtitleContent = getSpintaxContent("hero_subtitle", site, 'LOCAL');
-    const badgeContent = getSpintaxContent("hero_badge", site, 'LOCAL');
     const introContent = getSpintaxContent("intro_p1", site, 'LOCAL');
-    const ctaPrimary = getSpintaxContent("cta_primary", site, 'LOCAL');
-
-    // THEME & COLOR SYSTEM
-    // We derive the color theme from the PriceRange/Target to vary the look
-    // PREMIUM/LUXE -> Blue/Gold/Black
-    // STANDARD -> Emerald/Green (Eco friendly)
-    // COPRO -> Purple (Syndic trustworthy)
+    const badgeContent = getSpintaxContent("hero_badge", site, 'LOCAL');
 
     type ThemeColor = 'blue' | 'emerald' | 'amber' | 'purple';
 
-    let themeColor: ThemeColor = 'blue'; // Default
+    let themeColor: ThemeColor = 'blue';
     if (site.priceRange === 'LUXE') themeColor = 'amber';
     else if (site.targetType === 'COPRO') themeColor = 'purple';
     else if (site.priceRange === 'STANDARD') themeColor = 'emerald';
 
-    // Color Palette Map
     const colors = {
         blue: {
             primary: "bg-blue-600",
@@ -149,7 +125,7 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
             gradient: "from-emerald-600 to-emerald-700",
             shadow: "shadow-emerald-500/30"
         },
-        amber: { // Luxe / Gold
+        amber: {
             primary: "bg-amber-600",
             hover: "hover:bg-amber-700",
             text: "text-amber-600",
@@ -158,7 +134,7 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
             gradient: "from-amber-600 to-amber-700",
             shadow: "shadow-amber-500/30"
         },
-        purple: { // Copro / Tech
+        purple: {
             primary: "bg-purple-600",
             hover: "hover:bg-purple-700",
             text: "text-purple-600",
@@ -170,19 +146,12 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
     };
 
     const palette = colors[themeColor];
-    const isPremium = site.theme === 'premium'; // Dark mode header check remains
+    const isPremium = site.theme === 'premium';
 
-    // Inject Theme Color into Spintax Highlight
     const coloredH1Content = h1Content.replace(/spintax-highlight/g, `spintax-highlight ${palette.text}`);
 
     return (
         <div className="min-h-screen font-sans text-neutral-900 bg-neutral-50">
-            {/* ============================================ */}
-            {/* NAVIGATION - Theme Adaptive */}
-            {/* ============================================ */}
-            {/* ============================================ */}
-            {/* NAVIGATION - Theme Adaptive */}
-            {/* ============================================ */}
             <Header
                 isHub={isHub}
                 city={site.city}
@@ -193,40 +162,25 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
 
             <SchemaJSON type="LocalBusiness" site={site} />
 
-            {/* ============================================ */}
-            {/* HERO - Trust/Locale Style */}
-            {/* ============================================ */}
-            {/* ============================================ */}
-            {/* HERO - Trust/Locale Style (New Design) */}
-            {/* ============================================ */}
             <section className="relative pt-32 pb-16 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
                 <div className="container mx-auto px-4 relative z-20">
                     <div className="grid lg:grid-cols-12 gap-12 items-center">
-
-                        {/* Left: Content + Lead Form */}
                         <div className="lg:col-span-7 flex flex-col gap-8 text-center lg:text-left">
-
                             <div className="space-y-6">
-                                {/* Local Badge */}
                                 <div className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-bold border mx-auto lg:mx-0 ${isPremium ? "border-amber-500/30 bg-amber-500/10 text-amber-500" : `${palette.border} ${palette.light} ${palette.text}`}`}>
                                     <CheckCircle size={16} className="mr-2" />
                                     {badgeContent}
                                 </div>
-
-                                {/* H1 (Spintax) */}
                                 <h1
                                     className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight ${isPremium ? "text-white" : "text-neutral-900"}`}
                                     dangerouslySetInnerHTML={{ __html: coloredH1Content }}
                                 />
-
-                                {/* Subtitle (Spintax) */}
                                 <div
                                     className={`text-xl max-w-xl mx-auto lg:mx-0 ${isPremium ? "text-neutral-400" : "text-neutral-600"}`}
                                     dangerouslySetInnerHTML={{ __html: introContent }}
                                 />
                             </div>
 
-                            {/* LEAD FORM - Integrated Here (Left Side) */}
                             <div className="w-full max-w-xl mx-auto lg:mx-0 relative z-30 text-left">
                                 <div id="simulateur" className="bg-white rounded-2xl shadow-xl shadow-blue-900/10 overflow-hidden border border-slate-200">
                                     <div className={`p-1 bg-gradient-to-r ${palette.gradient}`}></div>
@@ -246,7 +200,6 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                             </div>
                         </div>
 
-                        {/* Right: Large Hero Image + Trust Badges */}
                         <div className="lg:col-span-5 hidden lg:block relative w-full">
                             <div className="relative h-[640px] w-full mb-8">
                                 <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/20 border border-slate-100 bg-white p-2">
@@ -260,10 +213,7 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                                             sizes="(max-width: 1024px) 100vw, 50vw"
                                             priority
                                         />
-                                        {/* Overlay Gradient */}
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-
-                                        {/* Image Caption/Badge */}
                                         <div className="absolute bottom-8 left-8 right-8 z-20">
                                             <div className="bg-white/95 backdrop-blur rounded-xl p-5 shadow-xl border border-white/50 flex items-center gap-4 cursor-default">
                                                 <div className="bg-green-100 p-3 rounded-full shrink-0">
@@ -278,8 +228,6 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                                     </div>
                                 </div>
                             </div>
-
-                            {/* Trust Elements relocated - Right Column */}
                             <div className="flex flex-wrap items-center gap-4 justify-center px-4">
                                 <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
                                     <Award size={24} className="text-yellow-500 fill-yellow-500" />
@@ -299,23 +247,17 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                 </div>
             </section>
 
-
-
-            {/* ============================================ */}
-            {/* AIDES SECTION (Gradient) - HUB ONLY or High Value */}
-            {/* ============================================ */}
             {isHub && (
                 <section className={`py-20 bg-gradient-to-b ${palette.gradient} text-white`}>
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-12">
                             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                                Jusqu'à <span className="text-yellow-400">2 460€</span> d'aides cumulables
+                                Jusqu&apos;à <span className="text-yellow-400">2 460€</span> d&apos;aides cumulables
                             </h2>
                             <p className="text-blue-100 text-lg">
                                 Profitez de toutes les aides disponibles en 2026
                             </p>
                         </div>
-
                         <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
                             {[
                                 { label: "Prime ADVENIR", value: "960€", detail: "Copropriétés" },
@@ -334,9 +276,6 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                 </section>
             )}
 
-            {/* ============================================ */}
-            {/* COST COMPARATOR - THE KILLER (HUB ONLY) */}
-            {/* ============================================ */}
             {isHub && (
                 <section className="py-20 bg-neutral-50">
                     <div className="container mx-auto px-4">
@@ -349,14 +288,12 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                                 Essence vs Recharge à domicile
                             </h2>
                             <p className="text-neutral-600 text-lg max-w-2xl mx-auto">
-                                Rechargez votre véhicule à la maison et économisez jusqu'à <strong>1 500€ par an</strong>
+                                Rechargez votre véhicule à la maison et économisez jusqu&apos;à <strong>1 500€ par an</strong>
                             </p>
                         </div>
-
                         <div className="max-w-4xl mx-auto">
                             <div className="bg-white rounded-3xl shadow-2xl border border-neutral-200">
                                 <div className="grid md:grid-cols-2">
-                                    {/* Essence Column */}
                                     <div className="p-8 bg-red-50 border-b md:border-b-0 md:border-r border-red-100 rounded-t-3xl md:rounded-tr-none md:rounded-l-3xl">
                                         <div className="flex items-center gap-3 mb-6">
                                             <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
@@ -386,8 +323,6 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                                             </div>
                                         </div>
                                     </div>
-
-                                    {/* Electric Column */}
                                     <div className="p-8 bg-green-50 relative rounded-b-3xl md:rounded-bl-none md:rounded-r-3xl">
                                         <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg z-10">
                                             RECOMMANDÉ
@@ -421,8 +356,6 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                                         </div>
                                     </div>
                                 </div>
-
-                                {/* Savings Banner */}
                                 <div className="bg-gradient-to-r from-green-600 to-emerald-600 p-6 text-white text-center">
                                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                                         <div>
@@ -445,21 +378,17 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                 </section>
             )}
 
-            {/* ============================================ */}
-            {/* SERVICES GRID - HUB ONLY (Simplify Local) */}
-            {/* ============================================ */}
             {isHub && (
                 <section className="py-20 bg-white">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-12">
                             <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-4">
-                                Types d'installations & Prix Moyens
+                                Types d&apos;installations &amp; Prix Moyens
                             </h2>
                             <p className="text-neutral-600 text-lg">
                                 Comparez les devis pour maison, copro et professionnels
                             </p>
                         </div>
-
                         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                             {[
                                 {
@@ -532,9 +461,6 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                 </section>
             )}
 
-            {/* ============================================ */}
-            {/* PROCESS SECTION */}
-            {/* ============================================ */}
             <section className="py-20 bg-neutral-900 text-white">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-12">
@@ -545,7 +471,6 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                             Un service de mise en relation simple, rapide et gratuit
                         </p>
                     </div>
-
                     <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
                         {[
                             {
@@ -557,13 +482,13 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                             {
                                 step: "02",
                                 title: "Comparez les offres",
-                                description: "Recevez jusqu'à 3 devis d'installateurs locaux certifiés IRVE.",
+                                description: "Recevez jusqu&apos;à 3 devis d&apos;installateurs locaux certifiés IRVE.",
                                 icon: Shield
                             },
                             {
                                 step: "03",
                                 title: "Choisissez le meilleur",
-                                description: "Sélectionnez l'artisan qui vous convient et lancez les travaux.",
+                                description: "Sélectionnez l&apos;artisan qui vous convient et lancez les travaux.",
                                 icon: Zap
                             }
                         ].map((item, i) => (
@@ -581,7 +506,6 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                             </div>
                         ))}
                     </div>
-
                     <div className="text-center mt-12">
                         <a
                             href="#simulateur"
@@ -594,26 +518,10 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                 </div>
             </section>
 
-
-
-            {/* ============================================ */}
-            {/* CHARGER COMPARISON - NEW STITCH COMPONENT */}
-            {/* ============================================ */}
             <ChargerComparison themeColor={themeColor} />
-
-            {/* ============================================ */}
-            {/* GRANTS CALCULATOR - NEW STITCH COMPONENT (HUB ONLY) */}
-            {/* ============================================ */}
             {isHub && <GrantsCalculator themeColor={themeColor} />}
-
-            {/* ============================================ */}
-            {/* REALIZATIONS GRID - VISUAL PROOF (WAR ARCHITECTURE) */}
-            {/* ============================================ */}
             <RealizationsGrid />
 
-            {/* ============================================ */}
-            {/* MAINTENANCE & SAV SECTION (ADTSI STRATEGY) */}
-            {/* ============================================ */}
             <section className="py-16 bg-white border-t border-neutral-100">
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col md:flex-row items-center gap-12 max-w-5xl mx-auto">
@@ -623,13 +531,13 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                                     <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
                                 </span>
-                                Urgence & Dépannage
+                                Urgence &amp; Dépannage
                             </div>
                             <h2 className="text-3xl font-bold text-neutral-900 mb-4">
                                 Une panne ? On intervient en <span className="text-red-500">48h</span>
                             </h2>
                             <p className="text-lg text-neutral-600 mb-6">
-                                Parce que votre mobilité n'attend pas, nos techniciens locaux à <strong>{site.city}</strong> assurent le SAV et la maintenance de votre borne, même si elle n'a pas été installée par nous.
+                                Parce que votre mobilité n&apos;attend pas, nos techniciens locaux à <strong>{site.city}</strong> assurent le SAV et la maintenance de votre borne, même si elle n&apos;a pas été installée par nous.
                             </p>
                             <ul className="space-y-3 mb-8">
                                 <li className="flex items-center gap-3 text-neutral-700">
@@ -642,7 +550,7 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                                 </li>
                                 <li className="flex items-center gap-3 text-neutral-700">
                                     <CheckCircle size={20} className="text-green-500" />
-                                    <span>Mise à jour logiciel borne & supervision</span>
+                                    <span>Mise à jour logiciel borne &amp; supervision</span>
                                 </li>
                             </ul>
                             <a href="#simulateur" className="text-red-600 font-bold hover:underline flex items-center gap-2">
@@ -659,7 +567,7 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                                     <span className="text-sm text-neutral-400 font-normal mr-1 italic">À partir de</span>
                                     15€<span className="text-sm text-neutral-400 font-normal">/mois</span>
                                 </div>
-                                <p className="text-sm text-neutral-300 mb-6">Tranquillité d'esprit totale. Visite annuelle et main d'œuvre incluse.</p>
+                                <p className="text-sm text-neutral-300 mb-6">Tranquillité d&apos;esprit totale. Visite annuelle et main d&apos;œuvre incluse.</p>
                                 <a
                                     href="#simulateur"
                                     className="block w-full bg-white text-neutral-900 font-bold py-3 rounded-xl hover:bg-neutral-100 transition text-center"
@@ -672,35 +580,18 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                 </div>
             </section>
 
-            {/* ============================================ */}
-            {/* TESTIMONIALS MAP - NEW STITCH COMPONENT (HUB ONLY) */}
-            {/* ============================================ */}
             {isHub && <TestimonialsSection />}
-
-            {/* ============================================ */}
-            {/* REVIEWS SECTION */}
-            {/* ============================================ */}
             <Reviews site={site} themeColor={themeColor} />
-
-            {/* ============================================ */}
-            {/* FAQ SECTION */}
-            {/* ============================================ */}
             <FAQ themeColor={themeColor} />
 
-            {/* ============================================ */}
-            {/* LOCAL SEO SECTION */}
-            {/* ============================================ */}
-            {/* ============================================ */}
-            {/* LOCAL SEO SECTION */}
-            {/* ============================================ */}
-            {!isHub && site.quartiers.length > 0 && (
+            {!isHub && site.quartiers && site.quartiers.length > 0 && (
                 <section className="py-16 bg-neutral-50 border-t border-neutral-200">
                     <div className="container mx-auto px-4">
                         <h3 className="text-2xl font-bold text-neutral-900 mb-6">
                             Installation borne de recharge à {site.city} et environs
                         </h3>
                         <div className="flex flex-wrap gap-3">
-                            {site.quartiers.map((quartier, i) => (
+                            {site.quartiers.map((quartier: string, i: number) => (
                                 <a
                                     key={i}
                                     href="#simulateur"
@@ -714,22 +605,9 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                 </section>
             )}
 
-            {/* Internal Linking Mesh */}
             <InternalMesh city={site.city} config={site} />
-
-            {/* ============================================ */}
-            {/* FOOTER */}
-            {/* ============================================ */}
             <Footer config={site} />
-
-            {/* ============================================ */}
-            {/* MOBILE STICKY CTA */}
-            {/* ============================================ */}
             <MobileStickyCTA themeColor={themeColor} />
-
-            {/* ============================================ */}
-            {/* FLOATING CTA - NEW STITCH COMPONENT */}
-            {/* ============================================ */}
             <FloatingCTA label="Devis gratuit" />
         </div>
     );

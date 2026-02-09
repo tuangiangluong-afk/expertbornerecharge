@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { Phone, MapPin, ArrowRight, Car, Building2, Star } from "lucide-react";
+import { Phone, MapPin, ArrowRight, Building2 } from "lucide-react";
 import CallButton from "@/components/CallButton";
 import Link from "next/link";
 import { getTheme } from "@/lib/theme";
@@ -54,10 +54,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     return {
         title: `Installation Borne ${poi} - Devis & Expert IRVE | Expert Borne Recharge`,
-        description: `Besoin d'une borne de recharge à ${poi} ? Électricien certifié IRVE, installation rapide et devis gratuit sous 24h. Service national.`,
-        alternates: {
-            canonical: `https://expertbornerecharge.com/poi/${resolvedParams.slug}`,
-        }
+        description: `Besoin d&apos;une borne de recharge à ${poi} ? Électricien certifié IRVE, installation rapide et devis gratuit sous 24h. Service national.`,
     };
 }
 
@@ -120,59 +117,32 @@ export default async function NationalGuidePage({ params }: { params: Promise<{ 
                     {/* Main Content */}
                     <div className="md:col-span-2 space-y-8">
                         <div className="bg-white rounded-3xl p-8 shadow-xl border border-neutral-100">
-                            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-                                <MapPin className="text-blue-600" />
-                                Installation de borne à {poi}
+                            <h2 className="text-3xl font-bold text-neutral-900 mb-4">
+                                Une panne ? On intervient en <span className="text-red-500">48h</span>
                             </h2>
-                            <div className="prose prose-neutral max-w-none text-neutral-600">
-                                <p>
-                                    Vous habitez ou travaillez à proximité de <strong>{poi}</strong> ? Équipez-vous d'une solution de recharge performante.
-                                    Le réseau Expert Borne Recharge vous accompagne de l'étude technique à la pose.
-                                </p>
-                                <p>
-                                    Nos techniciens partenaires interviennent rapidement à <strong>{poi}</strong> pour installer votre borne (maison, copropriété ou entreprise).
-                                    Profitez des aides de l'État pour votre installation IRVE.
-                                </p>
-                                <h2 className="text-xl font-bold text-neutral-900 mt-6 mb-3">Les avantages Expert Borne Recharge</h2>
-                                <ul className="space-y-2">
-                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Électriciens Certifiés IRVE</li>
-                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Devis Gratuit sous 24h</li>
-                                    <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Garantie Matériel & Main d'œuvre</li>
-                                </ul>
-                            </div>
-
+                            <p className="text-lg text-neutral-600 mb-6">
+                                Parce que votre mobilité n&apos;attend pas, nos techniciens locaux à <strong>{city.city}</strong> assurent le SAV et la maintenance de votre borne, même si elle n&apos;a pas été installée par nous.
+                            </p>
+                            <p>
+                                Le réseau Expert Borne Recharge vous accompagne de l&apos;étude technique à la pose.
+                            </p>
+                            <p>
+                                Nos techniciens partenaires interviennent rapidement à <strong>{poi}</strong> pour installer votre borne (maison, copropriété ou entreprise).
+                                Profitez des aides de l&apos;État pour votre installation IRVE.
+                            </p>
+                            <h2 className="text-xl font-bold text-neutral-900 mt-6 mb-3">Les avantages Expert Borne Recharge</h2>
+                            <ul className="space-y-2">
+                                <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Électriciens Certifiés IRVE</li>
+                                <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Devis Gratuit sous 24h</li>
+                                <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Garantie Matériel &amp; Main d&apos;œuvre</li>
+                            </ul>
                         </div>
 
                         {/* Reviews mockup for this POI */}
                         <div className="bg-white rounded-3xl p-8 shadow-sm border border-neutral-100">
-                            <div className="flex items-center justify-between mb-6">
-                                <h3 className="text-lg font-bold">Dernières installations à {poi}</h3>
-                                <div className="flex text-yellow-400 gap-1">
-                                    <Star size={16} fill="currentColor" />
-                                    <Star size={16} fill="currentColor" />
-                                    <Star size={16} fill="currentColor" />
-                                    <Star size={16} fill="currentColor" />
-                                    <Star size={16} fill="currentColor" />
+                                    <p className="text-sm italic text-neutral-700">&quot;Droit à la prise respecté, installation propre dans mon parking souterrain. Je recommande.&quot;</p>
                                 </div>
                             </div>
-                            <div className="grid gap-4">
-                                <div className="p-4 bg-neutral-50 rounded-xl">
-                                    <div className="flex justify-between text-xs text-neutral-500 mb-2">
-                                        <span>Marc D. - Il y a 2 jours</span>
-                                        <span>Installation Maison → {poi}</span>
-                                    </div>
-                                    <p className="text-sm italic text-neutral-700">"Installateur ponctuel et très compétent. Mise en service rapide et explications claires."</p>
-                                </div>
-                                <div className="p-4 bg-neutral-50 rounded-xl">
-                                    <div className="flex justify-between text-xs text-neutral-500 mb-2">
-                                        <span>Sophie L. - Semaine dernière</span>
-                                        <span>Installation Copropriété → {poi}</span>
-                                    </div>
-                                    <p className="text-sm italic text-neutral-700">"Droit à la prise respecté, installation propre dans mon parking souterrain. Je recommande."</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     {/* Sidebar / Widget */}
                     <div className="md:col-span-1">
@@ -189,7 +159,7 @@ export default async function NationalGuidePage({ params }: { params: Promise<{ 
 
                             <div className="bg-neutral-900 rounded-3xl p-6 text-white text-center">
                                 <Phone size={32} className="mx-auto mb-4 text-blue-400" />
-                                <h3 className="font-bold text-lg mb-2">Besoin d'aide ?</h3>
+                                <h3 className="font-bold text-lg mb-2">Besoin d&apos;aide ?</h3>
                                 <p className="text-sm text-neutral-400 mb-4">Nos experts sont disponibles du lundi au vendredi pour répondre à vos questions techniques.</p>
                                 <CallButton
                                     phoneNumber={city.phoneNumber}

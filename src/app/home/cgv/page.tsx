@@ -5,9 +5,6 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
     title: "Conditions Générales de Vente - Expert Borne Recharge",
     description: "Consultez les CGV du réseau Expert Borne Recharge : mise en relation avec des installateurs IRVE, devis gratuits et conditions d'intervention.",
-    alternates: {
-        canonical: "https://expertbornerecharge.com/cgv",
-    },
 };
 
 export default function CGV() {

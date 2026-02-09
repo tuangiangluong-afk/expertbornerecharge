@@ -48,17 +48,31 @@ export default async function middleware(req: NextRequest) {
     }
 
 
-    // 0.2 Domain Normalization (Removed to prevent Vercel Loops)
-    // We rely on Vercel or Canonical Tags to handle this.
-    // if (hostname.startsWith("www.")) { ... }
+    // 0.2 Domain Normalization (www -> non-www)
+    // Consolidate domain key early for all logic
+    let domainKey = hostname;
+    if (hostname.includes(".localhost")) {
+        domainKey = hostname.split(".")[0];
+        if (domainKey === "www") domainKey = hostname.split(".")[1];
+    } else if (hostname.startsWith("www.")) {
+        domainKey = hostname.replace("www.", "");
+    }
 
+    // Strict 301 Redirect for www -> non-www
+    if (hostname.startsWith("www.")) {
+        const newUrl = new URL(req.url);
+        newUrl.hostname = domainKey;
+        if (newUrl.href !== req.url) {
+            return applySecurityHeaders(NextResponse.redirect(newUrl, 301));
+        }
+    }
 
     // 1. Sitemap Rewrite
     if (path === "/sitemap.xml") {
         if (isHub) {
             return applySecurityHeaders(NextResponse.rewrite(new URL("/home/sitemap.xml", req.url)));
         }
-        return applySecurityHeaders(NextResponse.rewrite(new URL(`/${hostname}/sitemap.xml`, req.url)));
+        return applySecurityHeaders(NextResponse.rewrite(new URL(`/${domainKey}/sitemap.xml`, req.url)));
     }
 
     // 2. Routing Logic
@@ -88,29 +102,18 @@ export default async function middleware(req: NextRequest) {
 
         // Whitelist shared routes (serve from root app)
         if (path.startsWith("/guides") || path.startsWith("/vehicules") || path.startsWith("/solutions") || path.startsWith("/ville") || path.startsWith("/service") || path.startsWith("/quartier") || path.startsWith("/departement") || path.startsWith("/poi") || path.startsWith("/api") || path.startsWith("/outils") || path.startsWith("/login") || path.startsWith("/admin") || path.startsWith("/installation")) {
-            return applySecurityHeaders(NextResponse.next());
+            response = NextResponse.next();
+        } else {
+            const routeParam = hostname.includes(".localhost") ? domainKey : domainKey;
+            response = NextResponse.rewrite(
+                new URL(`/${routeParam}${path}`, req.url)
+            );
         }
-
-        let domainKey = hostname;
-        if (hostname.includes(".localhost")) {
-            domainKey = hostname.split(".")[0];
-            if (domainKey === "www") domainKey = hostname.split(".")[1];
-        }
-
-        if (domainKey.startsWith("www.")) {
-            domainKey = domainKey.replace("www.", "");
-        }
-
-        const routeParam = hostname.includes(".localhost") ? domainKey : hostname;
-        response = NextResponse.rewrite(
-            new URL(`/${routeParam}${path}`, req.url)
-        );
-
-        response.headers.set("x-irve-domain", domainKey);
-        response.headers.set("x-irve-city", domainKey);
     }
 
-    // Global Path injection for canonicals
+    // Global Headers for SEO & Canonical
+    response.headers.set("x-irve-domain", domainKey);
+    response.headers.set("x-irve-city", domainKey);
     response.headers.set("x-irve-path", cleanPath);
 
     return applySecurityHeaders(response);

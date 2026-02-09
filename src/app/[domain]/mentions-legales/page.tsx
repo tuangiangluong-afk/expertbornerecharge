@@ -15,9 +15,6 @@ export async function generateMetadata({ params }: { params: Promise<{ domain: s
     return {
         title: `Mentions Légales - ${city.name}`,
         description: `Consultez les mentions légales de ${city.name} : éditeur du site, hébergement, propriété intellectuelle et gestion des données personnelles (RGPD).`,
-        alternates: {
-            canonical: `https://${city.domain}/mentions-legales`,
-        },
     };
 }
 

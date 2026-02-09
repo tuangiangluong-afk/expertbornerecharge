@@ -11,9 +11,6 @@ export const metadata: Metadata = {
     title: "Wallbox vs Prise Renforcée 2026 | Le Comparatif Complet",
     description: "Wallbox ou prise renforcée Green'Up ? Comparez les deux solutions de recharge : temps de charge, prix, installation. Guide pour faire le bon choix.",
     keywords: ["wallbox vs prise renforcée", "prise green up", "comparatif borne recharge", "wallbox ou prise renforcée"],
-    alternates: {
-        canonical: "https://expertbornerecharge.com/guides/wallbox-vs-prise-renforcee",
-    },
 };
 
 // FAQ Data for Schema.org

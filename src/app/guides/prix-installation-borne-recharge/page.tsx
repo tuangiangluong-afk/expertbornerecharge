@@ -11,9 +11,6 @@ export const metadata: Metadata = {
     title: "Prix Installation Borne de Recharge 2026 | Combien ça Coûte ?",
     description: "Découvrez le coût réel d'installation d'une borne de recharge en 2026. Prix par type de logement, aides disponibles et devis gratuit d'installateurs IRVE.",
     keywords: ["prix installation borne recharge", "cout borne recharge", "tarif borne electrique", "devis borne recharge"],
-    alternates: {
-        canonical: "https://expertbornerecharge.com/guides/prix-installation-borne-recharge",
-    },
 };
 
 // FAQ Data for Schema.org

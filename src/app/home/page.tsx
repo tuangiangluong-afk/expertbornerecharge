@@ -1,12 +1,10 @@
 import { getHubConfig, SITES } from "@/lib/sites-config";
-import { Phone, Zap, MapPin, Award, ArrowRight, Building2, Home, Briefcase, CheckCircle } from "lucide-react";
+import { Zap, Award, ArrowRight, Building2, Home, Briefcase, CheckCircle } from "lucide-react";
 import LocalLinker from "@/components/blog/LocalLinker";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import Logo from "@/components/Logo";
 import Header from "@/components/Header";
-import FAQ from "@/components/FAQ";
 import LeadForm from "@/components/LeadForm";
 import { CityCards } from "@/components/CityCards";
 import MobileStickyCTA from "@/components/MobileStickyCTA";
@@ -14,22 +12,18 @@ import { Footer } from "@/components/Footer";
 import RealizationsGrid from "@/components/RealizationsGrid";
 import PersonaSelector from "@/components/PersonaSelector";
 import LogoCloud from "@/components/LogoCloud";
-// Stitch Design Components
+import FAQSection from "@/components/FAQSection";
+import PricingTable from "@/components/PricingTable";
+import InstallationSteps from "@/components/InstallationSteps";
 import ChargerComparison from "@/components/ChargerComparison";
 import GrantsCalculator from "@/components/GrantsCalculator";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FloatingCTA from "@/components/FloatingCTA";
-import PricingTable from "@/components/PricingTable";
-import InstallationSteps from "@/components/InstallationSteps";
-import FAQSection from "@/components/FAQSection";
 
 export const metadata: Metadata = {
     title: "Comparez les Devis Borne de Recharge | Expert Borne Recharge",
     description: "Recevez jusqu'à 3 devis gratuits d'installateurs certifiés IRVE. Comparez les prix et économisez jusqu'à 2 460€ grâce aux aides. Réseau national.",
     keywords: ["devis borne de recharge", "comparateur borne recharge", "installation IRVE", "borne électrique devis"],
-    alternates: {
-        canonical: "https://expertbornerecharge.com"
-    }
 };
 
 export default function HomePage() {
@@ -54,12 +48,7 @@ export default function HomePage() {
 
     return (
         <div className="min-h-screen font-sans text-slate-900 bg-white">
-            {/* ============================================ */}
             {/* NAVIGATION - Light Tech-Trust Style */}
-            {/* ============================================ */}
-            {/* ============================================ */}
-            {/* NAVIGATION - Light Tech-Trust Style */}
-            {/* ============================================ */}
             <Header isHub={true} variant="default" />
 
             {/* ============================================ */}
@@ -91,334 +80,334 @@ export default function HomePage() {
                                 </div>
 
                                 {/* H1 */}
-                                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-                                    Le 1er Réseau d'Installateurs <span className="text-blue-600">Certifiés</span>. Obtenez votre devis.
-                                </h1>
+                                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
+                                        Le 1er Réseau d&apos;Installateurs <span className="text-blue-600">Certifiés</span>. Obtenez votre devis.
+                                    </h1>
 
-                                {/* Subtitle */}
-                                <p className="text-xl text-slate-600 mb-4 max-w-xl mx-auto lg:mx-0">
-                                    <strong className="text-slate-900">Recevez jusqu'à 3 devis gratuits</strong> d'installateurs certifiés près de chez vous.
-                                </p>
-                            </div>
+                                    {/* Subtitle */}
+                                    <p className="text-xl text-slate-600 mb-4 max-w-xl mx-auto lg:mx-0">
+                                        <strong className="text-slate-900">Recevez jusqu&apos;à 3 devis gratuits</strong> d&apos;installateurs certifiés près de chez vous.
+                                    </p>
+                                </div>
 
-                            {/* LEAD FORM - Integrated Here */}
-                            <div className="w-full max-w-xl mx-auto lg:mx-0 relative z-30 text-left">
-                                <div id="simulateur" className="bg-white rounded-2xl shadow-xl shadow-blue-900/10 overflow-hidden border border-slate-200">
-                                    <div className="p-1 bg-gradient-to-r from-blue-600 to-blue-500"></div>
-                                    <div className="p-6 md:p-8">
-                                        <div className="mb-6">
-                                            <h3 className="text-lg font-bold text-slate-900">Testez votre éligibilité</h3>
-                                            <p className="text-sm text-slate-500">Réponse immédiate • Gratuit • Sans engagement</p>
+                                {/* LEAD FORM - Integrated Here */}
+                                <div className="w-full max-w-xl mx-auto lg:mx-0 relative z-30 text-left">
+                                    <div id="simulateur" className="bg-white rounded-2xl shadow-xl shadow-blue-900/10 overflow-hidden border border-slate-200">
+                                        <div className="p-1 bg-gradient-to-r from-blue-600 to-blue-500"></div>
+                                        <div className="p-6 md:p-8">
+                                            <div className="mb-6">
+                                                <h3 className="text-lg font-bold text-slate-900">Testez votre éligibilité</h3>
+                                                <p className="text-sm text-slate-500">Réponse immédiate • Gratuit • Sans engagement</p>
+                                            </div>
+                                            <LeadForm
+                                                city="France"
+                                                domain="expertbornerecharge.com"
+                                                targetType="MIXED"
+                                            />
                                         </div>
-                                        <LeadForm
-                                            city="France"
-                                            domain="expertbornerecharge.com"
-                                            targetType="MIXED"
-                                        />
                                     </div>
                                 </div>
+
+
                             </div>
 
+                            {/* Right: Large Hero Image */}
+                            {/* Right: Large Hero Image + Trust Badges */}
+                            <div className="lg:col-span-5 hidden lg:block relative w-full">
+                                <div className="relative h-[640px] w-full mb-8">
+                                    <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/20 border border-slate-100 bg-white p-2">
+                                        <div className="relative w-full h-full rounded-xl overflow-hidden">
+                                            <Image
+                                                src={hub.heroImage}
+                                                alt="Borne de recharge installée"
+                                                fill
+                                                className="object-cover hover:scale-105 transition-transform duration-700"
+                                                sizes="(max-width: 1024px) 100vw, 50vw"
+                                                priority
+                                            />
+                                            {/* Overlay Gradient */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
 
-                        </div>
-
-                        {/* Right: Large Hero Image */}
-                        {/* Right: Large Hero Image + Trust Badges */}
-                        <div className="lg:col-span-5 hidden lg:block relative w-full">
-                            <div className="relative h-[640px] w-full mb-8">
-                                <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/20 border border-slate-100 bg-white p-2">
-                                    <div className="relative w-full h-full rounded-xl overflow-hidden">
-                                        <Image
-                                            src={hub.heroImage}
-                                            alt="Borne de recharge installée"
-                                            fill
-                                            className="object-cover hover:scale-105 transition-transform duration-700"
-                                            sizes="(max-width: 1024px) 100vw, 50vw"
-                                            priority
-                                        />
-                                        {/* Overlay Gradient */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-
-                                        {/* Image Caption/Badge */}
-                                        <div className="absolute bottom-8 left-8 right-8 z-20">
-                                            <div className="bg-white/95 backdrop-blur rounded-xl p-5 shadow-xl border border-white/50 flex items-center gap-4 cursor-default">
-                                                <div className="bg-green-100 p-3 rounded-full shrink-0">
-                                                    <CheckCircle className="w-6 h-6 text-green-600" />
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold text-lg text-slate-900">Installation Conforme</div>
-                                                    <div className="text-sm font-medium text-slate-500">Norme NFC 15-100 garantie</div>
+                                            {/* Image Caption/Badge */}
+                                            <div className="absolute bottom-8 left-8 right-8 z-20">
+                                                <div className="bg-white/95 backdrop-blur rounded-xl p-5 shadow-xl border border-white/50 flex items-center gap-4 cursor-default">
+                                                    <div className="bg-green-100 p-3 rounded-full shrink-0">
+                                                        <CheckCircle className="w-6 h-6 text-green-600" />
+                                                    </div>
+                                                    <div>
+                                                        <div className="font-bold text-lg text-slate-900">Installation Conforme</div>
+                                                        <div className="text-sm font-medium text-slate-500">Norme NFC 15-100 garantie</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Trust Elements relocated - Right Column */}
-                            <div className="flex flex-wrap items-center gap-4 justify-center px-4">
-                                <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
-                                    <Award size={24} className="text-yellow-500 fill-yellow-500" />
-                                    <span className="font-bold text-slate-900 text-base">Qualifelec</span>
-                                </div>
-                                <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
-                                    <Award size={24} className="text-blue-500 fill-blue-500" />
-                                    <span className="font-bold text-slate-900 text-base">RGE</span>
-                                </div>
-                                <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
-                                    <CheckCircle size={24} className="text-green-500 fill-green-100" />
-                                    <span className="font-bold text-slate-900 text-base">Garantie décennale</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* ============================================ */}
-            {/* SEO STRUCTURE: PRIX & ETAPES */}
-            {/* ============================================ */}
-
-
-            {/* ============================================ */}
-            {/* TRUST SIGNALS (Hello Watt Style) */}
-            {/* ============================================ */}
-            <LogoCloud />
-
-            {/* ============================================ */}
-            {/* PERSONA SELECTOR (Waat Strategy) */}
-            {/* ============================================ */}
-            <PersonaSelector />
-
-            {/* ============================================ */}
-            {/* AIDES SECTION */}
-            {/* ============================================ */}
-            <section className="py-20 bg-blue-600 text-white">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                            Jusqu'à <span className="text-yellow-400">2 460€</span> d'aides cumulables
-                        </h2>
-                        <p className="text-blue-100 text-lg">
-                            Profitez de toutes les aides disponibles en 2026
-                        </p>
-                    </div>
-
-                    <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-                        {[
-                            { label: "Prime ADVENIR", value: "960€", detail: "Copropriétés" },
-                            { label: "Crédit d'Impôt", value: "500€", detail: "75% plafonné" },
-                            { label: "TVA Réduite", value: "5.5%", detail: "Au lieu de 20%" },
-                            { label: "MaPrimeRénov'", value: "1000€", detail: "Sous conditions" },
-                        ].map((aide, i) => (
-                            <div key={i} className="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20">
-                                <div className="text-3xl font-bold text-yellow-400 mb-2">{aide.value}</div>
-                                <div className="font-semibold mb-1">{aide.label}</div>
-                                <div className="text-sm text-blue-200">{aide.detail}</div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* ============================================ */}
-            {/* COST COMPARATOR (The Killer) */}
-            {/* ============================================ */}
-            <section className="py-20 bg-slate-50">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 rounded-full px-4 py-2 text-sm font-bold mb-4">
-                            <Zap size={18} />
-                            Économies garanties
-                        </div>
-                        <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
-                            Essence vs Recharge à domicile
-                        </h2>
-                        <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-                            Rechargez votre véhicule à la maison et économisez jusqu'à <strong>1 500€ par an</strong>
-                        </p>
-                    </div>
-
-                    <div className="max-w-4xl mx-auto">
-                        <div className="bg-white rounded-3xl shadow-2xl border border-slate-200">
-                            <div className="grid md:grid-cols-2">
-                                {/* Essence Column */}
-                                <div className="p-8 bg-red-50 border-b md:border-b-0 md:border-r border-red-100 rounded-t-3xl md:rounded-tr-none md:rounded-l-3xl">
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                                            <span className="text-2xl">⛽</span>
-                                        </div>
-                                        <div>
-                                            <h3 className="font-bold text-lg text-red-900">Essence / Diesel</h3>
-                                            <p className="text-sm text-red-600">Coût mensuel moyen</p>
-                                        </div>
+                                {/* Trust Elements relocated - Right Column */}
+                                <div className="flex flex-wrap items-center gap-4 justify-center px-4">
+                                    <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
+                                        <Award size={24} className="text-yellow-500 fill-yellow-500" />
+                                        <span className="font-bold text-slate-900 text-base">Qualifelec</span>
                                     </div>
-                                    <div className="space-y-4">
-                                        <div className="flex justify-between items-center py-3 border-b border-red-100">
-                                            <span className="text-neutral-700">Consommation</span>
-                                            <span className="font-semibold">6L/100km</span>
-                                        </div>
-                                        <div className="flex justify-between items-center py-3 border-b border-red-100">
-                                            <span className="text-neutral-700">Distance/mois</span>
-                                            <span className="font-semibold">1 500 km</span>
-                                        </div>
-                                        <div className="flex justify-between items-center pt-4">
-                                            <span className="font-bold text-neutral-900">Total mensuel</span>
-                                            <span className="text-3xl font-bold text-red-600">167€</span>
-                                        </div>
+                                    <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
+                                        <Award size={24} className="text-blue-500 fill-blue-500" />
+                                        <span className="font-bold text-slate-900 text-base">RGE</span>
                                     </div>
-                                </div>
-
-                                {/* Electric Column */}
-                                <div className="p-8 bg-green-50 relative rounded-b-3xl md:rounded-bl-none md:rounded-r-3xl">
-                                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg z-10">
-                                        RECOMMANDÉ
-                                    </div>
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                                            <Zap className="text-green-600" size={24} />
-                                        </div>
-                                        <div>
-                                            <h3 className="font-bold text-lg text-green-900">Recharge domicile</h3>
-                                            <p className="text-sm text-green-600">Coût mensuel moyen</p>
-                                        </div>
-                                    </div>
-                                    <div className="space-y-4">
-                                        <div className="flex justify-between items-center py-3 border-b border-green-100">
-                                            <span className="text-neutral-700">Consommation</span>
-                                            <span className="font-semibold">15kWh/100km</span>
-                                        </div>
-                                        <div className="flex justify-between items-center py-3 border-b border-green-100">
-                                            <span className="text-neutral-700">Distance/mois</span>
-                                            <span className="font-semibold">1 500 km</span>
-                                        </div>
-                                        <div className="flex justify-between items-center pt-4">
-                                            <span className="font-bold text-neutral-900">Total mensuel</span>
-                                            <span className="text-3xl font-bold text-green-600">41€</span>
-                                        </div>
+                                    <div className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:scale-105 duration-300">
+                                        <CheckCircle size={24} className="text-green-500 fill-green-100" />
+                                        <span className="font-bold text-slate-900 text-base">Garantie décennale</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            {/* ============================================ */}
-            {/* SEO STRUCTURE: PRIX & ETAPES */}
-            {/* ============================================ */}
-            <PricingTable />
-            <InstallationSteps />
+                {/* ============================================ */}
+                {/* SEO STRUCTURE: PRIX & ETAPES */}
+                {/* ============================================ */}
 
-            {/* ============================================ */}
-            {/* SERVICES */}
-            {/* ============================================ */}
-            <section className="py-20 bg-white">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
-                            Une solution pour chaque projet
-                        </h2>
-                        <p className="text-slate-600 text-lg">
-                            Maison, copropriété ou entreprise : nos installateurs s'adaptent
-                        </p>
-                    </div>
 
-                    <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                        {[
-                            { icon: Home, title: "Maison", desc: "Wallbox 7 à 22kW. Installation rapide en 48h.", href: "/solutions/maison" },
-                            { icon: Building2, title: "Copropriété", desc: "Solution collective. Prime ADVENIR jusqu'à 960€.", href: "/solutions/copropriete" },
-                            { icon: Briefcase, title: "Entreprise", desc: "Flotte & collaborateurs. Supervision à distance.", href: "/solutions/entreprise" },
-                        ].map((service, i) => (
-                            <Link key={i} href={service.href} className="block group">
-                                <div className="bg-slate-50 rounded-2xl p-8 text-center border border-slate-200 group-hover:shadow-xl group-hover:border-blue-500 transition-all h-full">
-                                    <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                                        <service.icon className="text-blue-600" size={32} />
-                                    </div>
-                                    <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 transition-colors">{service.title}</h3>
-                                    <p className="text-slate-600 mb-4">{service.desc}</p>
-                                    <div className="text-blue-600 font-bold inline-flex items-center opacity-0 group-hover:opacity-100 transition-opacity -translate-y-2 group-hover:translate-y-0 duration-300">
-                                        En savoir plus <ArrowRight size={16} className="ml-2" />
-                                    </div>
+                {/* ============================================ */}
+                {/* TRUST SIGNALS (Hello Watt Style) */}
+                {/* ============================================ */}
+                <LogoCloud />
+
+                {/* ============================================ */}
+                {/* PERSONA SELECTOR (Waat Strategy) */}
+                {/* ============================================ */}
+                <PersonaSelector />
+
+                {/* ============================================ */}
+                {/* AIDES SECTION */}
+                {/* ============================================ */}
+                <section className="py-20 bg-blue-600 text-white">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+                                Jusqu&apos;à <span className="text-yellow-400">2 460€</span> d&apos;aides cumulables
+                            </h2>
+                            <p className="text-blue-100 text-lg">
+                                Profitez de toutes les aides disponibles en 2026
+                            </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                            {[
+                                { label: "Prime ADVENIR", value: "960€", detail: "Copropriétés" },
+                                { label: "Crédit d'Impôt", value: "500€", detail: "75% plafonné" },
+                                { label: "TVA Réduite", value: "5.5%", detail: "Au lieu de 20%" },
+                                { label: "MaPrimeRénov'", value: "1000€", detail: "Sous conditions" },
+                            ].map((aide, i) => (
+                                <div key={i} className="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20">
+                                    <div className="text-3xl font-bold text-yellow-400 mb-2">{aide.value}</div>
+                                    <div className="font-semibold mb-1">{aide.label}</div>
+                                    <div className="text-sm text-blue-200">{aide.detail}</div>
                                 </div>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* ============================================ */}
-            {/* REALIZATIONS GRID (Bornetik Strategy) */}
-            {/* ============================================ */}
-            <RealizationsGrid />
-
-            {/* ============================================ */}
-            {/* CHARGER COMPARISON - NEW STITCH COMPONENT */}
-            {/* ============================================ */}
-            <ChargerComparison themeColor="blue" />
-
-            {/* ============================================ */}
-            {/* GRANTS CALCULATOR - NEW STITCH COMPONENT */}
-            {/* ============================================ */}
-            <GrantsCalculator themeColor="blue" />
-
-            {/* ============================================ */}
-            {/* TESTIMONIALS MAP - NEW STITCH COMPONENT */}
-            {/* ============================================ */}
-            <TestimonialsSection />
-
-            {/* ============================================ */}
-            {/* CITIES GRID */}
-            {/* ============================================ */}
-            <section id="villes" className="py-20 bg-slate-50 scroll-mt-20">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
-                            Nos installateurs par ville
-                        </h2>
-                        <p className="text-slate-600 text-lg">
-                            Trouvez un expert certifié IRVE près de chez vous
-                        </p>
-                    </div>
-
-                    {/* Integrated Local Linker */}
-                    <div className="max-w-2xl mx-auto mb-16">
-                        <div className="bg-white p-2 rounded-3xl shadow-lg border border-slate-200">
-                            <LocalLinker />
+                            ))}
                         </div>
                     </div>
+                </section>
 
-                    <div className="mb-16">
-                        <CityCards cities={cities} />
+                {/* ============================================ */}
+                {/* COST COMPARATOR (The Killer) */}
+                {/* ============================================ */}
+                <section className="py-20 bg-slate-50">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 rounded-full px-4 py-2 text-sm font-bold mb-4">
+                                <Zap size={18} />
+                                Économies garanties
+                            </div>
+                            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+                                Essence vs Recharge à domicile
+                            </h2>
+                            <p className="text-slate-600 text-lg max-w-2xl mx-auto">
+                                Rechargez votre véhicule à la maison et économisez jusqu&apos;à <strong>1 500€ par an</strong>
+                            </p>
+                        </div>
+
+                        <div className="max-w-4xl mx-auto">
+                            <div className="bg-white rounded-3xl shadow-2xl border border-slate-200">
+                                <div className="grid md:grid-cols-2">
+                                    {/* Essence Column */}
+                                    <div className="p-8 bg-red-50 border-b md:border-b-0 md:border-r border-red-100 rounded-t-3xl md:rounded-tr-none md:rounded-l-3xl">
+                                        <div className="flex items-center gap-3 mb-6">
+                                            <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                                                <span className="text-2xl">⛽</span>
+                                            </div>
+                                            <div>
+                                                <h3 className="font-bold text-lg text-red-900">Essence / Diesel</h3>
+                                                <p className="text-sm text-red-600">Coût mensuel moyen</p>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-4">
+                                            <div className="flex justify-between items-center py-3 border-b border-red-100">
+                                                <span className="text-neutral-700">Consommation</span>
+                                                <span className="font-semibold">6L/100km</span>
+                                            </div>
+                                            <div className="flex justify-between items-center py-3 border-b border-red-100">
+                                                <span className="text-neutral-700">Distance/mois</span>
+                                                <span className="font-semibold">1 500 km</span>
+                                            </div>
+                                            <div className="flex justify-between items-center pt-4">
+                                                <span className="font-bold text-neutral-900">Total mensuel</span>
+                                                <span className="text-3xl font-bold text-red-600">167€</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Electric Column */}
+                                    <div className="p-8 bg-green-50 relative rounded-b-3xl md:rounded-bl-none md:rounded-r-3xl">
+                                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg z-10">
+                                            RECOMMANDÉ
+                                        </div>
+                                        <div className="flex items-center gap-3 mb-6">
+                                            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                                <Zap className="text-green-600" size={24} />
+                                            </div>
+                                            <div>
+                                                <h3 className="font-bold text-lg text-green-900">Recharge domicile</h3>
+                                                <p className="text-sm text-green-600">Coût mensuel moyen</p>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-4">
+                                            <div className="flex justify-between items-center py-3 border-b border-green-100">
+                                                <span className="text-neutral-700">Consommation</span>
+                                                <span className="font-semibold">15kWh/100km</span>
+                                            </div>
+                                            <div className="flex justify-between items-center py-3 border-b border-green-100">
+                                                <span className="text-neutral-700">Distance/mois</span>
+                                                <span className="font-semibold">1 500 km</span>
+                                            </div>
+                                            <div className="flex justify-between items-center pt-4">
+                                                <span className="font-bold text-neutral-900">Total mensuel</span>
+                                                <span className="text-3xl font-bold text-green-600">41€</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </section>
 
-                    {/* FAQ moved below City Cards */}
-                    <FAQSection />
-                </div>
-            </section>
+                {/* ============================================ */}
+                {/* SEO STRUCTURE: PRIX & ETAPES */}
+                {/* ============================================ */}
+                <PricingTable />
+                <InstallationSteps />
 
-            {/* ============================================ */}
-            {/* CTA SECTION */}
-            {/* ============================================ */}
-            <section className="py-20 bg-slate-900 text-white">
-                <div className="container mx-auto px-4 text-center">
-                    <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                        Prêt à passer à l'électrique ?
-                    </h2>
-                    <p className="text-slate-400 text-lg mb-8 max-w-xl mx-auto">
-                        Obtenez votre devis gratuit en 48h et découvrez les aides auxquelles vous avez droit.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a
-                            href="#simulateur"
-                            className="flex items-center justify-center gap-3 rounded-2xl bg-blue-600 px-8 py-4 text-lg font-bold text-white shadow-xl hover:bg-blue-700 transition"
-                        >
-                            <Zap size={24} />
-                            Comparer les devis
-                        </a>
+                {/* ============================================ */}
+                {/* SERVICES */}
+                {/* ============================================ */}
+                <section className="py-20 bg-white">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+                                Une solution pour chaque projet
+                            </h2>
+                            <p className="text-slate-600 text-lg">
+                                Maison, copropriété ou entreprise : nos installateurs s&apos;adaptent
+                            </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                            {[
+                                { icon: Home, title: "Maison", desc: "Wallbox 7 à 22kW. Installation rapide en 48h.", href: "/solutions/maison" },
+                                { icon: Building2, title: "Copropriété", desc: "Solution collective. Prime ADVENIR jusqu'à 960€.", href: "/solutions/copropriete" },
+                                { icon: Briefcase, title: "Entreprise", desc: "Flotte & collaborateurs. Supervision à distance.", href: "/solutions/entreprise" },
+                            ].map((service, i) => (
+                                <Link key={i} href={service.href} className="block group">
+                                    <div className="bg-slate-50 rounded-2xl p-8 text-center border border-slate-200 group-hover:shadow-xl group-hover:border-blue-500 transition-all h-full">
+                                        <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                                            <service.icon className="text-blue-600" size={32} />
+                                        </div>
+                                        <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 transition-colors">{service.title}</h3>
+                                        <p className="text-slate-600 mb-4">{service.desc}</p>
+                                        <div className="text-blue-600 font-bold inline-flex items-center opacity-0 group-hover:opacity-100 transition-opacity -translate-y-2 group-hover:translate-y-0 duration-300">
+                                            En savoir plus <ArrowRight size={16} className="ml-2" />
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+
+                {/* ============================================ */}
+                {/* REALIZATIONS GRID (Bornetik Strategy) */}
+                {/* ============================================ */}
+                <RealizationsGrid />
+
+                {/* ============================================ */}
+                {/* CHARGER COMPARISON - NEW STITCH COMPONENT */}
+                {/* ============================================ */}
+                <ChargerComparison themeColor="blue" />
+
+                {/* ============================================ */}
+                {/* GRANTS CALCULATOR - NEW STITCH COMPONENT */}
+                {/* ============================================ */}
+                <GrantsCalculator themeColor="blue" />
+
+                {/* ============================================ */}
+                {/* TESTIMONIALS MAP - NEW STITCH COMPONENT */}
+                {/* ============================================ */}
+                <TestimonialsSection />
+
+                {/* ============================================ */}
+                {/* CITIES GRID */}
+                {/* ============================================ */}
+                <section id="villes" className="py-20 bg-slate-50 scroll-mt-20">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+                                Nos installateurs par ville
+                            </h2>
+                            <p className="text-slate-600 text-lg">
+                                Trouvez un expert certifié IRVE près de chez vous
+                            </p>
+                        </div>
+
+                        {/* Integrated Local Linker */}
+                        <div className="max-w-2xl mx-auto mb-16">
+                            <div className="bg-white p-2 rounded-3xl shadow-lg border border-slate-200">
+                                <LocalLinker />
+                            </div>
+                        </div>
+
+                        <div className="mb-16">
+                            <CityCards cities={cities} />
+                        </div>
+
+                        {/* FAQ moved below City Cards */}
+                        <FAQSection />
+                    </div>
+                </section>
+
+                {/* ============================================ */}
+                {/* CTA SECTION */}
+                {/* ============================================ */}
+                <section className="py-20 bg-slate-900 text-white">
+                    <div className="container mx-auto px-4 text-center">
+                        <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+                            Prêt à passer à l&apos;électrique ?
+                        </h2>
+                        <p className="text-slate-400 text-lg mb-8 max-w-xl mx-auto">
+                            Obtenez votre devis gratuit en 48h et découvrez les aides auxquelles vous avez droit.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a
+                                href="#simulateur"
+                                className="flex items-center justify-center gap-3 rounded-2xl bg-blue-600 px-8 py-4 text-lg font-bold text-white shadow-xl hover:bg-blue-700 transition"
+                            >
+                                <Zap size={24} />
+                                Comparer les devis
+                            </a>
+                        </div>
+                    </div>
+                </section>
 
             {/* ============================================ */}
             {/* FOOTER */}
