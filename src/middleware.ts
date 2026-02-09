@@ -58,14 +58,8 @@ export default async function middleware(req: NextRequest) {
         domainKey = hostname.replace("www.", "");
     }
 
-    // Strict 301 Redirect for www -> non-www
-    if (hostname.startsWith("www.")) {
-        const newUrl = new URL(req.url);
-        newUrl.hostname = domainKey;
-        if (newUrl.href !== req.url) {
-            return applySecurityHeaders(NextResponse.redirect(newUrl, 301));
-        }
-    }
+    // NOTE: www → non-www redirect is now handled by vercel.json
+    // The middleware redirect was causing a loop with Vercel edge redirects
 
     // 1. Sitemap Rewrite
     if (path === "/sitemap.xml") {

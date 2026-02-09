@@ -2,5 +2,18 @@
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "framework": "nextjs",
     "cleanUrls": true,
-    "trailingSlash": false
+    "trailingSlash": false,
+    "redirects": [
+        {
+            "source": "/:path((?!api/).*)",
+            "has": [
+                {
+                    "type": "host",
+                    "value": "www.expertbornerecharge.com"
+                }
+            ],
+            "destination": "https://expertbornerecharge.com/:path",
+            "permanent": true
+        }
+    ]
 }
