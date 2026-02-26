@@ -96,18 +96,33 @@ export default function ContactForm({ domain, city, theme }: ContactFormProps) {
                 </div>
             </div>
 
-            <div className="space-y-2">
-                <label htmlFor="subject" className="text-sm font-medium text-neutral-700">Sujet</label>
-                <select
-                    name="subject"
-                    id="subject"
-                    className={inputClasses}
-                >
-                    <option value="devis_particulier">Devis Particulier (Maison/Copro)</option>
-                    <option value="devis_pro">Devis Entreprise / Flotte</option>
-                    <option value="partenariat_installateur">Devenir Installateur Partenaire</option>
-                    <option value="autre">Autre demande</option>
-                </select>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                    <label htmlFor="subject" className="text-sm font-medium text-neutral-700">Sujet</label>
+                    <select
+                        name="subject"
+                        id="subject"
+                        className={inputClasses}
+                    >
+                        <option value="devis_particulier">Devis Particulier (Maison/Copro)</option>
+                        <option value="devis_pro">Devis Entreprise / Flotte</option>
+                        <option value="partenariat_installateur">Devenir Installateur Partenaire</option>
+                        <option value="autre">Autre demande</option>
+                    </select>
+                </div>
+                <div className="space-y-2">
+                    <label htmlFor="postalCode" className="text-sm font-medium text-neutral-700">Code Postal</label>
+                    <input
+                        required
+                        type="text"
+                        name="postalCode"
+                        id="postalCode"
+                        placeholder="75000"
+                        maxLength={5}
+                        pattern="\d{5}"
+                        className={inputClasses}
+                    />
+                </div>
             </div>
             {/* Honeypot for bots */}
             <input type="text" name="b_name" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />

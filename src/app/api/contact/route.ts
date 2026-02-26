@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY || 're_123'); // Safe fallb
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { name, email, subject, message, domain, city } = body;
+        const { name, email, subject, message, domain, city, postalCode } = body;
 
         // Validation simple
         if (!name || !email || !message) {
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
         if (!process.env.RESEND_API_KEY) {
             console.log("⚠️ SIMULATION RESEND (No API Key found)");
             console.log("To: hello@expertbornerecharge.com");
-            console.log(`Subject: [${city}] Nouveau message de ${name}`);
+            console.log(`Subject: [${postalCode || city}] Nouveau message de ${name}`);
             console.log("Body:", message);
 
             // Simulate delay
@@ -30,10 +30,11 @@ export async function POST(req: Request) {
             from: 'Expert Borne Recharge <contact@expertbornerecharge.com>',
             to: ['hello@expertbornerecharge.com'],
             replyTo: email,
-            subject: `[${city}] Contact: ${subject} - ${name}`,
+            subject: `[${postalCode || city}] Contact: ${subject} - ${name}`,
             html: `
                 <h1>Nouveau message depuis ${domain}</h1>
                 <p><strong>Ville :</strong> ${city}</p>
+                <p><strong>Code Postal :</strong> ${postalCode || 'N/A'}</p>
                 <p><strong>Nom :</strong> ${name}</p>
                 <p><strong>Email :</strong> ${email}</p>
                 <p><strong>Sujet :</strong> ${subject}</p>

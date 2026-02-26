@@ -47,10 +47,12 @@ interface FormData {
     name: string;
     email: string;
     phone: string;
+    zipCode: string;
 }
 
 // French phone validation regex
 const FRENCH_PHONE_REGEX = /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/;
+const ZIP_CODE_REGEX = /^\d{5}$/;
 
 export default function LeadForm({
     city,
@@ -67,7 +69,8 @@ export default function LeadForm({
         solarInterest: false,
         name: "",
         email: "",
-        phone: ""
+        phone: "",
+        zipCode: ""
     };
 
     // If project type is pre-selected, start at step 2
@@ -159,7 +162,8 @@ export default function LeadForm({
                 return (
                     formData.name.trim() !== "" &&
                     formData.email.includes("@") &&
-                    FRENCH_PHONE_REGEX.test(formData.phone.replace(/\s/g, ''))
+                    FRENCH_PHONE_REGEX.test(formData.phone.replace(/\s/g, '')) &&
+                    ZIP_CODE_REGEX.test(formData.zipCode.trim())
                 );
             default: return false;
         }
@@ -186,6 +190,7 @@ export default function LeadForm({
             const payload = {
                 ...formData,
                 city,
+                postalCode: formData.zipCode,
                 domain,
                 leadScore: getLeadScore(),
                 timestamp: new Date().toISOString()
@@ -306,7 +311,7 @@ export default function LeadForm({
                         <Zap size={24} />
                     </div>
                     <div>
-                        <h3 className="font-bold text-lg">Simulateur d'Éligibilité</h3>
+                        <h3 className="font-bold text-lg">Simulateur d&apos;Éligibilité</h3>
                         <p className="text-white/80 text-sm">Aides & Devis Gratuit</p>
                     </div>
                 </div>
@@ -394,7 +399,7 @@ export default function LeadForm({
                                         Accord du propriétaire requis
                                     </p>
                                     <p className="text-xs text-amber-600 mt-1">
-                                        Vous devrez obtenir l'accord écrit de votre propriétaire.
+                                        Vous devrez obtenir l&apos;accord écrit de votre propriétaire.
                                         Nous pouvons vous fournir un modèle de lettre.
                                     </p>
                                 </div>
@@ -530,19 +535,35 @@ export default function LeadForm({
                                 />
                             </div>
 
-                            <div>
-                                <label className="flex items-center gap-2 text-sm font-medium text-neutral-700 mb-2">
-                                    <Mail size={16} />
-                                    Adresse email
-                                </label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleInputChange}
-                                    placeholder="jean.dupont@email.com"
-                                    className="w-full px-4 py-3 rounded-xl border border-neutral-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition outline-none"
-                                />
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="flex items-center gap-2 text-sm font-medium text-neutral-700 mb-2">
+                                        Code Postal
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="zipCode"
+                                        value={formData.zipCode}
+                                        onChange={handleInputChange}
+                                        placeholder="75000"
+                                        maxLength={5}
+                                        className="w-full px-4 py-3 rounded-xl border border-neutral-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition outline-none"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="flex items-center gap-2 text-sm font-medium text-neutral-700 mb-2">
+                                        <Mail size={16} />
+                                        Adresse email
+                                    </label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleInputChange}
+                                        placeholder="jean.dupont@email.com"
+                                        className="w-full px-4 py-3 rounded-xl border border-neutral-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition outline-none"
+                                    />
+                                </div>
                             </div>
 
                             <div>
@@ -626,7 +647,7 @@ export default function LeadForm({
                             </button>
 
                             <p className="text-xs text-slate-400 text-center mt-4 px-4 leading-relaxed">
-                                En cliquant sur ce bouton, vous acceptez nos <a href="/cgu" className="underline hover:text-blue-600">CGU</a> et acceptez d'être recontacté par nos installateurs partenaires certifiés IRVE pour votre projet.
+                                En cliquant sur ce bouton, vous acceptez nos <a href="/cgu" className="underline hover:text-blue-600">CGU</a> et acceptez d&apos;être recontacté par nos installateurs partenaires certifiés IRVE pour votre projet.
                                 Vos données sont sécurisées.
                             </p>
                         </div>

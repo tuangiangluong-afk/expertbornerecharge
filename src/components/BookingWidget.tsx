@@ -21,6 +21,7 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
     const [projectType, setProjectType] = useState("maison");
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
+    const [postalCode, setPostalCode] = useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -29,6 +30,7 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
         const payload = {
             name,
             phone,
+            postalCode,
             projectType,
             city: city.city,
             domain: city.domain,
@@ -116,19 +118,34 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
                     </div>
                 </div>
 
-                {/* Phone */}
-                <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-1">Téléphone</label>
-                    <div className="relative">
+                {/* Phone & Zip */}
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-sm font-medium text-neutral-700 mb-1">Téléphone</label>
+                        <div className="relative">
+                            <input
+                                type="tel"
+                                required
+                                placeholder="06 12..."
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 pl-10 text-neutral-900 focus:border-blue-500 focus:ring-blue-500/20 outline-none transition text-sm"
+                            />
+                            <Phone className="absolute left-3 top-3.5 h-4 w-4 text-neutral-400" />
+                        </div>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-neutral-700 mb-1">Code Postal</label>
                         <input
-                            type="tel"
+                            type="text"
                             required
-                            placeholder="06 12 34 56 78"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 pl-10 text-neutral-900 focus:border-blue-500 focus:ring-blue-500/20 outline-none transition"
+                            maxLength={5}
+                            pattern="\d{5}"
+                            placeholder="75000"
+                            value={postalCode}
+                            onChange={(e) => setPostalCode(e.target.value)}
+                            className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-neutral-900 focus:border-blue-500 focus:ring-blue-500/20 outline-none transition text-sm"
                         />
-                        <Phone className="absolute left-3 top-3.5 h-5 w-5 text-neutral-400" />
                     </div>
                 </div>
 
@@ -151,7 +168,7 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
                 </button>
 
                 <p className="text-[10px] text-center text-neutral-400 mt-4 leading-relaxed">
-                    Vos données sont protégées. En validant, vous acceptez d'être recontacté pour votre projet de borne.
+                    Vos données sont protégées. En validant, vous acceptez d&apos;être recontacté pour votre projet de borne.
                 </p>
 
                 {/* Trust Badges */}

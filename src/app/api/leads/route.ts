@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     try {
         const body = await request.json();
         console.log("📥 [API/LEADS] Received body:", body);
-        const { name, email, phone, city, domain, projectType, ownerStatus, vehicleStatus, meterDistance, solarInterest } = body;
+        const { name, email, phone, city, postalCode, domain, projectType, ownerStatus, vehicleStatus, meterDistance, solarInterest } = body;
 
         // Validation basique
         if (!name || !email || !phone) {
@@ -45,6 +45,7 @@ export async function POST(request: Request) {
                 email,
                 phone,
                 city,
+                postal_code: postalCode,
                 tenant_id: domain, // Mapping domain to tenant_id
                 type: 'website_lead', // Mandatory field
                 housing_type: projectType, // Mapping project_type
@@ -64,10 +65,10 @@ export async function POST(request: Request) {
             const { data, error } = await resend.emails.send({
                 from: 'Expert Borne Recharge <contact@expertbornerecharge.com>',
                 to: ['hello@expertbornerecharge.com'],
-                subject: `🔥 Nouveau Lead ${solarInterest ? '+ SOLAIRE ☀️' : ''} [${city}] - ${name}`,
+                subject: `🔥 Nouveau Lead ${solarInterest ? '+ SOLAIRE ☀️' : ''} [${postalCode || city}] - ${name}`,
                 html: `
                     <h1>Nouveau Lead Entrant</h1>
-                    <p><strong>Source :</strong> ${domain} (${city})</p>
+                    <p><strong>Source :</strong> ${domain} (${city} - ${postalCode || 'N/A'})</p>
                     
                     ${solarInterest ? `
                     <div style="background-color: #fffbeb; border: 1px solid #fcd34d; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
