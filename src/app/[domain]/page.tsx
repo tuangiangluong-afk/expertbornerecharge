@@ -9,6 +9,7 @@ import LeadForm from "@/components/LeadForm";
 import Header from "@/components/Header";
 import MobileStickyCTA from "@/components/MobileStickyCTA";
 import FAQ from "@/components/FAQ";
+import FAQSection from "@/components/FAQSection";
 import SchemaJSON from "@/components/SchemaJSON";
 import Reviews from "@/components/Reviews";
 import { Footer } from "@/components/Footer";
@@ -583,6 +584,7 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
             {isHub && <TestimonialsSection />}
             <Reviews site={site} themeColor={themeColor} />
             <FAQ themeColor={themeColor} />
+            <FAQSection city={site.city} />
 
             {!isHub && site.quartiers && site.quartiers.length > 0 && (
                 <section className="py-16 bg-neutral-50 border-t border-neutral-200">

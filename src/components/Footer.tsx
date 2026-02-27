@@ -220,7 +220,7 @@ export function Footer({ config }: FooterProps) {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/fiscalite-entreprise-borne" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="https://expertbornerecharge.com/fiscalite-entreprise-borne" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                         Fiscalité Entreprise
                                     </Link>

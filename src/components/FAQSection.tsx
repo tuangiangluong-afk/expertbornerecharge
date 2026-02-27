@@ -3,16 +3,19 @@
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 
-export default function FAQSection() {
+export default function FAQSection({ city }: { city?: string }) {
     // SEO-focused questions based on PAA (People Also Ask)
+    
+    const cityText = city ? ` à ${city}` : "";
+    const cityPlural = city ? ` à ${city} et ses alentours` : "";
     const faqs = [
         {
-            question: "Qui a le droit d'installer une borne de recharge ?",
-            answer: "Légalement, toute installation de borne de recharge d'une puissance supérieure à 3,7 kW doit être réalisée par un électricien qualifié IRVE (Infrastructure de Recharge de Véhicule Électrique). Cela garantit la sécurité de votre installation et est obligatoire pour bénéficier des aides de l'État et de la couverture assurance."
+            question: `Qui a le droit d'installer une borne de recharge${cityText} ?`,
+            answer: `Légalement, toute installation de borne de recharge d'une puissance supérieure à 3,7 kW doit être réalisée par un électricien qualifié IRVE (Infrastructure de Recharge de Véhicule Électrique). Cela garantit la sécurité de votre installation et est obligatoire pour bénéficier des aides de l'État et de la couverture assurance${cityText}.`
         },
         {
-            question: "Quel est le prix moyen d'une installation de borne de recharge ?",
-            answer: "Le prix moyen d'une installation complète (borne + pose) se situe entre 990€ et 1500€ TTC, aides déduites. Ce coût varie selon la marque de la borne, la distance entre le tableau électrique et l'emplacement de charge, et les éventuels travaux de mise aux normes."
+            question: `Quel est le prix moyen d'une installation de borne de recharge${cityText} ?`,
+            answer: `Le prix moyen d'une installation complète (borne + pose) se situe entre 990€ et 1500€ TTC, aides déduites. Ce coût varie selon la marque de la borne, la distance entre le tableau électrique et l'emplacement de charge, et les éventuels travaux de mise aux normes${cityPlural}.`
         },
         {
             question: "Quelle puissance pour charger une voiture électrique à la maison ?",

@@ -12,7 +12,6 @@ import { Footer } from "@/components/Footer";
 import RealizationsGrid from "@/components/RealizationsGrid";
 import PersonaSelector from "@/components/PersonaSelector";
 import LogoCloud from "@/components/LogoCloud";
-import FAQSection from "@/components/FAQSection";
 import PricingTable from "@/components/PricingTable";
 import InstallationSteps from "@/components/InstallationSteps";
 import ChargerComparison from "@/components/ChargerComparison";
@@ -380,9 +379,6 @@ export default function HomePage() {
                         <div className="mb-16">
                             <CityCards cities={cities} />
                         </div>
-
-                        {/* FAQ moved below City Cards */}
-                        <FAQSection />
                     </div>
                 </section>
 
