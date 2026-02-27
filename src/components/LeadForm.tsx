@@ -162,8 +162,8 @@ export default function LeadForm({
                 return (
                     formData.name.trim() !== "" &&
                     formData.email.includes("@") &&
-                    FRENCH_PHONE_REGEX.test(formData.phone.replace(/\s/g, '')) &&
-                    ZIP_CODE_REGEX.test(formData.zipCode.trim())
+                    ZIP_CODE_REGEX.test(formData.zipCode.trim()) &&
+                    (formData.phone.trim() === "" || FRENCH_PHONE_REGEX.test(formData.phone.replace(/\s/g, '')))
                 );
             default: return false;
         }
@@ -569,7 +569,7 @@ export default function LeadForm({
                             <div>
                                 <label className="flex items-center gap-2 text-sm font-medium text-neutral-700 mb-2">
                                     <Phone size={16} />
-                                    Téléphone
+                                    Téléphone (Optionnel)
                                 </label>
                                 <input
                                     type="tel"

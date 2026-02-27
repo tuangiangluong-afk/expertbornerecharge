@@ -124,6 +124,17 @@ export default function ContactForm({ domain, city, theme }: ContactFormProps) {
                     />
                 </div>
             </div>
+
+            <div className="space-y-2">
+                <label htmlFor="phone" className="text-sm font-medium text-neutral-700">Téléphone (Optionnel)</label>
+                <input
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    placeholder="06 12 34 56 78"
+                    className={inputClasses}
+                />
+            </div>
             {/* Honeypot for bots */}
             <input type="text" name="b_name" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
 

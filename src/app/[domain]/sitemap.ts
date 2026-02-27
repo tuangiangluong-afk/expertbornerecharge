@@ -1,20 +1,26 @@
 import { MetadataRoute } from "next";
 import { SITES } from "@/lib/sites-config";
 import { slugify } from "@/lib/slugify";
+import { headers } from "next/headers";
 
 type Props = {
     params: Promise<{ domain: string }>;
 }
 
 export default async function sitemap(props?: Props): Promise<MetadataRoute.Sitemap> {
-    const resolved = props?.params ? await props.params : null;
-    const domain = resolved?.domain;
+    const headersList = await headers();
+    let domain = headersList.get("x-irve-domain");
 
-    if (!domain) return [];
+    if (!domain) {
+        const resolved = props?.params ? await props.params : null;
+        domain = resolved?.domain || null;
+    }
+
+    if (!domain) return [{ url: "https://expertbornerecharge.com", lastModified: new Date() }];
 
     // Get config for this domain
     const config = SITES[domain] || SITES[`www.${domain}`];
-    if (!config) return [];
+    if (!config) return [{ url: "https://expertbornerecharge.com", lastModified: new Date() }];
 
     const baseUrl = `https://${config.domain}`;
 

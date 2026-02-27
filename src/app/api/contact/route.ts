@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY || 're_123'); // Safe fallb
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { name, email, subject, message, domain, city, postalCode } = body;
+        const { name, email, phone, subject, message, domain, city, postalCode } = body;
 
         // Validation simple
         if (!name || !email || !message) {
@@ -37,6 +37,7 @@ export async function POST(req: Request) {
                 <p><strong>Code Postal :</strong> ${postalCode || 'N/A'}</p>
                 <p><strong>Nom :</strong> ${name}</p>
                 <p><strong>Email :</strong> ${email}</p>
+                <p><strong>Téléphone :</strong> ${phone || 'N/A'}</p>
                 <p><strong>Sujet :</strong> ${subject}</p>
                 <hr />
                 <h3>Message :</h3>

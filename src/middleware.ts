@@ -63,10 +63,15 @@ export default async function middleware(req: NextRequest) {
 
     // 1. Sitemap Rewrite
     if (path === "/sitemap.xml") {
+        let sitemapResponse;
         if (isHub) {
-            return applySecurityHeaders(NextResponse.rewrite(new URL("/home/sitemap.xml", req.url)));
+            sitemapResponse = NextResponse.rewrite(new URL("/home/sitemap.xml", req.url));
+        } else {
+            sitemapResponse = NextResponse.rewrite(new URL(`/${domainKey}/sitemap.xml`, req.url));
         }
-        return applySecurityHeaders(NextResponse.rewrite(new URL(`/${domainKey}/sitemap.xml`, req.url)));
+        sitemapResponse.headers.set("x-irve-domain", domainKey);
+        sitemapResponse.headers.set("x-irve-city", domainKey);
+        return applySecurityHeaders(sitemapResponse);
     }
 
     // 1.5 Robots Rewrite
