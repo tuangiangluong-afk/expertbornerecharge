@@ -24,9 +24,11 @@ import {
     Sun
 } from "lucide-react";
 
+import Link from "next/link";
+
 declare global {
     interface Window {
-        dataLayer: any[];
+        dataLayer: Record<string, unknown>[];
     }
 }
 
@@ -150,6 +152,10 @@ export default function LeadForm({
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+        if (status === 'error') {
+            setStatus('idle');
+            setErrorMessage("");
+        }
     };
 
     const canProceed = (): boolean => {
@@ -182,7 +188,11 @@ export default function LeadForm({
     };
 
     const handleSubmit = async () => {
-        if (!canProceed()) return;
+        if (!canProceed()) {
+            setStatus('error');
+            setErrorMessage("Veuillez remplir correctement les champs obligatoires (Nom, Email valide, Code Postal à 5 chiffres).");
+            return;
+        }
 
         setStatus('loading');
 
@@ -219,10 +229,10 @@ export default function LeadForm({
             }
 
             setStatus('success');
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Submission Error:", error);
             setStatus('error');
-            setErrorMessage(error.message || 'Une erreur est survenue');
+            setErrorMessage(error instanceof Error ? error.message : 'Une erreur est survenue');
         }
     };
 
@@ -258,7 +268,7 @@ export default function LeadForm({
     }: {
         selected: boolean;
         onClick: () => void;
-        icon: any;
+        icon: React.ElementType;
         label: string;
         sublabel?: string;
         highlight?: boolean;
@@ -447,7 +457,7 @@ export default function LeadForm({
                             Distance entre le compteur et le stationnement ?
                         </h4>
                         <p className="text-sm text-neutral-500 mb-6">
-                            Cela influence le devis d'installation
+                            Cela influence le devis d&apos;installation
                         </p>
                         <div className="space-y-3">
                             <OptionButton
@@ -636,7 +646,7 @@ export default function LeadForm({
                                     }
                                     `}
                             >
-                                {status === 'loading' ? ( // Assuming isSubmitting maps to status === 'loading'
+                                {status === 'loading' ? (
                                     <span className="flex items-center justify-center gap-2">
                                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                         Envoi en cours...
@@ -647,7 +657,7 @@ export default function LeadForm({
                             </button>
 
                             <p className="text-xs text-slate-400 text-center mt-4 px-4 leading-relaxed">
-                                En cliquant sur ce bouton, vous acceptez nos <a href="/cgu" className="underline hover:text-blue-600">CGU</a> et acceptez d&apos;être recontacté par nos installateurs partenaires certifiés IRVE pour votre projet.
+                                En cliquant sur ce bouton, vous acceptez nos <Link href="/cgv" className="underline hover:text-blue-600">CGV</Link> et acceptez d&apos;être recontacté par nos installateurs partenaires certifiés IRVE pour votre projet.
                                 Vos données sont sécurisées.
                             </p>
                         </div>
