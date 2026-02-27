@@ -17,8 +17,8 @@ export default async function DomainLayout({
 
     if (!site) return notFound();
 
-    // Priority: Config File (Static), fallback to Global Account
-    const gaId = site.ga_id || "G-3S88LL4FC5";
+    // Priority: Config File (Static)
+    const gaId = site.ga_id;
     const gtmId = site.gtm_id;
 
     return (
