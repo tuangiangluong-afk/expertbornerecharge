@@ -125,7 +125,7 @@ export default async function middleware(req: NextRequest) {
     response.headers.set("x-irve-path", cleanPath);
 
     // Shared routes must point back to the main hub as their canonical source
-    if (cleanPath.startsWith("/guides") || cleanPath.startsWith("/vehicules") || cleanPath.startsWith("/solutions") || cleanPath.startsWith("/service") || cleanPath.startsWith("/poi") || cleanPath.startsWith("/outils") || cleanPath.startsWith("/installation")) {
+    if (cleanPath.startsWith("/guides") || cleanPath.startsWith("/vehicules") || cleanPath.startsWith("/solutions") || cleanPath.startsWith("/service") || cleanPath.startsWith("/poi") || cleanPath.startsWith("/outils") || cleanPath.startsWith("/installation") || cleanPath.startsWith("/fiscalite-entreprise-borne")) {
         response.headers.set("x-irve-canonical-domain", "expertbornerecharge.com");
     } else {
         response.headers.set("x-irve-canonical-domain", domainKey);
