@@ -156,6 +156,7 @@ const _parisConfig: SiteConfig = {
     quartiers: ["Marais", "Bastille", "Montmartre", "Champs-Elysées"],
     coproprietes: ["Haussmannien", "Résidences 70s"],
     centresCommerciaux: [],
+    ga_id: "G-00EBCXCPYG",
     coordinates: { lat: 48.8566, lng: 2.3522 }
 };
 
@@ -187,6 +188,7 @@ const _neuillyConfig: SiteConfig = {
     quartiers: ["Sablons", "Saint-James", "Bagatelle", "Pont de Neuilly"],
     coproprietes: [],
     centresCommerciaux: [],
+    ga_id: "G-288041ZWT2",
     coordinates: { lat: 48.8846, lng: 2.2688 }
 };
 
@@ -218,6 +220,7 @@ const _lyonConfig: SiteConfig = {
     quartiers: ["Presqu'île", "Part-Dieu", "Confluence", "Croix-Rousse"],
     coproprietes: [],
     centresCommerciaux: [],
+    ga_id: "G-CCE7KCSVJZ",
     coordinates: { lat: 45.7640, lng: 4.8357 }
 };
 
@@ -248,6 +251,7 @@ const _boulogneConfig: SiteConfig = {
     quartiers: ["Point-du-Jour", "Silly-Gallieni", "Centre-Ville"],
     coproprietes: [],
     centresCommerciaux: [],
+    ga_id: "G-PRTNVL73RE",
     coordinates: { lat: 48.8397, lng: 2.2426 }
 };
 
@@ -278,6 +282,7 @@ const _bordeauxConfig: SiteConfig = {
     quartiers: ["Chartrons", "Saint-Michel", "Caudéran"],
     coproprietes: [],
     centresCommerciaux: [],
+    ga_id: "G-QR6VYF1LM5",
     coordinates: { lat: 44.8378, lng: -0.5792 }
 };
 
@@ -307,7 +312,8 @@ const _toulouseConfig: SiteConfig = {
     localKeywords: ["borne recharge toulouse", "installation borne 31"],
     quartiers: ["Capitole", "Minimes", "Saint-Cyprien"],
     coproprietes: [],
-    centresCommerciaux: []
+    centresCommerciaux: [],
+    ga_id: "G-4G7LZYW8ZF"
 };
 
 // 7. Annecy (Frontaliers Suisses - Cash) - Remplacement Toulouse #2
@@ -337,6 +343,7 @@ const _annecyConfig: SiteConfig = {
     quartiers: ["Veyrier", "Annecy-le-Vieux"],
     coproprietes: [],
     centresCommerciaux: [],
+    ga_id: "G-XCX2S9LBJB",
     coordinates: { lat: 45.8992, lng: 6.1294 }
 };
 
@@ -366,7 +373,8 @@ const _stgermainConfig: SiteConfig = {
     localKeywords: ["borne recharge saint germain", "installateur 78"],
     quartiers: [],
     coproprietes: [],
-    centresCommerciaux: []
+    centresCommerciaux: [],
+    ga_id: "G-1VS7642FBL"
 };
 
 // 9. Nice (PACA Luxe)
@@ -396,6 +404,7 @@ const _niceConfig: SiteConfig = {
     quartiers: ["Promenade", "Cimiez", "Mont Boron"],
     coproprietes: [],
     centresCommerciaux: [],
+    ga_id: "G-EVVGL6MRJQ",
     coordinates: { lat: 43.7102, lng: 7.2620 }
 };
 
@@ -426,6 +435,7 @@ const _nantesConfig: SiteConfig = {
     quartiers: [],
     coproprietes: [],
     centresCommerciaux: [],
+    ga_id: "G-G6Y4NQ5XBY",
     coordinates: { lat: 47.2184, lng: -1.5536 }
 };
 
@@ -456,6 +466,7 @@ const _aixConfig: SiteConfig = {
     quartiers: [],
     coproprietes: [],
     centresCommerciaux: [],
+    ga_id: "G-CDB4C36VM6",
     coordinates: { lat: 43.5297, lng: 5.4474 }
 };
 
@@ -485,7 +496,8 @@ const _strasbourgConfig: SiteConfig = {
     localKeywords: ["borne recharge strasbourg", "installateur 67"],
     quartiers: [],
     coproprietes: [],
-    centresCommerciaux: []
+    centresCommerciaux: [],
+    ga_id: "G-M2LGC1MP16"
 };
 
 // 13. Lille (Le Nord riche)
@@ -515,6 +527,7 @@ const _lilleConfig: SiteConfig = {
     quartiers: ["Vieux-Lille"],
     coproprietes: [],
     centresCommerciaux: [],
+    ga_id: "G-GJ9TKQNC9S",
     coordinates: { lat: 50.6292, lng: 3.0573 }
 };
 
@@ -544,7 +557,8 @@ const _montpellierConfig: SiteConfig = {
     localKeywords: ["borne recharge montpellier", "installateur 34"],
     quartiers: [],
     coproprietes: [],
-    centresCommerciaux: []
+    centresCommerciaux: [],
+    ga_id: "G-HJ5E9K54C6"
 };
 
 // 15. Versailles (Patrimoine)
@@ -573,7 +587,8 @@ const _versaillesConfig: SiteConfig = {
     localKeywords: ["borne recharge versailles", "installateur 78"],
     quartiers: [],
     coproprietes: [],
-    centresCommerciaux: []
+    centresCommerciaux: [],
+    ga_id: "G-1LDSBWTLCG"
 };
 
 // 16. Saint-Maur-des-Fossés (Volume Maison)
@@ -602,7 +617,8 @@ const _stmaurConfig: SiteConfig = {
     localKeywords: ["borne recharge saint maur", "installateur 94"],
     quartiers: [],
     coproprietes: [],
-    centresCommerciaux: []
+    centresCommerciaux: [],
+    ga_id: "G-GBZH52JQ6H"
 };
 
 // 17. Levallois (Business + Copro)
@@ -631,7 +647,8 @@ const _levalloisConfig: SiteConfig = {
     localKeywords: ["borne recharge levallois", "installateur 92"],
     quartiers: [],
     coproprietes: [],
-    centresCommerciaux: []
+    centresCommerciaux: [],
+    ga_id: "G-P230GJZZ4G"
 };
 
 // 18. Rennes
@@ -660,7 +677,8 @@ const _rennesConfig: SiteConfig = {
     localKeywords: ["borne recharge rennes", "installateur 35"],
     quartiers: [],
     coproprietes: [],
-    centresCommerciaux: []
+    centresCommerciaux: [],
+    ga_id: "G-3ZD47BWJN0"
 };
 
 // 19. Cannes (Résidences secondaires)
@@ -690,6 +708,7 @@ const _cannesConfig: SiteConfig = {
     quartiers: ["La Croisette", "Californie"],
     coproprietes: [],
     centresCommerciaux: [],
+    ga_id: "G-GMX71FCL9E",
     coordinates: { lat: 43.5528, lng: 7.0174 }
 };
 
@@ -720,6 +739,7 @@ const _biarritzConfig: SiteConfig = {
     quartiers: [],
     coproprietes: [],
     centresCommerciaux: [],
+    ga_id: "G-3GHBT5VLHW",
     coordinates: { lat: 43.4832, lng: -1.5586 }
 };
 
@@ -749,7 +769,8 @@ const _marseilleConfig: SiteConfig = {
     localKeywords: ["borne recharge marseille", "carport solaire marseille", "borne solaire 13", "cassis borne recharge", "carry le rouet"],
     quartiers: ["Le Prado", "Périer", "Roucas-Blanc", "La Corniche", "Cassis", "Carry-le-Rouet"], // La Ceinture Dorée
     coproprietes: [],
-    centresCommerciaux: []
+    centresCommerciaux: [],
+    ga_id: "G-TY9Z3692S5"
 };
 
 // ============================================
