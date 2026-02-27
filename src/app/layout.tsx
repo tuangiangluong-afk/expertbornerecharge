@@ -19,10 +19,11 @@ import StructuredData from "@/components/seo/StructuredData";
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
   const domain = headersList.get("x-irve-domain") || "expertbornerecharge.com";
+  const canonicalDomain = headersList.get("x-irve-canonical-domain") || domain;
   const path = headersList.get("x-irve-path") || "";
   const year = getCurrentYearSEO();
 
-  const canonicalUrl = `https://${domain}${path}`;
+  const canonicalUrl = `https://${canonicalDomain}${path}`;
 
   return {
     title: {
@@ -32,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: "Installation de bornes de recharge électriques. Réseau d'installateurs certifiés IRVE. Devis gratuit sous 24h.",
     metadataBase: new URL(`https://${domain}`),
     alternates: {
-      canonical: `${path.toLowerCase()}` || "/",
+      canonical: canonicalUrl,
     },
     robots: {
       index: true,

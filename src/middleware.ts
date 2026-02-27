@@ -69,6 +69,15 @@ export default async function middleware(req: NextRequest) {
         return applySecurityHeaders(NextResponse.rewrite(new URL(`/${domainKey}/sitemap.xml`, req.url)));
     }
 
+    // 1.5 Robots Rewrite
+    if (path === "/robots.txt") {
+        if (isHub) {
+            // Next.js handles /robots.txt from src/app/robots.ts
+            return applySecurityHeaders(NextResponse.next());
+        }
+        return applySecurityHeaders(NextResponse.rewrite(new URL(`/${domainKey}/robots.txt`, req.url)));
+    }
+
     // 2. Routing Logic
     let response: NextResponse;
 
@@ -109,6 +118,13 @@ export default async function middleware(req: NextRequest) {
     response.headers.set("x-irve-domain", domainKey);
     response.headers.set("x-irve-city", domainKey);
     response.headers.set("x-irve-path", cleanPath);
+
+    // Shared routes must point back to the main hub as their canonical source
+    if (cleanPath.startsWith("/guides") || cleanPath.startsWith("/vehicules") || cleanPath.startsWith("/solutions") || cleanPath.startsWith("/service") || cleanPath.startsWith("/poi") || cleanPath.startsWith("/outils") || cleanPath.startsWith("/installation")) {
+        response.headers.set("x-irve-canonical-domain", "expertbornerecharge.com");
+    } else {
+        response.headers.set("x-irve-canonical-domain", domainKey);
+    }
 
     return applySecurityHeaders(response);
 }

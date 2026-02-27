@@ -502,7 +502,7 @@ const _lilleConfig: SiteConfig = {
     targetType: 'MIXED',
     priceRange: 'STANDARD',
     theme: 'trust',
-    heroImage: "https://images.unsplash.com/photo-1533512930330-4ac257c86793?q=80&w=2940&auto=format&fit=crop", // Placeholder
+    heroImage: "https://images.unsplash.com/photo-1502484214532-6a84ebfa21ec?q=80&w=2940&auto=format&fit=crop", // Lille Architecture
     description: "Installation borne recharge Lille et métropole.",
     meta: {
         title: "Installation Borne de Recharge Lille | Nord",
@@ -590,7 +590,7 @@ const _stmaurConfig: SiteConfig = {
     targetType: 'MAISON',
     priceRange: 'STANDARD',
     theme: 'trust',
-    heroImage: "https://images.unsplash.com/photo-1563720743-7f215d2e7d77?q=80&w=2940&auto=format&fit=crop", // Placeholder
+    heroImage: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=2940&auto=format&fit=crop", // Suburb House
     description: "Installation borne recharge Saint-Maur-des-Fossés.",
     meta: {
         title: "Borne de Recharge Saint-Maur-des-Fossés | 94",
@@ -619,7 +619,7 @@ const _levalloisConfig: SiteConfig = {
     targetType: 'COPRO',
     priceRange: 'PREMIUM',
     theme: 'trust',
-    heroImage: "https://images.unsplash.com/photo-1565514020176-857de743ebc9?q=80&w=2940&auto=format&fit=crop", // Placeholder
+    heroImage: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2940&auto=format&fit=crop", // Modern buildings
     description: "Installation borne recharge Levallois-Perret.",
     meta: {
         title: "Installation Borne de Recharge Levallois-Perret",

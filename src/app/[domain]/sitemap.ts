@@ -58,17 +58,6 @@ export default async function sitemap(props?: Props): Promise<MetadataRoute.Site
         });
     }
 
-    // 3. Solutions (Filtered by site target)
-    const solutions = ['copropriete', 'maison', 'entreprise'];
-    solutions.forEach(s => {
-        routes.push({
-            url: `${baseUrl}/solutions/${s}`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.6,
-        });
-    });
-
     return routes.map(item => ({
         ...item,
         url: item.url.toLowerCase()
