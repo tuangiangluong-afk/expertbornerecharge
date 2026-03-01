@@ -169,7 +169,8 @@ export default function LeadForm({
                     formData.name.trim() !== "" &&
                     formData.email.includes("@") &&
                     ZIP_CODE_REGEX.test(formData.zipCode.trim()) &&
-                    (formData.phone.trim() === "" || FRENCH_PHONE_REGEX.test(formData.phone.replace(/\s/g, '')))
+                    formData.phone.trim() !== "" &&
+                    FRENCH_PHONE_REGEX.test(formData.phone.replace(/\s/g, ''))
                 );
             default: return false;
         }
@@ -190,7 +191,13 @@ export default function LeadForm({
     const handleSubmit = async () => {
         if (!canProceed()) {
             setStatus('error');
-            setErrorMessage("Veuillez remplir correctement les champs obligatoires (Nom, Email valide, Code Postal à 5 chiffres).");
+            const errors = [];
+            if (formData.name.trim() === "") errors.push("votre Nom");
+            if (!ZIP_CODE_REGEX.test(formData.zipCode.trim())) errors.push("un Code Postal valide à 5 chiffres");
+            if (!formData.email.includes("@")) errors.push("un Email valide avec '@'");
+            if (formData.phone.trim() === "" || !FRENCH_PHONE_REGEX.test(formData.phone.replace(/\s/g, ''))) errors.push("un Numéro de téléphone valide");
+            
+            setErrorMessage(`Veuillez corriger ou renseigner : ${errors.join(', ')}.`);
             return;
         }
 
@@ -579,7 +586,7 @@ export default function LeadForm({
                             <div>
                                 <label className="flex items-center gap-2 text-sm font-medium text-neutral-700 mb-2">
                                     <Phone size={16} />
-                                    Téléphone (Optionnel)
+                                    Téléphone
                                 </label>
                                 <input
                                     type="tel"

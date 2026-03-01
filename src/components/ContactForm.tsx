@@ -18,11 +18,31 @@ export default function ContactForm({ domain, city, theme }: ContactFormProps) {
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         // ... (existing logic same)
         e.preventDefault();
-        setStatus("loading");
-
         const form = e.currentTarget;
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
+
+        // Basic specific validation for Contact Form
+        const errors: string[] = [];
+        if (!data.name || (data.name as string).trim() === "") errors.push("votre Nom");
+        if (!data.email || !(data.email as string).includes("@")) errors.push("un Email valide avec '@'");
+        if (!data.postalCode || !/^\d{5}$/.test((data.postalCode as string).trim())) errors.push("un Code Postal valide à 5 chiffres");
+        if (!data.message || (data.message as string).trim() === "") errors.push("votre Message");
+        
+        // Phone validation (required)
+        const phone = (data.phone as string) || "";
+        const FRENCH_PHONE_REGEX = /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/;
+        if (phone.trim() === "" || !FRENCH_PHONE_REGEX.test(phone.replace(/\s/g, ''))) {
+            errors.push("un Numéro de téléphone valide");
+        }
+
+        if (errors.length > 0) {
+            setStatus("error");
+            setErrorMessage(`Veuillez corriger ou renseigner : ${errors.join(', ')}.`);
+            return;
+        }
+
+        setStatus("loading");
 
         try {
             const res = await fetch("/api/contact", {
@@ -126,8 +146,9 @@ export default function ContactForm({ domain, city, theme }: ContactFormProps) {
             </div>
 
             <div className="space-y-2">
-                <label htmlFor="phone" className="text-sm font-medium text-neutral-700">Téléphone (Optionnel)</label>
+                <label htmlFor="phone" className="text-sm font-medium text-neutral-700">Téléphone</label>
                 <input
+                    required
                     type="tel"
                     name="phone"
                     id="phone"
