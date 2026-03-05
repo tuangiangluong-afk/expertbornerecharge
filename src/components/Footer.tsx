@@ -181,6 +181,8 @@ export function Footer({ config }: FooterProps) {
                                         <li key={site.slug}>
                                             <Link
                                                 href={site.domain ? `https://${site.domain}/` : `https://expertbornerecharge.com/ville/${site.slug}`}
+                                                target={site.domain ? "_blank" : undefined}
+                                                rel={site.domain ? "noopener noreferrer" : undefined}
                                                 className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"
                                             >
                                                 <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>

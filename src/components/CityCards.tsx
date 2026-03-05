@@ -36,6 +36,8 @@ export function CityCards({ cities }: CityCardProps) {
                     <Link
                         key={i}
                         href={targetLink}
+                        target={city.domain ? "_blank" : undefined}
+                        rel={city.domain ? "noopener noreferrer" : undefined}
                         className={`
                             block relative bg-white rounded-2xl p-6 border-2 transition-all
                             ${city.available

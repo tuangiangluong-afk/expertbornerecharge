@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import { MapPin, ArrowRight, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { findLocalSite } from '@/app/actions/find-local-site';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 // Hardcoded safe list of top cities for autocomplete (Client Side)
 // In a real app we'd fetch this or pass it as props
@@ -29,7 +29,6 @@ const SUGGESTIONS = [
 ];
 
 export default function LocalLinker() {
-    const router = useRouter();
     const [query, setQuery] = useState('');
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'not-found'>('idle');
     const [result, setResult] = useState<{ url: string; city: string } | null>(null);
@@ -156,6 +155,8 @@ export default function LocalLinker() {
                             </p>
                             <a
                                 href={result.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="inline-flex items-center gap-2 text-xs font-bold bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-400 transition shadow-lg shadow-green-900/20 w-full justify-center"
                             >
                                 Voir les offres locales <ArrowRight size={14} />
@@ -173,12 +174,12 @@ export default function LocalLinker() {
                             <p className="text-xs text-slate-300 mb-2">
                                 Pas de site dédié pour cette zone, mais notre réseau national couvre toute la France.
                             </p>
-                            <a
+                            <Link
                                 href="/#simulateur"
                                 className="text-xs font-bold text-blue-400 hover:text-blue-300 underline decoration-blue-400/30"
                             >
                                 Faire une demande nationale
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
