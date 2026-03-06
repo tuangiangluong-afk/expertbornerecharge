@@ -88,7 +88,6 @@ export default async function middleware(req: NextRequest) {
 
     if (isHub) {
         // HUB Logic
-
         // Redirect /home/* to /* to prevent duplicate content
         if (cleanPath.startsWith("/home") && cleanPath !== "/home/sitemap.xml") {
             const cleanUrl = cleanPath.replace("/home", "") || "/";
@@ -108,6 +107,17 @@ export default async function middleware(req: NextRequest) {
     } else {
         // SATELLITE Logic
 
+        // RESTRICTION: Local routes (/ville, /quartier) MUST match the current domain
+        // If they don't, we redirect to the correct domain or the hub to avoid duplicate content cross-domain
+        if (cleanPath.startsWith("/ville/") || cleanPath.startsWith("/quartier/")) {
+            const slug = cleanPath.split("/")[2];
+            // If the slug doesn't match our domainKey, it's a cross-domain leak
+            if (slug && slug !== domainKey) {
+                // Redirect to the hub (which will then redirect to the correct domain if needed)
+                return applySecurityHeaders(NextResponse.redirect(new URL(path, "https://expertbornerecharge.com"), 301));
+            }
+        }
+
         // Whitelist shared routes (serve from root app)
         if (path.startsWith("/guides") || path.startsWith("/vehicules") || path.startsWith("/solutions") || path.startsWith("/ville") || path.startsWith("/service") || path.startsWith("/quartier") || path.startsWith("/departement") || path.startsWith("/poi") || path.startsWith("/api") || path.startsWith("/outils") || path.startsWith("/login") || path.startsWith("/admin") || path.startsWith("/installation") || path.startsWith("/fiscalite-entreprise-borne")) {
             response = NextResponse.next();
@@ -125,6 +135,7 @@ export default async function middleware(req: NextRequest) {
     response.headers.set("x-irve-path", cleanPath);
 
     // Shared routes must point back to the main hub as their canonical source
+    // Local /ville and /quartier pages MUST be canonical to THEMSELVES on their own domain
     if (cleanPath.startsWith("/guides") || cleanPath.startsWith("/vehicules") || cleanPath.startsWith("/solutions") || cleanPath.startsWith("/service") || cleanPath.startsWith("/poi") || cleanPath.startsWith("/outils") || cleanPath.startsWith("/installation") || cleanPath.startsWith("/fiscalite-entreprise-borne")) {
         response.headers.set("x-irve-canonical-domain", "expertbornerecharge.com");
     } else {

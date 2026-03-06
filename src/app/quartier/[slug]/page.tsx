@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
-import { Phone, MapPin, ArrowRight, Building2, CheckCircle, Home } from "lucide-react";
+import { Phone, CheckCircle, Home } from "lucide-react";
 import CallButton from "@/components/CallButton";
-import Link from "next/link";
 import { getTheme } from "@/lib/theme";
 import type { Metadata } from "next";
 import { NATIONAL_CONFIG } from "@/config/national";
@@ -11,6 +10,7 @@ import { InternalMesh } from "@/components/InternalMesh";
 import { slugify } from "@/lib/slugify";
 import { NATIONAL_TARGETS } from "@/config/national-targets"; // Source of Truth
 import { getTargetAsCityConfig } from "@/config/national-targets";
+import Header from "@/components/Header";
 
 // Helper to find Neighborhood across all Partner Cities
 function getNeighborhood(slug: string) {
@@ -71,36 +71,33 @@ export default async function QuartierPage({ params }: { params: Promise<{ slug:
     if (!quartier) return notFound();
 
     const cityConfig = quartier.config || NATIONAL_CONFIG;
-    const theme = getTheme("home");
-    const classes = theme.classes;
+    const isHub = cityConfig.slug === 'home';
+    const theme = getTheme(cityConfig.slug);
+
+    // Map theme name to Header themeColor
+    const themeColorMap: Record<string, 'blue' | 'emerald' | 'amber' | 'purple'> = {
+        'amber': 'amber',
+        'emerald': 'emerald',
+        'blue': 'blue',
+        'violet': 'purple',
+        'rose': 'purple', // Fallback
+        'cyan': 'emerald', // Fallback
+        'orange': 'amber', // Fallback
+        'indigo': 'blue', // Fallback
+    };
+    const headerThemeColor = themeColorMap[theme.name] || 'blue';
 
     return (
         <div className="min-h-screen bg-neutral-50 font-sans text-neutral-900">
-            {/* Nav */}
-            <nav className="sticky top-0 z-40 w-full border-b border-neutral-200 bg-white/80 px-4 py-3 backdrop-blur-md">
-                <div className="container mx-auto flex items-center justify-between">
-                    <Link
-                        href="/"
-                        className={`flex items-center gap-2 text-xl font-black tracking-tighter text-neutral-900 hover:text-blue-600 transition`}
-                    >
-                        Expert Borne Recharge<span className="text-blue-600">.</span>
-                    </Link>
-                    <CallButton
-                        phoneNumber={cityConfig.phoneNumber}
-                        cityName={cityConfig.name}
-                        theme={theme}
-                        className={`rounded-full ${classes.bg} px-4 py-2 text-sm font-bold text-white shadow-lg transition hover:brightness-110 active:scale-95`}
-                    >
-                        <div className="flex items-center gap-2">
-                            <Phone size={14} />
-                            <span>Appeler</span>
-                        </div>
-                    </CallButton>
-                </div>
-            </nav>
+            <Header 
+                isHub={isHub} 
+                city={isHub ? null : cityConfig.city} 
+                phoneNumber={cityConfig.phoneNumber}
+                themeColor={headerThemeColor}
+            />
 
             {/* Header */}
-            <header className="bg-neutral-900 text-white pt-24 pb-32 relative overflow-hidden">
+            <header className="bg-neutral-900 text-white pt-32 pb-32 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 to-neutral-900"></div>
                 <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
 
@@ -148,7 +145,7 @@ export default async function QuartierPage({ params }: { params: Promise<{ slug:
                                 <h3 className="text-lg font-bold">Avis clients {quartier.name}</h3>
                                 <div className="text-xs font-bold bg-green-100 text-green-700 px-2 py-1 rounded">Vérifié</div>
                             </div>
-                            <p className="text-neutral-600 italic">"Très satisfait de l'installation de ma borne à {quartier.name}. Travail propre et équipe très réactive." - <span className="not-italic font-bold text-neutral-900">Thomas P.</span></p>
+                            <p className="text-neutral-600 italic">&quot;Très satisfait de l&apos;installation de ma borne à {quartier.name}. Travail propre et équipe très réactive.&quot; - <span className="not-italic font-bold text-neutral-900">Thomas P.</span></p>
                         </div>
                     </div>
 

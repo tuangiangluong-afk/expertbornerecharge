@@ -56,7 +56,7 @@ export default async function CGV({ params }: { params: Promise<{ domain: string
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <p className="text-sm text-neutral-500">Dernière mise à jour : 25/01/2026</p>
                         <p>
-                            Les présentes Conditions Générales de Vente (ci-après "CGV") régissent les relations contractuelles entre la société <strong>MEDIASHMAN</strong>, sise au 91 RUE DU FAUBOURG SAINT-HONORE, 75008 PARIS (SIREN 509 987 681), ci-après "L'Éditeur", et toute personne utilisant le site <strong>Vous pouvez nous contacter via notre <a href="/contact" className="underline">formulaire de contact</a>.</strong> pour la réservation de services de transport, ci-après "Le Client".
+                            Les présentes Conditions Générales de Vente (ci-après &quot;CGV&quot;) régissent les relations contractuelles entre la société <strong>WELINK TECH</strong>, sise au 6 RUE DES BATELIERS, 92110 CLICHY (SIREN 984 800 136), ci-après &quot;L&apos;Éditeur&quot;, et toute personne utilisant le site <strong>{city.domain}</strong> pour la mise en relation avec des installateurs de bornes de recharge certifiés, ci-après &quot;Le Client&quot;.
                         </p>
                     </div>
 
@@ -70,33 +70,33 @@ export default async function CGV({ params }: { params: Promise<{ domain: string
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className={`mb-4 text-2xl font-bold ${theme.text}`}>2. Réservations et Tarifs</h2>
                         <ul className="list-disc pl-5 space-y-2">
-                            <li><strong>Réservation Immédiate :</strong> Elle est confirmée uniquement après validation téléphonique ou par SMS par un chauffeur partenaire.</li>
-                            <li><strong>Réservation à l'avance :</strong> Elle est recommandée 24h à l'avance pour garantir la disponibilité.</li>
-                            <li><strong>Tarification :</strong> Le service de mise en relation et l'établissement des devis par nos partenaires sont gratuits pour l'utilisateur. Le prix final de l'installation est déterminé par l'installateur partenaire après visite technique.</li>
+                            <li><strong>Demande de devis :</strong> L&apos;utilisateur remplit un formulaire précisant son besoin (maison, copropriété, entreprise).</li>
+                            <li><strong>Étude technique :</strong> Un premier diagnostic peut être effectué par téléphone ou sur photos.</li>
+                            <li><strong>Tarification :</strong> Le service de mise en relation et l&apos;établissement des devis par nos partenaires sont gratuits pour l&apos;utilisateur. Le prix final de l&apos;installation est déterminé par l&apos;installateur partenaire après visite technique.</li>
                         </ul>
                     </div>
 
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className={`mb-4 text-2xl font-bold ${theme.text}`}>3. Annulation et Retards</h2>
                         <p>
-                            Toute annulation doit être notifiée par téléphone au moins 1 heure avant l'heure de prise en charge prévue. En cas d'annulation tardive ou de non-présentation du client ("No Show"), des frais d'approche pourront être facturés.
+                            Toute demande peut être annulée ou modifiée tant que la visite technique n&apos;a pas eu lieu ou que le devis n&apos;a pas été accepté.
                         </p>
                         <p>
-                            L'Éditeur ne saurait être tenu responsable des retards dus aux conditions de circulation, grèves, ou cas de force majeure.
+                            L&apos;Éditeur ne saurait être tenu responsable des retards ou impossibilités techniques rencontrés par les installateurs partenaires.
                         </p>
                     </div>
 
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className={`mb-4 text-2xl font-bold ${theme.text}`}>4. Responsabilités</h2>
                         <p>
-                            MEDIASHMAN agit en qualité d'apporteur d'affaires et de plateforme technologique. La responsabilité du transport (sécurité, conformité du véhicule) incombe exclusivement au chauffeur exécutant la course, qui doit être assuré pour le transport de personnes à titre onéreux.
+                            WELINK TECH agit en qualité d&apos;apporteur d&apos;affaires et de plateforme technologique. La responsabilité de l&apos;installation (sécurité, conformité aux normes IRVE, assurance décennale) incombe exclusivement à l&apos;électricien partenaire exécutant les travaux.
                         </p>
                     </div>
 
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className={`mb-4 text-2xl font-bold ${theme.text}`}>5. Loi Applicable</h2>
                         <p>
-                            Les présentes CGV sont soumises au droit français. Tout litige relatif à leur interprétation et/ou à leur exécution relève des tribunaux compétents de Paris.
+                            Les présentes CGV sont soumises au droit français. Tout litige relatif à leur interprétation et/ou à leur exécution relève des tribunaux compétents de Nanterre.
                         </p>
                     </div>
                 </div>

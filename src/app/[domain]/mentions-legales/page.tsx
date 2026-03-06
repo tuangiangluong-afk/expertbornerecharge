@@ -27,7 +27,6 @@ export default async function MentionsLegales({ params }: { params: Promise<{ do
     }
 
     const theme = getTheme(city.slug);
-    const classes = theme.classes;
 
     return (
         <div className="min-h-screen bg-neutral-50 font-sans text-neutral-900">
@@ -60,10 +59,10 @@ export default async function MentionsLegales({ params }: { params: Promise<{ do
                         </p>
                         <ul className="list-none space-y-2 pl-0">
                             <li><strong>Forme juridique :</strong> SAS</li>
-                            <li><strong>Siège social :</strong> 123 Avenue des Champs-Élysées, 75008 PARIS</li>
-                            <li><strong>SIREN :</strong> 823 456 789 R.C.S. PARIS</li>
+                            <li><strong>Siège social :</strong> 6 RUE DES BATELIERS, 92110 CLICHY</li>
+                            <li><strong>SIREN :</strong> 984 800 136</li>
                             <li><strong>Responsable de publication :</strong> Direction WELINK TECH</li>
-                            <li><strong>Contact :</strong> <a href="/contact" className="underline">Formulaire de contact</a></li>
+                            <li><strong>Contact :</strong> <Link href="/contact" className="underline">Formulaire de contact</Link></li>
                         </ul>
                     </div>
 
@@ -98,7 +97,7 @@ export default async function MentionsLegales({ params }: { params: Promise<{ do
                     <div className="mb-8 rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
                         <h2 className={`mb-4 text-2xl font-bold ${theme.text}`}>5. Données Personnelles (RGPD)</h2>
                         <p>
-                            Les informations collectées via le module de réservation (nom, téléphone, adresse) sont nécessaires au traitement de votre demande de transport. Elles sont transmises exclusivement aux chauffeurs partenaires concernés par la course.
+                            Les informations collectées via le module de demande de devis (nom, téléphone, adresse) sont nécessaires au traitement de votre demande d&apos;installation. Elles sont transmises exclusivement aux installateurs partenaires certifiés IRVE.
                         </p>
                         <p>
                             Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour l'exercer, contactez-nous à : <strong>{city.email}</strong>.

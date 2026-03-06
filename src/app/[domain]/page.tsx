@@ -19,6 +19,7 @@ import ChargerComparison from "@/components/ChargerComparison";
 import GrantsCalculator from "@/components/GrantsCalculator";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FloatingCTA from "@/components/FloatingCTA";
+import { slugify } from "@/lib/slugify";
 
 // ============================================
 // METADATA
@@ -594,13 +595,13 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
                         </h3>
                         <div className="flex flex-wrap gap-3">
                             {site.quartiers.map((quartier: string, i: number) => (
-                                <a
+                                <Link
                                     key={i}
-                                    href="#simulateur"
+                                    href={`/quartier/${slugify(quartier).toLowerCase()}`}
                                     className="inline-block bg-white px-4 py-2 rounded-full text-sm text-neutral-700 border border-neutral-200 hover:border-blue-500 hover:text-blue-600 hover:shadow-sm transition-colors cursor-pointer"
                                 >
                                     Borne Recharge {quartier}
-                                </a>
+                                </Link>
                             ))}
                         </div>
                     </div>
