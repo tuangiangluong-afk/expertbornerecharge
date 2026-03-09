@@ -42,13 +42,13 @@ export default async function sitemap(props?: Props): Promise<MetadataRoute.Site
             url: `${baseUrl}/mentions-legales`,
             lastModified: new Date(),
             changeFrequency: 'monthly',
-            priority: 0.3,
+            priority: 0.7,
         },
         {
             url: `${baseUrl}/cgv`,
             lastModified: new Date(),
             changeFrequency: 'monthly',
-            priority: 0.3,
+            priority: 0.7,
         }
     ];
 

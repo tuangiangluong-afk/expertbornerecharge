@@ -110,12 +110,8 @@ export default async function middleware(req: NextRequest) {
         // RESTRICTION: Local routes (/ville, /quartier) MUST match the current domain
         // If they don't, we redirect to the correct domain or the hub to avoid duplicate content cross-domain
         if (cleanPath.startsWith("/ville/") || cleanPath.startsWith("/quartier/")) {
-            const slug = cleanPath.split("/")[2];
-            // If the slug doesn't match our domainKey, it's a cross-domain leak
-            if (slug && slug !== domainKey) {
-                // Redirect to the hub (which will then redirect to the correct domain if needed)
-                return applySecurityHeaders(NextResponse.redirect(new URL(path, "https://expertbornerecharge.com"), 301));
-            }
+            // No redirection needed here; the router will handle 404 if the slug is invalid,
+            // or serve the correct content if it exists.
         }
 
         // Whitelist shared routes (serve from root app)

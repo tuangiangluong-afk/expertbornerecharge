@@ -13,6 +13,8 @@ import { getTargetAsCityConfig } from "@/config/national-targets";
 import Header from "@/components/Header";
 
 // Helper to find Neighborhood across all Partner Cities
+import { SITES } from "@/lib/sites-config";
+
 function getNeighborhood(slug: string) {
     // 1. Search in National Config Fallbacks
     const nationalNightlife = NATIONAL_CONFIG.points_of_interest.nightlife;
@@ -28,26 +30,49 @@ function getNeighborhood(slug: string) {
         }
     }
 
+    // 3. Search in SITES config (Satellite Domains)
+    for (const site of Object.values(SITES)) {
+        const districts = site.quartiers || [];
+        match = districts.find(d => slugify(d) === slug);
+        if (match) return { 
+            name: match, 
+            city: site.city, 
+            citySlug: site.slug,
+            config: {
+                ...site,
+                name: site.name,
+                phoneNumber: site.phoneNumber,
+                neighborhoods: site.quartiers // Map for BookingWidget compatibility
+            } as any
+        };
+    }
+
     return undefined;
 }
 
 export async function generateStaticParams() {
     // Collect all neighborhoods from all targets
-    const allNeighborhoods = [];
+    const allNeighborhoods = new Set<string>();
 
     // National fallback
-    allNeighborhoods.push(...NATIONAL_CONFIG.points_of_interest.nightlife);
+    NATIONAL_CONFIG.points_of_interest.nightlife.forEach(n => allNeighborhoods.add(slugify(n)));
 
     // Partners
     for (const target of NATIONAL_TARGETS) {
         const config = getTargetAsCityConfig(target.slug);
         if (config && config.neighborhoods) {
-            allNeighborhoods.push(...config.neighborhoods);
+            config.neighborhoods.forEach(n => allNeighborhoods.add(slugify(n)));
         }
     }
 
-    return allNeighborhoods.map(n => ({
-        slug: slugify(n),
+    // SITES (Satellite Domains)
+    for (const site of Object.values(SITES)) {
+        const districts = site.quartiers || [];
+        districts.forEach(d => allNeighborhoods.add(slugify(d)));
+    }
+
+    return Array.from(allNeighborhoods).map(slug => ({
+        slug,
     }));
 }
 
