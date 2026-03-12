@@ -7,6 +7,8 @@ import CallButton from "@/components/CallButton";
 import Link from "next/link";
 import { Phone, Mail, MapPin, ArrowLeft, Zap } from "lucide-react";
 import type { Metadata } from "next";
+import { Footer } from "@/components/Footer";
+import { CITIES } from "@/lib/db";
 
 export async function generateMetadata({ params }: { params: Promise<{ domain: string }> }): Promise<Metadata> {
     const resolvedParams = await params;
@@ -54,7 +56,7 @@ export default async function ContactPage({ params }: { params: Promise<{ domain
                 </div>
             </nav>
 
-            <main className="container mx-auto max-w-5xl px-4 py-12">
+            <main className="container mx-auto max-w-5xl px-4 py-12 mb-20">
                 <div className="text-center mb-12">
                     <h1 className="text-4xl font-extrabold tracking-tight text-neutral-900 mb-4">
                         Contactez votre expert à {city.city}
@@ -124,6 +126,7 @@ export default async function ContactPage({ params }: { params: Promise<{ domain
                     </div>
                 </div>
             </main>
+            <Footer config={CITIES[resolvedParams.domain]} />
         </div>
     );
 }

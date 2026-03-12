@@ -34,19 +34,19 @@ export default async function sitemap(props?: Props): Promise<MetadataRoute.Site
         },
         {
             url: `${baseUrl}/contact`,
-            lastModified: new Date(),
+            lastModified: new Date('2026-03-01'),
             changeFrequency: 'monthly',
             priority: 0.8,
         },
         {
             url: `${baseUrl}/mentions-legales`,
-            lastModified: new Date(),
+            lastModified: new Date('2026-03-01'),
             changeFrequency: 'monthly',
             priority: 0.7,
         },
         {
             url: `${baseUrl}/cgv`,
-            lastModified: new Date(),
+            lastModified: new Date('2026-03-01'),
             changeFrequency: 'monthly',
             priority: 0.7,
         }

@@ -6,6 +6,8 @@ import { getTheme } from "@/lib/theme";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
+import { Footer } from "@/components/Footer";
+import { CITIES } from "@/lib/db";
 
 export async function generateMetadata({ params }: { params: Promise<{ domain: string }> }): Promise<Metadata> {
     const resolvedParams = await params;
@@ -47,7 +49,7 @@ export default async function CGV({ params }: { params: Promise<{ domain: string
                 </div>
             </nav>
 
-            <main className="container mx-auto max-w-3xl px-4 py-12 lg:py-20">
+            <main className="container mx-auto max-w-3xl px-4 py-12 lg:py-20 mb-20">
                 <h1 className="mb-8 text-4xl font-extrabold tracking-tight text-neutral-900 sm:text-5xl">
                     Conditions Générales de Vente (CGV)
                 </h1>
@@ -101,6 +103,7 @@ export default async function CGV({ params }: { params: Promise<{ domain: string
                     </div>
                 </div>
             </main>
+            <Footer config={CITIES[resolvedParams.domain]} />
         </div>
     );
 }

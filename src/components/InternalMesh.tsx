@@ -97,10 +97,10 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
                         <ul className="space-y-3">
                             {neighborhoods.slice(0, 8).map((quartier: string, i: number) => (
                                 <li key={quartier}>
-                                    <a href="#simulateur" className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
+                                    <Link href={`/quartier/${slugify(quartier)}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
                                         <span className="w-1 h-1 bg-yellow-500 rounded-full"></span>
                                         {getVariedAnchor(quartier, i + 2)} {/* Offset index for variation */}
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
