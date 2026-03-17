@@ -80,7 +80,10 @@ export default async function middleware(req: NextRequest) {
             // Next.js handles /robots.txt from src/app/robots.ts
             return applySecurityHeaders(NextResponse.next());
         }
-        return applySecurityHeaders(NextResponse.rewrite(new URL(`/${domainKey}/robots.txt`, req.url)));
+        // Satellite domains: serve from API route (Next.js Metadata robots.ts doesn't work in dynamic segments)
+        const robotsResponse = NextResponse.rewrite(new URL(`/api/robots`, req.url));
+        robotsResponse.headers.set("x-irve-domain", domainKey);
+        return applySecurityHeaders(robotsResponse);
     }
 
     // 2. Routing Logic
