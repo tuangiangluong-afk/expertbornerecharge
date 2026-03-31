@@ -25,6 +25,29 @@ export function Footer({ config }: FooterProps) {
 
     const theme = getTheme(config.slug);
 
+    // Group sites by region for the Mega Footer Directory
+    const sitesByRegion = Object.values(SITES)
+        .filter(site => site.slug !== 'home')
+        .reduce((acc, site) => {
+            const region = site.region || 'Autres Régions';
+            if (!acc[region]) acc[region] = [];
+            acc[region].push(site);
+            return acc;
+        }, {} as Record<string, SiteConfig[]>);
+
+    // Varied Anchor Logic (Local SEO)
+    const getGlobalDiverseAnchor = (cityName: string, index: number) => {
+        const variations = [
+            `Installation IRVE ${cityName}`,
+            `Installateur borne ${cityName}`,
+            `Borne de recharge ${cityName}`,
+            `Devis IRVE ${cityName}`,
+            `Électricien IRVE ${cityName}`,
+            `${cityName} (Borne électrique)`
+        ];
+        return variations[index % variations.length];
+    };
+
     return (
         <footer className="bg-neutral-900 border-t border-white/10 py-12 text-neutral-400">
             <div className="container mx-auto px-4 text-center">
@@ -276,6 +299,40 @@ export function Footer({ config }: FooterProps) {
                                 </li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+
+                {/* ========================================================= */}
+                {/* MEGA FOOTER - DIRECTORY SEO (CLEAN, WHITE-HAT, REGIONAL) */}
+                {/* ========================================================= */}
+                <div className="border-t border-white/10 pt-12 mt-4 text-left max-w-7xl mx-auto mb-16 px-4 md:px-0">
+                    <h5 className="text-white font-bold mb-8 text-xl tracking-tight text-center md:text-left">
+                        Notre Réseau National d'Installateurs
+                    </h5>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12">
+                        {Object.entries(sitesByRegion).map(([region, sites]) => (
+                            <div key={region} className="space-y-4">
+                                <h6 className="text-white/80 font-bold text-sm uppercase tracking-wider flex items-center gap-2">
+                                    <span className="w-2 h-2 rounded-full bg-blue-500/50"></span>
+                                    {region}
+                                </h6>
+                                <ul className="space-y-3 text-sm">
+                                    {sites.map((site, index) => (
+                                        <li key={site.slug}>
+                                            <Link
+                                                href={site.domain ? `https://${site.domain}/` : `https://expertbornerecharge.com/ville/${site.slug}`}
+                                                target={site.domain ? "_blank" : undefined}
+                                                rel={site.domain ? "noopener noreferrer" : undefined}
+                                                className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"
+                                            >
+                                                <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
+                                                {getGlobalDiverseAnchor(site.city, index)}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
                     </div>
                 </div>
 

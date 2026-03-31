@@ -32,7 +32,7 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
         : NATIONAL_CONFIG.points_of_interest.nightlife.slice(0, 3);
 
     // 3. Deep Mesh (Geo-Spatial) & Deduplication
-    const rawNearby = config ? getNearbyCities(config.slug, 5) : [];
+    const rawNearby = config ? getNearbyCities(config.slug, 12) : [];
     const slugs = new Set();
     const nearbyCities = rawNearby.filter(city => {
         if (slugs.has(city.slug)) return false;
@@ -43,11 +43,12 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
     // Varied Anchor Logic
     function getVariedAnchor(name: string, index: number) {
         const variations = [
-            `Borne recharge ${name}`,
-            `Installation à ${name}`,
-            `Électricien ${name}`,
-            `${name} (IRVE)`,
-            `Devis borne ${name}`
+            `Installation IRVE ${name}`,
+            `Installateur borne ${name}`,
+            `Devis borne recharge ${name}`,
+            `Électricien IRVE ${name}`,
+            `Borne électrique ${name}`,
+            `Entreprise IRVE ${name}`
         ];
         return variations[index % variations.length];
     }
@@ -73,9 +74,9 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
 
                     {/* 2. Villes à Proximité */}
                     <div>
-                        <h4 className="text-white font-bold mb-6 text-lg">Installateurs à Proximité</h4>
+                        <h4 className="text-white font-bold mb-6 text-lg">Agences à Proximité</h4>
                         <ul className="space-y-3">
-                            {nearbyCities.slice(0, 5).map((city, i) => (
+                            {nearbyCities.slice(0, 6).map((city, i) => (
                                 <li key={city.slug}>
                                     <Link
                                         href={city.domain ? `https://${city.domain}/` : `https://expertbornerecharge.com/ville/${city.slug}`}
@@ -112,15 +113,15 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
                             {nearbyCities.length > 0 ? "Installateurs à Proximité" : "Réseau National"}
                         </h4>
                         <ul className="space-y-3">
-                            {nearbyCities.length > 0 ? (
-                                nearbyCities.map((city, i) => (
+                            {nearbyCities.length > 6 ? (
+                                nearbyCities.slice(6, 12).map((city, i) => (
                                     <li key={city.slug}>
                                         <Link
                                             href={city.domain ? `https://${city.domain}/` : `https://expertbornerecharge.com/ville/${city.slug}`}
                                             className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2"
                                         >
                                             <span className="w-1 h-1 bg-blue-500 rounded-full"></span>
-                                            {getVariedAnchor(city.city, i + 5)}
+                                            {getVariedAnchor(city.city, i + 6)}
                                         </Link>
                                     </li>
                                 ))
