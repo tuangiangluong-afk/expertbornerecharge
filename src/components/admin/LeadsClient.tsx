@@ -21,6 +21,8 @@ interface Lead {
     message: string | null;
     postal_code: string | null;
     housing_type: string | null;
+    notes: string | null;
+    price: number | null;
     created_at: string;
 }
 
@@ -51,6 +53,9 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
     // UI States
     const [isSuccess, setIsSuccess] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isUpdatingLead, setIsUpdatingLead] = useState(false);
+    const [editNotes, setEditNotes] = useState("");
+    const [editPrice, setEditPrice] = useState(20);
 
     // Initial Fetch when opening modal
     async function openModal(lead: Lead) {
@@ -59,6 +64,8 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
         setAssignmentHistory([]);
         setIsLoadingHistory(true);
         setIsSuccess(false);
+        setEditNotes(lead.notes || "");
+        setEditPrice(lead.price || 20);
 
         try {
             const { getLeadAssignments } = await import("@/app/actions/leads");
@@ -68,6 +75,21 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
             console.error("Failed to load history", e);
         } finally {
             setIsLoadingHistory(false);
+        }
+    }
+
+    async function handleUpdateLead() {
+        if (!selectedLead) return;
+        setIsUpdatingLead(true);
+        try {
+            const { updateLeadDetails } = await import("@/app/actions/leads");
+            await updateLeadDetails(selectedLead.id, { notes: editNotes, price: editPrice });
+            setLeads(prev => prev.map(l => l.id === selectedLead.id ? { ...l, notes: editNotes, price: editPrice } : l));
+            showToast("Plomberie mise à jour !", "success");
+        } catch (e) {
+            showToast("Erreur mise à jour infos", "error");
+        } finally {
+            setIsUpdatingLead(false);
         }
     }
 
@@ -153,6 +175,8 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                     <th className="text-left px-6 py-3 text-xs font-bold text-slate-500 uppercase">Statut</th>
                                     <th className="text-left px-6 py-3 text-xs font-bold text-slate-500 uppercase">Contact</th>
                                     <th className="text-left px-6 py-3 text-xs font-bold text-slate-500 uppercase">Projet</th>
+                                    <th className="text-left px-6 py-3 text-xs font-bold text-slate-500 uppercase">Commentaire/Notes</th>
+                                    <th className="text-left px-6 py-3 text-xs font-bold text-slate-500 uppercase">Prix (HT)</th>
                                     <th className="text-right px-6 py-3 text-xs font-bold text-slate-500 uppercase">Actions</th>
                                 </tr>
                             </thead>
@@ -228,6 +252,16 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                                     </div>
                                                 )}
                                             </td>
+                                            <td className="px-6 py-4">
+                                                <p className="text-xs text-slate-600 max-w-[200px] truncate" title={lead.notes || ""}>
+                                                    {lead.notes || <span className="text-slate-300 italic">Aucune note</span>}
+                                                </p>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <span className="text-sm font-bold text-slate-700">
+                                                    {lead.price || 20} €
+                                                </span>
+                                            </td>
                                             <td className="px-6 py-4 text-right">
                                                 <button
                                                     onClick={() => openModal(lead)}
@@ -285,6 +319,48 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                         <span className="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">
                                             {selectedLead.tenant_id}
                                         </span>
+                                    </div>
+                                </div>
+
+                                {/* Notes & Price Editing */}
+                                <div className="mb-6 grid grid-cols-1 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-100">
+                                    <div>
+                                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                                            Notes / Contexte (visible par le partenaire)
+                                        </label>
+                                        <textarea
+                                            value={editNotes}
+                                            onChange={(e) => setEditNotes(e.target.value)}
+                                            className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 min-h-[80px]"
+                                            placeholder="Ex: Client pressé, prévoir nacelle..."
+                                        />
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
+                                                Prix de vente (HT)
+                                            </label>
+                                            <div className="flex items-center gap-2">
+                                                <input
+                                                    type="number"
+                                                    value={editPrice}
+                                                    onChange={(e) => setEditPrice(Number(e.target.value))}
+                                                    className="w-24 px-3 py-1.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 font-bold"
+                                                />
+                                                <span className="text-sm font-bold text-slate-500">€</span>
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={handleUpdateLead}
+                                            disabled={isUpdatingLead}
+                                            className="px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg text-sm font-bold hover:bg-slate-50 transition shadow-sm disabled:opacity-50"
+                                        >
+                                            {isUpdatingLead ? "..." : "Enregistrer"}
+                                        </button>
+                                    </div>
+                                    <div className="text-[10px] text-slate-400 flex items-center gap-1">
+                                        <Eye size={12} />
+                                        Le partenaire verra ces notes avant d'acheter.
                                     </div>
                                 </div>
 

@@ -221,6 +221,8 @@ export type Database = {
                     city: string | null
                     postal_code: string | null
                     housing_type: string | null
+                    notes: string | null
+                    price: number | null
                     created_at: string
                 }
                 Insert: {
@@ -236,6 +238,8 @@ export type Database = {
                     city?: string | null
                     postal_code?: string | null
                     housing_type?: string | null
+                    notes?: string | null
+                    price?: number | null
                     created_at?: string
                 }
                 Update: {
@@ -251,6 +255,8 @@ export type Database = {
                     city?: string | null
                     postal_code?: string | null
                     housing_type?: string | null
+                    notes?: string | null
+                    price?: number | null
                     created_at?: string
                 }
                 Relationships: []
