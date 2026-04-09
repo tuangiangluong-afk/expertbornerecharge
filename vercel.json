@@ -15,5 +15,11 @@
             "destination": "https://expertbornerecharge.com/:path",
             "permanent": true
         }
+    ],
+    "crons": [
+        {
+            "path": "/api/indexnow",
+            "schedule": "0 0 * * *"
+        }
     ]
 }

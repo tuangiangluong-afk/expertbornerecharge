@@ -1,29 +1,44 @@
 import { NextResponse } from 'next/server';
-import { NATIONAL_TARGETS } from '@/config/national-targets';
-import { SEO_GARES } from '@/lib/seo-gares';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
-    const INDEXNOW_KEY = "451408f3764b4c80b96839be70de0056";
+    const INDEXNOW_KEY = "d857c21382b142dcb53f9459750f5cc4";
     const HOST = "expertbornerecharge.com";
     const KEY_LOCATION = `https://${HOST}/${INDEXNOW_KEY}.txt`;
 
-    // Collect all URLs to ping
-    const urls = [
-        `https://${HOST}/`,
-        ...NATIONAL_TARGETS.map(t => `https://${HOST}/ville/${t.slug}`),
-        ...SEO_GARES.map(g => `https://${HOST}/gare/${g.slug}`)
-    ];
-
-    // Prepare IndexNow payload
-    const payload = {
-        host: HOST,
-        key: INDEXNOW_KEY,
-        keyLocation: KEY_LOCATION,
-        urlList: urls
-    };
-
     try {
-        // Ping Bing (Shared with Yandex and others)
+        // Fetch the site's own sitemap
+        const sitemapUrl = `https://${HOST}/sitemap.xml`;
+        const sitemapResponse = await fetch(sitemapUrl, { cache: 'no-store' });
+        
+        if (!sitemapResponse.ok) {
+            throw new Error(`Failed to fetch sitemap: ${sitemapResponse.statusText}`);
+        }
+        
+        const xml = await sitemapResponse.text();
+        
+        // Extract all URLs from sitemap
+        // Matches <loc>https://...</loc>
+        const matches = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)];
+        const urls = matches.map(m => m[1]);
+
+        if (urls.length === 0) {
+            throw new Error('No URLs found in sitemap');
+        }
+
+        // Limit to 10,000 URLs as per IndexNow restrictions
+        const payloadUrls = urls.slice(0, 10000);
+
+        // Prepare IndexNow payload
+        const payload = {
+            host: HOST,
+            key: INDEXNOW_KEY,
+            keyLocation: KEY_LOCATION,
+            urlList: payloadUrls
+        };
+
+        // Ping Bing/IndexNow
         const response = await fetch("https://api.indexnow.org/indexnow", {
             method: "POST",
             headers: {
@@ -39,8 +54,8 @@ export async function GET() {
         return NextResponse.json({
             success: true,
             provider: "IndexNow",
-            count: urls.length,
-            message: "Ping sent successfully"
+            count: payloadUrls.length,
+            message: "Ping sent successfully using sitemap URLs"
         });
 
     } catch (error: any) {
