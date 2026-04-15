@@ -1,5 +1,6 @@
 import { getCityByCleanSlug, CITIES } from "@/lib/db";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Building2, CheckCircle, Users, Euro, FileText, Award, Shield, ArrowRight } from "lucide-react";
