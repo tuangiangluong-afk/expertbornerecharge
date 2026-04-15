@@ -336,9 +336,9 @@ export function Footer({ config }: FooterProps) {
                     &copy; {new Date().getFullYear()} {config.name} - Tous droits réservés.
                 </div>
                 <div className="flex justify-center gap-4 text-xs mt-4 mb-2">
-                    <Link href={(config as Record<string, unknown>).basePath ? `${(config as Record<string, unknown>).basePath}/mentions-legales` : "/mentions-legales"} className="text-neutral-500 hover:text-white transition-colors">Mentions Légales</Link>
+                    <Link href={(config as any).basePath ? `${(config as any).basePath}/mentions-legales` : "/mentions-legales"} className="text-neutral-500 hover:text-white transition-colors">Mentions Légales</Link>
                     <span className="text-neutral-700">•</span>
-                    <Link href={(config as Record<string, unknown>).basePath ? `${(config as Record<string, unknown>).basePath}/cgv` : "/cgv"} className="text-neutral-500 hover:text-white transition-colors">CGV</Link>
+                    <Link href={(config as any).basePath ? `${(config as any).basePath}/cgv` : "/cgv"} className="text-neutral-500 hover:text-white transition-colors">CGV</Link>
                 </div>
             </div>
         </footer>
