@@ -2,13 +2,8 @@ import Link from "next/link";
 import { SITES } from "@/lib/sites-config"; // Import SITES
 import { CityConfig } from "@/lib/db";
 import { SiteConfig } from "@/lib/sites-config";
-import { slugify } from "@/lib/slugify";
-import CallButton from "@/components/CallButton";
-import { Phone, Mail } from "lucide-react";
-
 import { getTheme } from "@/lib/theme";
-
-import { SEO_DESTINATIONS } from "@/lib/seo-data";
+import { Mail } from "lucide-react";
 
 interface FooterProps {
     config: CityConfig | SiteConfig;
@@ -18,15 +13,15 @@ export function Footer({ config }: FooterProps) {
     if (!config) return null;
 
     // Normalize Data for both Config Types
-    const neighborhoods = (config as any).neighborhoods || (config as any).quartiers || [];
-    const poi = (config as any).points_of_interest || {};
-    const hotels = poi.hotels || [];
-    const nightlife = poi.nightlife || [];
 
     const theme = getTheme(config.slug);
 
-    // Group sites by region for the Mega Footer Directory
-    const sitesByRegion = Object.values(SITES)
+    // Group UNIQUE sites by region for the Mega Footer Directory
+    const uniqueSites = Array.from(
+        new Map(Object.values(SITES).map(site => [site.slug, site])).values()
+    );
+
+    const sitesByRegion = uniqueSites
         .filter(site => site.slug !== 'home')
         .reduce((acc, site) => {
             const region = site.region || 'Autres Régions';
@@ -53,14 +48,14 @@ export function Footer({ config }: FooterProps) {
             <div className="container mx-auto px-4 text-center">
                 <h4 className="text-white font-bold mb-4">À propos de {config.name}</h4>
                 <p className="max-w-2xl mx-auto text-sm mb-8">
-                    {config.name} est le comparateur de référence pour l'installation de bornes de recharge à {config.city}.
+                    {config.name} est le comparateur de référence pour l&apos;installation de bornes de recharge à {config.city}.
                     Nous sélectionnons les meilleurs électriciens certifiés IRVE pour vos projets en maison, copropriété ou entreprise.
-                    Obtenez jusqu'à 3 devis gratuits et comparez.
+                    Obtenez jusqu&apos;à 3 devis gratuits et comparez.
                 </p>
 
                 <div className="inline-flex items-center gap-2 bg-green-900/30 border border-green-800 px-4 py-2 rounded-full mb-8">
                     <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                    <span className="text-green-400 font-bold text-sm">Réseau d'Installateurs Qualifiés IRVE</span>
+                    <span className="text-green-400 font-bold text-sm">Réseau d&apos;Installateurs Qualifiés IRVE</span>
                 </div>
 
                 <div className="border-t border-white/10 pt-12 mt-12">
@@ -76,7 +71,7 @@ export function Footer({ config }: FooterProps) {
                                     <>
                                         <li><Link href="/ville/paris" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Île-de-France</Link></li>
                                         <li><Link href="/ville/lyon" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Auvergne-Rhône-Alpes</Link></li>
-                                        <li><Link href="/ville/marseille" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Provence-Alpes-Côte d'Azur</Link></li>
+                                        <li><Link href="/ville/marseille" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Provence-Alpes-Côte d&apos;Azur</Link></li>
                                         <li><Link href="/ville/bordeaux" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Nouvelle-Aquitaine</Link></li>
                                         <li><Link href="/ville/toulouse" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Occitanie</Link></li>
                                         <li><Link href="/ville/nantes" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Pays de la Loire</Link></li>
@@ -307,7 +302,7 @@ export function Footer({ config }: FooterProps) {
                 {/* ========================================================= */}
                 <div className="border-t border-white/10 pt-12 mt-4 text-left max-w-7xl mx-auto mb-16 px-4 md:px-0">
                     <h5 className="text-white font-bold mb-8 text-xl tracking-tight text-center md:text-left">
-                        Notre Réseau National d'Installateurs
+                        Notre Réseau National d&apos;Installateurs
                     </h5>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12">
                         {Object.entries(sitesByRegion).map(([region, sites]) => (
@@ -340,9 +335,9 @@ export function Footer({ config }: FooterProps) {
                     &copy; {new Date().getFullYear()} {config.name} - Tous droits réservés.
                 </div>
                 <div className="flex justify-center gap-4 text-xs mt-4 mb-2">
-                    <Link href={(config as any).basePath ? `${(config as any).basePath}/mentions-legales` : "/mentions-legales"} className="text-neutral-500 hover:text-white transition-colors">Mentions Légales</Link>
+                    <Link href={(config as Record<string, unknown>).basePath ? `${(config as Record<string, unknown>).basePath}/mentions-legales` : "/mentions-legales"} className="text-neutral-500 hover:text-white transition-colors">Mentions Légales</Link>
                     <span className="text-neutral-700">•</span>
-                    <Link href={(config as any).basePath ? `${(config as any).basePath}/cgv` : "/cgv"} className="text-neutral-500 hover:text-white transition-colors">CGV</Link>
+                    <Link href={(config as Record<string, unknown>).basePath ? `${(config as Record<string, unknown>).basePath}/cgv` : "/cgv"} className="text-neutral-500 hover:text-white transition-colors">CGV</Link>
                 </div>
             </div>
         </footer>

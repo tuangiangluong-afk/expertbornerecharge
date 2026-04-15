@@ -1,5 +1,5 @@
 import { Briefcase, BarChart3, TrendingUp, ShieldCheck, Zap, Globe, FileCheck, CheckCircle, Award } from "lucide-react";
-import LeadForm from "@/components/LeadForm";
+import LeadFormPro from "@/components/LeadFormPro";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
@@ -47,7 +47,7 @@ export default function SolutionEntreprise() {
                                             <h3 className="text-lg font-bold text-emerald-900">Devis Entreprise / Flotte</h3>
                                             <p className="text-sm text-slate-500">Réponse sous 24h ouvrées</p>
                                         </div>
-                                        <LeadForm city="France" domain="expertbornerecharge.com" targetType="ENTREPRISE" themeColor="emerald" initialProjectType="entreprise" />
+                                        <LeadFormPro city="France" domain="expertbornerecharge.com" segment="ENTREPRISE" themeColor="emerald" />
                                     </div>
                                 </div>
                             </div>

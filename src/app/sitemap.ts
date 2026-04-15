@@ -64,7 +64,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.9,
     }));
 
-    return [...routes, ...guideRoutes, ...vehicleRoutes, ...cityRoutes].map(item => ({
+    // 5. B2B PSEO Routes (Copro + Entreprise per city) — HIGH TICKET
+    const b2bRoutes = Array.from(uniqueSites.values()).flatMap((site) => {
+        const citySlug = slugify(site.city).toLowerCase();
+        return [
+            {
+                url: `${BASE_URL}/ville/${citySlug}/copropriete`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly' as const,
+                priority: 0.95,
+            },
+            {
+                url: `${BASE_URL}/ville/${citySlug}/entreprise`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly' as const,
+                priority: 0.95,
+            },
+        ];
+    });
+
+    return [...routes, ...guideRoutes, ...vehicleRoutes, ...cityRoutes, ...b2bRoutes].map(item => ({
         ...item,
         url: item.url.toLowerCase()
     }));

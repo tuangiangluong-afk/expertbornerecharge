@@ -52,7 +52,7 @@ export default function SolutionMaison() {
                                             <h3 className="text-lg font-bold text-slate-900">Testez votre éligibilité</h3>
                                             <p className="text-sm text-slate-500">Réponse immédiate • Gratuit • Sans engagement</p>
                                         </div>
-                                        <LeadForm city="France" domain="expertbornerecharge.com" targetType="MAISON" />
+                                        <LeadForm city="France" domain="expertbornerecharge.com" targetType="MAISON" initialProjectType="maison" />
                                     </div>
                                 </div>
                             </div>

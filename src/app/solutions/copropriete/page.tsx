@@ -1,5 +1,5 @@
 import { Building2, CheckCircle, HelpCircle, Users, FileText, Euro, Calculator, AlertCircle, Award } from "lucide-react";
-import LeadForm from "@/components/LeadForm";
+import LeadFormPro from "@/components/LeadFormPro";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
@@ -54,7 +54,7 @@ export default function SolutionCopro() {
                                             <h3 className="text-lg font-bold text-purple-900">Étude & Devis Copropriété</h3>
                                             <p className="text-sm text-slate-500">Réponse sous 24h ouvrées</p>
                                         </div>
-                                        <LeadForm city="France" domain="expertbornerecharge.com" targetType="COPRO" themeColor="purple" initialProjectType="copro" />
+                                        <LeadFormPro city="France" domain="expertbornerecharge.com" segment="COPRO" themeColor="purple" />
                                     </div>
                                 </div>
                             </div>

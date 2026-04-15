@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
     Home,
     Building2,
@@ -25,6 +26,7 @@ import {
 } from "lucide-react";
 
 import Link from "next/link";
+import { slugify } from "@/lib/slugify";
 
 declare global {
     interface Window {
@@ -38,6 +40,8 @@ interface LeadFormProps {
     targetType?: 'COPRO' | 'MAISON' | 'ENTREPRISE' | 'MIXED';
     themeColor?: 'blue' | 'emerald' | 'amber' | 'purple';
     initialProjectType?: 'maison' | 'copro' | 'entreprise';
+    /** Enable B2B redirect: copro/entreprise users get sent to the Pro tunnel */
+    enableB2BRedirect?: boolean;
 }
 
 interface FormData {
@@ -61,8 +65,10 @@ export default function LeadForm({
     domain,
     targetType = 'MIXED',
     themeColor = 'blue',
-    initialProjectType
+    initialProjectType,
+    enableB2BRedirect = true
 }: LeadFormProps) {
+    const router = useRouter();
     const INITIAL_FORM_DATA: FormData = {
         projectType: initialProjectType || null,
         ownerStatus: null,
@@ -178,12 +184,21 @@ export default function LeadForm({
 
     const nextStep = () => {
         if (canProceed() && step < totalSteps) {
+            // B2B SWITCHER: Redirect copro/entreprise to the dedicated Pro tunnel
+            if (enableB2BRedirect && step === 1 && (formData.projectType === 'copro' || formData.projectType === 'entreprise')) {
+                const citySlug = slugify(city);
+                const segment = formData.projectType === 'copro' ? 'copropriete' : 'entreprise';
+                router.push(`/ville/${citySlug}/${segment}#etude`);
+                return;
+            }
             setStep(step + 1);
         }
     };
 
     const prevStep = () => {
         if (step > 1) {
+            // Prevent going back to step 1 if we started with a pre-selected project type
+            if (step === 2 && initialProjectType) return;
             setStep(step - 1);
         }
     };
@@ -614,7 +629,7 @@ export default function LeadForm({
 
                 {/* Navigation */}
                 <div className="flex gap-3 mt-8 items-start">
-                    {step > 1 && (
+                    {step > 1 && !(step === 2 && initialProjectType) && (
                         <button
                             onClick={prevStep}
                             className="flex items-center gap-2 px-6 py-3 rounded-xl border border-neutral-300 text-neutral-700 font-medium hover:bg-neutral-50 transition"
@@ -659,7 +674,7 @@ export default function LeadForm({
                                         Envoi en cours...
                                     </span>
                                 ) : (
-                                    "Recevoir mes 3 devis gratuits"
+                                    "Recevoir mes devis gratuits"
                                 )}
                             </button>
 

@@ -1,4 +1,4 @@
-import { getHubConfig, SITES } from "@/lib/sites-config";
+import { getHubConfig, SITES, SiteConfig } from "@/lib/sites-config";
 import { Zap, Award, ArrowRight, Building2, Home, Briefcase, CheckCircle } from "lucide-react";
 import LocalLinker from "@/components/blog/LocalLinker";
 import type { Metadata } from "next";
@@ -35,7 +35,7 @@ export default function HomePage() {
             acc.push(site);
         }
         return acc;
-    }, [] as any[]);
+    }, [] as SiteConfig[]);
 
     const cities = uniqueSites.map(site => ({
         name: site.city,

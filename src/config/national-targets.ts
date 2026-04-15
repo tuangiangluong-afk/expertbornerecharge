@@ -345,6 +345,119 @@ export const NATIONAL_TARGETS: NationalTarget[] = [
         zip: "77700",
         tier: 'STRATEGIC',
         heroImage: "https://images.unsplash.com/photo-1495753132225-3d4d2c8ce2e9?q=80&w=2670&auto=format&fit=crop"
+    },
+    // ========================================
+    // 🌍 TIER 5: SOUTH-WEST EXPANSION
+    // ========================================
+    {
+        slug: "pau",
+        name: "Pau",
+        heroTitle: "Installateur Borne de Recharge Pau (64)",
+        geo: { lat: 43.295, lng: -0.370 },
+        price_start: 850.00,
+        top_places: ["Centre-Ville", "Trespoey", "Billère", "Lons"],
+        zip: "64000",
+        tier: 'STRATEGIC',
+        heroImage: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=2670&auto=format&fit=crop"
+    },
+    {
+        slug: "bayonne",
+        name: "Bayonne",
+        heroTitle: "Installation Borne Pays Basque (Bayonne)",
+        geo: { lat: 43.492, lng: -1.474 },
+        price_start: 890.00,
+        top_places: ["Grand Bayonne", "Petit Bayonne", "Anglet", "Saint-Esprit"],
+        zip: "64100",
+        tier: 'STRATEGIC',
+        heroImage: "https://images.unsplash.com/photo-1558979158-65a1eaa08691?q=80&w=2670&auto=format&fit=crop"
+    },
+    {
+        slug: "biarritz",
+        name: "Biarritz",
+        heroTitle: "Installateur IRVE Biarritz",
+        geo: { lat: 43.483, lng: -1.558 },
+        price_start: 950.00,
+        top_places: ["Côte des Basques", "Milady", "Saint-Charles", "La Négresse"],
+        zip: "64200",
+        tier: 'STRATEGIC',
+        heroImage: "https://images.unsplash.com/photo-1580477371194-e8de0a57a04a?q=80&w=2670&auto=format&fit=crop"
+    },
+    {
+        slug: "tarbes",
+        name: "Tarbes",
+        heroTitle: "Pose Borne de Recharge Tarbes",
+        geo: { lat: 43.232, lng: 0.076 },
+        price_start: 850.00,
+        top_places: ["Centre-Ville", "Ormeau", "Aureilhan", "Laloubère"],
+        zip: "65000",
+        tier: 'STRATEGIC',
+        heroImage: "https://images.unsplash.com/photo-1515861461893-af66afaf3f1f?q=80&w=2670&auto=format&fit=crop"
+    },
+    {
+        slug: "agen",
+        name: "Agen",
+        heroTitle: "Installation IRVE Agen (47)",
+        geo: { lat: 44.203, lng: 0.616 },
+        price_start: 850.00,
+        top_places: ["Centre-Ville", "Ermitage", "Le Passage", "Boé"],
+        zip: "47000",
+        tier: 'STRATEGIC',
+        heroImage: "https://images.unsplash.com/photo-1495753132225-3d4d2c8ce2e9?q=80&w=2670&auto=format&fit=crop"
+    },
+    {
+        slug: "montauban",
+        name: "Montauban",
+        heroTitle: "Expert Borne Recharge Montauban",
+        geo: { lat: 44.015, lng: 1.350 },
+        price_start: 850.00,
+        top_places: ["Centre Historique", "Villebourbon", "Saint-Martial", "Sapiac"],
+        zip: "82000",
+        tier: 'STRATEGIC',
+        heroImage: "https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=2670&auto=format&fit=crop"
+    },
+    {
+        slug: "albi",
+        name: "Albi",
+        heroTitle: "Installateur Borne de Recharge Albi",
+        geo: { lat: 43.928, lng: 2.148 },
+        price_start: 850.00,
+        top_places: ["Centre Historique", "Leuc", "Saint-Juéry", "Lescure-d'Albigeois"],
+        zip: "81000",
+        tier: 'STRATEGIC',
+        heroImage: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=2672&auto=format&fit=crop"
+    },
+    {
+        slug: "castres",
+        name: "Castres",
+        heroTitle: "Installation Borne Castres & Tarn",
+        geo: { lat: 43.606, lng: 2.240 },
+        price_start: 850.00,
+        top_places: ["Lameilhé", "Aillot", "Burlats", "Lagarrigue"],
+        zip: "81100",
+        tier: 'STRATEGIC',
+        heroImage: "https://images.unsplash.com/photo-1559825481-12a05cc00018?q=80&w=2670&auto=format&fit=crop"
+    },
+    {
+        slug: "mont-de-marsan",
+        name: "Mont-de-Marsan",
+        heroTitle: "Installateur Borne de Recharge Landes (40)",
+        geo: { lat: 43.890, lng: -0.500 },
+        price_start: 850.00,
+        top_places: ["Centre-Ville", "Saint-Médard", "Saint-Jean-d'Août", "Saint-Pierre-du-Mont"],
+        zip: "40000",
+        tier: 'STRATEGIC',
+        heroImage: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=2670&auto=format&fit=crop"
+    },
+    {
+        slug: "dax",
+        name: "Dax",
+        heroTitle: "Expert Borne de Recharge Dax & Sud Landes",
+        geo: { lat: 43.710, lng: -1.050 },
+        price_start: 850.00,
+        top_places: ["Centre-Ville", "Saint-Vincent-de-Paul", "Narrosse", "Saint-Paul-lès-Dax"],
+        zip: "40100",
+        tier: 'STRATEGIC',
+        heroImage: "https://images.unsplash.com/photo-1580477371194-e8de0a57a04a?q=80&w=2670&auto=format&fit=crop"
     }
 ];
 

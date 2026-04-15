@@ -46,9 +46,17 @@ export default async function GuidesIndex() {
         readTime: post.read_time_minutes ? `${post.read_time_minutes} min` : '5 min'
     }));
 
-    const guides = [...staticGuides, ...dynamicGuides].sort((a, b) => 
+    const allGuides = [...staticGuides, ...dynamicGuides].sort((a: any, b: any) => 
         new Date(b.date).getTime() - new Date(a.date).getTime()
     );
+
+    const uniqueGuidesMap = new Map();
+    allGuides.forEach((g: any) => {
+        if (!uniqueGuidesMap.has(g.slug)) {
+            uniqueGuidesMap.set(g.slug, g);
+        }
+    });
+    const guides = Array.from(uniqueGuidesMap.values());
 
     return (
         <div className="min-h-screen bg-neutral-50 font-sans text-slate-900">
