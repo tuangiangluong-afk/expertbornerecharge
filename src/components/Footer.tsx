@@ -13,6 +13,7 @@ export function Footer({ config }: FooterProps) {
     if (!config) return null;
 
     // Normalize Data for both Config Types
+    const neighborhoods = (config as any).neighborhoods || (config as any).quartiers || [];
 
     const theme = getTheme(config.slug);
 
