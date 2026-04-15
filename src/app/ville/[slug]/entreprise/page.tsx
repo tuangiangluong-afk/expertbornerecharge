@@ -63,7 +63,7 @@ export default async function EntrepriseCityPage({ params }: { params: Promise<{
 
     const cityName = site.city;
     const dept = site.department || "";
-    const neighborhoods = ('neighborhoods' in site ? site.neighborhoods : ('quartiers' in site ? site.quartiers : [])) as string[];
+    const neighborhoods = site.neighborhoods || [];
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
