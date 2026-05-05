@@ -31,6 +31,7 @@ export default function PartnersClient({ initialPartners }: { initialPartners: P
         setLoading(true);
         const formData = new FormData(e.currentTarget);
         formData.append("regions", JSON.stringify(selectedRegions));
+        formData.append("departments", formData.get("managed_departments_input") as string);
 
         try {
             if (editingPartner) {
@@ -39,7 +40,8 @@ export default function PartnersClient({ initialPartners }: { initialPartners: P
                     email: formData.get("email") as string,
                     phone: formData.get("phone") as string,
                     company_info: { company_name: formData.get("company") as string },
-                    managed_regions: selectedRegions
+                    managed_regions: selectedRegions,
+                    managed_departments: (formData.get("managed_departments_input") as string).split(',').map(d => d.trim()).filter(d => d !== "")
                 };
                 const updated = await updatePartner(editingPartner.id, updates);
                 setPartners(partners.map(p => p.id === updated.id ? updated : p));
@@ -110,39 +112,45 @@ export default function PartnersClient({ initialPartners }: { initialPartners: P
                             <h3 className="text-lg font-bold text-slate-900">{partner.name}</h3>
                             <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded-full">Actif</span>
                         </div>
-                        <div className="space-y-2 text-sm text-slate-600 flex-1">
-                            <div className="flex items-center gap-2">
-                                <Mail size={14} className="text-slate-400" />
-                                <a href={`mailto:${partner.email}`} className="hover:text-blue-600">{partner.email}</a>
+                        <div className="space-y-4 text-sm text-slate-600 flex-1">
+                            <div className="space-y-2">
+                                <div className="flex items-center gap-2">
+                                    <Mail size={14} className="text-slate-400" />
+                                    <a href={`mailto:${partner.email}`} className="hover:text-blue-600">{partner.email}</a>
+                                </div>
+                                {partner.phone && (
+                                    <div className="flex items-center gap-2">
+                                        <Phone size={14} className="text-slate-400" />
+                                        <span>{partner.phone}</span>
+                                    </div>
+                                )}
+                                {partner.company_info && typeof partner.company_info === 'object' && 'company_name' in partner.company_info && (
+                                    <div className="flex items-center gap-2">
+                                        <Briefcase size={14} className="text-slate-400" />
+                                        <span className="font-medium text-slate-900">{(partner.company_info as any).company_name}</span>
+                                    </div>
+                                )}
                             </div>
-                            {partner.phone && (
-                                <div className="flex items-center gap-2">
-                                    <Phone size={14} className="text-slate-400" />
-                                    <span>{partner.phone}</span>
-                                </div>
-                            )}
-                            {partner.company_info && typeof partner.company_info === 'object' && 'company_name' in partner.company_info && (
-                                <div className="flex items-center gap-2">
-                                    <Briefcase size={14} className="text-slate-400" />
-                                    <span className="font-medium text-slate-900">{(partner.company_info as any).company_name}</span>
-                                </div>
-                            )}
                             
                             {/* Managed Regions Display */}
-                            <div className="mt-4">
-                                <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                            <div className="pt-2 border-t border-slate-100">
+                                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
                                     <MapPin size={12} />
-                                    Régions gérées
+                                    Couverture Géo
                                 </div>
                                 <div className="flex flex-wrap gap-1">
-                                    {partner.managed_regions && partner.managed_regions.length > 0 ? (
-                                        partner.managed_regions.map(r => (
-                                            <span key={r} className="bg-blue-50 text-blue-600 text-[10px] px-2 py-0.5 rounded border border-blue-100">
-                                                {r}
-                                            </span>
-                                        ))
-                                    ) : (
-                                        <span className="text-[10px] text-slate-400 italic">Aucune région assignée</span>
+                                    {partner.managed_regions && partner.managed_regions.map(r => (
+                                        <span key={r} className="bg-blue-50 text-blue-600 text-[10px] px-2 py-0.5 rounded border border-blue-100">
+                                            {r}
+                                        </span>
+                                    ))}
+                                    {partner.managed_departments && partner.managed_departments.map(d => (
+                                        <span key={d} className="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded border border-slate-200 font-bold">
+                                            Dép. {d}
+                                        </span>
+                                    ))}
+                                    {(!partner.managed_regions?.length && !partner.managed_departments?.length) && (
+                                        <span className="text-[10px] text-slate-400 italic">Aucune zone assignée</span>
                                     )}
                                 </div>
                             </div>
@@ -189,34 +197,48 @@ export default function PartnersClient({ initialPartners }: { initialPartners: P
                                     />
                                 </div>
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Email (pour notif)</label>
-                                <input 
-                                    name="email" 
-                                    type="email" 
-                                    required 
-                                    defaultValue={editingPartner?.email}
-                                    placeholder="contact@elec.com" 
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" 
-                                />
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                    <input 
+                                        name="email" 
+                                        type="email" 
+                                        required 
+                                        defaultValue={editingPartner?.email}
+                                        placeholder="contact@elec.com" 
+                                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" 
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Téléphone</label>
+                                    <input 
+                                        name="phone" 
+                                        defaultValue={editingPartner?.phone || ""}
+                                        placeholder="06..." 
+                                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" 
+                                    />
+                                </div>
                             </div>
+
+                            {/* Department Selection */}
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Téléphone</label>
+                                <label className="block text-sm font-bold text-slate-700 mb-1 flex items-center gap-2">
+                                    <MapPin size={16} className="text-blue-600" />
+                                    Départements gérés
+                                </label>
+                                <p className="text-[10px] text-slate-400 mb-2">Entrez les numéros séparés par une virgule (ex: 75, 92, 33)</p>
                                 <input 
-                                    name="phone" 
-                                    defaultValue={editingPartner?.phone || ""}
-                                    placeholder="06..." 
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" 
+                                    name="managed_departments_input"
+                                    defaultValue={editingPartner?.managed_departments?.join(', ') || ""}
+                                    placeholder="75, 92, 94..." 
+                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-mono text-sm" 
                                 />
                             </div>
 
                             {/* Region Selection */}
                             <div>
-                                <label className="block text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
-                                    <MapPin size={16} className="text-blue-600" />
-                                    Régions gérées
-                                </label>
-                                <div className="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-lg border border-slate-200 max-h-48 overflow-y-auto">
+                                <label className="block text-sm font-bold text-slate-700 mb-2">Régions gérées (Macro)</label>
+                                <div className="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-lg border border-slate-200 max-h-40 overflow-y-auto">
                                     {REGIONS.map(region => (
                                         <label key={region} className="flex items-center gap-2 p-2 hover:bg-white rounded border border-transparent hover:border-slate-100 cursor-pointer transition">
                                             <input 

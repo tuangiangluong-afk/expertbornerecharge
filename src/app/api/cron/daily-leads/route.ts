@@ -46,11 +46,13 @@ export async function GET(request: Request) {
         // 3. Process per partner
         for (const partner of partners) {
             const partnerRegions = partner.managed_regions || [];
+            const partnerDepts = partner.managed_departments || [];
             
-            // Filter leads for this partner's regions
+            // Filter leads for this partner's regions OR departments
             const relevantLeads = leads.filter(l => 
                 partnerRegions.includes(l.region || 'National') || 
-                partnerRegions.includes('National')
+                partnerRegions.includes('National') ||
+                (l.department && partnerDepts.includes(l.department))
             );
 
             if (relevantLeads.length > 0 && partner.email) {
@@ -87,6 +89,7 @@ export async function GET(request: Request) {
                                                         <span style="background: #eff6ff; color: #2563eb; padding: 2px 6px; rounded: 4px; font-size: 10px; font-weight: bold;">
                                                             ${l.region || 'National'}
                                                         </span>
+                                                        ${l.department ? `<div style="font-size: 10px; color: #64748b; margin-top: 4px;">Dép. ${l.department}</div>` : ''}
                                                     </td>
                                                     <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; font-size: 14px;">${l.city}</td>
                                                     <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; font-size: 14px;">${l.housing_type || l.type}</td>

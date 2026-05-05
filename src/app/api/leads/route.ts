@@ -56,9 +56,10 @@ export async function POST(request: Request) {
 
         const supabase = createSupabaseAdmin();
         
-        // Find region from domain
+        // Find region and department from domain
         const siteConfig = getSiteConfig(domain);
         const region = siteConfig?.region || 'National';
+        const department = siteConfig?.department || (postalCode ? postalCode.substring(0, 2) : null);
 
         const { error: dbError } = await supabase
             .from('leads')
@@ -73,6 +74,7 @@ export async function POST(request: Request) {
                 housing_type: projectType,
                 status: 'new',
                 region: region,
+                department: department,
                 message: JSON.stringify(metadata, null, 2)
             });
 

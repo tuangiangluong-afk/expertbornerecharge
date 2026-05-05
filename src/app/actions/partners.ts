@@ -23,13 +23,21 @@ export async function addPartner(formData: FormData) {
     const email = formData.get("email") as string;
     const phone = formData.get("phone") as string;
     const company = formData.get("company") as string;
-    const regionsStr = formData.get("regions") as string; // Will be comma-separated or JSON
+    const regionsStr = formData.get("regions") as string;
+    const deptsStr = formData.get("departments") as string;
     
     let managed_regions: string[] = [];
     try {
         managed_regions = JSON.parse(regionsStr);
     } catch (e) {
         managed_regions = regionsStr ? regionsStr.split(',').map(r => r.trim()) : [];
+    }
+
+    let managed_departments: string[] = [];
+    try {
+        managed_departments = JSON.parse(deptsStr);
+    } catch (e) {
+        managed_departments = deptsStr ? deptsStr.split(',').map(d => d.trim()) : [];
     }
 
     if (!name || !email) throw new Error("Nom et Email obligatoires");
@@ -41,7 +49,8 @@ export async function addPartner(formData: FormData) {
             email,
             phone,
             company_info: { company_name: company },
-            managed_regions
+            managed_regions,
+            managed_departments
         })
         .select()
         .single();

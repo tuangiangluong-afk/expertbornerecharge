@@ -332,7 +332,7 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                                 </div>
                                                 {lead.city && (
                                                     <div className="text-xs text-slate-500">
-                                                        📍 {lead.city} ({lead.postal_code})
+                                                        📍 {lead.city} {lead.postal_code ? `(${lead.postal_code})` : ''} {lead.department ? `[Dép. ${lead.department}]` : ''}
                                                     </div>
                                                 )}
                                             </td>

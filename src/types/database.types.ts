@@ -224,6 +224,7 @@ export type Database = {
                     notes: string | null
                     price: number | null
                     region: string | null
+                    department: string | null
                     is_paid: boolean
                     created_at: string
                 }
@@ -243,6 +244,7 @@ export type Database = {
                     notes?: string | null
                     price?: number | null
                     region?: string | null
+                    department?: string | null
                     is_paid?: boolean
                     created_at?: string
                 }
@@ -262,6 +264,7 @@ export type Database = {
                     notes?: string | null
                     price?: number | null
                     region?: string | null
+                    department?: string | null
                     is_paid?: boolean
                     created_at?: string
                 }
@@ -312,6 +315,7 @@ export type Database = {
                     phone: string | null
                     company_info: Json | null
                     managed_regions: string[] | null
+                    managed_departments: string[] | null
                     created_at: string
                 }
                 Insert: {
@@ -321,6 +325,7 @@ export type Database = {
                     phone?: string | null
                     company_info?: Json | null
                     managed_regions?: string[] | null
+                    managed_departments?: string[] | null
                     created_at?: string
                 }
                 Update: {
@@ -330,6 +335,7 @@ export type Database = {
                     phone?: string | null
                     company_info?: Json | null
                     managed_regions?: string[] | null
+                    managed_departments?: string[] | null
                     created_at?: string
                 }
                 Relationships: []
