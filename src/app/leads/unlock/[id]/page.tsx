@@ -317,8 +317,17 @@ export default function LeadUnlockPage() {
                         <p className="text-slate-400 text-xs font-medium px-12 leading-relaxed">
                             Expert Borne Recharge garantit l'exclusivité de ce lead. En achetant ces coordonnées, vous bénéficiez de l'accès unique à ce projet client.
                         </p>
-                        <div className="flex items-center justify-center gap-8 opacity-40 grayscale hover:grayscale-0 transition-all">
-                            <img src="https://stripe.com/img/v3/home/social-card.png" alt="Secure Payment" className="h-12 object-contain rounded-lg shadow-sm" />
+                        <div className="flex flex-col items-center gap-4 opacity-50 grayscale hover:grayscale-0 transition-all">
+                            <div className="flex items-center gap-6">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" className="h-6 opacity-80" />
+                                <div className="w-px h-4 bg-slate-300" />
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-4" />
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6" />
+                            </div>
+                            <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                <ShieldCheck size={12} className="text-emerald-500" />
+                                Paiement 100% Sécurisé
+                            </div>
                         </div>
                     </footer>
                 </div>
