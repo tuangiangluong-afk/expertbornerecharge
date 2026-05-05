@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Users, Filter, Download, Eye, Phone, Mail, Building, Home, Briefcase, X } from "lucide-react";
+import { Users, Filter, Download, Eye, Phone, Mail, Building, Home, Briefcase, X, Link as LinkIcon, Check } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -56,6 +56,15 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
     const [isUpdatingLead, setIsUpdatingLead] = useState(false);
     const [editNotes, setEditNotes] = useState("");
     const [editPrice, setEditPrice] = useState(20);
+    const [copiedId, setCopiedId] = useState<string | null>(null);
+
+    const copyToClipboard = (leadId: string) => {
+        const url = `${window.location.origin}/leads/unlock/${leadId}`;
+        navigator.clipboard.writeText(url);
+        setCopiedId(leadId);
+        showToast("Lien de vente copié !", "success");
+        setTimeout(() => setCopiedId(null), 2000);
+    };
 
     // Initial Fetch when opening modal
     async function openModal(lead: Lead) {
@@ -263,13 +272,22 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 text-right">
-                                                <button
-                                                    onClick={() => openModal(lead)}
-                                                    className="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition font-bold flex items-center gap-1 justify-end ml-auto border border-emerald-200 shadow-sm"
-                                                    title="Assigner / Vendre"
-                                                >
-                                                    <span className="text-xs">Vendre ($)</span>
-                                                </button>
+                                                <div className="flex items-center justify-end gap-2">
+                                                    <button
+                                                        onClick={() => copyToClipboard(lead.id)}
+                                                        className={`p-2 rounded-lg transition border shadow-sm flex items-center gap-1 ${copiedId === lead.id ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : 'bg-white text-slate-400 hover:text-blue-600 hover:border-blue-200'}`}
+                                                        title="Copier le lien de vente"
+                                                    >
+                                                        {copiedId === lead.id ? <Check size={14} /> : <LinkIcon size={14} />}
+                                                    </button>
+                                                    <button
+                                                        onClick={() => openModal(lead)}
+                                                        className="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition font-bold flex items-center gap-1 border border-emerald-200 shadow-sm"
+                                                        title="Assigner / Vendre"
+                                                    >
+                                                        <span className="text-xs">Vendre ($)</span>
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     );

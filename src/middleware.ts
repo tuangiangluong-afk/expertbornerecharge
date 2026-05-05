@@ -100,7 +100,7 @@ export default async function middleware(req: NextRequest) {
             }
         }
 
-        if (path.startsWith("/admin") || path.startsWith("/login") || path.startsWith("/api") || path.startsWith("/guides") || path.startsWith("/outils") || path.startsWith("/vehicules") || path.startsWith("/ville") || path.startsWith("/solutions") || path.startsWith("/service") || path.startsWith("/quartier") || path.startsWith("/departement") || path.startsWith("/poi") || path.startsWith("/demo") || path.startsWith("/installation") || path.startsWith("/images") || path.startsWith("/fiscalite-entreprise-borne")) {
+        if (path.startsWith("/admin") || path.startsWith("/login") || path.startsWith("/api") || path.startsWith("/leads") || path.startsWith("/guides") || path.startsWith("/outils") || path.startsWith("/vehicules") || path.startsWith("/ville") || path.startsWith("/solutions") || path.startsWith("/service") || path.startsWith("/quartier") || path.startsWith("/departement") || path.startsWith("/poi") || path.startsWith("/demo") || path.startsWith("/installation") || path.startsWith("/images") || path.startsWith("/fiscalite-entreprise-borne")) {
             response = NextResponse.next();
         } else {
             response = NextResponse.rewrite(
@@ -118,7 +118,7 @@ export default async function middleware(req: NextRequest) {
         }
 
         // Whitelist shared routes (serve from root app)
-        if (path.startsWith("/guides") || path.startsWith("/vehicules") || path.startsWith("/solutions") || path.startsWith("/ville") || path.startsWith("/service") || path.startsWith("/quartier") || path.startsWith("/departement") || path.startsWith("/poi") || path.startsWith("/api") || path.startsWith("/outils") || path.startsWith("/login") || path.startsWith("/admin") || path.startsWith("/installation") || path.startsWith("/fiscalite-entreprise-borne")) {
+        if (path.startsWith("/guides") || path.startsWith("/leads") || path.startsWith("/vehicules") || path.startsWith("/solutions") || path.startsWith("/ville") || path.startsWith("/service") || path.startsWith("/quartier") || path.startsWith("/departement") || path.startsWith("/poi") || path.startsWith("/api") || path.startsWith("/outils") || path.startsWith("/login") || path.startsWith("/admin") || path.startsWith("/installation") || path.startsWith("/fiscalite-entreprise-borne")) {
             response = NextResponse.next();
         } else {
             const routeParam = hostname.includes(".localhost") ? domainKey : domainKey;

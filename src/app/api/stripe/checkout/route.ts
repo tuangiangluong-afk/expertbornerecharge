@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
                 },
             ],
             mode: "payment",
-            success_url: `${req.nextUrl.origin}/leads/unlock/${leadId}?success=true`,
+            success_url: `${req.nextUrl.origin}/leads/unlock/${leadId}?success=true&partnerId=${partnerId}`,
             cancel_url: `${req.nextUrl.origin}/leads/unlock/${leadId}?canceled=true`,
             customer_email: partnerEmail,
             metadata: {
