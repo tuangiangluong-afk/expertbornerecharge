@@ -13,7 +13,7 @@
                 }
             ],
             "destination": "https://expertbornerecharge.com/:path",
-            "permanent": true
+            "statusCode": 301
         }
     ],
     "crons": [

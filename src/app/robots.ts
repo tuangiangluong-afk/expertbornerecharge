@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: '*',
             allow: '/',
-            disallow: ['/admin/', '/login', '/api/', '/demo/'],
+            disallow: ['/admin/', '/login', '/api/', '/demo/', '/_next/static/', '/favicon.ico'],
         },
         sitemap: 'https://expertbornerecharge.com/sitemap.xml',
     };

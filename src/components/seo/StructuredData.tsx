@@ -6,8 +6,8 @@ export default function StructuredData() {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Expert Borne Recharge",
-        "url": "https://www.expertbornerecharge.com",
-        "logo": "https://www.expertbornerecharge.com/logo.png",
+        "url": "https://expertbornerecharge.com",
+        "logo": "https://expertbornerecharge.com/logo.png",
         "description": "Installation de bornes de recharge électriques pour particuliers et professionnels. Réseau d'installateurs certifiés IRVE.",
         "address": {
             "@type": "PostalAddress",

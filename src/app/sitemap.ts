@@ -3,69 +3,155 @@ import { getAllGuides } from '@/lib/mdx';
 import { getAllVehicles } from '@/data/vehicles';
 import { getHubConfig, SITES } from '@/lib/sites-config';
 import { slugify } from '@/lib/slugify';
+import { SEO_SERVICES } from '@/lib/seo-data';
+import { createClient } from '@supabase/supabase-js';
 
 // Base URL (Hub)
 const BASE_URL = 'https://expertbornerecharge.com';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const guides = getAllGuides();
     const vehicles = getAllVehicles();
 
-    // 1. Static Routes
-    const routes = [
-        '',
-        '/vehicules',
-        '/guides',
-        '/outils/generateur-lettre-syndic',
-        '/contact',
-        '/mentions-legales',
-        '/cgv',
-        '/solutions/copropriete',
-        '/solutions/maison',
-        '/solutions/entreprise',
-    ].map((route) => ({
-        url: `${BASE_URL}${route}`,
+    // 1. Static Routes (with realistic priorities)
+    const routes: MetadataRoute.Sitemap = [
+        {
+            url: BASE_URL,
+            lastModified: new Date(),
+            changeFrequency: 'daily',
+            priority: 1,
+        },
+        {
+            url: `${BASE_URL}/vehicules`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: `${BASE_URL}/guides`,
+            lastModified: new Date(),
+            changeFrequency: 'daily',
+            priority: 0.9,
+        },
+        {
+            url: `${BASE_URL}/outils/generateur-lettre-syndic`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.6,
+        },
+        {
+            url: `${BASE_URL}/contact`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.5,
+        },
+        {
+            url: `${BASE_URL}/fiscalite-entreprise-borne`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.8,
+        },
+        {
+            url: `${BASE_URL}/solutions/copropriete`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9,
+        },
+        {
+            url: `${BASE_URL}/solutions/maison`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9,
+        },
+        {
+            url: `${BASE_URL}/solutions/entreprise`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9,
+        },
+        // Legal pages — low priority (thin content)
+        {
+            url: `${BASE_URL}/mentions-legales`,
+            lastModified: new Date('2026-03-01'),
+            changeFrequency: 'yearly',
+            priority: 0.3,
+        },
+        {
+            url: `${BASE_URL}/cgv`,
+            lastModified: new Date('2026-03-01'),
+            changeFrequency: 'yearly',
+            priority: 0.3,
+        },
+    ];
+
+    // 2. Service Routes (from SEO_SERVICES)
+    const serviceRoutes: MetadataRoute.Sitemap = SEO_SERVICES.map((service) => ({
+        url: `${BASE_URL}/service/${service.slug}`,
         lastModified: new Date(),
-        changeFrequency: 'daily' as const,
-        priority: 1,
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
     }));
 
-    // 2. Guide Routes
-    const guideRoutes = guides.map((guide) => ({
+    // 3. Guide Routes (static MDX)
+    const guideRoutes: MetadataRoute.Sitemap = guides.map((guide) => ({
         url: `${BASE_URL}/guides/${guide.slug}`,
         lastModified: new Date(guide.date),
         changeFrequency: 'weekly' as const,
         priority: 0.8,
     }));
 
-    // 3. Vehicle Routes
-    const vehicleRoutes = vehicles.map((vehicle) => ({
+    // 4. Blog Routes (dynamic from Supabase)
+    let blogRoutes: MetadataRoute.Sitemap = [];
+    try {
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        if (supabaseUrl && supabaseKey) {
+            const supabase = createClient(supabaseUrl, supabaseKey);
+            const { data: blogPosts } = await supabase
+                .from('blog_posts')
+                .select('slug, published_at, updated_at')
+                .eq('status', 'published')
+                .order('published_at', { ascending: false });
+
+            if (blogPosts) {
+                blogRoutes = blogPosts.map((post) => ({
+                    url: `${BASE_URL}/blog/${post.slug}`,
+                    lastModified: new Date(post.updated_at || post.published_at),
+                    changeFrequency: 'weekly' as const,
+                    priority: 0.8,
+                }));
+            }
+        }
+    } catch (e) {
+        // Sitemap generation should never fail — fallback to empty blog routes
+        console.warn('[Sitemap] Failed to fetch blog posts:', e);
+    }
+
+    // 5. Vehicle Routes
+    const vehicleRoutes: MetadataRoute.Sitemap = vehicles.map((vehicle) => ({
         url: `${BASE_URL}/vehicules/${vehicle.brand.toLowerCase()}/${vehicle.id}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.7,
     }));
 
-    // 4. City Routes (From SITES Config)
-    // Filter duplicates and 'home' slug
+    // 6. City Routes (From SITES Config)
     const uniqueSites = new Map();
-
     Object.values(SITES).forEach(site => {
         if (site.slug !== 'home' && site.slug !== 'expertbornerecharge.com') {
             uniqueSites.set(site.slug, site);
         }
     });
 
-    const cityRoutes = Array.from(uniqueSites.values()).map((site) => ({
-        // Use clean URL: /ville/neuilly-sur-seine
+    const cityRoutes: MetadataRoute.Sitemap = Array.from(uniqueSites.values()).map((site) => ({
         url: `${BASE_URL}/ville/${slugify(site.city).toLowerCase()}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.9,
     }));
 
-    // 5. B2B PSEO Routes (Copro + Entreprise per city) — HIGH TICKET
-    const b2bRoutes = Array.from(uniqueSites.values()).flatMap((site) => {
+    // 7. B2B PSEO Routes (Copro + Entreprise per city) — HIGH TICKET
+    const b2bRoutes: MetadataRoute.Sitemap = Array.from(uniqueSites.values()).flatMap((site) => {
         const citySlug = slugify(site.city).toLowerCase();
         return [
             {
@@ -83,7 +169,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ];
     });
 
-    return [...routes, ...guideRoutes, ...vehicleRoutes, ...cityRoutes, ...b2bRoutes].map(item => ({
+    return [...routes, ...serviceRoutes, ...guideRoutes, ...blogRoutes, ...vehicleRoutes, ...cityRoutes, ...b2bRoutes].map(item => ({
         ...item,
         url: item.url.toLowerCase()
     }));
