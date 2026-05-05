@@ -451,6 +451,7 @@ export type Database = {
                     read_time_minutes: number
                     tags: string[] | null
                     faq: Json | null
+                    soloca_article_id: string | null
                     created_at: string
                 }
                 Insert: {
@@ -470,6 +471,7 @@ export type Database = {
                     read_time_minutes?: number
                     tags?: string[] | null
                     faq?: Json | null
+                    soloca_article_id?: string | null
                     created_at?: string
                 }
                 Update: {
@@ -489,6 +491,7 @@ export type Database = {
                     read_time_minutes?: number
                     tags?: string[] | null
                     faq?: Json | null
+                    soloca_article_id?: string | null
                     created_at?: string
                 }
                 Relationships: [
