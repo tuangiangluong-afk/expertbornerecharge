@@ -24,6 +24,7 @@ interface Lead {
     notes: string | null;
     price: number | null;
     region: string | null;
+    department: string | null;
     is_paid: boolean;
     created_at: string;
 }
