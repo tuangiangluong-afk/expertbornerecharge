@@ -103,34 +103,33 @@ export async function assignLeadToPartners(leadId: string, partnerIds: string[])
                 await resend.emails.send({
                     from: 'Expert Borne Recharge <contact@expertbornerecharge.com>',
                     to: [partner.email],
-                    subject: `🚀 Nouveau Lead Attribué : ${lead.name} (${lead.city})`,
+                    subject: `🚀 Nouveau Lead Disponible : ${lead.city}`,
                     html: `
                         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-                            <h1 style="color: #2563eb;">Nouveau Lead Client</h1>
+                            <h1 style="color: #2563eb;">Nouveau Projet à Saisir</h1>
                             <p>Bonjour ${partner.name},</p>
-                            <p>Nous sommes heureux de vous attribuer un nouveau prospect qualifié.</p>
+                            <p>Un nouveau lead correspondant à votre secteur vient d'être identifié.</p>
                             
                             <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin: 20px 0;">
-                                <h2 style="margin-top: 0; color: #1e293b;">Détails du Contact</h2>
+                                <h2 style="margin-top: 0; color: #1e293b;">Détails du Projet</h2>
                                 <ul style="list-style: none; padding: 0;">
-                                    <li style="margin-bottom: 10px;">👤 <strong>Nom :</strong> ${lead.name}</li>
-                                    <li style="margin-bottom: 10px;">📧 <strong>Email :</strong> <a href="mailto:${lead.email}">${lead.email}</a></li>
-                                    <li style="margin-bottom: 10px;">📞 <strong>Téléphone :</strong> <a href="tel:${lead.phone}">${lead.phone}</a></li>
                                     <li style="margin-bottom: 10px;">📍 <strong>Ville :</strong> ${lead.city} ${lead.postal_code || ''}</li>
-                                </ul>
-                                
-                                <h2 style="color: #1e293b; margin-top: 20px;">Détails du Projet</h2>
-                                <ul style="list-style: none; padding: 0;">
                                     <li style="margin-bottom: 10px;">🏠 <strong>Type :</strong> ${lead.housing_type || lead.type}</li>
                                     ${meta.owner_status ? `<li style="margin-bottom: 10px;">🔑 <strong>Statut :</strong> ${meta.owner_status}</li>` : ''}
                                     ${meta.vehicle_status ? `<li style="margin-bottom: 10px;">🚗 <strong>Véhicule :</strong> ${meta.vehicle_status}</li>` : ''}
-                                    ${meta.meter_distance ? `<li style="margin-bottom: 10px;">📏 <strong>Distance Compteur :</strong> ${meta.meter_distance}</li>` : ''}
-                                    ${meta.solar_interest ? '<li style="color: #b45309; background-color: #fffbeb; padding: 5px; display: inline-block; border-radius: 4px;">☀️ <strong>Intéressé par le Solaire</strong></li>' : ''}
                                 </ul>
                             </div>
+
+                            <p style="text-align: center; margin-top: 30px;">
+                                <a href="https://expertbornerecharge.com/leads/unlock/${lead.id}" 
+                                   style="background-color: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
+                                   DÉBLOQUER LES COORDONNÉES
+                                </a>
+                            </p>
         
-                            <p>Merci de contacter ce prospect sous 24h pour maximiser vos chances de conversion.</p>
-                            <p>Cordialement,<br>L'équipe Expert Borne Recharge</p>
+                            <p style="font-size: 14px; color: #64748b; margin-top: 40px; border-top: 1px solid #e2e8f0; pt: 20px;">
+                                Une fois le paiement validé, vous recevrez instantanément le nom, l'email et le téléphone du client.
+                            </p>
                         </div>
                     `
                 });

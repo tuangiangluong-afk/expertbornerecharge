@@ -9,6 +9,7 @@ import { fr } from 'date-fns/locale';
 import { TableOfContents } from "@/components/blog/TableOfContents";
 import SimulatorWidget from '@/components/blog/SimulatorWidget';
 import LocalLinker from '@/components/blog/LocalLinker';
+import { marked } from 'marked';
 
 // Initialize Supabase Client (No specific hook yet in this project structure)
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -189,7 +190,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                             prose-headings:font-bold prose-headings:text-neutral-900
                             prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
                             prose-img:rounded-xl"
-                            dangerouslySetInnerHTML={{ __html: post.content }}
+                            dangerouslySetInnerHTML={{ __html: marked.parse(post.content) }}
                         />
 
                         {/* FAQ */}

@@ -77,7 +77,7 @@ export async function GET(request: Request) {
                     seo_title: article.meta_title,
                     seo_description: article.meta_description,
                     soloca_article_id: article.id,
-                    read_time_minutes: Math.ceil((article.word_count || 1000) / 200),
+                    read_time_minutes: Math.min(8, Math.ceil((article.word_count || 1000) / 250)),
                     faq: article.faq_section ? JSON.parse(article.faq_section) : null
                 });
 

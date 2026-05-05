@@ -8,6 +8,7 @@ import { ArrowLeft, Clock, Calendar, Zap, ArrowRight } from 'lucide-react';
 import SimulatorWidget from '@/components/blog/SimulatorWidget';
 import LocalLinker from '@/components/blog/LocalLinker';
 import { createClient } from "@supabase/supabase-js";
+import { marked } from 'marked';
 
 // Initialize Supabase Client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -211,7 +212,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                         {/* Content Body */}
                         <article className="prose prose-lg prose-slate prose-headings:font-bold prose-headings:text-slate-900 prose-headings:scroll-mt-32 prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-img:rounded-2xl max-w-none">
                             {dbPost ? (
-                                <div dangerouslySetInnerHTML={{ __html: guide.content }} />
+                                <div dangerouslySetInnerHTML={{ __html: marked.parse(guide.content) }} />
                             ) : (
                                 <MDXRemote
                                     source={guide.content}
