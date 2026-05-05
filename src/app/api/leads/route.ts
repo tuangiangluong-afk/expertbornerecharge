@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createSupabaseAdmin } from '@/lib/supabase-server';
+import { getSiteConfig } from '@/lib/sites-config';
 
 export async function POST(request: Request) {
     try {
@@ -54,6 +55,11 @@ export async function POST(request: Request) {
         };
 
         const supabase = createSupabaseAdmin();
+        
+        // Find region from domain
+        const siteConfig = getSiteConfig(domain);
+        const region = siteConfig?.region || 'National';
+
         const { error: dbError } = await supabase
             .from('leads')
             .insert({
@@ -66,6 +72,7 @@ export async function POST(request: Request) {
                 type: isB2B ? 'b2b_lead' : 'website_lead',
                 housing_type: projectType,
                 status: 'new',
+                region: region,
                 message: JSON.stringify(metadata, null, 2)
             });
 

@@ -23,6 +23,14 @@ export async function addPartner(formData: FormData) {
     const email = formData.get("email") as string;
     const phone = formData.get("phone") as string;
     const company = formData.get("company") as string;
+    const regionsStr = formData.get("regions") as string; // Will be comma-separated or JSON
+    
+    let managed_regions: string[] = [];
+    try {
+        managed_regions = JSON.parse(regionsStr);
+    } catch (e) {
+        managed_regions = regionsStr ? regionsStr.split(',').map(r => r.trim()) : [];
+    }
 
     if (!name || !email) throw new Error("Nom et Email obligatoires");
 
@@ -32,8 +40,23 @@ export async function addPartner(formData: FormData) {
             name,
             email,
             phone,
-            company_info: { company_name: company }
+            company_info: { company_name: company },
+            managed_regions
         })
+        .select()
+        .single();
+
+    if (error) throw new Error(error.message);
+    return data;
+}
+
+export async function updatePartner(id: string, updates: Partial<Partner>) {
+    const supabase = createSupabaseAdmin();
+
+    const { data, error } = await supabase
+        .from("partners")
+        .update(updates)
+        .eq("id", id)
         .select()
         .single();
 

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Users, Filter, Download, Eye, Phone, Mail, Building, Home, Briefcase, X, Link as LinkIcon, Check } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { Users, Filter, Download, Eye, Phone, Mail, Building, Home, Briefcase, X, Link as LinkIcon, Check, MapPin, CreditCard } from "lucide-react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { updateLeadStatus } from "@/app/actions/leads";
+import { updateLeadStatus, updateLeadDetails } from "@/app/actions/leads";
 import { useToast } from "@/components/admin/Toast";
 
 interface Lead {
@@ -23,6 +23,8 @@ interface Lead {
     housing_type: string | null;
     notes: string | null;
     price: number | null;
+    region: string | null;
+    is_paid: boolean;
     created_at: string;
 }
 
@@ -32,14 +34,33 @@ interface Partner {
     email: string;
 }
 
+const REGIONS = [
+    "National",
+    "Île-de-France",
+    "Auvergne-Rhône-Alpes",
+    "Provence-Alpes-Côte d'Azur",
+    "Nouvelle-Aquitaine",
+    "Occitanie",
+    "Hauts-de-France",
+    "Grand Est",
+    "Pays de la Loire",
+    "Bretagne"
+];
+
 export default function LeadsClient({ initialLeads, partners }: { initialLeads: any[], partners: Partner[] }) {
     const searchParams = useSearchParams();
+    const router = useRouter();
     const currentTenantId = searchParams.get("tenantId");
+    const currentRegion = searchParams.get("region") || "all";
 
     // Filter leads based on search params (Client-Side Filtering)
-    const filteredLeads = currentTenantId && currentTenantId !== 'all'
+    let filteredLeads = currentTenantId && currentTenantId !== 'all'
         ? initialLeads.filter(l => l.tenant_id === currentTenantId)
         : initialLeads;
+    
+    if (currentRegion !== "all") {
+        filteredLeads = filteredLeads.filter(l => l.region === currentRegion);
+    }
 
     const [leads, setLeads] = useState<Lead[]>(filteredLeads);
     const { showToast } = useToast();
@@ -66,6 +87,27 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
         setTimeout(() => setCopiedId(null), 2000);
     };
 
+    const handleRegionFilter = (region: string) => {
+        const params = new URLSearchParams(searchParams.toString());
+        if (region === "all") {
+            params.delete("region");
+        } else {
+            params.set("region", region);
+        }
+        router.push(`?${params.toString()}`);
+    };
+
+    async function togglePaidStatus(lead: Lead) {
+        const newPaidStatus = !lead.is_paid;
+        try {
+            await updateLeadDetails(lead.id, { is_paid: newPaidStatus });
+            setLeads(prev => prev.map(l => l.id === lead.id ? { ...l, is_paid: newPaidStatus } : l));
+            showToast(newPaidStatus ? "Lead marqué comme PAYÉ ✅" : "Paiement annulé", "success");
+        } catch (e) {
+            showToast("Erreur mise à jour paiement", "error");
+        }
+    }
+
     // Initial Fetch when opening modal
     async function openModal(lead: Lead) {
         setSelectedLead(lead);
@@ -91,7 +133,6 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
         if (!selectedLead) return;
         setIsUpdatingLead(true);
         try {
-            const { updateLeadDetails } = await import("@/app/actions/leads");
             await updateLeadDetails(selectedLead.id, { notes: editNotes, price: editPrice });
             setLeads(prev => prev.map(l => l.id === selectedLead.id ? { ...l, notes: editNotes, price: editPrice } : l));
             showToast("Plomberie mise à jour !", "success");
@@ -146,7 +187,7 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
 
     return (
         <div className="w-full">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
                         <Users className="text-blue-600" />
@@ -156,14 +197,32 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                         {leads.length} leads trouvés {currentTenantId ? `pour ${currentTenantId}` : "au total"}
                     </p>
                 </div>
-                <div className="flex gap-2">
+                
+                <div className="flex flex-wrap items-center gap-2">
+                    {/* Region Filter Dropdown */}
+                    <div className="flex items-center gap-2 bg-white border border-slate-200 p-1 rounded-lg shadow-sm">
+                        <div className="pl-3 pr-1 text-slate-400">
+                            <MapPin size={16} />
+                        </div>
+                        <select 
+                            value={currentRegion}
+                            onChange={(e) => handleRegionFilter(e.target.value)}
+                            className="bg-transparent border-none text-sm font-bold text-slate-700 focus:ring-0 cursor-pointer pr-8"
+                        >
+                            <option value="all">Toutes les régions</option>
+                            {REGIONS.map(r => (
+                                <option key={r} value={r}>{r}</option>
+                            ))}
+                        </select>
+                    </div>
+
                     <button className="flex items-center gap-2 bg-white border border-slate-300 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-50 transition font-medium">
                         <Filter size={18} />
-                        Filtrer
+                        Plus de filtres
                     </button>
                     <button className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition shadow-lg shadow-slate-900/20">
                         <Download size={18} />
-                        Exporter CSV
+                        Export
                     </button>
                 </div>
             </div>
@@ -180,11 +239,10 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                             <thead className="bg-slate-50 border-b border-slate-200">
                                 <tr>
                                     <th className="text-left px-6 py-3 text-xs font-bold text-slate-500 uppercase">Date</th>
-                                    <th className="text-left px-6 py-3 text-xs font-bold text-slate-500 uppercase">Site</th>
-                                    <th className="text-left px-6 py-3 text-xs font-bold text-slate-500 uppercase">Statut</th>
+                                    <th className="text-left px-6 py-3 text-xs font-bold text-slate-500 uppercase">Region / Site</th>
+                                    <th className="text-left px-6 py-3 text-xs font-bold text-slate-500 uppercase">Statut / Payé</th>
                                     <th className="text-left px-6 py-3 text-xs font-bold text-slate-500 uppercase">Contact</th>
                                     <th className="text-left px-6 py-3 text-xs font-bold text-slate-500 uppercase">Projet</th>
-                                    <th className="text-left px-6 py-3 text-xs font-bold text-slate-500 uppercase">Commentaire/Notes</th>
                                     <th className="text-left px-6 py-3 text-xs font-bold text-slate-500 uppercase">Prix (HT)</th>
                                     <th className="text-right px-6 py-3 text-xs font-bold text-slate-500 uppercase">Actions</th>
                                 </tr>
@@ -200,7 +258,7 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                     } catch (e) { }
 
                                     return (
-                                        <tr key={lead.id} className="hover:bg-slate-50 transition group">
+                                        <tr key={lead.id} className={`hover:bg-slate-50 transition group ${lead.is_paid ? 'bg-emerald-50/30' : ''}`}>
                                             <td className="px-6 py-4 text-sm text-slate-500 whitespace-nowrap">
                                                 {format(new Date(lead.created_at), "dd MMM yyyy", { locale: fr })}
                                                 <div className="text-xs text-slate-400">
@@ -208,31 +266,48 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <span className="text-xs font-bold bg-slate-100 px-2 py-1 rounded text-slate-600">
-                                                    {lead.tenant_id}
-                                                </span>
+                                                <div className="flex flex-col gap-1">
+                                                    <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded self-start uppercase">
+                                                        {lead.region || "National"}
+                                                    </span>
+                                                    <span className="text-xs text-slate-400">
+                                                        {lead.tenant_id}
+                                                    </span>
+                                                </div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <select
-                                                    value={lead.status}
-                                                    onChange={async (e) => {
-                                                        const newStatus = e.target.value;
-                                                        try {
-                                                            await updateLeadStatus(lead.id, newStatus);
-                                                            // Update local state
-                                                            setLeads(prev => prev.map(l => l.id === lead.id ? { ...l, status: newStatus } : l));
-                                                        } catch (err) {
-                                                            showToast("Erreur mise à jour statut", "error");
-                                                        }
-                                                    }}
-                                                    className={`text-xs font-bold px-2 py-1 rounded-full border-0 cursor-pointer focus:ring-2 focus:ring-blue-500 ${getStatusColor(lead.status)}`}
-                                                >
-                                                    <option value="new">New</option>
-                                                    <option value="contacted">Contacted</option>
-                                                    <option value="converted">Converted</option>
-                                                    <option value="lost">Lost</option>
-                                                    <option value="sold">VENDU ($)</option>
-                                                </select>
+                                                <div className="flex flex-col gap-2">
+                                                    <select
+                                                        value={lead.status}
+                                                        onChange={async (e) => {
+                                                            const newStatus = e.target.value;
+                                                            try {
+                                                                await updateLeadStatus(lead.id, newStatus);
+                                                                setLeads(prev => prev.map(l => l.id === lead.id ? { ...l, status: newStatus } : l));
+                                                            } catch (err) {
+                                                                showToast("Erreur mise à jour statut", "error");
+                                                            }
+                                                        }}
+                                                        className={`text-[10px] font-bold px-2 py-1 rounded-full border-0 cursor-pointer focus:ring-2 focus:ring-blue-500 ${getStatusColor(lead.status)}`}
+                                                    >
+                                                        <option value="new">New</option>
+                                                        <option value="contacted">Contacted</option>
+                                                        <option value="converted">Converted</option>
+                                                        <option value="lost">Lost</option>
+                                                        <option value="sold">VENDU ($)</option>
+                                                    </select>
+                                                    
+                                                    {/* Paid Status Toggle */}
+                                                    <button 
+                                                        onClick={() => togglePaidStatus(lead)}
+                                                        className={`flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full border transition ${lead.is_paid 
+                                                            ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm' 
+                                                            : 'bg-white text-slate-400 border-slate-200 hover:border-emerald-200 hover:text-emerald-600'}`}
+                                                    >
+                                                        <CreditCard size={10} />
+                                                        {lead.is_paid ? "PAYÉ" : "NON PAYÉ"}
+                                                    </button>
+                                                </div>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex flex-col">
@@ -257,14 +332,9 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                                 </div>
                                                 {lead.city && (
                                                     <div className="text-xs text-slate-500">
-                                                        📍 {lead.city}
+                                                        📍 {lead.city} ({lead.postal_code})
                                                     </div>
                                                 )}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <p className="text-xs text-slate-600 max-w-[200px] truncate" title={lead.notes || ""}>
-                                                    {lead.notes || <span className="text-slate-300 italic">Aucune note</span>}
-                                                </p>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <span className="text-sm font-bold text-slate-700">
@@ -333,6 +403,11 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                         <div>
                                             <p className="font-bold text-slate-900 text-lg">{selectedLead.name}</p>
                                             <p className="text-slate-500">{selectedLead.city} ({selectedLead.postal_code})</p>
+                                            <div className="mt-1">
+                                                <span className="text-[10px] font-bold bg-blue-100 text-blue-700 px-2 py-0.5 rounded uppercase">
+                                                    {selectedLead.region || "National"}
+                                                </span>
+                                            </div>
                                         </div>
                                         <span className="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">
                                             {selectedLead.tenant_id}
@@ -375,10 +450,6 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                         >
                                             {isUpdatingLead ? "..." : "Enregistrer"}
                                         </button>
-                                    </div>
-                                    <div className="text-[10px] text-slate-400 flex items-center gap-1">
-                                        <Eye size={12} />
-                                        Le partenaire verra ces notes avant d'acheter.
                                     </div>
                                 </div>
 
@@ -458,3 +529,4 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
         </div>
     );
 }
+

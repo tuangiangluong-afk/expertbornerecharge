@@ -223,6 +223,8 @@ export type Database = {
                     housing_type: string | null
                     notes: string | null
                     price: number | null
+                    region: string | null
+                    is_paid: boolean
                     created_at: string
                 }
                 Insert: {
@@ -240,6 +242,8 @@ export type Database = {
                     housing_type?: string | null
                     notes?: string | null
                     price?: number | null
+                    region?: string | null
+                    is_paid?: boolean
                     created_at?: string
                 }
                 Update: {
@@ -257,6 +261,8 @@ export type Database = {
                     housing_type?: string | null
                     notes?: string | null
                     price?: number | null
+                    region?: string | null
+                    is_paid?: boolean
                     created_at?: string
                 }
                 Relationships: []
@@ -305,6 +311,7 @@ export type Database = {
                     email: string
                     phone: string | null
                     company_info: Json | null
+                    managed_regions: string[] | null
                     created_at: string
                 }
                 Insert: {
@@ -313,6 +320,7 @@ export type Database = {
                     email: string
                     phone?: string | null
                     company_info?: Json | null
+                    managed_regions?: string[] | null
                     created_at?: string
                 }
                 Update: {
@@ -321,6 +329,7 @@ export type Database = {
                     email?: string
                     phone?: string | null
                     company_info?: Json | null
+                    managed_regions?: string[] | null
                     created_at?: string
                 }
                 Relationships: []

@@ -18,7 +18,7 @@ export async function updateLeadStatus(leadId: string, status: string) {
     return data;
 }
 
-export async function updateLeadDetails(leadId: string, updates: { notes?: string, price?: number, status?: string }) {
+export async function updateLeadDetails(leadId: string, updates: { notes?: string, price?: number, status?: string, is_paid?: boolean }) {
     const supabase = createSupabaseAdmin();
     const { data, error } = await supabase
         .from("leads")
