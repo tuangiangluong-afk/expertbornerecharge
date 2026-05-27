@@ -126,18 +126,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // ========================================
     // 11. B2B PSEO Routes (Copro + Entreprise per city)
     // ========================================
-    const b2bRoutes = NATIONAL_TARGETS.flatMap((target) => {
+    const b2bRoutes: MetadataRoute.Sitemap = NATIONAL_TARGETS.flatMap((target) => {
         return [
             {
                 url: `${baseUrl}/ville/${target.slug}/copropriete`,
                 lastModified: new Date(),
-                changeFrequency: 'weekly',
+                changeFrequency: 'weekly' as const,
                 priority: 0.95,
             },
             {
                 url: `${baseUrl}/ville/${target.slug}/entreprise`,
                 lastModified: new Date(),
-                changeFrequency: 'weekly',
+                changeFrequency: 'weekly' as const,
                 priority: 0.95,
             },
         ];
@@ -146,11 +146,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // ========================================
     // 12. Domination Longue Traîne: City x Brand (pSEO Matrix)
     // ========================================
-    const cityBrandRoutes = NATIONAL_TARGETS.flatMap((target) => {
+    const cityBrandRoutes: MetadataRoute.Sitemap = NATIONAL_TARGETS.flatMap((target) => {
         return brands.map(brand => ({
             url: `${baseUrl}/ville/${target.slug}/${brand.slug}`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: 'weekly' as const,
             priority: 0.85,
         }));
     });
