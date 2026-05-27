@@ -122,6 +122,39 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { url: `${baseUrl}/solutions/entreprise`, lastModified: new Date(), priority: 0.7 },
     ];
 
+
+    // ========================================
+    // 11. B2B PSEO Routes (Copro + Entreprise per city)
+    // ========================================
+    const b2bRoutes = NATIONAL_TARGETS.flatMap((target) => {
+        return [
+            {
+                url: `${baseUrl}/ville/${target.slug}/copropriete`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly',
+                priority: 0.95,
+            },
+            {
+                url: `${baseUrl}/ville/${target.slug}/entreprise`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly',
+                priority: 0.95,
+            },
+        ];
+    });
+
+    // ========================================
+    // 12. Domination Longue Traîne: City x Brand (pSEO Matrix)
+    // ========================================
+    const cityBrandRoutes = NATIONAL_TARGETS.flatMap((target) => {
+        return brands.map(brand => ({
+            url: `${baseUrl}/ville/${target.slug}/${brand.slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.85,
+        }));
+    });
+
     return [
         ...coreRoutes,
         ...cityRoutes,
@@ -131,6 +164,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ...vehicleRoutes,
         ...guideRoutes,
         ...extraRoutes,
+        ...b2bRoutes,
+        ...cityBrandRoutes,
     ].map(item => ({
         ...item,
         url: item.url.toLowerCase()
