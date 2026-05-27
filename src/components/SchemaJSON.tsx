@@ -4,15 +4,17 @@ import { Vehicle } from "@/data/vehicles";
 import { BrandData } from "@/data/brands";
 
 interface SchemaJSONProps {
-    type: "LocalBusiness" | "Product" | "Service";
+    type: "LocalBusiness" | "Product" | "Service" | "B2BService" | "Organization" | "Breadcrumb";
     site?: SiteConfig | CityConfig;
     vehicle?: Vehicle;
     brand?: BrandData;
+    breadcrumbItems?: { name: string; item: string }[];
+    b2bType?: "Copropriété" | "Entreprise";
 }
 
 import { slugify } from "@/lib/slugify";
 
-export default function SchemaJSON({ type, site, vehicle, brand }: SchemaJSONProps) {
+export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems, b2bType }: SchemaJSONProps) {
     let schema = {};
 
     if (type === "LocalBusiness" && site) {
@@ -148,6 +150,64 @@ export default function SchemaJSON({ type, site, vehicle, brand }: SchemaJSONPro
                 "availability": "https://schema.org/InStock",
                 "itemCondition": "https://schema.org/NewCondition"
             }
+        };
+    } else if (type === "B2BService" && site && b2bType) {
+        const baseUrl = "https://expertbornerecharge.com";
+        const targetSlug = b2bType === "Copropriété" ? "copropriete" : "entreprise";
+        const canonicalUrl = `${baseUrl}/ville/${slugify(site.city)}/${targetSlug}`;
+
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": `Installation Borne de Recharge ${b2bType}`,
+            "name": `Installation Borne de Recharge pour ${b2bType} à ${site.city}`,
+            "description": `Devis gratuit et installation de bornes de recharge pour ${b2bType} à ${site.city}. Conformité, aides ADVENIR, et Tiers-Investisseur.`,
+            "url": canonicalUrl,
+            "provider": {
+                "@type": ["LocalBusiness", "Electrician"],
+                "name": site.name || "Expert Borne Recharge",
+                "telephone": site.phoneNumber,
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": site.city,
+                    "postalCode": site.postalCode,
+                    "addressCountry": "FR"
+                }
+            },
+            "areaServed": {
+                "@type": "City",
+                "name": site.city
+            }
+        };
+    } else if (type === "Organization" && site) {
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Expert Borne Recharge",
+            "url": "https://expertbornerecharge.com",
+            "logo": "https://expertbornerecharge.com/logo.png",
+            "sameAs": [
+                "https://www.linkedin.com/company/expert-borne-recharge",
+                "https://www.facebook.com/expertbornerecharge"
+            ],
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": site.phoneNumber || "01 89 70 21 00",
+                "contactType": "customer service",
+                "areaServed": "FR",
+                "availableLanguage": "French"
+            }
+        };
+    } else if (type === "Breadcrumb" && breadcrumbItems) {
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": breadcrumbItems.map((item, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "name": item.name,
+                "item": item.item
+            }))
         };
     }
 

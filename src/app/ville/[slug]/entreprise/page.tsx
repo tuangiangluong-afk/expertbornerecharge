@@ -70,6 +70,15 @@ export default async function EntrepriseCityPage({ params }: { params: Promise<{
             <Header isHub={true} variant="default" />
 
             <SchemaJSON type="LocalBusiness" site={site} />
+            <SchemaJSON type="B2BService" site={site} b2bType="Entreprise" />
+            <SchemaJSON
+                type="Breadcrumb"
+                breadcrumbItems={[
+                    { name: "Accueil", item: "https://expertbornerecharge.com" },
+                    { name: site.city, item: `https://expertbornerecharge.com/ville/${resolvedParams.slug}` },
+                    { name: "Entreprise", item: `https://expertbornerecharge.com/ville/${resolvedParams.slug}/entreprise` }
+                ]}
+            />
 
             {/* ============================== */}
             {/* HERO — B2B Entreprise Tone */}

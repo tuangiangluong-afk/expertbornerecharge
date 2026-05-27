@@ -179,6 +179,7 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
             />
 
             <SchemaJSON type="LocalBusiness" site={site} />
+            {isHub && <SchemaJSON type="Organization" site={site} />}
 
             <section className="relative pt-32 pb-16 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
                 <div className="container mx-auto px-4 relative z-20">

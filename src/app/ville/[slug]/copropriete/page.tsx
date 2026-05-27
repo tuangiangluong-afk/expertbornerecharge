@@ -70,6 +70,15 @@ export default async function CoproCityPage({ params }: { params: Promise<{ slug
             <Header isHub={true} variant="default" />
 
             <SchemaJSON type="LocalBusiness" site={site} />
+            <SchemaJSON type="B2BService" site={site} b2bType="Copropriété" />
+            <SchemaJSON
+                type="Breadcrumb"
+                breadcrumbItems={[
+                    { name: "Accueil", item: "https://expertbornerecharge.com" },
+                    { name: site.city, item: `https://expertbornerecharge.com/ville/${resolvedParams.slug}` },
+                    { name: "Copropriété", item: `https://expertbornerecharge.com/ville/${resolvedParams.slug}/copropriete` }
+                ]}
+            />
 
             {/* ============================== */}
             {/* HERO — B2B Copropriété Tone */}
