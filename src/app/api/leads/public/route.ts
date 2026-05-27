@@ -21,13 +21,14 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ error: "Lead not found" }, { status: 404 });
     }
 
-    // 2. If partnerId is provided, check if they have access
+    // 2. If partnerId is provided, check if they have access AND have paid
     if (partnerId) {
         const { data: assignment } = await supabase
             .from("lead_assignments")
             .select("*")
             .eq("lead_id", id)
             .eq("partner_id", partnerId)
+            .eq("status", "paid") // <--- CRITICAL SECURITY FIX: Only return full details if PAID
             .single();
 
         if (assignment) {

@@ -6,6 +6,7 @@ import { slugify } from "@/lib/slugify";
 import { SiteConfig } from "@/lib/sites-config";
 import { CityConfig } from "@/lib/db";
 import { getNearbyCities } from "@/lib/geo";
+import { brands } from "@/data/brands";
 
 interface InternalMeshProps {
     city?: string;
@@ -24,8 +25,8 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
     const neighborhoods = (config as any)?.neighborhoods || (config as any)?.quartiers || [];
 
     const monuments = poi.monuments?.length
-        ? poi.monuments.slice(0, 5) // Show top 5 local monuments
-        : NATIONAL_CONFIG.points_of_interest.monuments.slice(0, 5); // Fallback to Paris monuments if no local data
+        ? poi.monuments.slice(0, 5)
+        : NATIONAL_CONFIG.points_of_interest.monuments.slice(0, 5);
 
     const secondaryPois = neighborhoods.length
         ? neighborhoods.slice(0, 3)
@@ -100,39 +101,38 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
                                 <li key={quartier}>
                                     <Link href={`/quartier/${slugify(quartier)}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
                                         <span className="w-1 h-1 bg-yellow-500 rounded-full"></span>
-                                        {getVariedAnchor(quartier, i + 2)} {/* Offset index for variation */}
+                                        {getVariedAnchor(quartier, i + 2)}
                                     </Link>
                                 </li>
                             ))}
                         </ul>
                     </div>
 
-                    {/* 4. Deep Mesh / Proximité */}
+                    {/* 4. Véhicules Compatibles — Dynamic from brands.ts (NO hardcode) */}
                     <div>
                         <h4 className="text-white font-bold mb-6 text-lg">
-                            {nearbyCities.length > 0 ? "Installateurs à Proximité" : "Réseau National"}
+                            {config ? "Véhicules Compatibles" : "Réseau National"}
                         </h4>
                         <ul className="space-y-3">
-                            {nearbyCities.length > 6 ? (
-                                nearbyCities.slice(6, 12).map((city, i) => (
-                                    <li key={city.slug}>
+                            {config ? (
+                                brands.slice(0, 6).map((brand) => (
+                                    <li key={brand.slug}>
                                         <Link
-                                            href={city.domain ? `https://${city.domain}/` : `https://expertbornerecharge.com/ville/${city.slug}`}
+                                            href={`/ville/${config.slug}/${brand.slug}`}
                                             className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2"
                                         >
-                                            <span className="w-1 h-1 bg-blue-500 rounded-full"></span>
-                                            {getVariedAnchor(city.city, i + 6)}
+                                            <span className="w-1 h-1 bg-purple-500 rounded-full"></span>
+                                            Borne pour {brand.name} à {config.city}
                                         </Link>
                                     </li>
                                 ))
                             ) : (
-                                // Fallback if no specific nearby cities (e.g. on National page)
                                 [
-                                    { label: "Maison Individuelle", href: "https://expertbornerecharge.com/solutions/maison" },
-                                    { label: "Borne en Copropriété", href: "https://expertbornerecharge.com/solutions/copropriete" },
-                                    { label: "Borne en Entreprise", href: "https://expertbornerecharge.com/solutions/entreprise" },
-                                    { label: "Prix & Tarifs 2026", href: "https://expertbornerecharge.com/guides/cout-installation-borne-recharge" },
-                                    { label: "Aides & Subventions", href: "https://expertbornerecharge.com/guides/aides-subventions-borne-recharge" }
+                                    { label: "Maison Individuelle", href: "/solutions/maison" },
+                                    { label: "Borne en Copropriété", href: "/solutions/copropriete" },
+                                    { label: "Borne en Entreprise", href: "/solutions/entreprise" },
+                                    { label: "Prix & Tarifs 2026", href: "/guides/cout-installation-borne-recharge" },
+                                    { label: "Aides & Subventions", href: "/guides/aides-subventions-borne-recharge" }
                                 ].map((link, i) => (
                                     <li key={i}>
                                         <Link href={link.href} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
@@ -149,4 +149,3 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
         </section>
     );
 }
-

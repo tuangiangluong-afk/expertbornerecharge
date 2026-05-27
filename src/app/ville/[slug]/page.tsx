@@ -1,5 +1,5 @@
 import { getCityByCleanSlug, CITIES } from "@/lib/db";
-import { getSpintaxContent } from "@/lib/spintax";
+import { getPseoContent } from "@/lib/pseo";
 import { CheckCircle, Zap, TrendingDown, Home, Building2, Briefcase, Award, ArrowRight, Shield, Calendar } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -35,17 +35,16 @@ export async function generateMetadata({
         return {};
     }
 
-    // Dynamic Meta via Spintax
-    const spintaxTitle = getSpintaxContent("meta_title", site, 'HUB');
-    const spintaxDesc = getSpintaxContent("meta_description", site, 'HUB');
+    // Dynamic Meta via pSEO
+    const pseo = await getPseoContent(site);
 
     return {
-        title: spintaxTitle,
-        description: spintaxDesc,
+        title: pseo.meta_title,
+        description: pseo.meta_description,
         // Canonical is handled by root layout.tsx
         openGraph: {
-            title: spintaxTitle,
-            description: spintaxDesc,
+            title: pseo.meta_title,
+            description: pseo.meta_description,
             siteName: site.name,
             images: [
                 {
@@ -77,11 +76,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         return notFound();
     }
 
-    // Spintax Generation
-    const h1Content = getSpintaxContent("hero_title", site, 'HUB');
-    const badgeContent = getSpintaxContent("hero_badge", site, 'HUB');
-    const introContent = getSpintaxContent("intro_p1", site, 'HUB');
-    const ctaPrimary = getSpintaxContent("cta_primary", site, 'HUB');
+    // pSEO Generation
+    const pseo = await getPseoContent(site);
 
     return (
         <div className="min-h-screen font-sans text-slate-900 bg-white">
@@ -100,22 +96,31 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                         <div>
                             <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-sm font-bold mb-6">
                                 <CheckCircle size={16} />
-                                {badgeContent}
+                                {pseo.hero_badge}
                             </div>
                             <h1
                                 className="text-4xl lg:text-6xl font-extrabold text-slate-900 mb-6 leading-tight"
-                                dangerouslySetInnerHTML={{ __html: h1Content }}
+                                dangerouslySetInnerHTML={{ __html: pseo.hero_title }}
                             />
                             <div
-                                className="text-lg text-slate-600 mb-8 leading-relaxed"
-                                dangerouslySetInnerHTML={{ __html: introContent }}
+                                className="text-lg text-slate-600 mb-8 leading-relaxed prose prose-lg prose-blue"
+                                dangerouslySetInnerHTML={{ __html: pseo.intro_html }}
                             />
+                            
+                            {/* Local Expert Tip */}
+                            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-8 flex gap-3">
+                                <Award className="text-amber-500 shrink-0 mt-1" />
+                                <p className="text-sm text-slate-700 italic">
+                                    <strong>Conseil Expert :</strong> {pseo.expert_tip}
+                                </p>
+                            </div>
+
                             <div className="flex flex-col sm:flex-row gap-4">
                                 <a
                                     href="#simulateur"
                                     className="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-center hover:bg-blue-700 transition"
                                 >
-                                    {ctaPrimary}
+                                    {pseo.cta_primary}
                                 </a>
                                 <a
                                     href={`tel:${site.phoneNumber}`}

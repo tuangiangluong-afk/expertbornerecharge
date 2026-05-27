@@ -42,10 +42,26 @@ export default function FAQ({ city, type, themeColor = 'blue' }: FAQProps) {
         purple: "bg-purple-100 text-purple-700"
     };
 
+    const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": questions.map(item => ({
+            "@type": "Question",
+            "name": item.q,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": item.a
+            }
+        }))
+    };
     const badgeClass = themeStyles[themeColor] || themeStyles.blue;
 
     return (
         <section className="py-20 bg-slate-50 border-t border-slate-200">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
             <div className="container mx-auto px-4 max-w-4xl">
                 <div className="text-center mb-12">
                     <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4 ${badgeClass}`}>

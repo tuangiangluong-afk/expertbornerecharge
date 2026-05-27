@@ -1,6 +1,5 @@
 import { Star, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
-import { getSpintaxContent } from "@/lib/spintax";
 import { SiteConfig } from "@/lib/sites-config";
 import { CityConfig } from "@/lib/db";
 
@@ -9,27 +8,103 @@ interface ReviewsProps {
     themeColor?: 'blue' | 'emerald' | 'amber' | 'purple';
 }
 
+function stringHash(str: string): number {
+    let hash = 0;
+    if (str.length === 0) return hash;
+    for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+    }
+    return Math.abs(hash);
+}
+
+const REVIEW_POOL = [
+    {
+        author: "Thomas D.",
+        templates: [
+            "Électricien certifié IRVE très compétent. L'installation de ma borne de recharge {city} s'est faite proprement et rapidement. Le dossier de prime Advenir a été géré de A à Z.",
+            "Très bon contact avec l'installateur. Pose soignée de notre borne de recharge {city}. Explications claires lors de la mise en service. Je recommande sans hésiter !",
+            "Installation nickel de ma borne Tesla. Le technicien {city} a pris le temps de tout configurer avec l'application. Chantier rendu impeccable."
+        ]
+    },
+    {
+        author: "Lucie F.",
+        templates: [
+            "Devis rapide et clair. L'équipe intervenue {city} a été ponctuelle et très professionnelle. La borne fonctionne parfaitement, c'est un vrai confort au quotidien.",
+            "Installation d'une borne en copropriété {city}. Suivi de projet parfait et accompagnement au top pour l'obtention des aides. Travail très propre.",
+            "Ravi de l'installation de ma Wallbox {city}. Excellent rapport qualité/prix et installateur très pédagogue. Service client réactif."
+        ]
+    },
+    {
+        author: "Éric L.",
+        templates: [
+            "Professionnel sérieux et à l'écoute. Installation effectuée sous 4 jours {city}. La programmation pour recharger pendant les heures creuses fonctionne à merveille.",
+            "Un service parfait du début à la fin. Visite technique rapide {city} et pose dans la foulée. La borne de 7.4kW charge mon véhicule en une nuit.",
+            "Entreprise très pro pour la pose de bornes de recharge {city}. Conseils avisés sur le choix du modèle et installation conforme aux normes."
+        ]
+    },
+    {
+        author: "Marc-Antoine P.",
+        templates: [
+            "Très satisfait de la pose de notre borne de recharge {city}. Exécution impeccable, câble bien camouflé et explications complètes sur le fonctionnement.",
+            "Une intervention impeccable de l'installateur IRVE {city}. Tout est conforme et fonctionne parfaitement. Devis respecté au centime près.",
+            "Super expérience pour l'équipement de notre parking {city}. Techniciens qualifiés et sympas, travail propre et soigné."
+        ]
+    },
+    {
+        author: "Sophie G.",
+        templates: [
+            "Installation rapide et conforme. L'artisan {city} était très pro et a répondu à toutes mes questions sur le crédit d'impôt. Recommandé !",
+            "Très satisfaite de la prestation pour ma maison {city}. Enfin un vrai professionnel certifié IRVE avec une tarification transparente.",
+            "Excellent électricien pour l'installation de notre borne de 22kW {city}. Travail soigné et réactivité exemplaire."
+        ]
+    }
+];
+
 export default function Reviews({ site, themeColor = 'blue' }: ReviewsProps) {
+    const city = site.city;
+    const isFrance = city.toLowerCase() === "france";
+    const prep = isFrance ? "en" : "à";
+    const titlePrep = isFrance ? "en" : "à";
+    const cityWithPrep = `${prep} ${city}`;
+
+    const seed = stringHash(city);
+    
+    // Select 3 different reviewer profiles deterministically based on seed
+    const index1 = seed % REVIEW_POOL.length;
+    const index2 = (seed + 1) % REVIEW_POOL.length;
+    const index3 = (seed + 2) % REVIEW_POOL.length;
+    
+    const profile1 = REVIEW_POOL[index1];
+    const profile2 = REVIEW_POOL[index2];
+    const profile3 = REVIEW_POOL[index3];
+    
+    // Select a template for each deterministically
+    const tIndex1 = (seed >> 1) % profile1.templates.length;
+    const tIndex2 = (seed >> 2) % profile2.templates.length;
+    const tIndex3 = (seed >> 3) % profile3.templates.length;
+    
     const reviews = [
         {
             id: 1,
-            author: getSpintaxContent("review_name_1", site),
-            text: getSpintaxContent("review_text_1", site),
+            author: profile1.author,
+            text: profile1.templates[tIndex1].replace(/{city}/g, cityWithPrep),
             rating: 5,
             source: "Google"
         },
         {
             id: 2,
-            author: getSpintaxContent("review_name_2", site),
-            text: getSpintaxContent("review_text_2", site),
+            author: profile2.author,
+            text: profile2.templates[tIndex2].replace(/{city}/g, cityWithPrep),
             rating: 5,
             source: "Google"
         },
         {
             id: 3,
-            author: getSpintaxContent("review_name_3", site),
-            text: getSpintaxContent("review_text_3", site),
-            rating: 4.8, // Make it look natural
+            author: profile3.author,
+            text: profile3.templates[tIndex3].replace(/{city}/g, cityWithPrep),
+            rating: 4.9, // Make it look natural
             source: "Google"
         }
     ];
@@ -50,7 +125,7 @@ export default function Reviews({ site, themeColor = 'blue' }: ReviewsProps) {
                 <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-4">
                     <div>
                         <h2 className="text-2xl font-bold text-neutral-900">
-                            Avis Clients à <span className={highlightClass}>{site.city}</span>
+                            Avis Clients {titlePrep} <span className={highlightClass}>{site.city}</span>
                         </h2>
                         <p className="text-sm text-neutral-500 mt-1">
                             Retours vérifiés de nos clients récents.

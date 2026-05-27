@@ -468,10 +468,9 @@ export function getTargetBySlug(slug: string): NationalTarget | undefined {
 
 // ========================================
 // ADAPTER: Convert NationalTarget to CityConfig
-// Uses Spintax for unique content per city
+// Uses pSEO for unique content per city
 // ========================================
 import { CityConfig } from "@/lib/db";
-import { getSpintaxContent } from "@/lib/spintax";
 
 export function getTargetAsCityConfig(slug: string): CityConfig | undefined {
     const target = NATIONAL_TARGETS.find(t => t.slug === slug);
@@ -497,6 +496,7 @@ export function getTargetAsCityConfig(slug: string): CityConfig | undefined {
         region: "France",
 
         description: uniqueDescription,
+        geo: target.geo,
 
         // EV Features
         features: [

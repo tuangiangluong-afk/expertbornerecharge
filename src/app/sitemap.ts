@@ -169,7 +169,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ];
     });
 
-    return [...routes, ...serviceRoutes, ...guideRoutes, ...blogRoutes, ...vehicleRoutes, ...cityRoutes, ...b2bRoutes].map(item => ({
+    // 8. Domination Longue Traîne: City x Brand (pSEO Matrix)
+    // Uses brands.ts as the single source of truth (same as the page component)
+    const { brands: brandList } = await import('@/data/brands');
+    
+    const cityBrandRoutes: MetadataRoute.Sitemap = Array.from(uniqueSites.values()).flatMap((site) => {
+        const citySlug = slugify(site.city).toLowerCase();
+        return brandList.map(brand => ({
+            url: `${BASE_URL}/ville/${citySlug}/${brand.slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.85,
+        }));
+    });
+
+    return [...routes, ...serviceRoutes, ...guideRoutes, ...blogRoutes, ...vehicleRoutes, ...cityRoutes, ...b2bRoutes, ...cityBrandRoutes].map(item => ({
         ...item,
         url: item.url.toLowerCase()
     }));

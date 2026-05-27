@@ -38,6 +38,10 @@ export interface CityConfig {
     gtm_id?: string;
     type?: 'OWNED' | 'PARTNER';
     targetType?: 'COPRO' | 'MAISON' | 'ENTREPRISE' | 'MIXED';
+    geo?: {
+        lat: number;
+        lng: number;
+    };
     partnerPhone?: string;
 }
 
@@ -100,6 +104,7 @@ const ADAPTED_SITES = Object.entries(SITES).reduce((acc, [key, site]) => {
             base: site.priceRange === 'LUXE' ? 'Sur Dev.' : '900€',
             description: "Installation à partir de"
         },
+        geo: site.coordinates,
         neighborhoods: site.quartiers || [],
         hospitals: [], // Not relevant for owned sites usually
         stations: [],

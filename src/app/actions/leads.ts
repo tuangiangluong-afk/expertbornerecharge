@@ -1,8 +1,16 @@
 "use server";
 
-import { createSupabaseAdmin } from "@/lib/supabase-server";
+import { createSupabaseAdmin, createSupabaseServerClient } from "@/lib/supabase-server";
+
+async function requireAuth() {
+    const supabase = await createSupabaseServerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+    return user;
+}
 
 export async function updateLeadStatus(leadId: string, status: string) {
+    await requireAuth();
     const supabase = createSupabaseAdmin();
     const { data, error } = await supabase
         .from("leads")
@@ -19,6 +27,7 @@ export async function updateLeadStatus(leadId: string, status: string) {
 }
 
 export async function updateLeadDetails(leadId: string, updates: { notes?: string, price?: number, status?: string, is_paid?: boolean }) {
+    await requireAuth();
     const supabase = createSupabaseAdmin();
     const { data, error } = await supabase
         .from("leads")
@@ -38,6 +47,7 @@ import { Resend } from 'resend';
 import { Database } from "@/types/database.types";
 
 export async function getLeadAssignments(leadId: string) {
+    await requireAuth();
     const supabase = createSupabaseAdmin();
     const { data, error } = await supabase
         .from("lead_assignments")
@@ -56,6 +66,7 @@ export async function getLeadAssignments(leadId: string) {
 }
 
 export async function assignLeadToPartners(leadId: string, partnerIds: string[]) {
+    await requireAuth();
     const supabase = createSupabaseAdmin();
 
     // 1. Fetch Lead & Partners
@@ -153,6 +164,7 @@ export async function assignLeadToPartners(leadId: string, partnerIds: string[])
 }
 
 export async function verifyPartnerEmail(email: string) {
+    await requireAuth();
     const supabase = createSupabaseAdmin();
     const { data, error } = await supabase
         .from("partners")
@@ -165,6 +177,7 @@ export async function verifyPartnerEmail(email: string) {
 }
 
 export async function deliverUnlockedLead(leadId: string, partnerId: string) {
+    await requireAuth();
     const supabase = createSupabaseAdmin();
 
     // 1. Fetch Lead & Partner

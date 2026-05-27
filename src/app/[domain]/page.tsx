@@ -1,5 +1,6 @@
 import { getSiteConfig } from "@/lib/sites-config";
-import { getSpintaxContent } from "@/lib/spintax";
+import { getCity } from "@/lib/db";
+import { getPseoContent } from "@/lib/pseo";
 import { CheckCircle, Zap, TrendingDown, Home, Building2, Briefcase, Award, ArrowRight, Shield, Calendar } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -20,11 +21,11 @@ import GrantsCalculator from "@/components/GrantsCalculator";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FloatingCTA from "@/components/FloatingCTA";
 import { slugify } from "@/lib/slugify";
-
+ 
 // ============================================
 // METADATA
 // ============================================
-
+ 
 export async function generateMetadata({
     params,
 }: {
@@ -32,26 +33,34 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const resolvedParams = await params;
     const site = getSiteConfig(resolvedParams.domain);
-
+ 
     if (!site) {
         return {
             title: "Expert Borne Recharge | Installation IRVE",
             description: "Installation de bornes de recharge pour véhicules électriques.",
         };
     }
-
-    // Dynamic Meta via Spintax
-    const spintaxTitle = getSpintaxContent("meta_title", site, 'LOCAL');
-    const spintaxDesc = getSpintaxContent("meta_description", site, 'LOCAL');
-
+ 
+    const cityConfig = getCity(resolvedParams.domain);
+    if (!cityConfig) {
+        return {
+            title: site.meta.title,
+            description: site.meta.description,
+            keywords: site.localKeywords,
+        };
+    }
+ 
+    // Dynamic Meta via pSEO
+    const pseo = await getPseoContent(cityConfig);
+ 
     return {
-        title: spintaxTitle,
-        description: spintaxDesc,
+        title: pseo.meta_title,
+        description: pseo.meta_description,
         keywords: site.localKeywords,
         // Canonical is handled by root layout.tsx
         openGraph: {
-            title: spintaxTitle,
-            description: spintaxDesc,
+            title: pseo.meta_title,
+            description: pseo.meta_description,
             url: `https://${site.domain}`,
             siteName: site.name,
             images: [
@@ -71,43 +80,50 @@ export async function generateMetadata({
         },
     };
 }
-
+ 
 // ============================================
 // PAGE COMPONENT
 // ============================================
-
+ 
 interface SitePageProps {
     params: Promise<{ domain: string }>;
     basePath?: string; // Optional for Demo Mode
 }
-
+ 
 export default async function SitePage({ params, basePath }: SitePageProps) {
     const resolvedParams = await params;
-
+ 
     let site = getSiteConfig(resolvedParams.domain);
-
+ 
     if (site && basePath) {
         site = { ...site, basePath } as any;
     }
-
+ 
     if (!site) {
         return notFound();
     }
-
+ 
+    const cityConfig = getCity(resolvedParams.domain);
+    if (!cityConfig) {
+        return notFound();
+    }
+ 
     const isHub = site.slug === 'home';
-
-    // Spintax Generation
-    const h1Content = getSpintaxContent("hero_title", site, 'LOCAL');
-    const introContent = getSpintaxContent("intro_p1", site, 'LOCAL');
-    const badgeContent = getSpintaxContent("hero_badge", site, 'LOCAL');
-
+ 
+    // pSEO Generation
+    const pseo = await getPseoContent(cityConfig);
+ 
+    const h1Content = pseo.hero_title;
+    const introContent = pseo.intro_html;
+    const badgeContent = pseo.hero_badge;
+ 
     type ThemeColor = 'blue' | 'emerald' | 'amber' | 'purple';
-
+ 
     let themeColor: ThemeColor = 'blue';
     if (site.priceRange === 'LUXE') themeColor = 'amber';
     else if (site.targetType === 'COPRO') themeColor = 'purple';
     else if (site.priceRange === 'STANDARD') themeColor = 'emerald';
-
+ 
     const colors = {
         blue: {
             primary: "bg-blue-600",
@@ -146,11 +162,11 @@ export default async function SitePage({ params, basePath }: SitePageProps) {
             shadow: "shadow-purple-500/30"
         }
     };
-
+ 
     const palette = colors[themeColor];
     const isPremium = site.theme === 'premium';
-
-    const coloredH1Content = h1Content.replace(/spintax-highlight/g, `spintax-highlight ${palette.text}`);
+ 
+    const coloredH1Content = h1Content.replace(/text-blue-500/g, palette.text);
 
     return (
         <div className="min-h-screen font-sans text-neutral-900 bg-neutral-50">

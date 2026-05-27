@@ -1,11 +1,19 @@
 "use server";
 
-import { createSupabaseAdmin } from "@/lib/supabase-server";
+import { createSupabaseAdmin, createSupabaseServerClient } from "@/lib/supabase-server";
 import { Database } from "@/types/database.types";
+
+async function requireAuth() {
+    const supabase = await createSupabaseServerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+    return user;
+}
 
 export type Partner = Database['public']['Tables']['partners']['Row'];
 
 export async function getPartners() {
+    await requireAuth();
     const supabase = createSupabaseAdmin();
     const { data, error } = await supabase
         .from("partners")
@@ -17,6 +25,7 @@ export async function getPartners() {
 }
 
 export async function addPartner(formData: FormData) {
+    await requireAuth();
     const supabase = createSupabaseAdmin();
 
     const name = formData.get("name") as string;
@@ -60,6 +69,7 @@ export async function addPartner(formData: FormData) {
 }
 
 export async function updatePartner(id: string, updates: Partial<Partner>) {
+    await requireAuth();
     const supabase = createSupabaseAdmin();
 
     const { data, error } = await supabase
