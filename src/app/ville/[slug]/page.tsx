@@ -7,12 +7,13 @@ import Image from "next/image";
 import Link from "next/link";
 import LeadForm from "@/components/LeadForm";
 import Header from "@/components/Header";
-import FAQ from "@/components/FAQ";
 import SchemaJSON from "@/components/SchemaJSON";
 import Reviews from "@/components/Reviews";
 import { Footer } from "@/components/Footer";
 import { slugify } from "@/lib/slugify";
 import { InternalMesh } from "@/components/InternalMesh";
+import { VillesVoisines } from "@/components/VillesVoisines";
+import { LocalFAQ } from "@/components/LocalFAQ";
 
 // Dynamically generate for ALL cities (Owned + Partner)
 export async function generateStaticParams() {
@@ -89,6 +90,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             />
 
             <SchemaJSON type="LocalBusiness" site={site} />
+            <SchemaJSON type="FAQPage" site={site} faqSegment="B2C" />
 
             <section className="relative pt-24 pb-16 lg:pt-32 lg:pb-24">
                 <div className="container mx-auto px-4">
@@ -158,8 +160,9 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                 </div>
             </section>
 
-            <FAQ themeColor="blue" />
             <Reviews site={site} themeColor="blue" />
+            <LocalFAQ site={site} segment="B2C" />
+            <VillesVoisines currentCitySlug={slugify(site.city)} department={site.department || ""} cityName={site.city} />
             <InternalMesh city={site.city} config={site} />
             <Footer config={site} />
         </div>

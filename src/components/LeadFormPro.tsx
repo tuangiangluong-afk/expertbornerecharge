@@ -222,6 +222,28 @@ export default function LeadFormPro({
         setStatus('loading');
 
         try {
+            // Retrieve traffic attribution data from storage/cookie
+            let attribution = {};
+            if (typeof window !== 'undefined') {
+                const stored = sessionStorage.getItem('lead_attribution');
+                if (stored) {
+                    try {
+                        attribution = JSON.parse(stored);
+                    } catch (e) {
+                        console.error("Error parsing attribution from sessionStorage", e);
+                    }
+                } else {
+                    const cookieMatch = document.cookie.match(/lead_attribution=([^;]+)/);
+                    if (cookieMatch) {
+                        try {
+                            attribution = JSON.parse(decodeURIComponent(cookieMatch[1]));
+                        } catch (e) {
+                            console.error("Error parsing attribution from cookie", e);
+                        }
+                    }
+                }
+            }
+
             const leadScore = getLeadScore();
             const leadValue = getLeadValue();
 
@@ -247,7 +269,8 @@ export default function LeadFormPro({
                 timeline: formData.timeline,
                 company: formData.company,
                 leadSegment: 'B2B',
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                attribution // Include attribution data here
             };
 
             const res = await fetch('/api/leads', {
@@ -261,7 +284,7 @@ export default function LeadFormPro({
                 throw new Error(errorData.error || 'Erreur lors de l\'envoi');
             }
 
-            // GTM: High Ticket Conversion
+            // GTM: High Ticket Conversion (enriched with attribution fields)
             if (typeof window !== 'undefined' && window.dataLayer) {
                 window.dataLayer.push({
                     event: 'generate_lead',
@@ -273,7 +296,13 @@ export default function LeadFormPro({
                     lead_city: city,
                     lead_score: leadScore,
                     value: leadValue,
-                    currency: 'EUR'
+                    currency: 'EUR',
+                    traffic_source: (attribution as any).source || 'direct',
+                    traffic_medium: (attribution as any).medium || 'direct',
+                    traffic_campaign: (attribution as any).campaign || '',
+                    traffic_term: (attribution as any).term || '',
+                    traffic_content: (attribution as any).content || '',
+                    landing_page: (attribution as any).landing_page || window.location.pathname
                 });
             }
 

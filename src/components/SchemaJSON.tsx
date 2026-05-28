@@ -4,17 +4,19 @@ import { Vehicle } from "@/data/vehicles";
 import { BrandData } from "@/data/brands";
 
 interface SchemaJSONProps {
-    type: "LocalBusiness" | "Product" | "Service" | "B2BService" | "Organization" | "Breadcrumb";
+    type: "LocalBusiness" | "Product" | "Service" | "B2BService" | "Organization" | "Breadcrumb" | "FAQPage";
     site?: SiteConfig | CityConfig;
     vehicle?: Vehicle;
     brand?: BrandData;
     breadcrumbItems?: { name: string; item: string }[];
     b2bType?: "Copropriété" | "Entreprise";
+    faqSegment?: "B2C" | "COPRO" | "ENTREPRISE";
 }
 
 import { slugify } from "@/lib/slugify";
+import { getLocalFAQData } from "@/components/LocalFAQ";
 
-export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems, b2bType }: SchemaJSONProps) {
+export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems, b2bType, faqSegment }: SchemaJSONProps) {
     let schema = {};
 
     if (type === "LocalBusiness" && site) {
@@ -207,6 +209,20 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
                 "position": index + 1,
                 "name": item.name,
                 "item": item.item
+            }))
+        };
+    } else if (type === "FAQPage" && site && faqSegment) {
+        const faqs = getLocalFAQData(site.city, site.department, faqSegment);
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": faqs.map(faq => ({
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.answer
+                }
             }))
         };
     }

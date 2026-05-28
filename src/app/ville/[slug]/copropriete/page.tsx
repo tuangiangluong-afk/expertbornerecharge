@@ -10,6 +10,8 @@ import { Footer } from "@/components/Footer";
 import { slugify } from "@/lib/slugify";
 import { InternalMesh } from "@/components/InternalMesh";
 import SchemaJSON from "@/components/SchemaJSON";
+import { VillesVoisines } from "@/components/VillesVoisines";
+import { LocalFAQ } from "@/components/LocalFAQ";
 
 // ========================================
 // PSEO B2B — Copropriété x Ville
@@ -71,6 +73,7 @@ export default async function CoproCityPage({ params }: { params: Promise<{ slug
 
             <SchemaJSON type="LocalBusiness" site={site} />
             <SchemaJSON type="B2BService" site={site} b2bType="Copropriété" />
+            <SchemaJSON type="FAQPage" site={site} faqSegment="COPRO" />
             <SchemaJSON
                 type="Breadcrumb"
                 breadcrumbItems={[
@@ -311,6 +314,8 @@ export default async function CoproCityPage({ params }: { params: Promise<{ slug
                 </div>
             </section>
 
+            <LocalFAQ site={site} segment="COPRO" />
+            <VillesVoisines currentCitySlug={slugify(site.city)} department={site.department || ""} cityName={cityName} />
             <InternalMesh city={cityName} config={site} />
             <Footer config={site} />
         </div>

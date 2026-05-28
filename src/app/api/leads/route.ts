@@ -12,7 +12,8 @@ export async function POST(request: Request) {
             name, email, phone, city, postalCode, domain,
             projectType, ownerStatus, vehicleStatus, meterDistance, solarInterest,
             // B2B fields
-            role, parkingSize, timeline, company, leadSegment, leadScore, leadValue
+            role, parkingSize, timeline, company, leadSegment, leadScore, leadValue,
+            attribution // Extract attribution object
         } = body;
 
         // Validation basique
@@ -42,6 +43,7 @@ export async function POST(request: Request) {
             meter_distance: meterDistance,
             solar_interest: solarInterest,
             source: 'website',
+            attribution: attribution || { source: 'direct', medium: 'direct' }, // Store attribution metadata
             // B2B enrichment
             ...(isB2B && {
                 lead_segment: 'B2B',
@@ -176,6 +178,15 @@ export async function POST(request: Request) {
                         <li><strong>Email :</strong> ${email}</li>
                         <li><strong>Téléphone :</strong> ${phone}</li>
                         ${company ? `<li><strong>Entreprise / Copro :</strong> ${company}</li>` : ''}
+                    </ul>
+
+                    <h2>Attribution du trafic</h2>
+                    <ul>
+                        <li><strong>Canal (Source / Medium) :</strong> ${attribution?.source || 'direct'} / ${attribution?.medium || 'direct'}</li>
+                        ${attribution?.campaign ? `<li><strong>Campagne :</strong> ${attribution.campaign}</li>` : ''}
+                        ${attribution?.term ? `<li><strong>Mot-clé (SEA) :</strong> ${attribution.term}</li>` : ''}
+                        ${attribution?.landing_page ? `<li><strong>Landing Page :</strong> ${attribution.landing_page}</li>` : ''}
+                        ${attribution?.referrer ? `<li><strong>Référent :</strong> ${attribution.referrer}</li>` : ''}
                     </ul>
 
                     <h2>Projet</h2>

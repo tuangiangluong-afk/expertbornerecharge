@@ -27,6 +27,28 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
         e.preventDefault();
         setLoading(true);
 
+        // Retrieve traffic attribution data from storage/cookie
+        let attribution = {};
+        if (typeof window !== 'undefined') {
+            const stored = sessionStorage.getItem('lead_attribution');
+            if (stored) {
+                try {
+                    attribution = JSON.parse(stored);
+                } catch (e) {
+                    console.error("Error parsing attribution from sessionStorage", e);
+                }
+            } else {
+                const cookieMatch = document.cookie.match(/lead_attribution=([^;]+)/);
+                if (cookieMatch) {
+                    try {
+                        attribution = JSON.parse(decodeURIComponent(cookieMatch[1]));
+                    } catch (e) {
+                        console.error("Error parsing attribution from cookie", e);
+                    }
+                }
+            }
+        }
+
         const payload = {
             name,
             phone,
@@ -34,7 +56,8 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
             projectType,
             city: city.city,
             domain: city.domain,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            attribution // Include attribution data here
         };
 
         try {
@@ -45,6 +68,22 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
             });
 
             if (res.ok) {
+                // GTM: Track Conversion (enriched with attribution fields)
+                if (typeof window !== 'undefined' && (window as any).dataLayer) {
+                    (window as any).dataLayer.push({
+                        event: 'generate_lead',
+                        lead_category: projectType,
+                        lead_city: city.city,
+                        value: 50.00,
+                        currency: 'EUR',
+                        traffic_source: (attribution as any).source || 'direct',
+                        traffic_medium: (attribution as any).medium || 'direct',
+                        traffic_campaign: (attribution as any).campaign || '',
+                        traffic_term: (attribution as any).term || '',
+                        traffic_content: (attribution as any).content || '',
+                        landing_page: (attribution as any).landing_page || window.location.pathname
+                    });
+                }
                 setSuccess(true);
             } else {
                 alert("Une erreur est survenue. Veuillez nous appeler directement.");

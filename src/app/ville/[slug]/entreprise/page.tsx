@@ -10,6 +10,8 @@ import { Footer } from "@/components/Footer";
 import { slugify } from "@/lib/slugify";
 import { InternalMesh } from "@/components/InternalMesh";
 import SchemaJSON from "@/components/SchemaJSON";
+import { VillesVoisines } from "@/components/VillesVoisines";
+import { LocalFAQ } from "@/components/LocalFAQ";
 
 // ========================================
 // PSEO B2B — Entreprise x Ville
@@ -71,6 +73,7 @@ export default async function EntrepriseCityPage({ params }: { params: Promise<{
 
             <SchemaJSON type="LocalBusiness" site={site} />
             <SchemaJSON type="B2BService" site={site} b2bType="Entreprise" />
+            <SchemaJSON type="FAQPage" site={site} faqSegment="ENTREPRISE" />
             <SchemaJSON
                 type="Breadcrumb"
                 breadcrumbItems={[
@@ -307,6 +310,8 @@ export default async function EntrepriseCityPage({ params }: { params: Promise<{
                 </div>
             </section>
 
+            <LocalFAQ site={site} segment="ENTREPRISE" />
+            <VillesVoisines currentCitySlug={slugify(site.city)} department={site.department || ""} cityName={cityName} />
             <InternalMesh city={cityName} config={site} />
             <Footer config={site} />
         </div>
