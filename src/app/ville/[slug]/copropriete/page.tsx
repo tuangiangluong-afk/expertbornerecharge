@@ -13,6 +13,8 @@ import SchemaJSON from "@/components/SchemaJSON";
 import { VillesVoisines } from "@/components/VillesVoisines";
 import { LocalFAQ } from "@/components/LocalFAQ";
 
+import { getPseoB2bContent } from "@/lib/pseo-b2b";
+
 // ========================================
 // PSEO B2B — Copropriété x Ville
 // /ville/lyon/copropriete
@@ -40,15 +42,14 @@ export async function generateMetadata({
 
     if (!site) return {};
 
-    const title = `Installation Borne Recharge Copropriété ${site.city} | Étude Gratuite Syndic`;
-    const description = `Infrastructure collective de recharge en copropriété à ${site.city}. Solution Tiers-Investisseur : 0€ pour le syndic. Aides ADVENIR déduites. Étude de faisabilité gratuite.`;
+    const b2bContent = await getPseoB2bContent(site, 'COPRO');
 
     return {
-        title,
-        description,
+        title: b2bContent.meta_title,
+        description: b2bContent.meta_description,
         openGraph: {
-            title,
-            description,
+            title: b2bContent.meta_title,
+            description: b2bContent.meta_description,
             siteName: "Expert Borne Recharge",
             locale: "fr_FR",
             type: "website",
@@ -63,6 +64,7 @@ export default async function CoproCityPage({ params }: { params: Promise<{ slug
 
     if (!site) return notFound();
 
+    const b2bContent = await getPseoB2bContent(site, 'COPRO');
     const cityName = site.city;
     const dept = site.department || "";
     const neighborhoods = site.neighborhoods || [];
@@ -105,7 +107,7 @@ export default async function CoproCityPage({ params }: { params: Promise<{ slug
                                 <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
                                     <div className="inline-flex items-center rounded-full bg-purple-100 px-4 py-1.5 text-sm font-bold text-purple-800 border border-purple-200">
                                         <Building2 size={16} className="mr-2" />
-                                        Spécial Syndic & Copropriété
+                                        {b2bContent.hero_badge}
                                     </div>
                                     <div className="inline-flex items-center rounded-full bg-green-100 px-4 py-1.5 text-sm font-bold text-green-800 border border-green-200">
                                         <Euro size={16} className="mr-2" />
@@ -113,9 +115,10 @@ export default async function CoproCityPage({ params }: { params: Promise<{ slug
                                     </div>
                                 </div>
 
-                                <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                                    Bornes de recharge en <span className="text-purple-600">copropriété</span> à {cityName}
-                                </h1>
+                                <h1 
+                                    className="text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight"
+                                    dangerouslySetInnerHTML={{ __html: b2bContent.hero_title }}
+                                />
 
                                 <p className="text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                                     Équipez le parking de votre copropriété à {cityName} {dept ? `(${dept})` : ''} sans frais pour l&apos;immeuble.
@@ -202,12 +205,15 @@ export default async function CoproCityPage({ params }: { params: Promise<{ slug
                 <div className="container mx-auto px-4 max-w-5xl">
                     <article className="prose prose-lg prose-slate max-w-none">
                         <h2>Pourquoi installer des bornes en copropriété à {cityName} ?</h2>
-                        <p>
-                            À {cityName}, la demande de recharge en immeuble explose. Les copropriétaires sont de plus en plus nombreux
-                            à posséder un véhicule électrique, mais les parking souterrains ne sont pas équipés.
-                            Le <strong>Droit à la Prise</strong> (décret n°2011-873) permet à chaque résident de demander
-                            l&apos;installation d&apos;une borne, mais la solution la plus pérenne reste l&apos;<strong>infrastructure collective</strong>.
-                        </p>
+                        <div dangerouslySetInnerHTML={{ __html: b2bContent.intro_html }} />
+
+                        <div className="bg-purple-50 border-l-4 border-purple-600 p-6 rounded-r-xl my-8 not-prose">
+                            <h4 className="text-purple-950 font-bold mb-2 flex items-center gap-2">
+                                <Building2 className="text-purple-700" size={20} />
+                                Note Conseil Syndic à {cityName}
+                            </h4>
+                            <p className="text-purple-800 text-sm leading-relaxed">{b2bContent.expert_tip}</p>
+                        </div>
 
                         <div className="not-prose grid md:grid-cols-2 gap-6 my-10">
                             <div className="border-2 border-purple-200 bg-purple-50/30 rounded-2xl p-6 shadow-sm">

@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
 import { getAllGuides } from '@/lib/mdx';
 import { getAllVehicles } from '@/data/vehicles';
-import { getHubConfig, SITES } from '@/lib/sites-config';
+import { getHubConfig } from '@/lib/sites-config';
+import { CITIES } from '@/lib/db';
 import { slugify } from '@/lib/slugify';
 import { SEO_SERVICES } from '@/lib/seo-data';
 import { createClient } from '@supabase/supabase-js';
@@ -135,9 +136,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
     }));
 
-    // 6. City Routes (From SITES Config)
+    // 6. City Routes (From CITIES Config)
     const uniqueSites = new Map();
-    Object.values(SITES).forEach(site => {
+    Object.values(CITIES).forEach(site => {
         if (site.slug !== 'home' && site.slug !== 'expertbornerecharge.com') {
             uniqueSites.set(site.slug, site);
         }

@@ -13,6 +13,8 @@ import SchemaJSON from "@/components/SchemaJSON";
 import { VillesVoisines } from "@/components/VillesVoisines";
 import { LocalFAQ } from "@/components/LocalFAQ";
 
+import { getPseoB2bContent } from "@/lib/pseo-b2b";
+
 // ========================================
 // PSEO B2B — Entreprise x Ville
 // /ville/lyon/entreprise
@@ -40,15 +42,14 @@ export async function generateMetadata({
 
     if (!site) return {};
 
-    const title = `Bornes de Recharge Entreprise ${site.city} | Audit Flotte & Loi LOM`;
-    const description = `Installation bornes de recharge pour entreprises et flottes à ${site.city}. Conformité Loi LOM, aides ADVENIR, supervision intelligente. Audit d'infrastructure gratuit.`;
+    const b2bContent = await getPseoB2bContent(site, 'ENTREPRISE');
 
     return {
-        title,
-        description,
+        title: b2bContent.meta_title,
+        description: b2bContent.meta_description,
         openGraph: {
-            title,
-            description,
+            title: b2bContent.meta_title,
+            description: b2bContent.meta_description,
             siteName: "Expert Borne Recharge",
             locale: "fr_FR",
             type: "website",
@@ -63,6 +64,7 @@ export default async function EntrepriseCityPage({ params }: { params: Promise<{
 
     if (!site) return notFound();
 
+    const b2bContent = await getPseoB2bContent(site, 'ENTREPRISE');
     const cityName = site.city;
     const dept = site.department || "";
     const neighborhoods = site.neighborhoods || [];
@@ -105,7 +107,7 @@ export default async function EntrepriseCityPage({ params }: { params: Promise<{
                                 <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
                                     <div className="inline-flex items-center rounded-full bg-emerald-100 px-4 py-1.5 text-sm font-bold text-emerald-800 border border-emerald-200">
                                         <Briefcase size={16} className="mr-2" />
-                                        Solutions Pro & Flottes
+                                        {b2bContent.hero_badge}
                                     </div>
                                     <div className="inline-flex items-center rounded-full bg-amber-100 px-4 py-1.5 text-sm font-bold text-amber-800 border border-amber-200">
                                         <FileCheck size={16} className="mr-2" />
@@ -113,9 +115,10 @@ export default async function EntrepriseCityPage({ params }: { params: Promise<{
                                     </div>
                                 </div>
 
-                                <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                                    Bornes de recharge <span className="text-emerald-600">entreprise</span> à {cityName}
-                                </h1>
+                                <h1 
+                                    className="text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight"
+                                    dangerouslySetInnerHTML={{ __html: b2bContent.hero_title }}
+                                />
 
                                 <p className="text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                                     Électrifiez votre parking professionnel à {cityName} {dept ? `(${dept})` : ''}.
@@ -211,11 +214,15 @@ export default async function EntrepriseCityPage({ params }: { params: Promise<{
                 <div className="container mx-auto px-4 max-w-5xl">
                     <article className="prose prose-lg prose-slate max-w-none">
                         <h2>Pourquoi installer des bornes en entreprise à {cityName} ?</h2>
-                        <p>
-                            L&apos;électrification des flottes est en cours à {cityName}. Les entreprises qui ne s&apos;équipent pas
-                            aujourd&apos;hui risquent de ne plus être en conformité avec la <strong>Loi LOM</strong> (Loi d&apos;Orientation
-                            des Mobilités) qui impose d&apos;équiper les parkings de plus de 20 places.
-                        </p>
+                        <div dangerouslySetInnerHTML={{ __html: b2bContent.intro_html }} />
+
+                        <div className="bg-emerald-50 border-l-4 border-emerald-600 p-6 rounded-r-xl my-8 not-prose">
+                            <h4 className="text-emerald-950 font-bold mb-2 flex items-center gap-2">
+                                <Briefcase className="text-emerald-700" size={20} />
+                                Note Conseil Expert à {cityName}
+                            </h4>
+                            <p className="text-emerald-800 text-sm leading-relaxed">{b2bContent.expert_tip}</p>
+                        </div>
 
                         <div className="grid md:grid-cols-3 gap-6 not-prose my-10">
                             <div className="p-5 bg-emerald-50 rounded-2xl border border-emerald-100">
