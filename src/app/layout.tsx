@@ -13,75 +13,64 @@ const geistMono = Geist_Mono({
 });
 
 import { getCurrentYearSEO } from "@/lib/date";
-import { headers } from "next/headers";
 import StructuredData from "@/components/seo/StructuredData";
 import AttributionTracker from "@/components/AttributionTracker";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const headersList = await headers();
-  const domain = headersList.get("x-irve-domain") || "expertbornerecharge.com";
-  const canonicalDomain = headersList.get("x-irve-canonical-domain") || domain;
-  const path = headersList.get("x-irve-path") || "";
-  const year = getCurrentYearSEO();
-
-  const canonicalUrl = `https://${canonicalDomain}${path}`;
-
-  return {
-    title: {
-      template: `%s | Expert Borne Recharge ${year}`,
-      default: `Expert Borne Recharge - Prix & Installation ${year}`,
-    },
-    description: "Installation de bornes de recharge électriques. Réseau d'installateurs certifiés IRVE. Devis gratuit sous 24h.",
-    metadataBase: new URL(`https://${domain}`),
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    robots: {
+export const metadata: Metadata = {
+  title: {
+    template: `%s | Expert Borne Recharge ${getCurrentYearSEO()}`,
+    default: `Expert Borne Recharge - Prix & Installation ${getCurrentYearSEO()}`,
+  },
+  description: "Installation de bornes de recharge électriques. Réseau d'installateurs certifiés IRVE. Devis gratuit sous 24h.",
+  metadataBase: new URL("https://expertbornerecharge.com"),
+  alternates: {
+    canonical: "https://expertbornerecharge.com",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
       index: true,
       follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    title: "Expert Borne Recharge - Installation Bornes IRVE",
+    description: "Installation de bornes de recharge électriques. Réseau d'installateurs certifiés IRVE. Devis gratuit sous 24h.",
+    siteName: "Expert Borne Recharge",
+    locale: "fr_FR",
+    type: "website",
+    url: "https://expertbornerecharge.com",
+    images: [
+      {
+        url: "https://expertbornerecharge.com/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Expert Borne Recharge - Installation bornes de recharge IRVE",
       },
-    },
-    openGraph: {
-      title: "Expert Borne Recharge - Installation Bornes IRVE",
-      description: "Installation de bornes de recharge électriques. Réseau d'installateurs certifiés IRVE. Devis gratuit sous 24h.",
-      siteName: "Expert Borne Recharge",
-      locale: "fr_FR",
-      type: "website",
-      url: `https://${domain}${path}`,
-      images: [
-        {
-          url: `https://${domain}/images/og-image.png`,
-          width: 1200,
-          height: 630,
-          alt: "Expert Borne Recharge - Installation bornes de recharge IRVE",
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "Expert Borne Recharge - Installation Bornes IRVE",
-      description: "Installation de bornes de recharge électriques. Réseau d'installateurs certifiés IRVE. Devis gratuit.",
-      images: [`https://${domain}/images/og-image.png`],
-    },
-    icons: {
-      icon: "/icon.png",
-      shortcut: "/favicon.png",
-      apple: "/icon.png",
-      other: [
-        {
-          rel: "icon",
-          url: "/favicon.ico",
-        }
-      ]
-    },
-  };
-}
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Expert Borne Recharge - Installation Bornes IRVE",
+    description: "Installation de bornes de recharge électriques. Réseau d'installateurs certifiés IRVE. Devis gratuit.",
+    images: ["https://expertbornerecharge.com/images/og-image.png"],
+  },
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/favicon.png",
+    apple: "/icon.png",
+    other: [
+      {
+        rel: "icon",
+        url: "/favicon.ico",
+      }
+    ]
+  },
+};
 
 export const viewport: Viewport = {
   themeColor: "#1d4ed8",

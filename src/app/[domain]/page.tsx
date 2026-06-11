@@ -57,7 +57,9 @@ export async function generateMetadata({
         title: pseo.meta_title,
         description: pseo.meta_description,
         keywords: site.localKeywords,
-        // Canonical is handled by root layout.tsx
+        alternates: {
+            canonical: `https://${site.domain}`,
+        },
         openGraph: {
             title: pseo.meta_title,
             description: pseo.meta_description,

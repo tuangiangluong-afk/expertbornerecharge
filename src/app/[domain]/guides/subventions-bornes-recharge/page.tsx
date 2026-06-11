@@ -14,6 +14,9 @@ export async function generateMetadata({
     return {
         title: `Guide des subventions pour bornes de recharge 2025 | ${config?.name || "Expert Borne Recharge"}`,
         description: "Découvrez toutes les aides financières pour l'installation de votre borne de recharge : MaPrimeRénov', ADVENIR, Crédit d'impôt. Jusqu'à 960€ d'économies.",
+        alternates: {
+            canonical: `https://${config?.domain || "expertbornerecharge.com"}/guides/subventions-bornes-recharge`,
+        },
     };
 }
 

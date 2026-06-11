@@ -18,6 +18,9 @@ export async function generateMetadata({ params }: { params: Promise<{ domain: s
     return {
         title: `Contact Borne Recharge ${city.city} | Devis Gratuit`,
         description: `Contactez votre installateur IRVE à ${city.city}. Devis gratuit pour maison, copropriété et entreprise. Réponse sous 48h.`,
+        alternates: {
+            canonical: `https://${city.domain}/contact`,
+        },
     };
 }
 

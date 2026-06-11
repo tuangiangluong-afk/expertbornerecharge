@@ -17,6 +17,9 @@ export async function generateMetadata({ params }: { params: Promise<{ domain: s
     return {
         title: `Conditions Générales de Vente - ${city.name}`,
         description: `Retrouvez nos Conditions Générales de Vente (CGV) pour la mise en relation avec des installateurs IRVE : devis, responsabilités et litiges.`,
+        alternates: {
+            canonical: `https://${city.domain}/cgv`,
+        },
     };
 }
 

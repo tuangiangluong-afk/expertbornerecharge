@@ -141,6 +141,18 @@ export default async function middleware(req: NextRequest) {
         response.headers.set("x-irve-canonical-domain", domainKey);
     }
 
+    // Vercel CDN Caching: Cache all public HTML and sitemap routes to save Fluid CPU hours
+    if (
+        !cleanPath.startsWith("/api") && 
+        !cleanPath.startsWith("/admin") && 
+        !cleanPath.startsWith("/login") && 
+        !cleanPath.startsWith("/leads") &&
+        !cleanPath.startsWith("/success") &&
+        !cleanPath.startsWith("/demo")
+    ) {
+        response.headers.set("Vercel-CDN-Cache-Control", "public, s-maxage=86400, stale-while-revalidate=3600");
+    }
+
     return applySecurityHeaders(response);
 }
 

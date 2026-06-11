@@ -15,6 +15,9 @@ export async function generateMetadata({
         title: `Demande reçue | ${config?.name || "Expert Borne Recharge"}`,
         description: "Votre demande de devis a été envoyée avec succès. Un expert vous contactera sous 24h.",
         robots: { index: false, follow: false },
+        alternates: {
+            canonical: `https://${config?.domain || "expertbornerecharge.com"}/success`,
+        },
     };
 }
 
