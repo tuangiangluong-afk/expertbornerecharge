@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { getSiteConfig } from "@/lib/sites-config";
 import { CheckCircle, Phone, Wrench, FileText, Gift, ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
+import ViteUnDevisSpinner from "@/components/ViteUnDevisSpinner";
 
 export async function generateMetadata({
     params,
@@ -55,10 +56,16 @@ const timelineSteps: TimelineStep[] = [
 
 export default async function SuccessPage({
     params,
+    searchParams,
 }: {
     params: Promise<{ domain: string }>;
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
     const { domain } = await params;
+    const resolvedSearchParams = await searchParams;
+    const devisId = resolvedSearchParams.devis_id as string | undefined;
+    const devisHash = resolvedSearchParams.devis_hash as string | undefined;
+
     const config = getSiteConfig(domain);
     const siteName = config?.name || "Expert Borne Recharge";
 
@@ -96,6 +103,13 @@ export default async function SuccessPage({
                         examinera vos informations et vous contactera sous 24h.
                     </p>
                 </div>
+
+                {/* ViteUnDevis SMS Verification Spinner */}
+                {devisId && devisHash && (
+                    <div className="mb-12 max-w-2xl mx-auto">
+                        <ViteUnDevisSpinner devisId={devisId} devisHash={devisHash} />
+                    </div>
+                )}
 
                 {/* Two Column Layout */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">

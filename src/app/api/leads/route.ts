@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createSupabaseAdmin } from '@/lib/supabase-server';
 import { getSiteConfig } from '@/lib/sites-config';
+import { sendLeadToViteUnDevis } from '@/lib/viteundevis';
 
 export async function POST(request: Request) {
     try {
@@ -206,7 +207,58 @@ export async function POST(request: Request) {
                 return NextResponse.json({ error: `Erreur Resend: ${error.message}` }, { status: 500 });
             }
 
-            return NextResponse.json({ success: true, data });
+            // 3. SEND LEAD TO VITEUNDEVIS (for B2C leads)
+            let vudResult = null;
+            if (!isB2B) {
+                console.log("📡 [API/LEADS] Routing B2C lead to ViteUnDevis...");
+
+                // Auto test category override for postal code 33260 (La Teste de Buch)
+                let catId = '164'; // Default to "Pose de borne de recharge"
+                if (postalCode === '33260') {
+                    catId = '145'; // Map to Déménagement for tests
+                }
+
+                const nameParts = (name || '').trim().split(/\s+/);
+                const prenom = nameParts[0] || 'Client';
+                const nom = nameParts.slice(1).join(' ') || 'Inconnu';
+
+                const vudPayload = {
+                    nom,
+                    prenom,
+                    email,
+                    tel: phone,
+                    cp: postalCode,
+                    ville: city,
+                    cp_projet: postalCode,
+                    ville_projet: city,
+                    pays: 'fr',
+                    adresse1: 'Adresse non communiquee',
+                    tp: 1, // Particulier
+                    type_bien: 2, // Maison
+                    situation: ownerStatus === 'proprietaire' ? 1 : ownerStatus === 'locataire' ? 2 : 4,
+                    delais: 2, // Dans les 6 mois
+                    description: `Projet de pose de borne de recharge. Vehicule: ${vehicleStatus || 'N/A'}. Distance compteur: ${meterDistance || 'N/A'}. Interet solaire: ${solarInterest ? 'Oui' : 'Non'}.`,
+                    cat_id: catId,
+                    site_name: domain || 'expertbornerecharge.com'
+                };
+
+                try {
+                    vudResult = await sendLeadToViteUnDevis(vudPayload);
+                } catch (vudErr) {
+                    console.error("❌ [API/LEADS] ViteUnDevis post error:", vudErr);
+                }
+            }
+
+            const vudDetails = vudResult?.devis_data?.devis_id ? {
+                devis_id: vudResult.devis_data.devis_id,
+                devis_hash: vudResult.devis_data.devis_hash || ''
+            } : null;
+
+            return NextResponse.json({ 
+                success: true, 
+                data,
+                vud: vudDetails
+            });
         } catch (resendException: any) {
             console.error('Resend Exception:', resendException);
             return NextResponse.json({ error: `Exception Resend: ${resendException.message}` }, { status: 500 });

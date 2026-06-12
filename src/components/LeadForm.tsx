@@ -262,6 +262,8 @@ export default function LeadForm({
                 throw new Error(errorData.error || 'Erreur lors de l\'envoi');
             }
 
+            const data = await res.json();
+
             // GTM: Track Conversion (enriched with attribution fields)
             if (typeof window !== 'undefined' && window.dataLayer) {
                 window.dataLayer.push({
@@ -277,6 +279,12 @@ export default function LeadForm({
                     traffic_content: (attribution as any).content || '',
                     landing_page: (attribution as any).landing_page || window.location.pathname
                 });
+            }
+
+            // Redirect to success page if we have VUD details!
+            if (data?.vud && data.vud.devis_id) {
+                router.push(`/${domain}/success?devis_id=${data.vud.devis_id}&devis_hash=${data.vud.devis_hash || ''}`);
+                return;
             }
 
             setStatus('success');

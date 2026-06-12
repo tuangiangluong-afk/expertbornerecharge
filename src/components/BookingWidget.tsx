@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Zap, Loader2, CheckCircle, ShieldCheck, Mail, User, Phone } from "lucide-react";
 import { CityConfig } from "@/lib/db";
 import { getTheme } from "@/lib/theme";
+import { useRouter } from "next/navigation";
 
 interface BookingWidgetProps {
     city: CityConfig;
@@ -11,6 +12,7 @@ interface BookingWidgetProps {
 }
 
 export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
+    const router = useRouter();
     const theme = getTheme(city.slug);
     const classes = theme.classes;
 
@@ -28,30 +30,22 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
         setLoading(true);
 
         // Retrieve traffic attribution data from storage/cookie
-        let attribution = {};
-        if (typeof window !== 'undefined') {
-            const stored = sessionStorage.getItem('lead_attribution');
-            if (stored) {
-                try {
-                    attribution = JSON.parse(stored);
-                } catch (e) {
-                    console.error("Error parsing attribution from sessionStorage", e);
+        let attribution = { source: "direct", medium: "direct", campaign: "", term: "", content: "", landing_page: "" };
+        if (typeof window !== "undefined") {
+            try {
+                const storedAttr = localStorage.getItem("marketing_attribution");
+                if (storedAttr) {
+                    attribution = JSON.parse(storedAttr);
                 }
-            } else {
-                const cookieMatch = document.cookie.match(/lead_attribution=([^;]+)/);
-                if (cookieMatch) {
-                    try {
-                        attribution = JSON.parse(decodeURIComponent(cookieMatch[1]));
-                    } catch (e) {
-                        console.error("Error parsing attribution from cookie", e);
-                    }
-                }
+            } catch (err) {
+                console.error("Failed to parse attribution data:", err);
             }
         }
 
         const payload = {
             name,
             phone,
+            email: "client-booking@expertbornerecharge.com", // Fallback email for widget
             postalCode,
             projectType,
             city: city.city,
@@ -68,6 +62,8 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
             });
 
             if (res.ok) {
+                const data = await res.json();
+
                 // GTM: Track Conversion (enriched with attribution fields)
                 if (typeof window !== 'undefined' && (window as any).dataLayer) {
                     (window as any).dataLayer.push({
@@ -84,6 +80,13 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
                         landing_page: (attribution as any).landing_page || window.location.pathname
                     });
                 }
+
+                // Redirect to success page if we have VUD details!
+                if (data?.vud && data.vud.devis_id) {
+                    router.push(`/${city.domain}/success?devis_id=${data.vud.devis_id}&devis_hash=${data.vud.devis_hash || ''}`);
+                    return;
+                }
+
                 setSuccess(true);
             } else {
                 alert("Une erreur est survenue. Veuillez nous appeler directement.");
