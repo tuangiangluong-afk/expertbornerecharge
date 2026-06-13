@@ -30,7 +30,7 @@ const components = {
     ),
     // Le bouton magique à mettre au milieu de l'article
     CtaButton: ({ text, url }: { text: string, url: string }) => (
-        <div className="my-8 text-center">
+        <div className="my-8 text-center not-prose">
             <a href={url} className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-blue-500/30 transition-all transform hover:-translate-y-1">
                 {text} <ArrowRight size={20} />
             </a>
