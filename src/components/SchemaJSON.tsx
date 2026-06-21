@@ -108,7 +108,12 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
                         "latitude": geoData.lat,
                         "longitude": geoData.lng
                     }
-                } : {})
+                } : {}),
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "4.9",
+                    "reviewCount": "127"
+                }
             },
             "areaServed": {
                 "@type": "City",
@@ -120,16 +125,11 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
                 "itemListElement": brand.models.map(model => ({
                     "@type": "Offer",
                     "itemOffered": {
-                        "@type": "Product",
+                        "@type": "Service",
                         "name": `Installation Borne pour ${brand.name} ${model}`,
                         "brand": { "@type": "Brand", "name": brand.name }
                     }
                 }))
-            },
-            "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "4.9",
-                "reviewCount": "127"
             }
         };
     } else if (type === "Product" && vehicle) {
@@ -151,6 +151,11 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
                 "priceValidUntil": "2026-12-31",
                 "availability": "https://schema.org/InStock",
                 "itemCondition": "https://schema.org/NewCondition"
+            },
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "127"
             }
         };
     } else if (type === "B2BService" && site && b2bType) {
