@@ -48,7 +48,13 @@ export default async function middleware(req: NextRequest) {
     }
 
 
-    // 0.2 Domain Normalization (www -> non-www)
+    // 0.2 Domain Normalization (www -> non-www redirect)
+    if (hostname.startsWith("www.") && !hostname.includes("localhost") && !hostname.includes("192.168.")) {
+        const nonWwwHost = hostname.replace(/^www\./, "");
+        const targetUrl = new URL(url.pathname + url.search, `https://${nonWwwHost}`);
+        return applySecurityHeaders(NextResponse.redirect(targetUrl, 301));
+    }
+
     // Consolidate domain key early for all logic
     let domainKey = hostname;
     if (hostname.includes(".localhost")) {
@@ -57,9 +63,6 @@ export default async function middleware(req: NextRequest) {
     } else if (hostname.startsWith("www.")) {
         domainKey = hostname.replace("www.", "");
     }
-
-    // NOTE: www → non-www redirect is now handled by vercel.json
-    // The middleware redirect was causing a loop with Vercel edge redirects
 
     // 1. Sitemap Rewrite
     if (path === "/sitemap.xml") {

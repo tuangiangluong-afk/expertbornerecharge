@@ -1,3 +1,4 @@
+import Script from "next/script";
 import { headers } from "next/headers";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -16,6 +17,7 @@ const geistMono = Geist_Mono({
 import { getCurrentYearSEO } from "@/lib/date";
 import StructuredData from "@/components/seo/StructuredData";
 import AttributionTracker from "@/components/AttributionTracker";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
@@ -106,7 +108,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-neutral-900 text-neutral-50`}
       >
+        {/* AnswerShaper Local Tag */}
+        <Script src="https://answershaper.com/api/v1/m2m/local-tag/13.js" strategy="lazyOnload" defer />
+
         <StructuredData />
+        <GoogleAnalytics GA_MEASUREMENT_ID="G-3S88LL4FC5" />
         <AttributionTracker />
         {/* Google Tag Manager (noscript) */}
         <noscript>
