@@ -207,46 +207,85 @@ export async function POST(request: Request) {
                 return NextResponse.json({ error: `Erreur Resend: ${error.message}` }, { status: 500 });
             }
 
-            // 3. SEND LEAD TO VITEUNDEVIS (for B2C leads)
+            // 3. SEND LEAD TO VITEUNDEVIS
             let vudResult = null;
-            if (!isB2B) {
-                console.log("📡 [API/LEADS] Routing B2C lead to ViteUnDevis...");
+            console.log("📡 [API/LEADS] Routing lead to ViteUnDevis...");
 
-                // Auto test category override for postal code 33260 (La Teste de Buch)
-                let catId = '164'; // Default to "Pose de borne de recharge"
-                if (postalCode === '33260') {
-                    catId = '145'; // Map to Déménagement for tests
+            // Auto test category override for postal code 33260 (La Teste de Buch)
+            let catId = '164'; // Default to "Pose de borne de recharge"
+            if (postalCode === '33260') {
+                catId = '145'; // Map to Déménagement for tests
+            }
+
+            const nameParts = (name || '').trim().split(/\s+/);
+            const prenom = nameParts[0] || 'Client';
+            const nom = nameParts.slice(1).join(' ') || 'Inconnu';
+
+            let tp = 1; // 1: Particulier
+            let typeBien = 2; // 2: Maison
+            let situation = 1; // 1: Propriétaire
+            let delais = 2; // 2: Dans les 6 mois
+            let description = '';
+
+            if (isB2B) {
+                // Map B2B roles to ViteUnDevis profile (tp)
+                // 1: Particulier, 2: Pro, 3: Syndicat, 4: Autre
+                if (role === 'syndic' || role === 'conseil_syndical') {
+                    tp = 3; // Syndicat
+                } else if (role === 'dirigeant' || role === 'facility_manager' || role === 'rse_rh') {
+                    tp = 2; // Pro
+                } else {
+                    tp = 1; // Particulier (copro_resident, salarie)
                 }
 
-                const nameParts = (name || '').trim().split(/\s+/);
-                const prenom = nameParts[0] || 'Client';
-                const nom = nameParts.slice(1).join(' ') || 'Inconnu';
-
-                const vudPayload = {
-                    nom,
-                    prenom,
-                    email,
-                    tel: phone,
-                    cp: postalCode,
-                    ville: city,
-                    cp_projet: postalCode,
-                    ville_projet: city,
-                    pays: 'fr',
-                    adresse1: 'Adresse non communiquee',
-                    tp: 1, // Particulier
-                    type_bien: 2, // Maison
-                    situation: ownerStatus === 'proprietaire' ? 1 : ownerStatus === 'locataire' ? 2 : 4,
-                    delais: 2, // Dans les 6 mois
-                    description: `Projet de pose de borne de recharge. Vehicule: ${vehicleStatus || 'N/A'}. Distance compteur: ${meterDistance || 'N/A'}. Interet solaire: ${solarInterest ? 'Oui' : 'Non'}.`,
-                    cat_id: catId,
-                    site_name: domain || 'expertbornerecharge.com'
-                };
-
-                try {
-                    vudResult = await sendLeadToViteUnDevis(vudPayload);
-                } catch (vudErr) {
-                    console.error("❌ [API/LEADS] ViteUnDevis post error:", vudErr);
+                // Map B2B types to type_bien
+                // 1: Appt, 2: Maison, 3: Immeuble, 4: Bureau
+                if (projectType === 'copro' || role === 'copro_resident' || role === 'syndic' || role === 'conseil_syndical') {
+                    typeBien = 3; // Immeuble / Copro
+                } else {
+                    typeBien = 4; // Bureau / Entreprise
                 }
+
+                situation = 1; // Propriétaire par défaut pour B2B
+                delais = timeline === 'urgent' ? 1 : 2;
+
+                const parkingLabel = SIZE_LABELS[parkingSize] || parkingSize || 'non spécifié';
+                const roleLabel = ROLE_LABELS[role] || role || 'non spécifié';
+                const timelineLabel = TIMELINE_LABELS[timeline] || timeline || 'non spécifié';
+
+                description = `Projet d'installation de borne(s) en Copropriété / Entreprise (${company || 'Horizon'}). Rôle du contact : ${roleLabel}. Taille du parking/flotte : ${parkingLabel}. Calendrier du projet : ${timelineLabel}. Potentiel élevé, client attend un contact rapide pour étude de faisabilité et devis.`;
+            } else {
+                tp = 1; // Particulier
+                typeBien = projectType === 'copro' ? 1 : 2; // 1: Appt (pour copro B2C), 2: Maison
+                situation = ownerStatus === 'proprietaire' ? 1 : ownerStatus === 'locataire' ? 2 : 4;
+                delais = 2; // Dans les 6 mois
+                description = `Projet de pose de borne de recharge. Véhicule : ${vehicleStatus || 'N/A'}. Distance compteur : ${meterDistance || 'N/A'}. Intérêt solaire : ${solarInterest ? 'Oui' : 'Non'}.`;
+            }
+
+            const vudPayload = {
+                nom,
+                prenom,
+                email,
+                tel: phone,
+                cp: postalCode,
+                ville: city,
+                cp_projet: postalCode,
+                ville_projet: city,
+                pays: 'fr',
+                adresse1: 'Adresse non communiquee',
+                tp,
+                type_bien: typeBien,
+                situation,
+                delais,
+                description,
+                cat_id: catId,
+                site_name: domain || 'expertbornerecharge.com'
+            };
+
+            try {
+                vudResult = await sendLeadToViteUnDevis(vudPayload);
+            } catch (vudErr) {
+                console.error("❌ [API/LEADS] ViteUnDevis post error:", vudErr);
             }
 
             const vudDetails = vudResult?.devis_data?.devis_id ? {
