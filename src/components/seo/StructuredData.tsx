@@ -22,11 +22,50 @@ export default function StructuredData() {
         }
     };
 
+    
+    const webPageSchema = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "url": "https://expertbornerecharge.com",
+        "name": "Expert Borne Recharge",
+        "description": "Installation de bornes de recharge pour véhicules électriques",
+        "inLanguage": "fr",
+        "speakable": {
+            "@type": "SpeakableSpecification",
+            "cssSelector": [
+                "h1",
+                ".hero-description",
+                ".faq-answer",
+                "article h2",
+                "article p:first-of-type",
+                ".prose > p:first-child"
+            ]
+        },
+        "isPartOf": {
+            "@type": "WebSite",
+            "url": "https://expertbornerecharge.com",
+            "name": "Expert Borne Recharge"
+        }
+    };
+
     return (
+        <>
         <Script
             id="org-schema"
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
+
+        <Script
+
+            id="webpage-speakable-schema"
+
+            type="application/ld+json"
+
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+
+        />
+
+        </>
     );
 }

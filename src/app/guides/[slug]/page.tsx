@@ -157,8 +157,58 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         });
     }
 
+    // Article Schema for SEO/AEO
+    const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": guide.meta.title,
+        "description": guide.meta.description,
+        "image": guide.meta.image ? `https://expertbornerecharge.com${guide.meta.image}` : undefined,
+        "datePublished": guide.meta.date,
+        "dateModified": guide.meta.date,
+        "author": {
+            "@type": "Organization",
+            "name": guide.meta.author || "Expert Borne Recharge"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Expert Borne Recharge",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://expertbornerecharge.com/logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": `https://expertbornerecharge.com/guides/${resolvedParams.slug}`
+        },
+        "speakable": {
+            "@type": "SpeakableSpecification",
+            "cssSelector": ["h1", "article h2", "article p:first-of-type"]
+        }
+    };
+    // HowTo Schema for AEO (auto-generated from article headings)
+    const howToSchema = toc.length >= 3 ? {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": guide.meta?.title,
+        "description": guide.meta?.description,
+        "step": toc.filter((h: any) => h.level === 2).map((h: any, i: number) => ({
+            "@type": "HowToStep",
+            "position": i + 1,
+            "name": h.text,
+            "url": `https://expertbornerecharge.com/guides/${resolvedParams.slug}#${h.id}`
+        }))
+    } : null;
+
+
     return (
         <div className="min-h-screen bg-white text-slate-900 font-sans">
+            {/* Article Schema JSON-LD */}
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+            {howToSchema && (
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+            )}
             {/* Nav */}
             <Header isHub={true} variant="default" />
 
