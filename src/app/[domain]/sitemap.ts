@@ -33,18 +33,6 @@ export default async function sitemap(props?: Props): Promise<MetadataRoute.Site
             priority: 1.0,
         },
         {
-            url: `${baseUrl}/llms.txt`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.5,
-        },
-        {
-            url: `${baseUrl}/openapi.json`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.5,
-        },
-        {
             url: `${baseUrl}/contact`,
             lastModified: new Date('2026-03-01'),
             changeFrequency: 'monthly',

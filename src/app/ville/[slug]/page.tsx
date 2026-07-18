@@ -39,10 +39,17 @@ export async function generateMetadata({
     // Dynamic Meta via pSEO
     const pseo = await getPseoContent(site);
 
+    const isSatellite = site.domain && !site.domain.includes('/');
+    const canonicalUrl = isSatellite 
+        ? `https://${site.domain.replace(/^www\./, "")}` 
+        : `https://expertbornerecharge.com/ville/${resolvedParams.slug}`;
+
     return {
         title: pseo.meta_title,
         description: pseo.meta_description,
-        // Canonical is handled by root layout.tsx
+        alternates: {
+            canonical: canonicalUrl,
+        },
         openGraph: {
             title: pseo.meta_title,
             description: pseo.meta_description,

@@ -82,10 +82,21 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     if (!quartier) return {};
 
+    const canonicalDomain = (quartier.config && !quartier.config.domain?.includes('/')) 
+        ? quartier.config.domain.replace(/^www\./, "") 
+        : "expertbornerecharge.com";
+    const canonicalUrl = `https://${canonicalDomain}/quartier/${resolvedParams.slug}`;
+
     return {
         title: `Installation Borne ${quartier.name} - ${quartier.city} | Devis Gratuit`,
         description: `Installation de borne de recharge électrique à ${quartier.name} (${quartier.city}). Expert IRVE local, devis gratuit sous 24h, matériel garanti.`,
-        // Canonical is handled by root layout.tsx
+        alternates: {
+            canonical: canonicalUrl,
+        },
+        robots: {
+            index: canonicalDomain !== "expertbornerecharge.com",
+            follow: true,
+        },
     };
 }
 

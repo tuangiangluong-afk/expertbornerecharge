@@ -41,9 +41,18 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     const title = `Installateur Borne ${brandData.name} à ${site.city}${site.postalCode ? ` (${site.postalCode})` : ''} | Devis IRVE Gratuit`;
     const description = `Installation certifiée IRVE pour ${brandData.name} (${brandData.models.slice(0, 3).join(', ')}) à ${site.city}. ${brandData.chargeTime} de charge. Devis gratuit, garantie 2 ans, prime Advenir déduite.`;
 
+    const isSatellite = site.domain && !site.domain.includes('/');
+    const canonicalDomain = isSatellite 
+        ? site.domain.replace(/^www\./, "") 
+        : "expertbornerecharge.com";
+    const canonicalUrl = `https://${canonicalDomain}/ville/${slug}/${brandSlug}`;
+
     return {
         title,
         description,
+        alternates: {
+            canonical: canonicalUrl,
+        },
         openGraph: {
             title,
             description,

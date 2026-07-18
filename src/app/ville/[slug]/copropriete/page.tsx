@@ -43,10 +43,18 @@ export async function generateMetadata({
     if (!site) return {};
 
     const b2bContent = await getPseoB2bContent(site, 'COPRO');
+    const isSatellite = site.domain && !site.domain.includes('/');
+    const canonicalDomain = isSatellite 
+        ? site.domain.replace(/^www\./, "") 
+        : "expertbornerecharge.com";
+    const canonicalUrl = `https://${canonicalDomain}/ville/${resolvedParams.slug}/copropriete`;
 
     return {
         title: b2bContent.meta_title,
         description: b2bContent.meta_description,
+        alternates: {
+            canonical: canonicalUrl,
+        },
         openGraph: {
             title: b2bContent.meta_title,
             description: b2bContent.meta_description,
