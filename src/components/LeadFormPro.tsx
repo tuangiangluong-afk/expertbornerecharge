@@ -53,6 +53,7 @@ interface ProFormData {
     phone: string;
     company: string; // Nom copro ou entreprise
     zipCode: string;
+    phoneConsent?: boolean;
 }
 
 const FRENCH_PHONE_REGEX = /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/;
@@ -75,7 +76,8 @@ export default function LeadFormPro({
         email: "",
         phone: "",
         company: "",
-        zipCode: ""
+        zipCode: "",
+        phoneConsent: false
     });
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState("");
@@ -191,7 +193,7 @@ export default function LeadFormPro({
                     formData.email.includes("@") &&
                     ZIP_CODE_REGEX.test(formData.zipCode.trim()) &&
                     formData.phone.trim() !== "" &&
-                    FRENCH_PHONE_REGEX.test(formData.phone.replace(/\s/g, ''))
+                    FRENCH_PHONE_REGEX.test(formData.phone.replace(/\s/g, '')) && formData.phoneConsent === true
                 );
             default: return false;
         }
@@ -270,6 +272,10 @@ export default function LeadFormPro({
                 company: formData.company,
                 leadSegment: 'B2B',
                 timestamp: new Date().toISOString(),
+                phoneConsent: formData.phoneConsent,
+                consentText: "J'accepte d'être contacté(e) par téléphone par ViteUnDevis.com et ses partenaires certifiés pour la qualification de ma demande de devis et la réalisation d'une étude technique.",
+                consentDate: new Date().toISOString(),
+                consentUrl: typeof window !== 'undefined' ? window.location.href : `https://${domain}`,
                 attribution // Include attribution data here
             };
 

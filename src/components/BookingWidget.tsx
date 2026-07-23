@@ -24,6 +24,7 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [postalCode, setPostalCode] = useState("");
+    const [phoneConsent, setPhoneConsent] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -51,6 +52,10 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
             city: city.city,
             domain: city.domain,
             timestamp: new Date().toISOString(),
+            phoneConsent,
+            consentText: "J'accepte d'être contacté(e) par téléphone par ViteUnDevis.com et ses partenaires certifiés pour la qualification de ma demande de devis et la réalisation d'une étude technique.",
+            consentDate: new Date().toISOString(),
+            consentUrl: typeof window !== 'undefined' ? window.location.href : `https://${city.domain}`,
             attribution // Include attribution data here
         };
 
@@ -189,6 +194,23 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
                             className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-neutral-900 focus:border-blue-500 focus:ring-blue-500/20 outline-none transition text-sm"
                         />
                     </div>
+                </div>
+
+                
+                {/* Phone Consent Checkbox */}
+                <div className="p-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-left">
+                    <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                        <input
+                            type="checkbox"
+                            required
+                            checked={phoneConsent}
+                            onChange={(e) => setPhoneConsent(e.target.checked)}
+                            className="mt-0.5 h-4 w-4 rounded border-neutral-300 text-blue-600 focus:ring-blue-500 accent-blue-600 shrink-0"
+                        />
+                        <span className="text-[11px] text-neutral-600 leading-tight">
+                            J&apos;accepte d&apos;être contacté(e) par téléphone par ViteUnDevis.com et ses partenaires certifiés pour mon devis.
+                        </span>
+                    </label>
                 </div>
 
                 <button

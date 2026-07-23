@@ -54,6 +54,7 @@ interface FormData {
     email: string;
     phone: string;
     zipCode: string;
+    phoneConsent?: boolean;
 }
 
 // French phone validation regex
@@ -78,7 +79,8 @@ export default function LeadForm({
         name: "",
         email: "",
         phone: "",
-        zipCode: ""
+        zipCode: "",
+        phoneConsent: false
     };
 
     // If project type is pre-selected, start at step 2
@@ -176,7 +178,7 @@ export default function LeadForm({
                     formData.email.includes("@") &&
                     ZIP_CODE_REGEX.test(formData.zipCode.trim()) &&
                     formData.phone.trim() !== "" &&
-                    FRENCH_PHONE_REGEX.test(formData.phone.replace(/\s/g, ''))
+                    FRENCH_PHONE_REGEX.test(formData.phone.replace(/\s/g, '')) && formData.phoneConsent === true
                 );
             default: return false;
         }
@@ -211,6 +213,7 @@ export default function LeadForm({
             if (!ZIP_CODE_REGEX.test(formData.zipCode.trim())) errors.push("un Code Postal valide à 5 chiffres");
             if (!formData.email.includes("@")) errors.push("un Email valide avec '@'");
             if (formData.phone.trim() === "" || !FRENCH_PHONE_REGEX.test(formData.phone.replace(/\s/g, ''))) errors.push("un Numéro de téléphone valide");
+            if (!formData.phoneConsent) errors.push("votre accord pour être recontacté(e) par téléphone");
             
             setErrorMessage(`Veuillez corriger ou renseigner : ${errors.join(', ')}.`);
             return;
@@ -248,6 +251,10 @@ export default function LeadForm({
                 domain,
                 leadScore: getLeadScore(),
                 timestamp: new Date().toISOString(),
+                phoneConsent: formData.phoneConsent,
+                consentText: "J'accepte d'être contacté(e) par téléphone par ViteUnDevis.com et ses partenaires certifiés pour la qualification de ma demande de devis et la réalisation d'une étude technique.",
+                consentDate: new Date().toISOString(),
+                consentUrl: typeof window !== 'undefined' ? window.location.href : `https://${domain}`,
                 attribution // Include attribution data here
             };
 
