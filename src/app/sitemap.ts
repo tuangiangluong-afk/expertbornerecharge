@@ -6,6 +6,8 @@ import { CITIES } from '@/lib/db';
 import { slugify } from '@/lib/slugify';
 import { SEO_SERVICES } from '@/lib/seo-data';
 import { createClient } from '@supabase/supabase-js';
+import fs from 'fs';
+import path from 'path';
 
 // Base URL (Hub)
 const BASE_URL = 'https://expertbornerecharge.com';
@@ -184,7 +186,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }));
     });
 
-    return [...routes, ...serviceRoutes, ...guideRoutes, ...blogRoutes, ...vehicleRoutes, ...cityRoutes, ...b2bRoutes, ...cityBrandRoutes].map(item => ({
+    // 9. SEO Bottom of Funnel Routes (Vertex AI generated)
+    let marquesRoutes: MetadataRoute.Sitemap = [];
+    let comparatifRoutes: MetadataRoute.Sitemap = [];
+    let puissanceRoutes: MetadataRoute.Sitemap = [];
+    let prisesRoutes: MetadataRoute.Sitemap = [];
+    
+    try {
+        const marquesData = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src', 'data', 'marques.json'), 'utf-8'));
+        marquesRoutes = marquesData.map((d: any) => ({ url: `${BASE_URL}/marques/${d.slug}`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 }));
+        
+        const comparatifsData = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src', 'data', 'comparatifs.json'), 'utf-8'));
+        comparatifRoutes = comparatifsData.map((d: any) => ({ url: `${BASE_URL}/comparatif/${d.slug}`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 }));
+        
+        const puissancesData = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src', 'data', 'puissances.json'), 'utf-8'));
+        puissanceRoutes = puissancesData.map((d: any) => ({ url: `${BASE_URL}/puissance/${d.slug}`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 }));
+        
+        const prisesData = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src', 'data', 'prises.json'), 'utf-8'));
+        prisesRoutes = prisesData.map((d: any) => ({ url: `${BASE_URL}/prises/${d.slug}`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 }));
+    } catch (e) {
+        console.warn('[Sitemap] Failed to load local JSON files for SEO clusters', e);
+    }
+
+    return [...routes, ...serviceRoutes, ...guideRoutes, ...blogRoutes, ...vehicleRoutes, ...cityRoutes, ...b2bRoutes, ...cityBrandRoutes, ...marquesRoutes, ...comparatifRoutes, ...puissanceRoutes, ...prisesRoutes].map(item => ({
         ...item,
         url: item.url.toLowerCase()
     }));
