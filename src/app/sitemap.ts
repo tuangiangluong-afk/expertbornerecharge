@@ -208,7 +208,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.warn('[Sitemap] Failed to load local JSON files for SEO clusters', e);
     }
 
-    return [...routes, ...serviceRoutes, ...guideRoutes, ...blogRoutes, ...vehicleRoutes, ...cityRoutes, ...b2bRoutes, ...cityBrandRoutes, ...marquesRoutes, ...comparatifRoutes, ...puissanceRoutes, ...prisesRoutes].map(item => ({
+    // Quartier Routes
+    const quartierRoutes: MetadataRoute.Sitemap = Array.from(uniqueSites.values()).flatMap((site) => {
+        const neighborhoods = (site.neighborhoods || (site as any).quartiers || []) as string[];
+        return neighborhoods.map(q => ({
+            url: `${BASE_URL}/quartier/${slugify(q)}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.8,
+        }));
+    });
+
+    return [...routes, ...serviceRoutes, ...guideRoutes, ...blogRoutes, ...vehicleRoutes, ...cityRoutes, ...b2bRoutes, ...cityBrandRoutes, ...quartierRoutes, ...marquesRoutes, ...comparatifRoutes, ...puissanceRoutes, ...prisesRoutes].map(item => ({
         ...item,
         url: item.url.toLowerCase()
     }));

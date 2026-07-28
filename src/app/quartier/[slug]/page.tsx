@@ -76,15 +76,16 @@ export async function generateStaticParams() {
     }));
 }
 
+import { headers } from "next/headers";
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const resolvedParams = await params;
     const quartier = getNeighborhood(resolvedParams.slug);
 
     if (!quartier) return {};
 
-    const canonicalDomain = (quartier.config && !quartier.config.domain?.includes('/')) 
-        ? quartier.config.domain.replace(/^www\./, "") 
-        : "expertbornerecharge.com";
+    const headersList = await headers();
+    const canonicalDomain = headersList.get("x-irve-canonical-domain") || "expertbornerecharge.com";
     const canonicalUrl = `https://${canonicalDomain}/quartier/${resolvedParams.slug}`;
 
     return {
@@ -94,7 +95,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             canonical: canonicalUrl,
         },
         robots: {
-            index: canonicalDomain !== "expertbornerecharge.com",
+            index: true,
             follow: true,
         },
     };

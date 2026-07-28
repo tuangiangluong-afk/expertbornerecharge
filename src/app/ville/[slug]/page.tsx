@@ -24,6 +24,8 @@ export async function generateStaticParams() {
 // METADATA
 // ============================================
 
+import { headers } from "next/headers";
+
 export async function generateMetadata({
     params,
 }: {
@@ -39,10 +41,9 @@ export async function generateMetadata({
     // Dynamic Meta via pSEO
     const pseo = await getPseoContent(site);
 
-    const isSatellite = site.domain && !site.domain.includes('/');
-    const canonicalUrl = isSatellite 
-        ? `https://${site.domain.replace(/^www\./, "")}` 
-        : `https://expertbornerecharge.com/ville/${resolvedParams.slug}`;
+    const headersList = await headers();
+    const canonicalDomain = headersList.get("x-irve-canonical-domain") || "expertbornerecharge.com";
+    const canonicalUrl = `https://${canonicalDomain}/ville/${resolvedParams.slug}`;
 
     return {
         title: pseo.meta_title,

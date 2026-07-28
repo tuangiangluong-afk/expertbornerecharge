@@ -15,11 +15,24 @@ export async function generateStaticParams() {
     }));
 }
 
-export function generateMetadata({ params }: { params: Promise<{ brand: string }> }) {
-    // Simple metadata
+export async function generateMetadata({ params }: { params: Promise<{ brand: string }> }) {
+    const resolvedParams = await params;
+    const models = getVehiclesByBrand(resolvedParams.brand);
+    if (models.length === 0) return {};
+
+    const brandName = models[0].brand;
+    const modelNames = models.map(m => m.model).slice(0, 3).join(', ');
+
     return {
-        title: "Installation Borne Recharge - Véhicules Électriques",
-        description: "Trouvez la borne de recharge adaptée à votre voiture électrique. Devis gratuit et installateurs agréés.",
+        title: `Installation Borne Recharge ${brandName} | Devis IRVE Gratuit`,
+        description: `Installation certifiée IRVE de bornes de recharge pour ${brandName} (${modelNames}). Devis gratuit sous 24h, matériel garanti 2 ans.`,
+        openGraph: {
+            title: `Installation Borne Recharge ${brandName}`,
+            description: `Borne de recharge adaptée pour ${brandName} (${modelNames}). Installation professionnelle certifiée IRVE.`,
+            siteName: "Expert Borne Recharge",
+            locale: "fr_FR",
+            type: "website",
+        },
     };
 }
 

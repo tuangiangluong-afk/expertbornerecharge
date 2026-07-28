@@ -89,6 +89,17 @@ export default async function middleware(req: NextRequest) {
         return applySecurityHeaders(robotsResponse);
     }
 
+    // Prepare request headers to pass forward to Server Components & Layout
+    const requestHeaders = new Headers(req.headers);
+    requestHeaders.set("x-irve-domain", domainKey);
+    requestHeaders.set("x-irve-city", domainKey);
+    requestHeaders.set("x-irve-path", cleanPath);
+
+    const canonicalDomain = (cleanPath.startsWith("/guides") || cleanPath.startsWith("/vehicules") || cleanPath.startsWith("/solutions") || cleanPath.startsWith("/service") || cleanPath.startsWith("/poi") || cleanPath.startsWith("/outils") || cleanPath.startsWith("/installation") || cleanPath.startsWith("/fiscalite-entreprise-borne"))
+        ? "expertbornerecharge.com"
+        : domainKey;
+    requestHeaders.set("x-irve-canonical-domain", canonicalDomain);
+
     // 2. Routing Logic
     let response: NextResponse;
 
@@ -104,29 +115,22 @@ export default async function middleware(req: NextRequest) {
         }
 
         if (path.startsWith("/admin") || path.startsWith("/login") || path.startsWith("/api") || path.startsWith("/leads") || path.startsWith("/guides") || path.startsWith("/outils") || path.startsWith("/vehicules") || path.startsWith("/ville") || path.startsWith("/solutions") || path.startsWith("/service") || path.startsWith("/quartier") || path.startsWith("/departement") || path.startsWith("/poi") || path.startsWith("/demo") || path.startsWith("/installation") || path.startsWith("/images") || path.startsWith("/fiscalite-entreprise-borne")) {
-            response = NextResponse.next();
+            response = NextResponse.next({ request: { headers: requestHeaders } });
         } else {
             response = NextResponse.rewrite(
-                new URL(`/home${path === "/" ? "" : path}`, req.url)
+                new URL(`/home${path === "/" ? "" : path}`, req.url),
+                { request: { headers: requestHeaders } }
             );
         }
     } else {
         // SATELLITE Logic
-
-        // RESTRICTION: Local routes (/ville, /quartier) MUST match the current domain
-        // If they don't, we redirect to the correct domain or the hub to avoid duplicate content cross-domain
-        if (cleanPath.startsWith("/ville/") || cleanPath.startsWith("/quartier/")) {
-            // No redirection needed here; the router will handle 404 if the slug is invalid,
-            // or serve the correct content if it exists.
-        }
-
-        // Whitelist shared routes (serve from root app)
         if (path.startsWith("/guides") || path.startsWith("/leads") || path.startsWith("/vehicules") || path.startsWith("/solutions") || path.startsWith("/ville") || path.startsWith("/service") || path.startsWith("/quartier") || path.startsWith("/departement") || path.startsWith("/poi") || path.startsWith("/api") || path.startsWith("/outils") || path.startsWith("/login") || path.startsWith("/admin") || path.startsWith("/installation") || path.startsWith("/fiscalite-entreprise-borne")) {
-            response = NextResponse.next();
+            response = NextResponse.next({ request: { headers: requestHeaders } });
         } else {
             const routeParam = hostname.includes(".localhost") ? domainKey : domainKey;
             response = NextResponse.rewrite(
-                new URL(`/${routeParam}${path}`, req.url)
+                new URL(`/${routeParam}${path}`, req.url),
+                { request: { headers: requestHeaders } }
             );
         }
     }
@@ -135,14 +139,7 @@ export default async function middleware(req: NextRequest) {
     response.headers.set("x-irve-domain", domainKey);
     response.headers.set("x-irve-city", domainKey);
     response.headers.set("x-irve-path", cleanPath);
-
-    // Shared routes must point back to the main hub as their canonical source
-    // Local /ville and /quartier pages MUST be canonical to THEMSELVES on their own domain
-    if (cleanPath.startsWith("/guides") || cleanPath.startsWith("/vehicules") || cleanPath.startsWith("/solutions") || cleanPath.startsWith("/service") || cleanPath.startsWith("/poi") || cleanPath.startsWith("/outils") || cleanPath.startsWith("/installation") || cleanPath.startsWith("/fiscalite-entreprise-borne")) {
-        response.headers.set("x-irve-canonical-domain", "expertbornerecharge.com");
-    } else {
-        response.headers.set("x-irve-canonical-domain", domainKey);
-    }
+    response.headers.set("x-irve-canonical-domain", canonicalDomain);
 
     // Vercel CDN Caching: Cache all public HTML and sitemap routes to save Fluid CPU hours
     if (

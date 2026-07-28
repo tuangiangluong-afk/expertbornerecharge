@@ -32,6 +32,8 @@ export async function generateStaticParams() {
         .map(city => ({ slug: slugify(city.city) }));
 }
 
+import { headers } from "next/headers";
+
 export async function generateMetadata({
     params,
 }: {
@@ -43,10 +45,8 @@ export async function generateMetadata({
     if (!site) return {};
 
     const b2bContent = await getPseoB2bContent(site, 'ENTREPRISE');
-    const isSatellite = site.domain && !site.domain.includes('/');
-    const canonicalDomain = isSatellite 
-        ? site.domain.replace(/^www\./, "") 
-        : "expertbornerecharge.com";
+    const headersList = await headers();
+    const canonicalDomain = headersList.get("x-irve-canonical-domain") || "expertbornerecharge.com";
     const canonicalUrl = `https://${canonicalDomain}/ville/${resolvedParams.slug}/entreprise`;
 
     return {
