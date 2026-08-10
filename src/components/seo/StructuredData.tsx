@@ -6,7 +6,7 @@ export default function StructuredData() {
         "@type": "Organization",
         "name": "Expert Borne Recharge",
         "legalName": "Expert Borne Recharge SAS",
-        "alternateName": ["ExpertBorneRecharge", "Expert Borne Recharge France"],
+        "alternateName": ["ExpertBorneRecharge", "Expert Borne Recharge Global"],
         "url": "https://expertbornerecharge.fr",
         "logo": "https://expertbornerecharge.fr/icon.png",
         "description": "N°1 de l'installation de bornes de recharge IRVE pour maisons, copropriétés et flottes d'entreprise en France.",
@@ -17,21 +17,16 @@ export default function StructuredData() {
             "postalCode": "75002",
             "addressCountry": "FR"
         },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": 48.8686,
-            "longitude": 2.3314
-        },
         "contactPoint": {
             "@type": "ContactPoint",
             "telephone": "+33 1 84 80 00 00",
             "contactType": "customer service",
             "areaServed": "FR",
-            "availableLanguage": "French"
+            "availableLanguage": "fr-FR"
         },
         "areaServed": {
             "@type": "Country",
-            "name": "France"
+            "name": "FR"
         }
     };
 
