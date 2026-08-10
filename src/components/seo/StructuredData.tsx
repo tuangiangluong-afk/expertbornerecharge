@@ -118,6 +118,29 @@ export default function StructuredData() {
         ]
     };
 
+    const productSchema = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Borne de Recharge IRVE 7kW / 22kW",
+        "image": "https://expertbornerecharge.com/icon.png",
+        "description": "Installation et fourniture de borne de recharge électrique IRVE pour voiture électrique et hybride rechargeable.",
+        "brand": {
+            "@type": "Brand",
+            "name": "Expert Borne Recharge"
+        },
+        "offers": {
+            "@type": "Offer",
+            "priceCurrency": "EUR",
+            "price": "690",
+            "availability": "https://schema.org/InStock"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "310"
+        }
+    };
+
     return (
         <>
             <Script
@@ -129,6 +152,11 @@ export default function StructuredData() {
                 id="service-schema"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+            />
+            <Script
+                id="product-schema"
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
             />
             <Script
                 id="website-schema"
