@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "expertbornerecharge",
+  "name_for_model": "expertbornerecharge",
+  "description_for_human": "Service expert pour expertbornerecharge",
+  "description_for_model": "Expert service related to expertbornerecharge, offering quotes and professional installations.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://www.expertbornerecharge/openapi.json",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://www.expertbornerecharge/favicon.ico",
+  "contact_email": "contact@expertbornerecharge",
+  "legal_info_url": "https://www.expertbornerecharge/legal"
+}
