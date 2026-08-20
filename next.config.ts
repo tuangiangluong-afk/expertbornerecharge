@@ -19,6 +19,25 @@ const nextConfig: NextConfig = {
     ],
   },
   trailingSlash: false,
+  async redirects() {
+    return [
+      {
+        source: '/guides/assurance-borne-recharge-couverture',
+        destination: '/guides',
+        permanent: true,
+      },
+      {
+        source: '/service/installation-borne-entreprise',
+        destination: '/solutions',
+        permanent: true,
+      },
+      {
+        source: '/service/installation-rapide',
+        destination: '/service',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
