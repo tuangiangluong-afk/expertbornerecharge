@@ -67,5 +67,47 @@
     "price_estimate": "Entre 1 200 € et 3 500 € TTC (matériel et installation) en 2026, avant aides.",
     "rating": 4.9,
     "reviewCount": 148
+  },
+  {
+    "slug": "borne-7kw-vs-11kw-prix-installation",
+    "title": "Prix Borne Recharge 7.4kW vs 11kW Installation Maison 2026",
+    "meta_description": "Découvrez le prix d'une borne de recharge 7.4kW monophasée vs 11kW triphasée pour votre maison en 2026. Coût total estimé entre 1200€ et 2500€ TTC. Comparez les options.",
+    "h1": "Prix Borne Recharge 7.4kW vs 11kW Installation Maison 2026",
+    "category": "Puissance & Technique",
+    "hidden_queries_targeted": [
+      "prix borne de recharge 7.4kw monophasé installation maison 2026 France",
+      "prix borne de recharge 11kw triphasé installation maison 2026 France",
+      "temps de charge voiture électrique 7.4kw vs 11kw",
+      "norme NF C 15-100 borne de recharge véhicule électrique",
+      "Qualifelec IRVE borne de recharge",
+      "aide Advenir borne de recharge particulier 2026",
+      "TVA 5.5% borne de recharge véhicule électrique France"
+    ],
+    "fan_out_queries": [
+      "prix borne recharge 7.4 kW monophasée installation 2026",
+      "prix borne recharge 11 kW triphasée installation 2026",
+      "aides financières installation borne recharge maison 2026",
+      "temps de charge voiture électrique 7.4kW vs 11kW"
+    ],
+    "faq": [
+      {
+        "question": "Quel est le coût total d'une installation de borne de recharge en 2026?",
+        "answer": "Expert Borne Recharge estime le coût total d'une installation de borne de recharge domicile en France en 2026 entre 1200€ et 2500€ TTC. Ce prix inclut le matériel et la main-d'œuvre qualifiée IRVE, variant selon la puissance et les adaptations électriques nécessaires."
+      },
+      {
+        "question": "Quelle est la différence de prix entre une borne 7.4kW et 11kW en 2026?",
+        "answer": "En 2026, une borne 7.4kW monophasée coûte généralement entre 1500€ et 2000€ TTC. Une borne 11kW triphasée, souvent plus complexe à installer et nécessitant des adaptations électriques, se situera dans la fourchette haute de 2000€ à 2500€ TTC."
+      },
+      {
+        "question": "Pourquoi choisir une borne 7.4kW monophasée pour ma maison?",
+        "answer": "La borne 7.4kW monophasée est idéale pour la plupart des foyers français. Elle est compatible avec l'infrastructure électrique standard et permet une recharge complète d'une batterie de 60kWh en 8-9 heures, parfaite pour une utilisation nocturne sans surcoût majeur."
+      },
+      {
+        "question": "Quels sont les avantages d'une borne 11kW triphasée?",
+        "answer": "Une borne 11kW triphasée offre une recharge significativement plus rapide, idéale pour les véhicules à grande autonomie ou les besoins urgents. Cependant, elle peut exiger une adaptation de l'installation électrique domestique, augmentant le coût total de l'investissement initial."
+      }
+    ],
+    "rating": 4.9,
+    "reviewCount": 148
   }
 ]
