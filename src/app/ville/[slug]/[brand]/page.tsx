@@ -32,6 +32,8 @@ export async function generateStaticParams() {
 }
 
 import { headers } from "next/headers";
+import { getPseoBrandContent } from "@/lib/pseo-brand";
+import { HelpCircle, Sparkles, Clock } from "lucide-react";
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
     const { slug, brand: brandSlug } = await params;
@@ -40,25 +42,24 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
     if (!site || !brandData) return {};
 
-    const title = `Installateur Borne ${brandData.name} à ${site.city}${site.postalCode ? ` (${site.postalCode})` : ''} | Devis IRVE Gratuit`;
-    const description = `Installation certifiée IRVE pour ${brandData.name} (${brandData.models.slice(0, 3).join(', ')}) à ${site.city}. ${brandData.chargeTime} de charge. Devis gratuit, garantie 2 ans, prime Advenir déduite.`;
-
+    const pseo = getPseoBrandContent(site.city, brandData, site);
     const headersList = await headers();
     const canonicalDomain = headersList.get("x-irve-canonical-domain") || "expertbornerecharge.com";
     const canonicalUrl = `https://${canonicalDomain}/ville/${slug}/${brandSlug}`;
 
     return {
-        title,
-        description,
+        title: pseo.meta_title,
+        description: pseo.meta_description,
         alternates: {
             canonical: canonicalUrl,
         },
         openGraph: {
-            title,
-            description,
+            title: pseo.meta_title,
+            description: pseo.meta_description,
             siteName: "Expert Borne Recharge",
             locale: "fr_FR",
             type: "website",
+            url: canonicalUrl,
             images: [
                 {
                     url: brandData.image,
@@ -79,12 +80,33 @@ export default async function CityBrandPage({ params }: { params: Params }) {
 
     if (!site || !brand) return notFound();
 
+    const pseo = getPseoBrandContent(site.city, brand, site);
+
+    const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": pseo.faqs.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
+    };
+
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
             <Header isHub={true} city={site.city} phoneNumber={site.phoneNumber} variant="default" />
 
             {/* Schema JSON — type Service spécifique à la marque */}
             <SchemaJSON type="Service" site={site} brand={brand} />
+
+            {/* Structured Data for FAQ */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
 
             {/* Breadcrumb structuré */}
             <script
@@ -119,17 +141,17 @@ export default async function CityBrandPage({ params }: { params: Params }) {
 
                     <div className="text-center">
                         <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold mb-6 border border-blue-500/30">
-                            <Zap size={14} />
-                            Expert Certifié IRVE — Spécialiste {brand.name}
+                            <Sparkles size={14} />
+                            {pseo.hero_badge}
                         </span>
                         <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-6">
                             Installation Borne <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">{brand.name}</span><br />
                             à {site.city}
                         </h1>
                         <p className="text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed mb-8">
-                            Vous roulez en {brand.models[0]}{brand.models[1] ? ` ou ${brand.models[1]}` : ''} ? Nos électriciens certifiés installent la borne parfaitement adaptée à votre {brand.name} à {site.city}.
+                            Rechargez votre {brand.name} ({brand.models.slice(0, 3).join(', ')}) à domicile en {brand.chargeTime}. Pose certifiée IRVE avec crédit d&apos;impôt de 500 €.
                         </p>
-                        <a href="#devis" className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold inline-flex items-center gap-2 transition">
+                        <a href="#devis" className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold inline-flex items-center gap-2 transition shadow-lg hover:shadow-blue-500/25">
                             Obtenir un devis gratuit
                             <ArrowRight size={18} />
                         </a>
@@ -140,52 +162,132 @@ export default async function CityBrandPage({ params }: { params: Params }) {
             {/* Main Content */}
             <div className="container mx-auto px-4 py-16 max-w-6xl">
                 <div className="grid lg:grid-cols-3 gap-12">
-                    <div className="lg:col-span-2 space-y-12">
+                    <div className="lg:col-span-2 space-y-10">
 
-                        <div className="prose prose-lg text-slate-600 max-w-none">
-                            <h2>La recharge idéale pour votre {brand.name} à {site.city}</h2>
-                            <p>
-                                Pour recharger efficacement votre <strong>{brand.name}</strong>, il est crucial d&apos;installer une borne adaptée à la puissance de votre véhicule (jusqu&apos;à {brand.maxPower}).
-                                En choisissant notre réseau d&apos;installateurs certifiés IRVE sur <strong>{site.city}{site.postalCode ? ` (${site.postalCode})` : ''}</strong>, vous vous assurez une installation conforme à la norme NF C 15-100.
-                            </p>
+                        {/* Dynamic Local Intro */}
+                        <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100">
+                            <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-slate-900">
+                                <Zap className="text-blue-600" />
+                                La recharge idéale pour votre {brand.name} à {site.city}
+                            </h2>
+                            <div 
+                                className="prose prose-lg text-slate-600 max-w-none leading-relaxed"
+                                dangerouslySetInnerHTML={{ __html: pseo.intro_html }}
+                            />
+                        </div>
 
-                            {brand.technicalSpecs && (
-                                <div className="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-xl my-8 not-prose">
-                                    <h4 className="text-blue-900 font-bold mb-2 flex items-center gap-2">
-                                        <Award className="text-amber-500" size={20} />
-                                        Conseil Technique {brand.name}
-                                    </h4>
-                                    <p className="text-blue-800 text-sm mb-4">{brand.technicalSpecs.expertTip}</p>
-                                    <div className="grid sm:grid-cols-3 gap-3 text-sm">
-                                        <div className="bg-white/70 rounded-lg p-3">
-                                            <strong className="block text-blue-900">Câble</strong>
-                                            <span className="text-blue-700">{brand.technicalSpecs.cable}</span>
-                                        </div>
-                                        <div className="bg-white/70 rounded-lg p-3">
-                                            <strong className="block text-blue-900">Protection</strong>
-                                            <span className="text-blue-700">{brand.technicalSpecs.protection}</span>
-                                        </div>
-                                        <div className="bg-white/70 rounded-lg p-3">
-                                            <strong className="block text-blue-900">Mise à la Terre</strong>
-                                            <span className="text-blue-700">{brand.technicalSpecs.grounding}</span>
-                                        </div>
+                        {/* Charging Times Breakdown Table */}
+                        <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100">
+                            <h3 className="text-xl font-bold mb-6 flex items-center gap-3 text-slate-900">
+                                <Clock className="text-emerald-600" />
+                                Comparatif des temps de recharge {brand.name}
+                            </h3>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left text-sm">
+                                    <thead>
+                                        <tr className="border-b border-slate-200 text-slate-500">
+                                            <th className="pb-3 font-semibold">Type de recharge</th>
+                                            <th className="pb-3 font-semibold">Temps estimé</th>
+                                            <th className="pb-3 font-semibold">Puissance & Ampérage</th>
+                                            <th className="pb-3 font-semibold">Recommandation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-100">
+                                        {pseo.battery_charging_table.map((row, i) => (
+                                            <tr key={i} className={i === 1 ? "bg-blue-50/50" : ""}>
+                                                <td className="py-4 font-bold text-slate-900">{row.power}</td>
+                                                <td className="py-4 font-semibold text-blue-600">{row.time}</td>
+                                                <td className="py-4 text-slate-600">{row.current}</td>
+                                                <td className="py-4 text-slate-600">{row.usage}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        {/* Technical Specs Card */}
+                        {brand.technicalSpecs && (
+                            <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-8 shadow-xl border border-slate-700">
+                                <h4 className="text-xl font-bold mb-4 flex items-center gap-3 text-amber-400">
+                                    <Award size={22} />
+                                    Conseil Expert IRVE — {brand.name}
+                                </h4>
+                                <p className="text-slate-200 text-sm leading-relaxed mb-6">{brand.technicalSpecs.expertTip}</p>
+                                <div className="grid sm:grid-cols-3 gap-4 text-sm">
+                                    <div className="bg-white/5 rounded-xl p-4 border border-white/10">
+                                        <strong className="block text-slate-400 text-xs uppercase mb-1">Câblage</strong>
+                                        <span className="text-white font-semibold">{brand.technicalSpecs.cable}</span>
+                                    </div>
+                                    <div className="bg-white/5 rounded-xl p-4 border border-white/10">
+                                        <strong className="block text-slate-400 text-xs uppercase mb-1">Protection</strong>
+                                        <span className="text-white font-semibold">{brand.technicalSpecs.protection}</span>
+                                    </div>
+                                    <div className="bg-white/5 rounded-xl p-4 border border-white/10">
+                                        <strong className="block text-slate-400 text-xs uppercase mb-1">Mise à la Terre</strong>
+                                        <span className="text-white font-semibold">{brand.technicalSpecs.grounding}</span>
                                     </div>
                                 </div>
-                            )}
+                            </div>
+                        )}
 
-                            <h3>Pourquoi un électricien IRVE pour votre {brand.name} à {site.city} ?</h3>
-                            <p>
-                                L&apos;installation d&apos;une borne de recharge de plus de 3,7 kW par un professionnel <strong>certifié IRVE</strong> est obligatoire par la loi.
-                                Cela vous garantit la sécurité de votre installation, le maintien de la garantie constructeur de votre {brand.name},
-                                et l&apos;accès aux aides de l&apos;État (Prime Advenir et Crédit d&apos;impôt).
+                        {/* Local Advice Card */}
+                        <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100">
+                            <h3 className="text-xl font-bold mb-4 text-slate-900">
+                                {pseo.local_advice.title}
+                            </h3>
+                            <p className="text-slate-600 leading-relaxed mb-6">
+                                {pseo.local_advice.content}
                             </p>
+                            <div className="grid sm:grid-cols-2 gap-4 pt-4 border-t border-slate-100">
+                                <div className="flex items-start gap-3">
+                                    <CheckCircle size={20} className="text-emerald-500 shrink-0 mt-0.5" />
+                                    <div>
+                                        <div className="font-bold text-sm text-slate-900">Installation certifiée IRVE</div>
+                                        <div className="text-xs text-slate-500">Obligatoire pour les puissances &gt; 3.7 kW</div>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-3">
+                                    <CheckCircle size={20} className="text-emerald-500 shrink-0 mt-0.5" />
+                                    <div>
+                                        <div className="font-bold text-sm text-slate-900">Crédit d&apos;impôt 500 €</div>
+                                        <div className="text-xs text-slate-500">Accessible à tous les propriétaires et locataires</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                            <h3>Modèles {brand.name} pris en charge</h3>
-                            <ul>
+                        {/* Brand Models List */}
+                        <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100">
+                            <h3 className="text-xl font-bold mb-4 text-slate-900">Modèles {brand.name} pris en charge à {site.city}</h3>
+                            <ul className="grid sm:grid-cols-2 gap-3">
                                 {brand.models.map(model => (
-                                    <li key={model}><strong>{brand.name} {model}</strong> — Connecteur {brand.connectorType}, charge jusqu&apos;à {brand.maxPower}</li>
+                                    <li key={model} className="flex items-center gap-2 text-sm text-slate-700 bg-slate-50 rounded-xl p-3 border border-slate-100">
+                                        <CheckCircle size={16} className="text-blue-500 shrink-0" />
+                                        <span><strong>{brand.name} {model}</strong> ({brand.connectorType})</span>
+                                    </li>
                                 ))}
                             </ul>
+                        </div>
+
+                        {/* Local Brand FAQs */}
+                        <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100">
+                            <h3 className="text-xl font-bold mb-6 flex items-center gap-3 text-slate-900">
+                                <HelpCircle className="text-blue-600" />
+                                Questions fréquentes — Borne {brand.name} à {site.city}
+                            </h3>
+                            <div className="space-y-4">
+                                {pseo.faqs.map((faq, i) => (
+                                    <div key={i} className="bg-slate-50 rounded-2xl p-5 border border-slate-200/60">
+                                        <h4 className="font-bold text-slate-900 mb-2 text-sm">
+                                            {faq.question}
+                                        </h4>
+                                        <p className="text-sm text-slate-600 leading-relaxed">
+                                            {faq.answer}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
 
                     </div>
@@ -223,7 +325,7 @@ export default async function CityBrandPage({ params }: { params: Params }) {
                                     </div>
                                 </li>
                             </ul>
-                            <a href="#devis" className="mt-6 block w-full text-center bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition">
+                            <a href="#devis" className="mt-6 block w-full text-center bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg hover:shadow-blue-500/25">
                                 Devis gratuit →
                             </a>
                         </div>
