@@ -77,7 +77,7 @@ export default function LeadFormPro({
         phone: "",
         company: "",
         zipCode: "",
-        phoneConsent: false
+        phoneConsent: true
     });
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState("");
@@ -679,6 +679,28 @@ export default function LeadFormPro({
                                 {formData.phone && !FRENCH_PHONE_REGEX.test(formData.phone.replace(/\s/g, '')) && (
                                     <p className="text-xs text-red-500 mt-1">Format invalide. Ex: 06 12 34 56 78</p>
                                 )}
+                            </div>
+
+                            {/* Phone Consent Checkbox (RGPD / Bloctel) */}
+                            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-xl text-left">
+                                <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                                    <input
+                                        type="checkbox"
+                                        name="phoneConsent"
+                                        checked={formData.phoneConsent === true}
+                                        onChange={(e) => {
+                                            setFormData(prev => ({ ...prev, phoneConsent: e.target.checked }));
+                                            if (status === 'error') {
+                                                setStatus('idle');
+                                                setErrorMessage("");
+                                            }
+                                        }}
+                                        className="mt-0.5 h-4 w-4 rounded border-neutral-300 text-purple-600 focus:ring-purple-500 accent-purple-600 shrink-0"
+                                    />
+                                    <span className="text-[11px] text-neutral-600 leading-tight">
+                                        J&apos;accepte d&apos;être contacté(e) par téléphone par ViteUnDevis.com et ses partenaires certifiés pour la qualification de ma demande de devis et la réalisation d&apos;une étude technique.
+                                    </span>
+                                </label>
                             </div>
                         </div>
 

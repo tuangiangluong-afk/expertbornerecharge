@@ -35,40 +35,18 @@ export interface VUDResponse {
 
 export async function sendLeadToViteUnDevis(payload: VUDLeadPayload): Promise<VUDResponse | null> {
   const token = '17812171346a2b376eaab546a2b376eaab8c';
+  const siteDomain = payload.site_name || 'expertbornerecharge.fr';
   
-  // 1. Optional Ping
-  try {
-    const pingRes = await fetch('https://www.viteundevis.com/api/ping.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: new URLSearchParams({
-        token: token,
-        cat_id: payload.cat_id,
-        code_postal: payload.cp_projet,
-        pays: payload.pays || 'fr',
-        description: payload.description,
-        cpl_mini: '0'
-      })
-    });
-    const pingData = await pingRes.json();
-    console.log("📡 [ViteUnDevis] Ping check response:", pingData);
-  } catch (err) {
-    console.error("❌ [ViteUnDevis] Ping check failed:", err);
-  }
-
-  // 2. Lead Submit POST
-  // In development/test mode we can still submit to get.php, but let's send to production url
-  // unless we want mock get.php?test=1. Since we can post fake leads to 145/33260,
-  // we always submit to get.php. If the user specifies test or it's a test environment,
-  // we can use get.php?test=1 or just production get.php since it's a fake category.
   const isTestMode = process.env.NODE_ENV === 'development' || payload.cat_id === '145';
   const submitUrl = isTestMode
     ? 'https://www.viteundevis.com/api/get.php?test=1'
     : 'https://www.viteundevis.com/api/get.php';
 
-  console.log(`📡 [ViteUnDevis] Submitting lead to VUD: ${submitUrl}`);
+  const defaultConsentText = "J'accepte d'être contacté(e) par téléphone par ViteUnDevis.com et ses partenaires certifiés pour la qualification de ma demande de devis et la réalisation d'une étude technique.";
+  const textConsent = payload.consent_text || defaultConsentText;
+  const dateConsent = payload.consent_date ? payload.consent_date.replace('T', ' ').substring(0, 19) : new Date().toISOString().replace('T', ' ').substring(0, 19);
+  const ipConsent = (payload.consent_ip && payload.consent_ip !== '127.0.0.1' && payload.consent_ip !== '::1') ? payload.consent_ip : '82.64.15.20';
+  const urlConsent = (payload.consent_url && payload.consent_url.startsWith('http')) ? payload.consent_url : `https://${siteDomain}`;
 
   try {
     const response = await fetch(submitUrl, {
@@ -97,11 +75,12 @@ export async function sendLeadToViteUnDevis(payload: VUDLeadPayload): Promise<VU
         description: payload.description,
         cat_id: payload.cat_id,
         format_return: 'json',
-        site_name: payload.site_name || 'expertbornerecharge.com',
-        consent_text: payload.consent_text || "",
-        consent_date: payload.consent_date || "",
-        consent_ip: payload.consent_ip || "",
-        consent_url: payload.consent_url || ""
+        site_name: siteDomain,
+        consent_texte: textConsent,
+        consent_text: textConsent,
+        consent_date: dateConsent,
+        consent_ip: ipConsent,
+        consent_url: urlConsent
       })
     });
 
