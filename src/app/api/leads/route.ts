@@ -12,7 +12,7 @@ export async function POST(request: Request) {
         const domain = body.domain || "expertbornerecharge.com";
         const siteUrl = domain.startsWith("http") ? domain : `https://${domain}`;
         
-        const consentText = body.consentText || "J'accepte d'être contacté(e) par téléphone par ViteUnDevis.com et ses partenaires certifiés pour la qualification de ma demande de devis et la réalisation d'une étude technique.";
+        const consentText = body.consentText || "J'accepte d'être contacté par téléphone par les services qui prendront en charge ma demande de devis pour la qualifier et effectuer une visite technique.";
         const consentDate = body.consentDate ? body.consentDate.replace('T', ' ').substring(0, 19) : new Date().toISOString().replace('T', ' ').substring(0, 19);
         const consentIp = (clientIp && clientIp !== '127.0.0.1' && clientIp !== '::1') ? clientIp : "82.64.15.20";
         const consentUrl = body.consentUrl || refererUrl || siteUrl;

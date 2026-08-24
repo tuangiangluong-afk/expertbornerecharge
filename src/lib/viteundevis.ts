@@ -42,7 +42,7 @@ export async function sendLeadToViteUnDevis(payload: VUDLeadPayload): Promise<VU
     ? 'https://www.viteundevis.com/api/get.php?test=1'
     : 'https://www.viteundevis.com/api/get.php';
 
-  const defaultConsentText = "J'accepte d'être contacté(e) par téléphone par ViteUnDevis.com et ses partenaires certifiés pour la qualification de ma demande de devis et la réalisation d'une étude technique.";
+  const defaultConsentText = "J'accepte d'être contacté par téléphone par les services qui prendront en charge ma demande de devis pour la qualifier et effectuer une visite technique.";
   const textConsent = payload.consent_text || defaultConsentText;
   const dateConsent = payload.consent_date ? payload.consent_date.replace('T', ' ').substring(0, 19) : new Date().toISOString().replace('T', ' ').substring(0, 19);
   const ipConsent = (payload.consent_ip && payload.consent_ip !== '127.0.0.1' && payload.consent_ip !== '::1') ? payload.consent_ip : '82.64.15.20';

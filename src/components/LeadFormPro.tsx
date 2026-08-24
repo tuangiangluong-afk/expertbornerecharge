@@ -273,7 +273,7 @@ export default function LeadFormPro({
                 leadSegment: 'B2B',
                 timestamp: new Date().toISOString(),
                 phoneConsent: formData.phoneConsent,
-                consentText: "J'accepte d'être contacté(e) par téléphone par ViteUnDevis.com et ses partenaires certifiés pour la qualification de ma demande de devis et la réalisation d'une étude technique.",
+                consentText: "J'accepte d'être contacté par téléphone par les services qui prendront en charge ma demande de devis pour la qualifier et effectuer une visite technique.",
                 consentDate: new Date().toISOString(),
                 consentUrl: typeof window !== 'undefined' ? window.location.href : `https://${domain}`,
                 attribution // Include attribution data here
@@ -698,8 +698,7 @@ export default function LeadFormPro({
                                         className="mt-0.5 h-4 w-4 rounded border-neutral-300 text-purple-600 focus:ring-purple-500 accent-purple-600 shrink-0"
                                     />
                                     <span className="text-[11px] text-neutral-600 leading-tight">
-                                        J&apos;accepte d&apos;être contacté(e) par téléphone par ViteUnDevis.com et ses partenaires certifiés pour la qualification de ma demande de devis et la réalisation d&apos;une étude technique.
-                                    </span>
+                                        J&apos;accepte d&apos;être contacté par téléphone par les services qui prendront en charge ma demande de devis pour la qualifier et effectuer une visite technique.</span>
                                 </label>
                             </div>
                         </div>

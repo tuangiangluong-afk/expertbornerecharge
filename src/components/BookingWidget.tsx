@@ -53,7 +53,7 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
             domain: city.domain,
             timestamp: new Date().toISOString(),
             phoneConsent,
-            consentText: "J'accepte d'être contacté(e) par téléphone par ViteUnDevis.com et ses partenaires certifiés pour la qualification de ma demande de devis et la réalisation d'une étude technique.",
+            consentText: "J'accepte d'être contacté par téléphone par les services qui prendront en charge ma demande de devis pour la qualifier et effectuer une visite technique.",
             consentDate: new Date().toISOString(),
             consentUrl: typeof window !== 'undefined' ? window.location.href : `https://${city.domain}`,
             attribution // Include attribution data here
@@ -208,8 +208,7 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
                             className="mt-0.5 h-4 w-4 rounded border-neutral-300 text-blue-600 focus:ring-blue-500 accent-blue-600 shrink-0"
                         />
                         <span className="text-[11px] text-neutral-600 leading-tight">
-                            J&apos;accepte d&apos;être contacté(e) par téléphone par ViteUnDevis.com et ses partenaires certifiés pour mon devis.
-                        </span>
+                            J&apos;accepte d&apos;être contacté par téléphone par les services qui prendront en charge ma demande de devis pour la qualifier et effectuer une visite technique.</span>
                     </label>
                 </div>
 
