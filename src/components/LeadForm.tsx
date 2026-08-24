@@ -40,7 +40,7 @@ interface LeadFormProps {
     targetType?: 'COPRO' | 'MAISON' | 'ENTREPRISE' | 'MIXED';
     themeColor?: 'blue' | 'emerald' | 'amber' | 'purple';
     initialProjectType?: 'maison' | 'copro' | 'entreprise';
-    /** Enable B2B redirect: copro/entreprise users get sent to the Pro tunnel */
+    / Enable B2B redirect: copro/entreprise users get sent to the Pro tunnel */
     enableB2BRedirect?: boolean;
 }
 
@@ -313,7 +313,7 @@ export default function LeadForm({
                     Demande envoyée avec succès !
                 </h3>
                 <p className="text-neutral-700 mb-6">
-                    Nos installateurs partenaires certifiés IRVE vous contacteront sous 24h pour votre projet à <strong>{city}</strong>.
+                    Nos installateurs partenaires certifiés IRVE vous contacteront sous 24h pour votre projet {(!city || city.toLowerCase() === 'france' || city.toLowerCase() === 'national') ? 'en France' : <>à <strong>{city}</strong></>}.
                 </p>
                 <div className={`flex items-center justify-center gap-2 text-sm ${palette.text}`}>
                     <Shield size={16} />
