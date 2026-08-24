@@ -115,17 +115,68 @@ export default function StructuredData() {
         "@context": "https://schema.org",
         "@type": "Product",
         "name": "Borne de Recharge IRVE 7kW / 22kW",
-        "image": "https://expertbornerecharge.com/icon.png",
+        "image": [
+            "https://expertbornerecharge.com/icon.png"
+        ],
         "description": "Installation et fourniture de borne de recharge électrique IRVE pour voiture électrique et hybride rechargeable.",
+        "sku": "EBR-BORNE-001",
+        "mpn": "EBR-BORNE-001",
         "brand": {
             "@type": "Brand",
             "name": "Expert Borne Recharge"
         },
         "offers": {
             "@type": "Offer",
+            "url": "https://expertbornerecharge.com/simulateur",
             "priceCurrency": "EUR",
             "price": "690",
-            "availability": "https://schema.org/InStock"
+            "validFrom": "2026-01-01",
+            "priceValidUntil": "2026-12-31",
+            "itemCondition": "https://schema.org/NewCondition",
+            "availability": "https://schema.org/InStock",
+            "hasMerchantReturnPolicy": {
+                "@type": "MerchantReturnPolicy",
+                "applicableCountry": "FR",
+                "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+            },
+            "shippingDetails": {
+                "@type": "OfferShippingDetails",
+                "shippingRate": {
+                    "@type": "MonetaryAmount",
+                    "value": "0",
+                    "currency": "EUR"
+                },
+                "shippingDestination": {
+                    "@type": "DefinedRegion",
+                    "addressCountry": "FR"
+                },
+                "deliveryTime": {
+                    "@type": "ShippingDeliveryTime",
+                    "businessDays": {
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": [
+                            "https://schema.org/Monday",
+                            "https://schema.org/Tuesday",
+                            "https://schema.org/Wednesday",
+                            "https://schema.org/Thursday",
+                            "https://schema.org/Friday"
+                        ]
+                    },
+                    "cutoffTime": "18:00:00Z",
+                    "handlingTime": {
+                        "@type": "QuantitativeValue",
+                        "minValue": 1,
+                        "maxValue": 3,
+                        "unitCode": "DAY"
+                    },
+                    "transitTime": {
+                        "@type": "QuantitativeValue",
+                        "minValue": 1,
+                        "maxValue": 5,
+                        "unitCode": "DAY"
+                    }
+                }
+            }
         },
         "aggregateRating": {
             "@type": "AggregateRating",

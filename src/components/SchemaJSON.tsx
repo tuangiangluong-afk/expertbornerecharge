@@ -137,8 +137,10 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
             "@context": "https://schema.org",
             "@type": "Product",
             "name": `Installation Borne de Recharge ${vehicle.brand} ${vehicle.model}`,
-            "image": vehicle.image,
+            "image": [vehicle.image],
             "description": `Installation de borne de recharge à domicile pour ${vehicle.brand} ${vehicle.model}. Installateurs certifiés IRVE.`,
+            "sku": `EBR-${slugify(vehicle.brand).toUpperCase()}-${slugify(vehicle.model).toUpperCase()}`,
+            "mpn": `EBR-${slugify(vehicle.brand).toUpperCase()}-${slugify(vehicle.model).toUpperCase()}`,
             "brand": {
                 "@type": "Brand",
                 "name": vehicle.brand
@@ -147,10 +149,54 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
                 "@type": "Offer",
                 "url": "https://expertbornerecharge.com/simulateur",
                 "priceCurrency": "EUR",
-                "price": "990.00", // Starting price
+                "price": "990.00",
+                "validFrom": "2026-01-01",
                 "priceValidUntil": "2026-12-31",
                 "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/NewCondition"
+                "itemCondition": "https://schema.org/NewCondition",
+                "hasMerchantReturnPolicy": {
+                    "@type": "MerchantReturnPolicy",
+                    "applicableCountry": "FR",
+                    "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+                },
+                "shippingDetails": {
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": "0",
+                        "currency": "EUR"
+                    },
+                    "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "FR"
+                    },
+                    "deliveryTime": {
+                        "@type": "ShippingDeliveryTime",
+                        "businessDays": {
+                            "@type": "OpeningHoursSpecification",
+                            "dayOfWeek": [
+                                "https://schema.org/Monday",
+                                "https://schema.org/Tuesday",
+                                "https://schema.org/Wednesday",
+                                "https://schema.org/Thursday",
+                                "https://schema.org/Friday"
+                            ]
+                        },
+                        "cutoffTime": "18:00:00Z",
+                        "handlingTime": {
+                            "@type": "QuantitativeValue",
+                            "minValue": 1,
+                            "maxValue": 3,
+                            "unitCode": "DAY"
+                        },
+                        "transitTime": {
+                            "@type": "QuantitativeValue",
+                            "minValue": 1,
+                            "maxValue": 5,
+                            "unitCode": "DAY"
+                        }
+                    }
+                }
             },
             "aggregateRating": {
                 "@type": "AggregateRating",
