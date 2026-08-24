@@ -40,7 +40,7 @@ interface LeadFormProps {
     targetType?: 'COPRO' | 'MAISON' | 'ENTREPRISE' | 'MIXED';
     themeColor?: 'blue' | 'emerald' | 'amber' | 'purple';
     initialProjectType?: 'maison' | 'copro' | 'entreprise';
-    / Enable B2B redirect: copro/entreprise users get sent to the Pro tunnel */
+    /** Enable B2B redirect: copro/entreprise users get sent to the Pro tunnel */
     enableB2BRedirect?: boolean;
 }
 
