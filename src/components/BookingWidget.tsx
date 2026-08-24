@@ -88,7 +88,7 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
 
                 // Redirect to success page if we have VUD details!
                 if (data?.vud && data.vud.devis_id) {
-                    router.push(`/${city.domain}/success?devis_id=${data.vud.devis_id}&devis_hash=${data.vud.devis_hash || ''}`);
+                    router.push(`/success?devis_id=${data.vud.devis_id}&devis_hash=${data.vud.devis_hash || ''}`);
                     return;
                 }
 

@@ -7,7 +7,7 @@ import { sendLeadToViteUnDevis } from '@/lib/viteundevis';
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "82.64.15.20";
+        const clientIp = request.headers.get("cf-connecting-ip") || request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "82.64.15.20";
         const refererUrl = request.headers.get("referer") || "";
         const domain = body.domain || "expertbornerecharge.com";
         const siteUrl = domain.startsWith("http") ? domain : `https://${domain}`;
