@@ -13,6 +13,6 @@ export default function robots(): MetadataRoute.Robots {
                 allow: '/',
             }
         ],
-        sitemap: 'https://expertbornerecharge.fr/sitemap.xml',
+        sitemap: 'https://expertbornerecharge.com/sitemap.xml',
     };
 }

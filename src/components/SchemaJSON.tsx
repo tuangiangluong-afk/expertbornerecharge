@@ -72,11 +72,7 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
                 "@type": "City",
                 "name": site.city
             },
-            "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "4.9",
-                "reviewCount": "127"
-            }
+            
         };
     } else if (type === "Service" && site && brand) {
         // Schema Service pour les pages Ville x Marque
@@ -109,11 +105,7 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
                         "longitude": geoData.lng
                     }
                 } : {}),
-                "aggregateRating": {
-                    "@type": "AggregateRating",
-                    "ratingValue": "4.9",
-                    "reviewCount": "127"
-                }
+                
             },
             "areaServed": {
                 "@type": "City",
@@ -241,11 +233,7 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
                     }
                 }
             },
-            "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "4.9",
-                "reviewCount": "127"
-            }
+            
         };
     } else if (type === "B2BService" && site && b2bType) {
         const baseUrl = "https://expertbornerecharge.com";

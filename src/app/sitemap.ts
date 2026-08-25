@@ -5,6 +5,7 @@ import { getHubConfig } from '@/lib/sites-config';
 import { CITIES } from '@/lib/db';
 import { slugify } from '@/lib/slugify';
 import { SEO_SERVICES } from '@/lib/seo-data';
+import { DEPARTMENTS } from '@/config/departments';
 import { createClient } from '@supabase/supabase-js';
 import fs from 'fs';
 import path from 'path';
@@ -53,6 +54,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             lastModified: new Date(),
             changeFrequency: 'monthly',
             priority: 0.8,
+        },
+        {
+            url: `${BASE_URL}/llms.txt`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.5,
+        },
+        {
+            url: `${BASE_URL}/openapi.json`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.5,
         },
         {
             url: `${BASE_URL}/solutions/copropriete`,
@@ -186,6 +199,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }));
     });
 
+    // 8b. Installation Brand Routes
+    const installationRoutes: MetadataRoute.Sitemap = brandList.map((brand) => ({
+        url: `${BASE_URL}/installation/${brand.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+    }));
+
     // 9. SEO Bottom of Funnel Routes (Vertex AI generated)
     let marquesRoutes: MetadataRoute.Sitemap = [];
     let comparatifRoutes: MetadataRoute.Sitemap = [];
@@ -208,6 +229,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.warn('[Sitemap] Failed to load local JSON files for SEO clusters', e);
     }
 
+    // 6b. Département Routes
+    const departementRoutes: MetadataRoute.Sitemap = Object.values(DEPARTMENTS).map((dept) => ({
+        url: `${BASE_URL}/departement/${dept.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+    }));
+
     // Quartier Routes
     const quartierRoutes: MetadataRoute.Sitemap = Array.from(uniqueSites.values()).flatMap((site) => {
         const neighborhoods = (site.neighborhoods || (site as any).quartiers || []) as string[];
@@ -219,7 +248,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }));
     });
 
-    return [...routes, ...serviceRoutes, ...guideRoutes, ...blogRoutes, ...vehicleRoutes, ...cityRoutes, ...b2bRoutes, ...cityBrandRoutes, ...quartierRoutes, ...marquesRoutes, ...comparatifRoutes, ...puissanceRoutes, ...prisesRoutes].map(item => ({
+    return [...routes, ...serviceRoutes, ...guideRoutes, ...blogRoutes, ...vehicleRoutes, ...installationRoutes, ...cityRoutes, ...b2bRoutes, ...cityBrandRoutes, ...departementRoutes, ...quartierRoutes, ...marquesRoutes, ...comparatifRoutes, ...puissanceRoutes, ...prisesRoutes].map(item => ({
         ...item,
         url: item.url.toLowerCase()
     }));

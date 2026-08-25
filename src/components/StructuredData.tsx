@@ -63,13 +63,6 @@ export function StructuredData({ city }: { city: CityConfig }) {
                         "itemOffered": service,
                         "position": index + 1
                     }))
-                },
-                "aggregateRating": {
-                    "@type": "AggregateRating",
-                    "ratingValue": "4.9",
-                    "reviewCount": "128",
-                    "bestRating": "5",
-                    "worstRating": "1"
                 }
             },
             {

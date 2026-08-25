@@ -19,50 +19,10 @@ function stringHash(str: string): number {
     return Math.abs(hash);
 }
 
-const REVIEW_POOL = [
-    {
-        author: "Thomas D.",
-        templates: [
-            "Électricien certifié IRVE très compétent. L'installation de ma borne de recharge {city} s'est faite proprement et rapidement. Le dossier de prime Advenir a été géré de A à Z.",
-            "Très bon contact avec l'installateur. Pose soignée de notre borne de recharge {city}. Explications claires lors de la mise en service. Je recommande sans hésiter !",
-            "Installation nickel de ma borne Tesla. Le technicien {city} a pris le temps de tout configurer avec l'application. Chantier rendu impeccable."
-        ]
-    },
-    {
-        author: "Lucie F.",
-        templates: [
-            "Devis rapide et clair. L'équipe intervenue {city} a été ponctuelle et très professionnelle. La borne fonctionne parfaitement, c'est un vrai confort au quotidien.",
-            "Installation d'une borne en copropriété {city}. Suivi de projet parfait et accompagnement au top pour l'obtention des aides. Travail très propre.",
-            "Ravi de l'installation de ma Wallbox {city}. Excellent rapport qualité/prix et installateur très pédagogue. Service client réactif."
-        ]
-    },
-    {
-        author: "Éric L.",
-        templates: [
-            "Professionnel sérieux et à l'écoute. Installation effectuée sous 4 jours {city}. La programmation pour recharger pendant les heures creuses fonctionne à merveille.",
-            "Un service parfait du début à la fin. Visite technique rapide {city} et pose dans la foulée. La borne de 7.4kW charge mon véhicule en une nuit.",
-            "Entreprise très pro pour la pose de bornes de recharge {city}. Conseils avisés sur le choix du modèle et installation conforme aux normes."
-        ]
-    },
-    {
-        author: "Marc-Antoine P.",
-        templates: [
-            "Très satisfait de la pose de notre borne de recharge {city}. Exécution impeccable, câble bien camouflé et explications complètes sur le fonctionnement.",
-            "Une intervention impeccable de l'installateur IRVE {city}. Tout est conforme et fonctionne parfaitement. Devis respecté au centime près.",
-            "Super expérience pour l'équipement de notre parking {city}. Techniciens qualifiés et sympas, travail propre et soigné."
-        ]
-    },
-    {
-        author: "Sophie G.",
-        templates: [
-            "Installation rapide et conforme. L'artisan {city} était très pro et a répondu à toutes mes questions sur le crédit d'impôt. Recommandé !",
-            "Très satisfaite de la prestation pour ma maison {city}. Enfin un vrai professionnel certifié IRVE avec une tarification transparente.",
-            "Excellent électricien pour l'installation de notre borne de 22kW {city}. Travail soigné et réactivité exemplaire."
-        ]
-    }
-];
+const REVIEW_POOL: any[] = [];
 
 export default function Reviews({ site, themeColor = 'blue' }: ReviewsProps) {
+      if (REVIEW_POOL.length === 0) return null;
     const city = site.city;
     const isFrance = city.toLowerCase() === "france";
     const prep = isFrance ? "en" : "à";

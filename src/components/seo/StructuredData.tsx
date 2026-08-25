@@ -222,11 +222,7 @@ export default function StructuredData() {
                 }
             }
         },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "reviewCount": "310"
-        }
+        
     };
 
     return (
