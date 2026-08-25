@@ -156,126 +156,118 @@ export async function assignLeadToPartners(
         if (resend && partner.email) {
             try {
                 if (isFree) {
-                    // 🎁 GRATUIT / OFFERT : Send ALL lead details (STRICTLY EXCLUDING traffic attribution)
+                    // DIRECT LEAD TRANSMISSION IN EMAIL BODY (NO LP LINK, NO BLABLA, NO ATTRIBUTION)
+                    const locationStr = lead.city 
+                        ? `${lead.city}${lead.postal_code ? ` (${lead.postal_code})` : ''}` 
+                        : (lead.postal_code || '');
+
                     await resend.emails.send({
                         from: 'Expert Borne Recharge <contact@expertbornerecharge.com>',
                         to: [partner.email],
-                        subject: `🎁 Nouveau Lead Offert : ${lead.name} (${lead.city || lead.postal_code})`,
+                        subject: `Nouveau lead : ${locationStr ? `${locationStr} - ` : ''}${lead.name}`,
                         html: `
-                            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 620px; margin: 0 auto; color: #1e293b; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden;">
-                                <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 32px 24px; text-align: center;">
-                                    <div style="font-size: 36px; margin-bottom: 8px;">🎁</div>
-                                    <h1 style="margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.02em;">Nouveau Lead Offert</h1>
-                                    <p style="margin: 8px 0 0; opacity: 0.95; font-size: 15px;">Coordonnées complètes immédiatement disponibles (0€)</p>
+                            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #0f172a; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; padding: 28px 24px;">
+                                <h1 style="margin: 0 0 20px; font-size: 20px; font-weight: 800; color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px;">
+                                    🚀 Nouveau Lead Client — Borne de Recharge
+                                </h1>
+
+                                <p style="font-size: 15px; margin-top: 0; color: #334155;">
+                                    Bonjour ${partner.name}, voici les informations complètes de la nouvelle demande de devis sur votre secteur :
+                                </p>
+
+                                <!-- COORDONNEES CLIENT -->
+                                <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #2563eb; border-radius: 8px; padding: 18px; margin: 20px 0;">
+                                    <h2 style="margin: 0 0 12px; font-size: 15px; color: #1e293b; text-transform: uppercase; letter-spacing: 0.05em;">
+                                        👤 Coordonnées du Client
+                                    </h2>
+                                    <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                                        <tr>
+                                            <td style="padding: 5px 0; width: 130px; font-weight: 600; color: #64748b;">Nom :</td>
+                                            <td style="padding: 5px 0; font-weight: 700; color: #0f172a;">${lead.name}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Téléphone :</td>
+                                            <td style="padding: 5px 0;">
+                                                <a href="tel:${lead.phone}" style="color: #059669; font-weight: 700; text-decoration: none; font-size: 16px;">
+                                                    📞 ${lead.phone}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Email :</td>
+                                            <td style="padding: 5px 0;">
+                                                <a href="mailto:${lead.email}" style="color: #2563eb; font-weight: 600; text-decoration: none;">
+                                                    ✉️ ${lead.email}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Localisation :</td>
+                                            <td style="padding: 5px 0; font-weight: 600; color: #0f172a;">
+                                                📍 ${lead.city || ''} ${lead.postal_code ? `(${lead.postal_code})` : ''} ${lead.department ? `[Dép. ${lead.department}]` : ''}
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
 
-                                <div style="padding: 28px 24px;">
-                                    <p style="font-size: 16px; margin-top: 0;">Bonjour <strong>${partner.name}</strong>,</p>
-                                    <p style="font-size: 15px; color: #475569; line-height: 1.5;">
-                                        Un nouveau projet d'installation de borne de recharge sur votre secteur vous est <strong>gracieusement offert</strong> par l'équipe Expert Borne Recharge.
-                                    </p>
+                                <!-- DETAILS DU PROJET -->
+                                <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 18px; margin: 20px 0;">
+                                    <h2 style="margin: 0 0 12px; font-size: 15px; color: #1e293b; text-transform: uppercase; letter-spacing: 0.05em;">
+                                        🏠 Détails du Projet
+                                    </h2>
+                                    <table style="width: 100%; border-collapse: collapse; font-size: 14px; color: #334155;">
+                                        <tr>
+                                            <td style="padding: 5px 0; width: 160px; font-weight: 600; color: #64748b;">Type de logement :</td>
+                                            <td style="padding: 5px 0; font-weight: 600;">${housingLabel}</td>
+                                        </tr>
+                                        ${ownerLabel ? `
+                                        <tr>
+                                            <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Statut :</td>
+                                            <td style="padding: 5px 0;">${ownerLabel}</td>
+                                        </tr>` : ''}
+                                        ${vehicleLabel ? `
+                                        <tr>
+                                            <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Véhicule électrique :</td>
+                                            <td style="padding: 5px 0;">${vehicleLabel}</td>
+                                        </tr>` : ''}
+                                        ${distanceLabel ? `
+                                        <tr>
+                                            <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Distance compteur :</td>
+                                            <td style="padding: 5px 0;">${distanceLabel}</td>
+                                        </tr>` : ''}
+                                        ${meta.solar_interest ? `
+                                        <tr>
+                                            <td style="padding: 5px 0; font-weight: 600; color: #b45309;">Option Solaire :</td>
+                                            <td style="padding: 5px 0; font-weight: 700; color: #b45309;">☀️ Client intéressé par couplage Panneaux Solaires / Carport</td>
+                                        </tr>` : ''}
+                                        ${isB2B && meta.company ? `
+                                        <tr>
+                                            <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Entreprise / Copro :</td>
+                                            <td style="padding: 5px 0; font-weight: 700;">${meta.company}</td>
+                                        </tr>` : ''}
+                                        ${isB2B && meta.parking_size ? `
+                                        <tr>
+                                            <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Taille parking :</td>
+                                            <td style="padding: 5px 0;">${meta.parking_size}</td>
+                                        </tr>` : ''}
+                                        ${isB2B && meta.timeline ? `
+                                        <tr>
+                                            <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Calendrier :</td>
+                                            <td style="padding: 5px 0;">${meta.timeline}</td>
+                                        </tr>` : ''}
+                                        ${notesToUse ? `
+                                        <tr>
+                                            <td style="padding: 8px 0; font-weight: 600; color: #64748b; vertical-align: top;">Note :</td>
+                                            <td style="padding: 8px 0; font-style: italic; color: #1e293b; background: #ffffff; border-radius: 6px; padding-left: 8px;">"${notesToUse}"</td>
+                                        </tr>` : ''}
+                                    </table>
+                                </div>
 
-                                    <!-- COORDONNEES CLIENT -->
-                                    <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #10b981; border-radius: 10px; padding: 20px; margin: 24px 0;">
-                                        <h2 style="margin: 0 0 14px; font-size: 16px; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;">
-                                            👤 Coordonnées du Client
-                                        </h2>
-                                        <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
-                                            <tr>
-                                                <td style="padding: 6px 0; width: 130px; font-weight: 600; color: #64748b;">Nom complet :</td>
-                                                <td style="padding: 6px 0; font-weight: 700; color: #0f172a;">${lead.name}</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Téléphone :</td>
-                                                <td style="padding: 6px 0;">
-                                                    <a href="tel:${lead.phone}" style="color: #059669; font-weight: 700; text-decoration: none; font-size: 16px;">
-                                                        📞 ${lead.phone}
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Email :</td>
-                                                <td style="padding: 6px 0;">
-                                                    <a href="mailto:${lead.email}" style="color: #2563eb; font-weight: 600; text-decoration: none;">
-                                                        ✉️ ${lead.email}
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Localisation :</td>
-                                                <td style="padding: 6px 0; font-weight: 600; color: #0f172a;">
-                                                    📍 ${lead.city || ''} ${lead.postal_code ? `(${lead.postal_code})` : ''} ${lead.department ? `[Dép. ${lead.department}]` : ''}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-
-                                    <!-- DETAILS DU PROJET -->
-                                    <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #3b82f6; border-radius: 10px; padding: 20px; margin: 24px 0;">
-                                        <h2 style="margin: 0 0 14px; font-size: 16px; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;">
-                                            🏠 Détails du Projet
-                                        </h2>
-                                        <table style="width: 100%; border-collapse: collapse; font-size: 14px; color: #334155;">
-                                            <tr>
-                                                <td style="padding: 6px 0; width: 160px; font-weight: 600; color: #64748b;">Type de logement :</td>
-                                                <td style="padding: 6px 0; font-weight: 600;">${housingLabel}</td>
-                                            </tr>
-                                            ${ownerLabel ? `
-                                            <tr>
-                                                <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Statut :</td>
-                                                <td style="padding: 6px 0;">${ownerLabel}</td>
-                                            </tr>` : ''}
-                                            ${vehicleLabel ? `
-                                            <tr>
-                                                <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Véhicule électrique :</td>
-                                                <td style="padding: 6px 0;">${vehicleLabel}</td>
-                                            </tr>` : ''}
-                                            ${distanceLabel ? `
-                                            <tr>
-                                                <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Distance compteur :</td>
-                                                <td style="padding: 6px 0;">${distanceLabel}</td>
-                                            </tr>` : ''}
-                                            ${meta.solar_interest ? `
-                                            <tr>
-                                                <td style="padding: 6px 0; font-weight: 600; color: #b45309;">Option Solaire :</td>
-                                                <td style="padding: 6px 0; font-weight: 700; color: #b45309;">☀️ Intéressé par couplage Panneaux Solaires / Carport</td>
-                                            </tr>` : ''}
-                                            ${isB2B && meta.company ? `
-                                            <tr>
-                                                <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Entreprise / Copro :</td>
-                                                <td style="padding: 6px 0; font-weight: 700;">${meta.company}</td>
-                                            </tr>` : ''}
-                                            ${isB2B && meta.parking_size ? `
-                                            <tr>
-                                                <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Taille parking :</td>
-                                                <td style="padding: 6px 0;">${meta.parking_size}</td>
-                                            </tr>` : ''}
-                                            ${isB2B && meta.timeline ? `
-                                            <tr>
-                                                <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Calendrier :</td>
-                                                <td style="padding: 6px 0;">${meta.timeline}</td>
-                                            </tr>` : ''}
-                                            ${notesToUse ? `
-                                            <tr>
-                                                <td style="padding: 8px 0; font-weight: 600; color: #64748b; vertical-align: top;">Note Admin :</td>
-                                                <td style="padding: 8px 0; font-style: italic; color: #1e293b; background: #ffffff; border-radius: 6px; padding-left: 8px;">"${notesToUse}"</td>
-                                            </tr>` : ''}
-                                        </table>
-                                    </div>
-
-                                    <!-- ACTION / RECOMMANDATION -->
-                                    <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0; padding: 18px 20px; border-radius: 10px; margin: 24px 0; text-align: center;">
-                                        <p style="margin: 0 0 12px; font-weight: 700; color: #065f46; font-size: 15px;">
-                                            ⚡ Conseil : Contactez ce client au plus vite pour maximiser vos chances de signer le chantier.
-                                        </p>
-                                        <a href="tel:${lead.phone}" style="display: inline-block; background-color: #059669; color: white; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 15px;">
-                                            Appeler le client (${lead.phone})
-                                        </a>
-                                    </div>
-
-                                    <p style="text-align: center; margin: 20px 0 0; font-size: 13px; color: #94a3b8;">
-                                        Fiche en ligne : <a href="https://expertbornerecharge.com/leads/unlock/${lead.id}?partnerId=${partner.id}" style="color: #64748b; text-decoration: underline;">Voir la fiche débloquée</a>
-                                    </p>
+                                <!-- BOUTON APPEL DIRECT -->
+                                <div style="text-align: center; margin: 24px 0 10px;">
+                                    <a href="tel:${lead.phone}" style="display: inline-block; background-color: #059669; color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px;">
+                                        📞 Appeler le client (${lead.phone})
+                                    </a>
                                 </div>
                             </div>
                         `
@@ -453,85 +445,84 @@ export async function deliverUnlockedLead(leadId: string, partnerId: string) {
         await resend.emails.send({
             from: 'Expert Borne Recharge <contact@expertbornerecharge.com>',
             to: [partner.email],
-            subject: `💰 Lead Débloqué : ${lead.name} (${lead.city || lead.postal_code})`,
+            subject: `Paiement Confirmé - Lead Débloqué : ${lead.name} (${lead.city || lead.postal_code})`,
             html: `
-                <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 620px; margin: 0 auto; color: #1e293b; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden;">
-                    <div style="background-color: #2563eb; color: white; padding: 30px 24px; text-align: center;">
-                        <h1 style="margin: 0; font-size: 24px; font-weight: 800;">Paiement Confirmé !</h1>
-                        <p style="margin: 8px 0 0; opacity: 0.95; font-size: 15px;">Voici les coordonnées complètes de votre client</p>
+                <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; padding: 28px 24px;">
+                    <h1 style="margin: 0 0 20px; font-size: 20px; font-weight: 800; color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px;">
+                        Coordonnées Client — Borne de Recharge
+                    </h1>
+                    
+                    <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #2563eb; border-radius: 8px; padding: 18px; margin-bottom: 20px;">
+                        <h2 style="margin: 0 0 12px; font-size: 15px; color: #1e293b; text-transform: uppercase; letter-spacing: 0.05em;">👤 Coordonnées Client</h2>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                            <tr>
+                                <td style="padding: 5px 0; width: 130px; font-weight: 600; color: #64748b;">Nom :</td>
+                                <td style="padding: 5px 0; font-weight: 700; color: #0f172a;">${lead.name}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Téléphone :</td>
+                                <td style="padding: 5px 0;">
+                                    <a href="tel:${lead.phone}" style="color: #059669; font-weight: 700; text-decoration: none; font-size: 16px;">
+                                        📞 ${lead.phone}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Email :</td>
+                                <td style="padding: 5px 0;">
+                                    <a href="mailto:${lead.email}" style="color: #2563eb; font-weight: 600; text-decoration: none;">
+                                        ✉️ ${lead.email}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Localisation :</td>
+                                <td style="padding: 5px 0; font-weight: 600; color: #0f172a;">
+                                    📍 ${lead.city || ''} ${lead.postal_code ? `(${lead.postal_code})` : ''}
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                     
-                    <div style="padding: 28px 24px;">
-                        <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #2563eb; border-radius: 10px; padding: 20px; margin-bottom: 24px;">
-                            <h2 style="margin: 0 0 14px; font-size: 16px; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;">👤 Coordonnées Client</h2>
-                            <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
-                                <tr>
-                                    <td style="padding: 6px 0; width: 130px; font-weight: 600; color: #64748b;">Nom complet :</td>
-                                    <td style="padding: 6px 0; font-weight: 700; color: #0f172a;">${lead.name}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Téléphone :</td>
-                                    <td style="padding: 6px 0;">
-                                        <a href="tel:${lead.phone}" style="color: #059669; font-weight: 700; text-decoration: none; font-size: 16px;">
-                                            📞 ${lead.phone}
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Email :</td>
-                                    <td style="padding: 6px 0;">
-                                        <a href="mailto:${lead.email}" style="color: #2563eb; font-weight: 600; text-decoration: none;">
-                                            ✉️ ${lead.email}
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Localisation :</td>
-                                    <td style="padding: 6px 0; font-weight: 600; color: #0f172a;">
-                                        📍 ${lead.city || ''} ${lead.postal_code ? `(${lead.postal_code})` : ''}
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        
-                        <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #3b82f6; border-radius: 10px; padding: 20px; margin-bottom: 24px;">
-                            <h2 style="margin: 0 0 14px; font-size: 16px; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;">🏠 Détails du Projet</h2>
-                            <table style="width: 100%; border-collapse: collapse; font-size: 14px; color: #334155;">
-                                <tr>
-                                    <td style="padding: 6px 0; width: 160px; font-weight: 600; color: #64748b;">Type de logement :</td>
-                                    <td style="padding: 6px 0; font-weight: 600;">${housingLabel}</td>
-                                </tr>
-                                ${ownerLabel ? `
-                                <tr>
-                                    <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Statut :</td>
-                                    <td style="padding: 6px 0;">${ownerLabel}</td>
-                                </tr>` : ''}
-                                ${vehicleLabel ? `
-                                <tr>
-                                    <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Véhicule :</td>
-                                    <td style="padding: 6px 0;">${vehicleLabel}</td>
-                                </tr>` : ''}
-                                ${distanceLabel ? `
-                                <tr>
-                                    <td style="padding: 6px 0; font-weight: 600; color: #64748b;">Distance compteur :</td>
-                                    <td style="padding: 6px 0;">${distanceLabel}</td>
-                                </tr>` : ''}
-                                ${meta.solar_interest ? `
-                                <tr>
-                                    <td style="padding: 6px 0; font-weight: 600; color: #b45309;">Option Solaire :</td>
-                                    <td style="padding: 6px 0; font-weight: 700; color: #b45309;">☀️ Client intéressé par couplage Panneaux Solaires</td>
-                                </tr>` : ''}
-                                ${lead.notes ? `
-                                <tr>
-                                    <td style="padding: 8px 0; font-weight: 600; color: #64748b; vertical-align: top;">Note Admin :</td>
-                                    <td style="padding: 8px 0; font-style: italic; color: #1e293b; background: #ffffff; border-radius: 6px; padding-left: 8px;">"${lead.notes}"</td>
-                                </tr>` : ''}
-                            </table>
-                        </div>
+                    <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 18px; margin-bottom: 20px;">
+                        <h2 style="margin: 0 0 12px; font-size: 15px; color: #1e293b; text-transform: uppercase; letter-spacing: 0.05em;">🏠 Détails du Projet</h2>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 14px; color: #334155;">
+                            <tr>
+                                <td style="padding: 5px 0; width: 160px; font-weight: 600; color: #64748b;">Type de logement :</td>
+                                <td style="padding: 5px 0; font-weight: 600;">${housingLabel}</td>
+                            </tr>
+                            ${ownerLabel ? `
+                            <tr>
+                                <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Statut :</td>
+                                <td style="padding: 5px 0;">${ownerLabel}</td>
+                            </tr>` : ''}
+                            ${vehicleLabel ? `
+                            <tr>
+                                <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Véhicule :</td>
+                                <td style="padding: 5px 0;">${vehicleLabel}</td>
+                            </tr>` : ''}
+                            ${distanceLabel ? `
+                            <tr>
+                                <td style="padding: 5px 0; font-weight: 600; color: #64748b;">Distance compteur :</td>
+                                <td style="padding: 5px 0;">${distanceLabel}</td>
+                            </tr>` : ''}
+                            ${meta.solar_interest ? `
+                            <tr>
+                                <td style="padding: 5px 0; font-weight: 600; color: #b45309;">Option Solaire :</td>
+                                <td style="padding: 5px 0; font-weight: 700; color: #b45309;">☀️ Client intéressé par couplage Panneaux Solaires</td>
+                            </tr>` : ''}
+                            ${lead.notes ? `
+                            <tr>
+                                <td style="padding: 8px 0; font-weight: 600; color: #64748b; vertical-align: top;">Note :</td>
+                                <td style="padding: 8px 0; font-style: italic; color: #1e293b; background: #ffffff; border-radius: 6px; padding-left: 8px;">"${lead.notes}"</td>
+                            </tr>` : ''}
+                        </table>
+                    </div>
 
-                        <div style="text-align: center; color: #94a3b8; font-size: 12px; border-top: 1px solid #f1f5f9; padding-top: 16px;">
-                            Facture Stripe disponible via votre espace de paiement.
-                        </div>
+                    <div style="text-align: center; margin: 24px 0 10px;">
+                        <a href="tel:${lead.phone}" style="display: inline-block; background-color: #059669; color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px;">
+                            📞 Appeler le client (${lead.phone})
+                        </a>
                     </div>
                 </div>
             `
