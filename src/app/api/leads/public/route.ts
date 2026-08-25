@@ -10,10 +10,10 @@ export async function GET(req: NextRequest) {
 
     const supabase = createSupabaseAdmin();
     
-    // 1. Fetch public info first
+    // 1. Fetch lead from database
     const { data: lead, error } = await supabase
         .from("leads")
-        .select("id, city, postal_code, housing_type, type, notes, price, status")
+        .select("*")
         .eq("id", id)
         .single();
 
@@ -21,27 +21,54 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ error: "Lead not found" }, { status: 404 });
     }
 
-    // 2. If partnerId is provided, check if they have access AND have paid
+    // Helper: sanitize message so attribution is NEVER sent in public responses
+    const sanitizeLead = (l: any) => {
+        let meta: any = {};
+        try {
+            if (l.message) meta = JSON.parse(l.message);
+        } catch (e) { }
+        
+        // Strip out sensitive traffic attribution
+        delete meta.attribution;
+        delete meta.source;
+
+        return {
+            ...l,
+            message: JSON.stringify(meta)
+        };
+    };
+
+    // 2. If partnerId is provided, check if assignment exists and is paid/unlocked
     if (partnerId) {
         const { data: assignment } = await supabase
             .from("lead_assignments")
             .select("*")
             .eq("lead_id", id)
             .eq("partner_id", partnerId)
-            .eq("status", "paid") // <--- CRITICAL SECURITY FIX: Only return full details if PAID
             .single();
 
-        if (assignment) {
-            // Return FULL lead details
-            const { data: fullLead } = await supabase
-                .from("leads")
-                .select("*")
-                .eq("id", id)
-                .single();
-            
-            return NextResponse.json({ lead: fullLead, isUnlocked: true });
+        if (assignment && (assignment.status === 'paid' || assignment.status === 'free' || lead.price === 0 || lead.is_paid === true)) {
+            return NextResponse.json({ lead: sanitizeLead(lead), isUnlocked: true });
         }
     }
 
-    return NextResponse.json({ lead, isUnlocked: false });
+    // 3. If the lead itself is already unlocked / free / paid globally and has partnerId
+    if (lead.price === 0 && partnerId) {
+        return NextResponse.json({ lead: sanitizeLead(lead), isUnlocked: true });
+    }
+
+    // Public locked view: only return safe non-identifying fields
+    const publicLead = {
+        id: lead.id,
+        city: lead.city,
+        postal_code: lead.postal_code,
+        housing_type: lead.housing_type,
+        type: lead.type,
+        notes: lead.notes,
+        price: lead.price ?? 20,
+        status: lead.status,
+        is_paid: lead.is_paid
+    };
+
+    return NextResponse.json({ lead: publicLead, isUnlocked: false });
 }

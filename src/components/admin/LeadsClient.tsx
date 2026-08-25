@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Users, Filter, Download, Eye, Phone, Mail, Building, Home, Briefcase, X, Link as LinkIcon, Check, MapPin, CreditCard } from "lucide-react";
+import { Users, Filter, Download, Eye, Phone, Mail, Building, Home, Briefcase, X, Link as LinkIcon, Check, MapPin, CreditCard, Gift } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -76,6 +76,7 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
     const [isSuccess, setIsSuccess] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isUpdatingLead, setIsUpdatingLead] = useState(false);
+    const [isFree, setIsFree] = useState(false);
     const [editNotes, setEditNotes] = useState("");
     const [editPrice, setEditPrice] = useState(20);
     const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -116,8 +117,9 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
         setAssignmentHistory([]);
         setIsLoadingHistory(true);
         setIsSuccess(false);
+        setIsFree(lead.price === 0);
         setEditNotes(lead.notes || "");
-        setEditPrice(lead.price || 20);
+        setEditPrice(lead.price ?? 20);
 
         try {
             const { getLeadAssignments } = await import("@/app/actions/leads");
@@ -150,10 +152,20 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
 
         try {
             const { assignLeadToPartners } = await import("@/app/actions/leads");
-            await assignLeadToPartners(selectedLead.id, selectedPartnerIds);
+            await assignLeadToPartners(selectedLead.id, selectedPartnerIds, {
+                isFree,
+                notes: editNotes,
+                price: isFree ? 0 : editPrice
+            });
 
             // Update local state
-            setLeads(prev => prev.map(l => l.id === selectedLead.id ? { ...l, status: 'sold' } : l));
+            setLeads(prev => prev.map(l => l.id === selectedLead.id ? {
+                ...l,
+                status: 'sold',
+                is_paid: isFree ? true : l.is_paid,
+                price: isFree ? 0 : editPrice,
+                notes: editNotes
+            } : l));
 
             setIsSuccess(true);
         } catch (e) {
@@ -338,9 +350,15 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                                 )}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className="text-sm font-bold text-slate-700">
-                                                    {lead.price || 20} €
-                                                </span>
+                                                {lead.price === 0 ? (
+                                                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                                        🎁 GRATUIT
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-sm font-bold text-slate-700">
+                                                        {lead.price || 20} €
+                                                    </span>
+                                                )}
                                             </td>
                                             <td className="px-6 py-4 text-right">
                                                 <div className="flex items-center justify-end gap-2">
@@ -356,7 +374,7 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                                         className="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition font-bold flex items-center gap-1 border border-emerald-200 shadow-sm"
                                                         title="Assigner / Vendre"
                                                     >
-                                                        <span className="text-xs">Vendre ($)</span>
+                                                        <span className="text-xs">Vendre / Offrir</span>
                                                     </button>
                                                 </div>
                                             </td>
@@ -377,11 +395,15 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                         {isSuccess ? (
                             <div className="text-center py-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
                                 <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                                    <Check size={32} />
                                 </div>
-                                <h2 className="text-2xl font-bold text-slate-900 mb-2">🎉 Lead Vendu !</h2>
+                                <h2 className="text-2xl font-bold text-slate-900 mb-2">
+                                    {isFree ? "🎉 Lead Offert & Envoyé !" : "🎉 Lead Transmis !"}
+                                </h2>
                                 <p className="text-slate-500 mb-8">
-                                    L'email de notification a été envoyé à {selectedPartnerIds.length} partenaire(s).
+                                    {isFree
+                                        ? `Toutes les coordonnées complètes du client ont été envoyées par email à ${selectedPartnerIds.length} partenaire(s) (déblocage immédiat 0€).`
+                                        : `L'email de notification avec lien de déblocage Stripe a été envoyé à ${selectedPartnerIds.length} partenaire(s).`}
                                 </p>
                                 <button
                                     onClick={() => setSelectedLead(null)}
@@ -393,13 +415,13 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                         ) : (
                             <>
                                 <div className="flex justify-between items-center mb-4">
-                                    <h2 className="text-xl font-bold text-slate-900">Assignation Lead</h2>
+                                    <h2 className="text-xl font-bold text-slate-900">Vendre ou Offrir ce Lead</h2>
                                     <button onClick={() => setSelectedLead(null)} className="text-slate-400 hover:text-slate-600">
                                         <X size={20} />
                                     </button>
                                 </div>
 
-                                <div className="bg-slate-50 p-4 rounded-lg mb-6 text-sm border border-slate-100">
+                                <div className="bg-slate-50 p-4 rounded-lg mb-5 text-sm border border-slate-100">
                                     <div className="flex justify-between items-start">
                                         <div>
                                             <p className="font-bold text-slate-900 text-lg">{selectedLead.name}</p>
@@ -414,6 +436,32 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                             {selectedLead.tenant_id}
                                         </span>
                                     </div>
+                                </div>
+
+                                {/* FREE LEAD CHECKBOX OPTION */}
+                                <div className={`p-4 rounded-xl border transition-all mb-5 ${isFree ? 'bg-emerald-50 border-emerald-300 ring-2 ring-emerald-500/20' : 'bg-slate-50 border-slate-200'}`}>
+                                    <label className="flex items-start gap-3 cursor-pointer select-none">
+                                        <input
+                                            type="checkbox"
+                                            checked={isFree}
+                                            onChange={(e) => {
+                                                const checked = e.target.checked;
+                                                setIsFree(checked);
+                                                if (checked) setEditPrice(0);
+                                                else setEditPrice(selectedLead.price || 20);
+                                            }}
+                                            className="mt-0.5 w-5 h-5 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 accent-emerald-600 shrink-0 cursor-pointer"
+                                        />
+                                        <div className="flex-1">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-sm font-bold text-slate-900">🎁 Offrir ce lead (Gratuit / Sans Stripe)</span>
+                                                <span className="text-[10px] font-black uppercase px-2 py-0.5 bg-emerald-600 text-white rounded-full">0€ Stripe</span>
+                                            </div>
+                                            <p className="text-xs text-slate-600 mt-1">
+                                                Cochez pour envoyer immédiatement <strong>toutes les coordonnées du client</strong> (nom, email, téléphone, détails projet) sans aucun paiement Stripe.
+                                            </p>
+                                        </div>
+                                    </label>
                                 </div>
 
                                 {/* Notes & Price Editing */}
@@ -438,10 +486,12 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                                 <input
                                                     type="number"
                                                     value={editPrice}
+                                                    disabled={isFree}
                                                     onChange={(e) => setEditPrice(Number(e.target.value))}
-                                                    className="w-24 px-3 py-1.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 font-bold"
+                                                    className={`w-24 px-3 py-1.5 text-sm border rounded-lg font-bold ${isFree ? 'bg-slate-100 text-slate-400 border-slate-200' : 'bg-white border-slate-200 focus:ring-2 focus:ring-blue-500'}`}
                                                 />
                                                 <span className="text-sm font-bold text-slate-500">€</span>
+                                                {isFree && <span className="text-xs font-bold text-emerald-600">(Offert)</span>}
                                             </div>
                                         </div>
                                         <button
@@ -466,6 +516,7 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                                     <span className="font-medium text-slate-700">{assign.partners?.name}</span>
                                                     <span className="text-xs text-slate-400">
                                                         {format(new Date(assign.assigned_at), "dd MMM HH:mm", { locale: fr })}
+                                                        {assign.status === 'paid' && <span className="ml-2 text-emerald-600 font-bold">✓ Débloqué</span>}
                                                     </span>
                                                 </div>
                                             ))}
@@ -474,7 +525,7 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                 ) : null}
 
                                 <div className="mb-6">
-                                    <h3 className="text-sm font-bold text-slate-900 mb-3">Sélectionner les Installateurs</h3>
+                                    <h3 className="text-sm font-bold text-slate-900 mb-3">Sélectionner les Partenaires / Installateurs</h3>
                                     <div className="space-y-2 max-h-60 overflow-y-auto border border-slate-200 rounded-lg p-2">
                                         {partners.length === 0 ? (
                                             <p className="text-xs text-red-500 italic p-2">Aucun partenaire enregistré.</p>
@@ -510,10 +561,14 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                     <button
                                         onClick={handleAssignment}
                                         disabled={selectedPartnerIds.length === 0 || isSubmitting}
-                                        className="flex-1 px-4 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 font-bold disabled:opacity-50 shadow-lg shadow-slate-900/10 transition flex items-center justify-center gap-2"
+                                        className={`flex-1 px-4 py-3 text-white rounded-xl font-bold disabled:opacity-50 shadow-lg transition flex items-center justify-center gap-2 ${isFree ? 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-600/20' : 'bg-slate-900 hover:bg-slate-800 shadow-slate-900/10'}`}
                                     >
                                         {isSubmitting ? (
                                             <span className="animate-spin">⏳</span>
+                                        ) : isFree ? (
+                                            <>
+                                                <span>🎁 Offrir & Envoyer ({selectedPartnerIds.length})</span>
+                                            </>
                                         ) : (
                                             <>
                                                 <span>Envoyer ({selectedPartnerIds.length})</span>
@@ -530,4 +585,3 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
         </div>
     );
 }
-
