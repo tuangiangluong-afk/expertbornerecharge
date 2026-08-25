@@ -163,7 +163,7 @@ export async function POST(request: Request) {
                 ` : '';
 
                 await resend.emails.send({
-                    from: 'Expert Borne Recharge <contact@expertbornerecharge.com>',
+                    from: 'Expert Borne Recharge <hello@expertbornerecharge.com>',
                     to: ['hello@expertbornerecharge.com'],
                     subject,
                     html: `

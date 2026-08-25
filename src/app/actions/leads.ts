@@ -162,7 +162,7 @@ export async function assignLeadToPartners(
                         : (lead.postal_code || '');
 
                     await resend.emails.send({
-                        from: 'Expert Borne Recharge <contact@expertbornerecharge.com>',
+                        from: 'Expert Borne Recharge <hello@expertbornerecharge.com>',
                         to: [partner.email],
                         subject: `Nouveau lead : ${locationStr ? `${locationStr} - ` : ''}${lead.name}`,
                         html: `
@@ -275,7 +275,7 @@ export async function assignLeadToPartners(
                 } else {
                     // 💰 PAYANT : Standard paid lead notification (unlock via Stripe)
                     await resend.emails.send({
-                        from: 'Expert Borne Recharge <contact@expertbornerecharge.com>',
+                        from: 'Expert Borne Recharge <hello@expertbornerecharge.com>',
                         to: [partner.email],
                         subject: `🚀 Nouveau Lead Disponible : ${lead.city || lead.postal_code}`,
                         html: `
@@ -443,7 +443,7 @@ export async function deliverUnlockedLead(leadId: string, partnerId: string) {
             : (meta.meter_distance === '10a20m' ? '10 à 20 mètres' : (meta.meter_distance === 'plus20m' ? 'Plus de 20 mètres' : meta.meter_distance));
 
         await resend.emails.send({
-            from: 'Expert Borne Recharge <contact@expertbornerecharge.com>',
+            from: 'Expert Borne Recharge <hello@expertbornerecharge.com>',
             to: [partner.email],
             subject: `Paiement Confirmé - Lead Débloqué : ${lead.name} (${lead.city || lead.postal_code})`,
             html: `

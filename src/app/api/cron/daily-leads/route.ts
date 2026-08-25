@@ -59,7 +59,7 @@ export async function GET(request: Request) {
                 // Send Summary Email
                 try {
                     await resend.emails.send({
-                        from: 'Expert Borne Recharge <contact@expertbornerecharge.com>',
+                        from: 'Expert Borne Recharge <hello@expertbornerecharge.com>',
                         to: [partner.email],
                         subject: `📊 Récapitulatif : ${relevantLeads.length} Nouveaux Leads dans vos régions`,
                         html: `

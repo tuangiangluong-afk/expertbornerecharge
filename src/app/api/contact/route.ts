@@ -27,7 +27,7 @@ export async function POST(req: Request) {
         }
 
         const data = await resend.emails.send({
-            from: 'Expert Borne Recharge <contact@expertbornerecharge.com>',
+            from: 'Expert Borne Recharge <hello@expertbornerecharge.com>',
             to: ['hello@expertbornerecharge.com'],
             replyTo: email,
             subject: `[${postalCode || city}] Contact: ${subject} - ${name}`,
