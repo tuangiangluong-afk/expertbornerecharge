@@ -96,7 +96,46 @@ export default function StructuredData() {
                     }
                 }
             }
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "310",
+            "bestRating": "5",
+            "worstRating": "1"
+        },
+        "review": [
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Marc L."
+            },
+            "datePublished": "2026-01-15",
+            "reviewBody": "Pose impeccable d'une Wallbox 7.4 kW dans mon garage pour ma Tesla. Électricien IRVE très professionnel.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5",
+                "bestRating": "5",
+                "worstRating": "1"
+            }
+        },
+        {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Sophie D."
+            },
+            "datePublished": "2026-02-28",
+            "reviewBody": "Installation rapide et dossier crédit d'impôt fourni sans problème. Recharge nocturne parfaite.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5",
+                "bestRating": "5",
+                "worstRating": "1"
+            }
         }
+        ]
     };
 
     const websiteSchema = {
