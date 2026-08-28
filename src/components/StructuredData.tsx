@@ -4,21 +4,21 @@ export function StructuredData({ city }: { city: CityConfig }) {
     const services = [
         {
             "@type": "Service",
-            "name": "Transport Médical Conventionné",
-            "description": "Transport assis professionnalisé (TAP) vers hôpitaux et cliniques. Agréé CPAM.",
-            "serviceType": "MedicalTransport"
+            "name": "Installation de borne de recharge à domicile",
+            "description": "Étude électrique et installation de borne de recharge IRVE pour maison individuelle.",
+            "serviceType": "ElectricVehicleChargingStationInstallation"
         },
         {
             "@type": "Service",
-            "name": "Navette Aéroport",
-            "description": "Transfert privé vers aéroports avec suivi de vol en temps réel.",
-            "serviceType": "AirportTransfer"
+            "name": "Installation de borne en copropriété",
+            "description": "Accompagnement de copropriétés pour l'installation de solutions de recharge des véhicules électriques.",
+            "serviceType": "EVChargingStationInstallation"
         },
         {
             "@type": "Service",
-            "name": "Taxi Gare TGV",
-            "description": "Liaison gare avec attente panneau et aide aux bagages.",
-            "serviceType": "TaxiService"
+            "name": "Installation de bornes pour entreprise",
+            "description": "Déploiement de bornes de recharge IRVE pour flottes et parkings d'entreprise.",
+            "serviceType": "CommercialEVChargingStationInstallation"
         }
     ];
 
@@ -27,7 +27,7 @@ export function StructuredData({ city }: { city: CityConfig }) {
         "@graph": [
             {
                 "@type": "LocalBusiness",
-                "additionalType": "https://schema.org/TaxiService",
+                "additionalType": "https://schema.org/Electrician",
                 "@id": `https://${city.domain}/#localbusiness`,
                 "name": city.name,
                 "image": city.heroImage.startsWith('http') ? city.heroImage : `https://${city.domain}${city.heroImage}`,
@@ -72,7 +72,7 @@ export function StructuredData({ city }: { city: CityConfig }) {
                     {
                         "@type": "ListItem",
                         "position": 1,
-                        "name": `Taxi ${city.city}`,
+                        "name": `Installation de borne de recharge à ${city.city}`,
                         "item": `https://${city.domain}`
                     }
                 ]
@@ -83,10 +83,10 @@ export function StructuredData({ city }: { city: CityConfig }) {
                 "mainEntity": [
                     {
                         "@type": "Question",
-                        "name": `Combien coûte un taxi à ${city.city} ?`,
+                        "name": `Combien coûte l'installation d'une borne à ${city.city} ?`,
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": `Le tarif de base est d'environ ${city.pricing.base}. Le prix final dépend de la distance et de l'horaire (jour/nuit).`
+                            "text": `Le prix d'une installation dépend de la puissance, du type de borne, de la longueur du câblage et de la configuration électrique. Un devis personnalisé est nécessaire pour confirmer le montant à ${city.city}.`
                         }
                     },
                     {
@@ -99,10 +99,10 @@ export function StructuredData({ city }: { city: CityConfig }) {
                     },
                     {
                         "@type": "Question",
-                        "name": `Comment réserver un taxi à ${city.city} ?`,
+                        "name": `Comment demander un devis de borne à ${city.city} ?`,
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": `Vous pouvez réserver immédiatement par téléphone au ${city.phoneNumber} ou via notre formulaire de réservation en ligne.`
+                            "text": `Vous pouvez demander un devis via le formulaire du site ou par téléphone au ${city.phoneNumber}. L'étude précise la puissance disponible, l'emplacement et la solution de recharge adaptée.`
                         }
                     }
                 ]

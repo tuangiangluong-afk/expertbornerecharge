@@ -1,15 +1,17 @@
 import Script from "next/script";
 
 export default function StructuredData() {
+    const baseUrl = "https://expertbornerecharge.com";
     const schema = {
         "@context": "https://schema.org",
         "@type": "Organization",
+        "@id": `${baseUrl}/#organization`,
         "name": "Expert Borne Recharge",
         "legalName": "Expert Borne Recharge SAS",
         "alternateName": ["ExpertBorneRecharge", "Expert Borne Recharge France"],
-        "url": "https://expertbornerecharge.fr",
-        "logo": "https://expertbornerecharge.fr/icon.png",
-        "description": "N°1 de l'installation de bornes de recharge IRVE pour maisons, copropriétés et flottes d'entreprise en France.",
+        "url": baseUrl,
+        "logo": `${baseUrl}/icon.png`,
+        "description": "Installation de bornes de recharge IRVE pour maisons, copropriétés et flottes d'entreprise en France.",
         "address": {
             "@type": "PostalAddress",
             "streetAddress": "6 Rue des Bateliers",
@@ -38,12 +40,14 @@ export default function StructuredData() {
     const websiteSchema = {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "url": "https://expertbornerecharge.fr",
+        "@id": `${baseUrl}/#website`,
+        "url": baseUrl,
         "name": "Expert Borne Recharge",
         "alternateName": "expertbornerecharge.fr",
-        "description": "N°1 de l'installation de bornes de recharge IRVE pour maisons, copropriétés et flottes d'entreprise en France.",
+        "description": "Installation de bornes de recharge IRVE pour maisons, copropriétés et flottes d'entreprise en France.",
         "inLanguage": "fr-FR",
         "publisher": {
+            "@id": `${baseUrl}/#organization`,
             "@type": "Organization",
             "name": "Expert Borne Recharge"
         }
