@@ -4,6 +4,21 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+function GooglePreferredSourceButton() {
+  return (
+    <a
+      href="https://www.google.com/preferences/source?q=expertbornerecharge.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Ajouter Expert Borne Recharge aux sources préférées Google"
+      className="inline-flex items-center gap-3 rounded-xl border-2 border-blue-400 bg-neutral-900 px-4 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-400/40"
+    >
+      <span aria-hidden="true" className="grid h-8 w-8 place-items-center rounded-full bg-white text-xl font-black text-[#4285F4]">G</span>
+      <span>Ajouter aux sources préférées Google</span>
+    </a>
+  );
+}
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -138,6 +153,9 @@ export default function RootLayout({
         </noscript>
         {/* End Google Tag Manager (noscript) */}
         {children}
+        <div className="border-t border-neutral-800 bg-neutral-900 px-4 py-8 text-center">
+          <GooglePreferredSourceButton />
+        </div>
       </body>
     </html>
   );
