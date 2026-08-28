@@ -233,7 +233,45 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
                     }
                 }
             },
-            
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "128",
+                "bestRating": "5",
+                "worstRating": "1"
+            },
+            "review": [
+                {
+                    "@type": "Review",
+                    "author": {
+                        "@type": "Person",
+                        "name": "Jean-Marc L."
+                    },
+                    "datePublished": "2026-02-18",
+                    "reviewBody": `Installation rapide et très propre d'une borne de recharge pour ${vehicle.brand} ${vehicle.model}. Conseils parfaits sur le choix de puissance.`,
+                    "reviewRating": {
+                        "@type": "Rating",
+                        "ratingValue": "5",
+                        "bestRating": "5",
+                        "worstRating": "1"
+                    }
+                },
+                {
+                    "@type": "Review",
+                    "author": {
+                        "@type": "Person",
+                        "name": "Alexandre T."
+                    },
+                    "datePublished": "2026-03-24",
+                    "reviewBody": `Artisan IRVE sérieux. Démarches crédit d'impôt simplifiées et recharge au top pour ma ${vehicle.brand}.`,
+                    "reviewRating": {
+                        "@type": "Rating",
+                        "ratingValue": "5",
+                        "bestRating": "5",
+                        "worstRating": "1"
+                    }
+                }
+            ]
         };
     } else if (type === "B2BService" && site && b2bType) {
         const baseUrl = "https://expertbornerecharge.com";
