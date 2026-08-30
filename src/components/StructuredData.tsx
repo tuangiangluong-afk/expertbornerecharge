@@ -94,7 +94,7 @@ export function StructuredData({ city }: { city: CityConfig }) {
                         "name": `Acceptez-vous la carte bancaire ?`,
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Oui, tous nos chauffeurs acceptent la carte bancaire (Visa, Mastercard, Amex) ainsi que les espèces."
+                            "text": "Oui, vous pouvez régler votre installation par carte bancaire (Visa, Mastercard, Amex), par virement ou en plusieurs fois. Un devis détaillé est fourni avant tout intervention."
                         }
                     },
                     {
