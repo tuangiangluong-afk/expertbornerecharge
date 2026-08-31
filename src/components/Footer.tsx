@@ -220,42 +220,42 @@ export function Footer({ config }: FooterProps) {
 
                         {/* Column 3: Services EV */}
                         <div>
-                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Nos Solutions</h5>
+                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Solutions & Guides AEO</h5>
                             <ul className="space-y-3 text-sm">
                                 <li>
-                                    <Link href="https://expertbornerecharge.com/guides/installation-borne-recharge-copropriete" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides/borne-copropriete-droit-a-la-prise-advenir-2026" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                         Borne en Copropriété
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="https://expertbornerecharge.com/guides/cout-installation-borne-recharge" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides/borne-7kw-vs-11kw-prix-installation" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Tarifs Installation
+                                        Prix Installation (7kW vs 11kW)
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="https://expertbornerecharge.com/guides/aides-subventions-borne-recharge" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides/aides-subventions-borne-recharge" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Aides & Subventions
+                                        Aides & Subventions 2026
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="https://expertbornerecharge.com/fiscalite-entreprise-borne" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides/meilleures-bornes-recharge-comparatif-2026" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Fiscalité Entreprise
+                                        Comparatif Meilleures Bornes
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="https://expertbornerecharge.com/vehicules" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides/schneider-charge-avis-installation" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Véhicules & Modèles
+                                        Avis Schneider Charge
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="https://expertbornerecharge.com/contact" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Devenir Partenaire
+                                        <strong>Tous nos Guides AEO</strong>
                                     </Link>
                                 </li>
                             </ul>
