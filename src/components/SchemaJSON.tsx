@@ -309,7 +309,6 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
             "url": "https://expertbornerecharge.com",
             "logo": "https://expertbornerecharge.com/logo.png",
             "sameAs": [
-                "https://www.linkedin.com/company/expert-borne-recharge",
                 "https://www.facebook.com/expertbornerecharge"
             ],
             "contactPoint": {
