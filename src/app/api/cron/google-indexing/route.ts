@@ -1,124 +1,139 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import { GoogleAuth } from 'google-auth-library';
 
 export const dynamic = 'force-dynamic';
 
-const MAX_DAILY_QUOTA = 200; // Strict Google Indexing API daily limit
+const MAX_DAILY_BATCH = 190; // Stays safely under Google's 200/day limit
 
-async function getAuthToken() {
-  const keyPath = process.env.GOOGLE_SERVICE_ACCOUNT_KEY_PATH || '/Users/marc/Downloads/project-0c646319-da1d-4eaf-832-a8c9a965aa6e.json';
-  if (!fs.existsSync(keyPath)) {
-    const fallbackPath = '/Users/marc/Downloads/project-8d17328c-283e-453e-bc4-b16c0e680c6d.json';
-    if (!fs.existsSync(fallbackPath)) return null;
-    const auth = new GoogleAuth({
-      keyFile: fallbackPath,
-      scopes: ['https://www.googleapis.com/auth/indexing'],
-    });
-    const client = await auth.getClient();
-    return (await client.getAccessToken()).token;
+function cleanEnv(val: string | undefined): string | null {
+  if (!val) return null;
+  return val.replace(/^["']|["']$/g, '').trim() || null;
+}
+
+async function getAccessToken(): Promise<string | null> {
+  const CLIENT_ID = cleanEnv(process.env.GOOGLE_OAUTH_CLIENT_ID);
+  const CLIENT_SECRET = cleanEnv(process.env.GOOGLE_OAUTH_CLIENT_SECRET);
+  const REFRESH_TOKEN = cleanEnv(process.env.GOOGLE_OAUTH_REFRESH_TOKEN);
+
+  if (!CLIENT_ID || !CLIENT_SECRET || !REFRESH_TOKEN) {
+    return null;
   }
 
-  const auth = new GoogleAuth({
-    keyFile: keyPath,
-    scopes: ['https://www.googleapis.com/auth/indexing'],
-  });
-  const client = await auth.getClient();
-  return (await client.getAccessToken()).token;
+  try {
+    const response = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        refresh_token: REFRESH_TOKEN,
+        grant_type: 'refresh_token',
+      }),
+    });
+
+    const data = await response.json();
+    return data.access_token || null;
+  } catch {
+    return null;
+  }
 }
 
 export async function GET(request: Request) {
-  const hostHeader = request.headers.get('host') || '';
-  const HOST = hostHeader.split(':')[0] || process.env.NEXT_PUBLIC_HOST || "expertbornerecharge.com";
-  
   try {
-    const sitemapUrl = `https://${HOST}/sitemap.xml`;
-    const sitemapResponse = await fetch(sitemapUrl, { cache: 'no-store' });
-    
-    let urls: string[] = [];
-    if (sitemapResponse.ok) {
-      const xml = await sitemapResponse.text();
-      const matches = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)];
-      urls = matches.map(m => m[1]);
+    const { searchParams } = new URL(request.url);
+    const hostHeader = request.headers.get('host') || '';
+    const HOST = hostHeader.split(':')[0] || process.env.NEXT_PUBLIC_HOST || 'expertbornerecharge.com';
+
+    const token = await getAccessToken();
+    if (!token) {
+      return NextResponse.json({
+        success: false,
+        error: 'Missing or invalid Google OAuth2 credentials'
+      }, { status: 500 });
     }
+
+    const sitemapUrl = `https://${HOST}/sitemap.xml`;
+    const sitemapRes = await fetch(sitemapUrl, { cache: 'no-store' });
+    if (!sitemapRes.ok) {
+      return NextResponse.json({ success: false, error: 'Failed to fetch sitemap from ' + sitemapUrl }, { status: 502 });
+    }
+
+    const xml = await sitemapRes.text();
+    const matches = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)];
+    const urls = matches.map(m => m[1]);
 
     if (urls.length === 0) {
       return NextResponse.json({ success: false, error: 'No URLs found in sitemap' }, { status: 400 });
     }
 
-    const queueFilePath = path.join(process.cwd(), 'src', 'data', 'google-indexing-state.json');
-    let submittedSet = new Set<string>();
+    // Daily Cursor Calculation:
+    // If a site has 600 URLs, day 1 submits 0..190, day 2 submits 190..380, day 3 submits 380..570, etc.
+    const now = new Date();
+    const dayOfYear = Math.floor((now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+    
+    // Allow manual override via ?offset=X&limit=Y
+    const customOffset = searchParams.get('offset');
+    const customLimit = searchParams.get('limit');
+    
+    const limit = customLimit ? Math.min(parseInt(customLimit, 10), 200) : MAX_DAILY_BATCH;
+    const startIndex = customOffset ? parseInt(customOffset, 10) : (dayOfYear * limit) % urls.length;
 
-    if (fs.existsSync(queueFilePath)) {
-      try {
-        const stateData = JSON.parse(fs.readFileSync(queueFilePath, 'utf8'));
-        submittedSet = new Set(stateData.submitted || []);
-      } catch (e) {
-        console.error('Failed to parse queue state:', e);
-      }
+    // Build rolling batch with wrap-around
+    let batch: string[] = [];
+    if (startIndex + limit <= urls.length) {
+      batch = urls.slice(startIndex, startIndex + limit);
+    } else {
+      batch = urls.slice(startIndex).concat(urls.slice(0, (startIndex + limit) % urls.length));
     }
 
-    const pendingUrls = urls.filter(u => !submittedSet.has(u));
-
-    if (pendingUrls.length === 0) {
-      return NextResponse.json({
-        success: true,
-        message: 'All sitemap URLs have already been submitted to Google Indexing API!',
-        totalSubmitted: submittedSet.size
-      });
-    }
-
-    const batchToSubmit = pendingUrls.slice(0, MAX_DAILY_QUOTA);
-    const token = await getAuthToken();
     let successCount = 0;
     let failCount = 0;
+    let quotaReached = false;
 
-    if (token) {
-      for (const url of batchToSubmit) {
-        try {
-          const res = await fetch("https://indexing.googleapis.com/v1/urlNotifications:publish", {
-            method: "POST",
-            headers: {
-              "Authorization": `Bearer ${token}`,
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              url: url,
-              type: "URL_UPDATED"
-            })
-          });
+    for (const url of batch) {
+      try {
+        const res = await fetch('https://indexing.googleapis.com/v3/urlNotifications:publish', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            url,
+            type: 'URL_UPDATED',
+          }),
+        });
 
-          if (res.ok) {
-            submittedSet.add(url);
-            successCount++;
-          } else {
-            failCount++;
+        if (res.ok) {
+          successCount++;
+        } else {
+          if (res.status === 429) {
+            quotaReached = true;
+            break; // Stop immediately when daily 200 quota is hit
           }
-        } catch (err) {
           failCount++;
         }
+      } catch {
+        failCount++;
       }
     }
-
-    const newState = {
-      lastRun: new Date().toISOString(),
-      submitted: Array.from(submittedSet),
-      pendingCount: pendingUrls.length - batchToSubmit.length
-    };
-    
-    fs.writeFileSync(queueFilePath, JSON.stringify(newState, null, 2));
 
     return NextResponse.json({
       success: true,
-      provider: "Google Search Indexing API",
-      submittedToday: batchToSubmit.length,
-      successCount,
-      failCount,
-      remainingInQueue: pendingUrls.length - batchToSubmit.length,
-      totalSubmittedSoFar: submittedSet.size
+      provider: 'Google Indexing API (OAuth2)',
+      submitted: successCount,
+      failed: failCount,
+      quotaReached,
+      totalSitemapUrls: urls.length,
+      currentBatchRange: {
+        startIndex,
+        batchSize: batch.length,
+        submittedCount: successCount,
+      },
+      nextRunScheduled: 'Tomorrow at 02:00 UTC (Next batch will resume automatically)',
+      message: quotaReached 
+        ? `Daily Google limit reached (200/day). Successfully indexed ${successCount} URLs. Remaining queue will continue tomorrow at 02:00 UTC.`
+        : `Successfully submitted ${successCount}/${batch.length} URLs (Rotating daily batch for Day ${dayOfYear}).`
     });
-
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
