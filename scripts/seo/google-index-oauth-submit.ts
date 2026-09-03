@@ -13,7 +13,7 @@ if (!SUPABASE_KEY) {
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const PRODUCTION_URL = process.env.PRODUCTION_URL || 'https://expertbornerecharge.fr';
+const PRODUCTION_URL = process.env.PRODUCTION_URL || 'https://expertbornerecharge.com';
 
 const CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID;
 const CLIENT_SECRET = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
@@ -107,7 +107,21 @@ async function run() {
     urlsToSubmit.push(`${PRODUCTION_URL}/blog/${post.slug}`);
   }
 
-  const allUrls = [`${PRODUCTION_URL}/blog`, ...urlsToSubmit];
+  const targetUrls = [
+    `${PRODUCTION_URL}/`,
+    `${PRODUCTION_URL}/guides/tesla-wall-connector-installation-france`,
+    `${PRODUCTION_URL}/guides/recharger-tesla-domicile`,
+    `${PRODUCTION_URL}/guides/schneider-evlink-pro-ac-installation`,
+    `${PRODUCTION_URL}/guides/comparatif-wallbox-schneider-legrand`,
+    `${PRODUCTION_URL}/guides/cout-installation-borne-recharge`,
+    `${PRODUCTION_URL}/guides/obligation-installateur-irve-particulier`,
+    `${PRODUCTION_URL}/installation/tesla`,
+    `${PRODUCTION_URL}/ville/pays-de-gex`,
+    `${PRODUCTION_URL}/ville/toulouse`,
+    `${PRODUCTION_URL}/guides`,
+  ];
+
+  const allUrls = [...targetUrls, ...urlsToSubmit];
   console.log(`📢 Total URLs prepared for Indexing API: ${allUrls.length}`);
   console.log(`⚡ Submitting batch of 50 URLs...`);
 

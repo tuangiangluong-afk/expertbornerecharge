@@ -14,7 +14,7 @@ if (!SUPABASE_KEY) {
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const BING_KEY = '136009bf6d91456da87ab666014285fb';
-const HOST = 'expertbornerecharge.fr';
+const HOST = 'expertbornerecharge.com';
 const PRODUCTION_URL = `https://${HOST}`;
 
 async function run() {
@@ -34,17 +34,29 @@ async function run() {
   }
 
   console.log(`Found ${posts?.length || 0} published blog posts.`);
-  if (!posts || posts.length === 0) {
-    console.log('✅ No published blog posts found.');
-    return;
-  }
 
   const urlsToSubmit: string[] = [];
-  for (const post of posts) {
-    urlsToSubmit.push(`${PRODUCTION_URL}/blog/${post.slug}`);
+  if (posts) {
+    for (const post of posts) {
+      urlsToSubmit.push(`${PRODUCTION_URL}/blog/${post.slug}`);
+    }
   }
 
-  const allUrls = [`${PRODUCTION_URL}/blog`, ...urlsToSubmit];
+  const targetUrls = [
+    `${PRODUCTION_URL}/`,
+    `${PRODUCTION_URL}/guides/tesla-wall-connector-installation-france`,
+    `${PRODUCTION_URL}/guides/recharger-tesla-domicile`,
+    `${PRODUCTION_URL}/guides/schneider-evlink-pro-ac-installation`,
+    `${PRODUCTION_URL}/guides/comparatif-wallbox-schneider-legrand`,
+    `${PRODUCTION_URL}/guides/cout-installation-borne-recharge`,
+    `${PRODUCTION_URL}/guides/obligation-installateur-irve-particulier`,
+    `${PRODUCTION_URL}/installation/tesla`,
+    `${PRODUCTION_URL}/ville/pays-de-gex`,
+    `${PRODUCTION_URL}/ville/toulouse`,
+    `${PRODUCTION_URL}/guides`,
+  ];
+
+  const allUrls = [...targetUrls, `${PRODUCTION_URL}/blog`, ...urlsToSubmit];
   console.log(`📢 Total URLs prepared for IndexNow: ${allUrls.length}`);
 
   const requestBody = {
