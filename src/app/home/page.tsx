@@ -405,15 +405,36 @@ export default function HomePage() {
                     </div>
                 </section>
 
-            {/* ============================================ */}
-            {/* FOOTER */}
-            {/* ============================================ */}
-            {/* ============================================ */}
-            {/* FOOTER */}
-            {/* ============================================ */}
-            {/* ============================================ */}
-            {/* FOOTER */}
-            {/* ============================================ */}
+            {/* Pôle Mobilité & Énergie Verte */}
+            <section className="py-16 bg-white border-t border-slate-100">
+                <div className="container mx-auto px-4 max-w-5xl">
+                    <div className="bg-gradient-to-br from-blue-50/60 to-amber-50/40 rounded-3xl p-8 sm:p-10 border border-blue-100/80 shadow-sm">
+                        <div className="flex flex-col md:flex-row gap-8 items-center justify-between">
+                            <div className="space-y-3 text-center md:text-left max-w-xl">
+                                <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-full uppercase tracking-wider">
+                                    Mobilité Électrique &amp; Autonomie Solaire
+                                </span>
+                                <h3 className="text-2xl font-bold text-slate-900">
+                                    Rechargez votre véhicule 100% gratuitement grâce à l&apos;énergie solaire
+                                </h3>
+                                <p className="text-slate-600 text-sm leading-relaxed">
+                                    Couplée à des panneaux photovoltaïques en toiture, votre borne de recharge intelligente pilote automatiquement la charge sur le surplus d&apos;électricité verte en journée pour rouler à coût nul.
+                                </p>
+                            </div>
+                            <a
+                                href="https://www.expertpanneausolaire.com"
+                                target="_blank"
+                                rel="noopener"
+                                className="shrink-0 inline-flex items-center gap-2 bg-white text-amber-700 border border-amber-200 hover:bg-amber-600 hover:text-white px-6 py-3.5 rounded-2xl font-bold shadow-sm transition group"
+                            >
+                                <span>Découvrir les panneaux solaires</span>
+                                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <Footer config={hub} />
 
             {/* Mobile Sticky CTA */}
