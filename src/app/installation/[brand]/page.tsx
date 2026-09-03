@@ -159,6 +159,28 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
                                 Votre installation devra comporter un interrupteur différentiel Type A ou B (selon la borne) et un disjoncteur adapté à la puissance (32A ou 40A).
                                 Nos devis incluent systématiquement ces protections obligatoires.
                             </p>
+
+                            {slug === 'tesla' && (
+                                <div className="my-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 not-prose">
+                                    <h4 className="font-bold text-slate-900 text-lg mb-2 flex items-center gap-2">
+                                        <Zap className="text-blue-600" size={20} />
+                                        Dossiers Techniques &amp; Guides Spéciaux Tesla
+                                    </h4>
+                                    <p className="text-slate-600 text-sm mb-4">
+                                        Consultez nos dossiers d&apos;experts pour préparer votre projet d&apos;installation à domicile :
+                                    </p>
+                                    <div className="grid sm:grid-cols-2 gap-3">
+                                        <Link href="/guides/tesla-wall-connector-installation-france" className="p-4 bg-white rounded-xl border border-slate-200 hover:border-blue-500 hover:shadow-sm transition block group">
+                                            <span className="font-bold text-slate-900 group-hover:text-blue-600 block text-sm mb-1">Tesla Wall Connector Gen 3</span>
+                                            <span className="text-xs text-slate-500">Installation, installateur agréé &amp; prix 2026</span>
+                                        </Link>
+                                        <Link href="/guides/recharger-tesla-domicile" className="p-4 bg-white rounded-xl border border-slate-200 hover:border-blue-500 hover:shadow-sm transition block group">
+                                            <span className="font-bold text-slate-900 group-hover:text-blue-600 block text-sm mb-1">Recharger sa Tesla à Domicile</span>
+                                            <span className="text-xs text-slate-500">Prise renforcée vs Wallbox vs Coût au kWh</span>
+                                        </Link>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* CROSS LINKER (War Architecture) */}

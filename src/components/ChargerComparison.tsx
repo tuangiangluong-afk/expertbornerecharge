@@ -16,6 +16,8 @@ interface Charger {
     power: string;
     specs: ChargerSpec[];
     popular?: boolean;
+    guideUrl?: string;
+    guideLabel?: string;
 }
 
 const chargers: Charger[] = [
@@ -24,6 +26,8 @@ const chargers: Charger[] = [
         tagline: "Idéal pour les propriétaires Tesla",
         image: "/images/chargers/tesla-wall-connector.png",
         power: "7kW - 22kW",
+        guideUrl: "/guides/tesla-wall-connector-installation-france",
+        guideLabel: "Dossier Wall Connector Gen 3 →",
         specs: [
             { icon: <Zap className="w-5 h-5" />, label: "7kW - 22kW" },
             { icon: <Wifi className="w-5 h-5" />, label: "Connectivité Wi-Fi" },
@@ -36,6 +40,8 @@ const chargers: Charger[] = [
         image: "/images/chargers/wallbox-pulsar-plus.png",
         power: "7kW - 22kW",
         popular: true,
+        guideUrl: "/guides/wallbox-pulsar-plus-avis-prix-installation",
+        guideLabel: "Avis & Prix Pulsar Plus →",
         specs: [
             { icon: <Zap className="w-5 h-5" />, label: "7kW - 22kW" },
             { icon: <Bluetooth className="w-5 h-5" />, label: "Bluetooth & Wi-Fi" },
@@ -47,6 +53,8 @@ const chargers: Charger[] = [
         tagline: "Robuste & Sécurisé",
         image: "/images/chargers/schneider-evlink.png",
         power: "3kW - 22kW",
+        guideUrl: "/guides/schneider-evlink-pro-ac-installation",
+        guideLabel: "Guide Schneider EVlink Pro →",
         specs: [
             { icon: <Zap className="w-5 h-5" />, label: "3kW - 22kW" },
             { icon: <Lock className="w-5 h-5" />, label: "Verrouillage sécurisé" },
@@ -136,15 +144,25 @@ export default function ChargerComparison({ themeColor = "blue", onCompareClick 
                             </div>
 
                             {/* CTA */}
-                            <button
-                                onClick={scrollToForm}
-                                className={`mt-auto w-full font-bold h-10 rounded-lg transition-colors ${charger.popular
-                                    ? "bg-blue-600 hover:bg-blue-700 text-white"
-                                    : "bg-slate-200 hover:bg-slate-300 text-slate-900"
-                                    }`}
-                            >
-                                Obtenir mon devis
-                            </button>
+                            <div className="mt-auto flex flex-col gap-2">
+                                <button
+                                    onClick={scrollToForm}
+                                    className={`w-full font-bold h-10 rounded-lg transition-colors ${charger.popular
+                                        ? "bg-blue-600 hover:bg-blue-700 text-white"
+                                        : "bg-slate-200 hover:bg-slate-300 text-slate-900"
+                                        }`}
+                                >
+                                    Obtenir mon devis
+                                </button>
+                                {charger.guideUrl && (
+                                    <Link
+                                        href={charger.guideUrl}
+                                        className="text-xs text-center text-blue-600 font-semibold hover:underline py-1"
+                                    >
+                                        {charger.guideLabel}
+                                    </Link>
+                                )}
+                            </div>
                         </div>
                     ))}
                 </div>

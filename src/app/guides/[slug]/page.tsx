@@ -273,12 +273,48 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                                 </div>
                                 <div>
                                     <div className="font-bold text-lg text-slate-900">Expert Borne Recharge</div>
-                                    <div className="text-sm text-slate-500">Pôle Technique & Réglementation</div>
+                                    <div className="text-sm text-slate-500">Pôle Technique &amp; Réglementation</div>
                                 </div>
                             </div>
                             <p className="text-slate-600 mb-4">
                                 Nos guides sont rédigés par des experts en mobilité électrique pour vous aider à comparer les meilleures solutions du marché. Les informations sur les aides (Advenir, Crédit d&apos;Impôt) sont vérifiées régulièrement auprès des organismes officiels.
                             </p>
+                        </div>
+
+                        {/* Dossiers Liés & Guides Recommandés (Topical Silo) */}
+                        <div className="mt-12 p-8 bg-white rounded-3xl border border-slate-200 shadow-sm not-prose">
+                            <h3 className="text-xl font-black text-slate-900 mb-2 flex items-center gap-2">
+                                <Zap className="text-blue-600" size={22} />
+                                Dossiers Techniques &amp; Guides Recommandés
+                            </h3>
+                            <p className="text-sm text-slate-500 mb-6">
+                                Approfondissez votre projet de recharge avec les analyses de nos experts IRVE :
+                            </p>
+                            <div className="grid sm:grid-cols-2 gap-4">
+                                {[
+                                    { slug: "tesla-wall-connector-installation-france", title: "Tesla Wall Connector Gen 3", desc: "Guide de pose, compatibilité & prix d'installation 2026" },
+                                    { slug: "recharger-tesla-domicile", title: "Recharger sa Tesla à Domicile", desc: "Wallbox vs prise renforcée : temps de charge et rentabilité" },
+                                    { slug: "schneider-evlink-pro-ac-installation", title: "Schneider EVlink Pro AC", desc: "Avis technique, caractéristiques et retour d'expérience" },
+                                    { slug: "comparatif-wallbox-schneider-legrand", title: "Comparatif Schneider vs Legrand", desc: "Quelle borne choisir pour sa maison individuelle ?" },
+                                    { slug: "cout-installation-borne-recharge", title: "Prix & Coût Installation Borne", desc: "Budget complet avec pose IRVE et déduction d'aides" },
+                                    { slug: "obligation-installateur-irve-particulier", title: "Obligation Installateur IRVE", desc: "Que dit la loi pour les particuliers et assurances ?" },
+                                ]
+                                    .filter(item => item.slug !== resolvedParams.slug)
+                                    .slice(0, 4)
+                                    .map(item => (
+                                        <Link
+                                            key={item.slug}
+                                            href={`/guides/${item.slug}`}
+                                            className="p-4 bg-slate-50 hover:bg-blue-50/50 rounded-2xl border border-slate-200 hover:border-blue-400 transition-all group"
+                                        >
+                                            <h4 className="font-bold text-sm text-slate-900 group-hover:text-blue-600 mb-1 flex items-center justify-between">
+                                                {item.title}
+                                                <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-blue-600" />
+                                            </h4>
+                                            <p className="text-xs text-slate-500 leading-relaxed">{item.desc}</p>
+                                        </Link>
+                                    ))}
+                            </div>
                         </div>
                     </div>
 
