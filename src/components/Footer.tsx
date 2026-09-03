@@ -76,6 +76,7 @@ export function Footer({ config }: FooterProps) {
                                         <li><Link href="/ville/bordeaux" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Nouvelle-Aquitaine</Link></li>
                                         <li><Link href="/ville/toulouse" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Occitanie</Link></li>
                                         <li><Link href="/ville/nantes" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Pays de la Loire</Link></li>
+                                        <li><Link href="/ville/pays-de-gex" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group"><span className="w-1 h-1 rounded-full bg-neutral-600 group-hover:bg-blue-500 transition"></span>Pays de Gex (Ain / Suisse)</Link></li>
                                     </>
                                 ) : (
                                     // LOCAL: Show neighborhoods
@@ -218,44 +219,44 @@ export function Footer({ config }: FooterProps) {
                             </ul>
                         </div>
 
-                        {/* Column 3: Services EV */}
+                        {/* Column 3: Guides & Comparatifs GSC Targets */}
                         <div>
-                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Solutions & Guides AEO</h5>
+                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Guides Techniques & Avis</h5>
                             <ul className="space-y-3 text-sm">
                                 <li>
-                                    <Link href="/guides/borne-copropriete-droit-a-la-prise-advenir-2026" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides/tesla-wall-connector-installation-france" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Borne en Copropriété
+                                        Tesla Wall Connector (Installation & Prix)
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/guides/borne-7kw-vs-11kw-prix-installation" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides/recharger-tesla-domicile" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Prix Installation (7kW vs 11kW)
+                                        Recharger sa Tesla à Domicile
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/guides/aides-subventions-borne-recharge" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides/schneider-evlink-pro-ac-installation" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Aides & Subventions 2026
+                                        Schneider EVlink Pro AC : Avis & Pose
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/guides/meilleures-bornes-recharge-comparatif-2026" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides/comparatif-wallbox-schneider-legrand" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Comparatif Meilleures Bornes
+                                        Comparatif Wallbox Schneider vs Legrand
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/guides/schneider-charge-avis-installation" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides/cout-installation-borne-recharge" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Avis Schneider Charge
+                                        Coût Installation Borne de Recharge 2026
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/guides" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        <strong>Tous nos Guides AEO</strong>
+                                        <strong>Tous nos Guides AEO & IRVE</strong>
                                     </Link>
                                 </li>
                             </ul>
