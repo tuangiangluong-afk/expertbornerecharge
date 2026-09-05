@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CheckCircle, ShieldCheck, Clock, Award, Euro, ArrowRight, ChevronRight, FileText } from "lucide-react";
+import { CheckCircle, ShieldCheck, Clock, Award, Euro, ArrowRight, ChevronRight, FileText, Landmark, Building2 } from "lucide-react";
 import type { CityConfig } from "@/lib/db";
 
 interface LocalAeoSectionProps {
@@ -12,6 +12,10 @@ const steps = [{"title": "Audit électrique & visite technique gratuite", "desc"
 export default function LocalAeoSection({ site }: LocalAeoSectionProps) {
     const city = site.city;
     const dept = site.department ? ` (${site.department})` : "";
+    const neighborhoods = site.neighborhoods || [];
+    const neighborhoodsText = neighborhoods.length > 0 
+        ? `, notamment dans les quartiers ${neighborhoods.slice(0, 4).join(', ')}` 
+        : "";
 
     return (
         <section className="py-12 bg-slate-50/50 border-t border-slate-200">
@@ -97,6 +101,59 @@ export default function LocalAeoSection({ site }: LocalAeoSectionProps) {
                                 ))}
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                {/* Guide & Spécificités d'installation à {city} */}
+                <div className="mb-14">
+                    <div className="mb-8">
+                        <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+                            Spécificités d'installation & particularités locales à {city}
+                        </h2>
+                        <p className="text-slate-600 mt-1 text-sm md:text-base">
+                            Réglementation municipale, typologie de l'habitat et conseils techniques adaptés à votre commune.
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-6">
+                        {/* Card 1: Urbanisme & Démarches */}
+                        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
+                            <div className="flex items-center gap-3 mb-4">
+                                <span className="grid h-10 w-10 place-items-center rounded-xl bg-blue-50 text-blue-600">
+                                    <Landmark size={20} />
+                                </span>
+                                <h3 className="font-bold text-slate-900 text-base">Urbanisme & Démarches à {city}</h3>
+                            </div>
+                            <p className="text-sm text-slate-600 leading-relaxed">
+                                À {city}{dept}, l'installation en copropriété bénéficie du <strong>Droit à la prise</strong> (décret 2020-1720) : notre bureau d'études prépare gratuitement le dossier technique pour notification au syndic sans vote requis en AG. En maison individuelle, la pose intérieure ne requiert aucune démarche en mairie. Pour les boîtiers extérieurs visibles depuis la voie publique ou situés en périmètre protégé ABF (Architecte des Bâtiments de France), nous vous guidons dans le dépôt de déclaration préalable de travaux.
+                            </p>
+                        </div>
+
+                        {/* Card 2: Typologie du bâti & Quartiers */}
+                        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
+                            <div className="flex items-center gap-3 mb-4">
+                                <span className="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+                                    <Building2 size={20} />
+                                </span>
+                                <h3 className="font-bold text-slate-900 text-base">Secteurs & Typologie à {city}</h3>
+                            </div>
+                            <p className="text-sm text-slate-600 leading-relaxed">
+                                Nos installateurs IRVE qualifiés interviennent sur l'ensemble de la commune{neighborhoodsText}, aussi bien dans les résidences collectives avec parkings souterrains que dans les pavillons individuels. Nous réalisons systématiquement l'audit de puissance du compteur d'abonné Enedis et déterminons le cheminement de câble optimal (goulotte étanche ou tranchée extérieure) pour limiter les coûts d'aménagement.
+                            </p>
+                        </div>
+
+                        {/* Card 3: Puissance, Sécurité & Aides */}
+                        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
+                            <div className="flex items-center gap-3 mb-4">
+                                <span className="grid h-10 w-10 place-items-center rounded-xl bg-amber-50 text-amber-600">
+                                    <ShieldCheck size={20} />
+                                </span>
+                                <h3 className="font-bold text-slate-900 text-base">Puissance & Aides à {city}</h3>
+                            </div>
+                            <p className="text-sm text-slate-600 leading-relaxed">
+                                Chaque chantier inclut l'installation d'un module de délestage dynamique : votre borne de 7.4 kW à 22 kW adapte sa charge en temps réel pour ne jamais dépasser la puissance souscrite de votre abonnement. Les particuliers et entreprises de {city} bénéficient du <strong>crédit d'impôt forfaitaire de 500€</strong>, de la TVA réduite à 5,5% et des primes ADVENIR (jusqu'à 960€ en copropriété). Notre équipe déduit directement ces montants de votre devis.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
