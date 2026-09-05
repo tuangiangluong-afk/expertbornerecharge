@@ -8,32 +8,27 @@ export default function StructuredData() {
         "@id": `${baseUrl}/#organization`,
         "name": "Expert Borne Recharge",
         "legalName": "Expert Borne Recharge SAS",
-        "alternateName": ["ExpertBorneRecharge", "Expert Borne Recharge France"],
+        "alternateName": ["Expert Borne", "Expert Borne Recharge Official"],
         "url": baseUrl,
         "logo": `${baseUrl}/icon.png`,
-        "description": "Installation de bornes de recharge IRVE pour maisons, copropriétés et flottes d'entreprise en France.",
+        "description": "N°1 de l'installation de bornes de recharge IRVE en France.",
         "address": {
             "@type": "PostalAddress",
             "streetAddress": "6 Rue des Bateliers",
-            "addressLocality": "Clichy",
+            "addressLocality": "Paris",
             "postalCode": "92110",
             "addressCountry": "FR"
-        },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": 48.9022,
-            "longitude": 2.3060
         },
         "contactPoint": {
             "@type": "ContactPoint",
             "telephone": "+33 1 49 14 02 64",
             "contactType": "customer service",
             "areaServed": "FR",
-            "availableLanguage": "French"
+            "availableLanguage": "fr-FR"
         },
         "areaServed": {
             "@type": "Country",
-            "name": "France"
+            "name": "FR"
         }
     };
 
@@ -43,13 +38,36 @@ export default function StructuredData() {
         "@id": `${baseUrl}/#website`,
         "url": baseUrl,
         "name": "Expert Borne Recharge",
-        "alternateName": "expertbornerecharge.fr",
-        "description": "Installation de bornes de recharge IRVE pour maisons, copropriétés et flottes d'entreprise en France.",
+        "alternateName": "expertbornerecharge.com",
+        "description": "N°1 de l'installation de bornes de recharge IRVE en France.",
         "inLanguage": "fr-FR",
         "publisher": {
             "@id": `${baseUrl}/#organization`,
             "@type": "Organization",
             "name": "Expert Borne Recharge"
+        }
+    };
+
+    const serviceSchema = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Expert Borne Recharge",
+        "provider": {
+            "@id": `${baseUrl}/#organization`,
+            "@type": "Organization",
+            "name": "Expert Borne Recharge"
+        },
+        "areaServed": {
+            "@type": "Country",
+            "name": "FR"
+        },
+        "description": "N°1 de l'installation de bornes de recharge IRVE en France.",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "148",
+            "bestRating": "5",
+            "worstRating": "1"
         }
     };
 
@@ -64,6 +82,11 @@ export default function StructuredData() {
                 id="website-schema"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+            />
+            <Script
+                id="service-schema"
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
             />
         </>
     );

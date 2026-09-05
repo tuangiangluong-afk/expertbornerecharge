@@ -64,7 +64,7 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
                         <ul className="space-y-3">
                             {SEO_SERVICES.map(s => (
                                 <li key={s.slug}>
-                                    <a href="#simulateur" className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
+                                    <a href={`/service/${s.slug}`} className="text-neutral-400 hover:text-white transition text-sm flex items-center gap-2">
                                         <span className="w-1 h-1 bg-blue-500 rounded-full"></span>
                                         {s.title}
                                     </a>

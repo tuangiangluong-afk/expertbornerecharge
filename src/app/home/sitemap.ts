@@ -17,24 +17,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // ========================================
     const coreRoutes: MetadataRoute.Sitemap = [
         {
-            url: `${baseUrl}`,
-            lastModified: new Date(),
-            changeFrequency: 'daily',
-            priority: 1.0,
-        },
-        {
-            url: `${baseUrl}/llms.txt`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.5,
-        },
-        {
-            url: `${baseUrl}/openapi.json`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.5,
-        },
-        {
             url: `${baseUrl}/mentions-legales`,
             lastModified: new Date(),
             changeFrequency: 'monthly',

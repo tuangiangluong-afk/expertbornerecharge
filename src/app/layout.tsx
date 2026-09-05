@@ -42,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
   title: {
-    template: `%s | Expert Borne Recharge ${getCurrentYearSEO()}`,
+    template: `%s | Expert Borne`,
     default: `Expert Borne Recharge - Prix & Installation ${getCurrentYearSEO()}`,
   },
   description: "Installation de bornes de recharge électriques. Réseau d'installateurs certifiés IRVE. Devis gratuit sous 24h.",
