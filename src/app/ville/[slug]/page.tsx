@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import LocalAeoSection from "@/components/LocalAeoSection";
 import { getCityByCleanSlug, CITIES } from "@/lib/db";
 import { getPseoContent } from "@/lib/pseo";

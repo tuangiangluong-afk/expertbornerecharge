@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import { getSiteConfig } from "@/lib/sites-config";
 import { getCity } from "@/lib/db";
 import { getPseoContent } from "@/lib/pseo";

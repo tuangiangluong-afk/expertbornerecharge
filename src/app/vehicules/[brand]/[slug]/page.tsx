@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import { getAllVehicles, getVehicleById } from "@/data/vehicles";
 import { notFound } from "next/navigation";
 import SafeImage from "@/components/SafeImage";

@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import { getHubConfig, SITES, SiteConfig } from "@/lib/sites-config";
 import { Zap, Award, ArrowRight, Building2, Home, Briefcase, CheckCircle } from "lucide-react";
 import LocalLinker from "@/components/blog/LocalLinker";

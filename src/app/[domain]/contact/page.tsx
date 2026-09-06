@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 
 import { getCity } from "@/lib/db";
 import { notFound } from "next/navigation";

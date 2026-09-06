@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import { notFound } from "next/navigation";
 import fs from "fs";
 import path from "path";

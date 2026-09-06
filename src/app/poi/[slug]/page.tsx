@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import { notFound } from "next/navigation";
 import { Phone, MapPin, ArrowRight, Building2 } from "lucide-react";
 import CallButton from "@/components/CallButton";

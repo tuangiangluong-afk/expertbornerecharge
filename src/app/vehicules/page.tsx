@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import { getAllBrands, getAllVehicles } from "@/data/vehicles";
 import Link from "next/link";
 import { ArrowLeft, Car, Zap } from "lucide-react";

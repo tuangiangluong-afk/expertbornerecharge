@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";

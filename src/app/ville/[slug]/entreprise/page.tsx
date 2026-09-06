@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import { getCityByCleanSlug, CITIES } from "@/lib/db";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";

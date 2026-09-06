@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import { Briefcase, BarChart3, TrendingUp, ShieldCheck, Zap, Globe, FileCheck, CheckCircle, Award } from "lucide-react";
 import LeadFormPro from "@/components/LeadFormPro";
 import Header from "@/components/Header";

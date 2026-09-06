@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';

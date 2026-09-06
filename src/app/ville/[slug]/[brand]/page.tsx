@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import { getCityByCleanSlug, CITIES } from "@/lib/db";
 import { brands } from "@/data/brands";
 import { slugify } from "@/lib/slugify";

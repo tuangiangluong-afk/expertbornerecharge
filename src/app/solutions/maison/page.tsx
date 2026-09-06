@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import { Zap, CheckCircle, HelpCircle, TrendingDown, Shield, Clock, Info, Battery, Plug, Euro, Award } from "lucide-react";
 import LeadForm from "@/components/LeadForm";
 import Header from "@/components/Header";

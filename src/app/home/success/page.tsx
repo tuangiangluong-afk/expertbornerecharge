@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import { Metadata } from "next";
 import { getSiteConfig } from "@/lib/sites-config";
 import { CheckCircle, Phone, Wrench, FileText, Gift, ArrowRight, Download } from "lucide-react";

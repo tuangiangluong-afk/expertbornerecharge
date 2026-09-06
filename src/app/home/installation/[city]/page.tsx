@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 import { getCityBySlug, getAllCitySlugs, type CityData, FRENCH_CITIES } from "@/lib/french-cities";
 import { getHubConfig } from "@/lib/sites-config";
 import { Phone, Zap, MapPin, Award, CheckCircle, Building2, Home, Briefcase, ArrowRight, Clock, Shield, Euro } from "lucide-react";

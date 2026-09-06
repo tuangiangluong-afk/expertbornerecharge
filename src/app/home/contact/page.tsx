@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 24h ISR cache
 
 import ContactForm from "@/components/ContactForm";
 import Link from "next/link";
