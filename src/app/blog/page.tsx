@@ -4,12 +4,23 @@ import Image from "next/image";
 import { createClient } from "@supabase/supabase-js";
 import { Calendar, ArrowRight } from "lucide-react";
 
+import type { Metadata } from 'next';
+
 // Initialize Supabase Client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-key";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+    title: "Blog Borne de Recharge & Véhicules Électriques | Expert IRVE",
+    description: "Guides, actualités et conseils d'experts pour réussir votre installation de borne de recharge électrique à domicile ou en entreprise.",
+    alternates: {
+        canonical: "https://expertbornerecharge.com/blog",
+    },
+    robots: { index: true, follow: true },
+};
 
 async function getPosts() {
     const { data } = await supabase

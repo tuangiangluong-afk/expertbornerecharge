@@ -27,6 +27,51 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/guides/cout-installation-borne-recharge',
+        destination: '/blog/prix-installation-borne-recharge',
+        permanent: true,
+      },
+      {
+        source: '/guides/prix-installation-borne-recharge',
+        destination: '/blog/prix-installation-borne-recharge',
+        permanent: true,
+      },
+      {
+        source: '/guides/droit-a-la-prise-borne-recharge',
+        destination: '/guides/borne-copropriete-droit-a-la-prise-advenir-2026',
+        permanent: true,
+      },
+      {
+        source: '/guides/meilleures-bornes-recharge-2026',
+        destination: '/guides/meilleures-bornes-recharge-comparatif-2026',
+        permanent: true,
+      },
+      {
+        source: '/guides/wallbox-vs-prise-renforcee',
+        destination: '/guides/borne-7kw-vs-11kw-prix-installation',
+        permanent: true,
+      },
+      {
+        source: '/devis',
+        destination: '/#simulateur',
+        permanent: true,
+      },
+      {
+        source: '/simulateur',
+        destination: '/#simulateur',
+        permanent: true,
+      },
+      {
+        source: '/ville/saint-exupery',
+        destination: '/ville/lyon',
+        permanent: true,
+      },
+      {
+        source: '/ville/orly',
+        destination: '/ville/paris',
+        permanent: true,
+      },
+      {
         source: '/service/installation-borne-entreprise',
         destination: '/solutions',
         permanent: true,
@@ -40,6 +85,24 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      {
+        source: "/llms.txt",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
+      {
+        source: "/openapi.json",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
       {
         source: "/((?!api|admin|login|_next).*)",
         headers: [

@@ -5,9 +5,15 @@ import { ArrowLeft, Car, Zap } from "lucide-react";
 import Logo from "@/components/Logo";
 import Header from "@/components/Header";
 
-export const metadata = {
-    title: "Quelle borne de recharge pour ma voiture électrique ?",
-    description: "Sélectionnez la marque de votre véhicule pour découvrir la borne de recharge idéale et le temps de charge à domicile.",
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Quelle borne de recharge pour ma voiture électrique ? | Expert IRVE",
+    description: "Sélectionnez la marque de votre véhicule pour découvrir la borne de recharge idéale, la puissance maximale acceptée et le temps de charge à domicile.",
+    alternates: {
+        canonical: "https://expertbornerecharge.com/vehicules",
+    },
+    robots: { index: true, follow: true },
 };
 
 export default function VehiclesIndexPage() {

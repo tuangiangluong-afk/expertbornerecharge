@@ -181,7 +181,7 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
             },
             "offers": {
                 "@type": "Offer",
-                "url": "https://expertbornerecharge.com/simulateur",
+                "url": `https://expertbornerecharge.com/vehicules/${slugify(vehicle.brand).toLowerCase()}/${vehicle.id}#simulateur`,
                 "priceCurrency": "EUR",
                 "price": "990.00",
                 "validFrom": "2026-01-01",

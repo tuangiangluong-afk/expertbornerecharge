@@ -21,9 +21,31 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const vehicle = getVehicleById(resolvedParams.slug);
     if (!vehicle) return {};
 
+    const canonicalUrl = `https://expertbornerecharge.com/vehicules/${vehicle.brand.toLowerCase()}/${vehicle.id}`;
+
     return {
         title: `Installation Borne de Recharge ${vehicle.brand} ${vehicle.model} - Devis & Prix`,
         description: `Installateur agréé pour ${vehicle.brand} ${vehicle.model}. Temps de charge : ${calculateChargeTime(vehicle.battery, 7)}h. Obtenez votre devis en 24h. Certified IRVE.`,
+        alternates: {
+            canonical: canonicalUrl,
+        },
+        openGraph: {
+            title: `Installation Borne de Recharge ${vehicle.brand} ${vehicle.model}`,
+            description: `Installateur agréé pour ${vehicle.brand} ${vehicle.model}. Temps de charge : ${calculateChargeTime(vehicle.battery, 7)}h. Obtenez votre devis en 24h. Certified IRVE.`,
+            siteName: "Expert Borne Recharge",
+            locale: "fr_FR",
+            type: "website",
+            url: canonicalUrl,
+            images: [
+                {
+                    url: vehicle.image,
+                    width: 1200,
+                    height: 630,
+                    alt: `Installation Borne ${vehicle.brand} ${vehicle.model}`
+                }
+            ]
+        },
+        robots: { index: true, follow: true },
     };
 }
 
@@ -54,6 +76,15 @@ export default async function VehiclePage({ params }: { params: Promise<{ slug: 
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
             <SchemaJSON type="Product" vehicle={vehicle} />
+            <SchemaJSON
+                type="Breadcrumb"
+                breadcrumbItems={[
+                    { name: "Accueil", item: "https://expertbornerecharge.com" },
+                    { name: "Véhicules", item: "https://expertbornerecharge.com/vehicules" },
+                    { name: vehicle.brand, item: `https://expertbornerecharge.com/vehicules/${vehicle.brand.toLowerCase()}` },
+                    { name: vehicle.model, item: `https://expertbornerecharge.com/vehicules/${vehicle.brand.toLowerCase()}/${vehicle.id}` }
+                ]}
+            />
             {/* Navbar simplified */}
             <Header isHub={true} variant="default" />
 

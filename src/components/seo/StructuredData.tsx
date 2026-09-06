@@ -1,7 +1,7 @@
 import Script from "next/script";
 
 export default function StructuredData() {
-    const baseUrl = "https://expertbornerecharge.fr";
+    const baseUrl = "https://expertbornerecharge.com";
 
     const organizationSchema = {
         "@context": "https://schema.org",

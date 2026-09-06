@@ -1,15 +1,14 @@
 import { MetadataRoute } from 'next';
 import { NATIONAL_TARGETS } from '@/config/national-targets';
-import { SEO_ROUTES } from '@/lib/seo-routes';
 import { SEO_SERVICES } from '@/lib/seo-data';
-import { SEO_GARES } from '@/lib/seo-gares';
 import { NATIONAL_CONFIG } from '@/config/national';
 import { slugify } from '@/lib/slugify';
 import { brands } from '@/data/brands';
 import { getAllVehicles } from '@/data/vehicles';
 import { getAllGuides } from '@/lib/mdx';
+import { createClient } from '@supabase/supabase-js';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://expertbornerecharge.com';
 
     // ========================================
@@ -17,16 +16,46 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // ========================================
     const coreRoutes: MetadataRoute.Sitemap = [
         {
-            url: `${baseUrl}/mentions-legales`,
+            url: baseUrl,
             lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.3,
+            changeFrequency: 'daily',
+            priority: 1.0,
         },
         {
-            url: `${baseUrl}/cgv`,
+            url: `${baseUrl}/solutions/copropriete`,
             lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.3,
+            changeFrequency: 'weekly',
+            priority: 0.9,
+        },
+        {
+            url: `${baseUrl}/solutions/maison`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9,
+        },
+        {
+            url: `${baseUrl}/solutions/entreprise`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9,
+        },
+        {
+            url: `${baseUrl}/guides`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: `${baseUrl}/blog`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: `${baseUrl}/vehicules`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
         },
         {
             url: `${baseUrl}/contact`,
@@ -34,12 +63,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'monthly',
             priority: 0.5,
         },
+        {
+            url: `${baseUrl}/mentions-legales`,
+            lastModified: new Date('2026-03-01'),
+            changeFrequency: 'yearly',
+            priority: 0.3,
+        },
+        {
+            url: `${baseUrl}/cgv`,
+            lastModified: new Date('2026-03-01'),
+            changeFrequency: 'yearly',
+            priority: 0.3,
+        },
     ];
 
+    // Filter out redirect targets (airports)
+    const validTargets = NATIONAL_TARGETS.filter(t => t.slug !== 'saint-exupery' && t.slug !== 'orly');
+
     // ========================================
-    // 2. PARTNER CITIES (30 Ghost Broker Pages)
+    // 2. PARTNER CITIES
     // ========================================
-    const cityRoutes: MetadataRoute.Sitemap = NATIONAL_TARGETS.map((target) => ({
+    const cityRoutes: MetadataRoute.Sitemap = validTargets.map((target) => ({
         url: `${baseUrl}/ville/${target.slug}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
@@ -84,9 +128,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
 
     // ========================================
-    // 8. VEHICLE PAGES (NEW)
+    // 8. VEHICLE PAGES
     // ========================================
     const vehicles = getAllVehicles();
+    const vehicleBrandRoutes: MetadataRoute.Sitemap = Array.from(new Set(vehicles.map((v) => v.brand.toLowerCase()))).map((brand) => ({
+        url: `${baseUrl}/vehicules/${brand}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+    }));
+
     const vehicleRoutes: MetadataRoute.Sitemap = vehicles.map((vehicle) => ({
         url: `${baseUrl}/vehicules/${vehicle.brand.toLowerCase()}/${vehicle.id}`,
         lastModified: new Date(),
@@ -95,32 +146,48 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
 
     // ========================================
-    // 9. BLOG GUIDES (Dynamic)
+    // 9. BLOG GUIDES (MDX)
     // ========================================
     const guides = getAllGuides();
     const guideRoutes: MetadataRoute.Sitemap = guides.map((guide) => ({
         url: `${baseUrl}/guides/${guide.slug}`,
         lastModified: new Date(guide.date),
         changeFrequency: 'weekly' as const,
-        priority: 0.7,
+        priority: 0.8,
     }));
 
     // ========================================
-    // 10. HUB WHITESPACE
+    // 9b. BLOG POSTS (Supabase)
     // ========================================
-    const extraRoutes: MetadataRoute.Sitemap = [
-        { url: `${baseUrl}/vehicules`, lastModified: new Date(), priority: 0.8 },
-        { url: `${baseUrl}/guides`, lastModified: new Date(), priority: 0.8 },
-        { url: `${baseUrl}/solutions/maison`, lastModified: new Date(), priority: 0.7 },
-        { url: `${baseUrl}/solutions/copropriete`, lastModified: new Date(), priority: 0.7 },
-        { url: `${baseUrl}/solutions/entreprise`, lastModified: new Date(), priority: 0.7 },
-    ];
+    let blogRoutes: MetadataRoute.Sitemap = [];
+    try {
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        if (supabaseUrl && supabaseKey) {
+            const supabase = createClient(supabaseUrl, supabaseKey);
+            const { data: blogPosts } = await supabase
+                .from('blog_posts')
+                .select('slug, published_at, updated_at')
+                .eq('status', 'published')
+                .order('published_at', { ascending: false });
 
+            if (blogPosts) {
+                blogRoutes = blogPosts.map((post) => ({
+                    url: `${baseUrl}/blog/${post.slug}`,
+                    lastModified: new Date(post.updated_at || post.published_at),
+                    changeFrequency: 'weekly' as const,
+                    priority: 0.8,
+                }));
+            }
+        }
+    } catch (e) {
+        console.warn('[Sitemap] Failed to fetch blog posts:', e);
+    }
 
     // ========================================
     // 11. B2B PSEO Routes (Copro + Entreprise per city)
     // ========================================
-    const b2bRoutes: MetadataRoute.Sitemap = NATIONAL_TARGETS.flatMap((target) => {
+    const b2bRoutes: MetadataRoute.Sitemap = validTargets.flatMap((target) => {
         return [
             {
                 url: `${baseUrl}/ville/${target.slug}/copropriete`,
@@ -140,7 +207,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // ========================================
     // 12. Domination Longue Traîne: City x Brand (pSEO Matrix)
     // ========================================
-    const cityBrandRoutes: MetadataRoute.Sitemap = NATIONAL_TARGETS.flatMap((target) => {
+    const cityBrandRoutes: MetadataRoute.Sitemap = validTargets.flatMap((target) => {
         return brands.map(brand => ({
             url: `${baseUrl}/ville/${target.slug}/${brand.slug}`,
             lastModified: new Date(),
@@ -155,9 +222,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ...serviceRoutes,
         ...poiRoutes,
         ...installationRoutes,
+        ...vehicleBrandRoutes,
         ...vehicleRoutes,
         ...guideRoutes,
-        ...extraRoutes,
+        ...blogRoutes,
         ...b2bRoutes,
         ...cityBrandRoutes,
     ].map(item => ({

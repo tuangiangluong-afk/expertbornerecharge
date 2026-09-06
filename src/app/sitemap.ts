@@ -43,6 +43,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: 'weekly',
             priority: 0.9,
         },
+        {
+            url: `${BASE_URL}/guides`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: `${BASE_URL}/blog`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
+        {
+            url: `${BASE_URL}/vehicules`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
         // Legal pages — low priority (thin content)
         {
             url: `${BASE_URL}/mentions-legales`,
@@ -102,6 +120,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     // 5. Vehicle Routes
+    const vehicleBrandRoutes: MetadataRoute.Sitemap = Array.from(new Set(vehicles.map((v) => v.brand.toLowerCase()))).map((brand) => ({
+        url: `${BASE_URL}/vehicules/${brand}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+    }));
+
     const vehicleRoutes: MetadataRoute.Sitemap = vehicles.map((vehicle) => ({
         url: `${BASE_URL}/vehicules/${vehicle.brand.toLowerCase()}/${vehicle.id}`,
         lastModified: new Date(),
@@ -112,7 +137,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 6. City Routes (From CITIES Config)
     const uniqueSites = new Map();
     Object.values(CITIES).forEach(site => {
-        if (site.slug !== 'home' && site.slug !== 'expertbornerecharge.com') {
+        if (site.slug !== 'home' && site.slug !== 'expertbornerecharge.com' && site.slug !== 'saint-exupery' && site.slug !== 'orly') {
             uniqueSites.set(site.slug, site);
         }
     });
@@ -206,7 +231,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }));
     });
 
-    return [...routes, ...serviceRoutes, ...guideRoutes, ...blogRoutes, ...vehicleRoutes, ...installationRoutes, ...cityRoutes, ...b2bRoutes, ...cityBrandRoutes, ...departementRoutes, ...quartierRoutes, ...marquesRoutes, ...comparatifRoutes, ...puissanceRoutes, ...prisesRoutes].map(item => ({
+    return [...routes, ...serviceRoutes, ...guideRoutes, ...blogRoutes, ...vehicleBrandRoutes, ...vehicleRoutes, ...installationRoutes, ...cityRoutes, ...b2bRoutes, ...cityBrandRoutes, ...departementRoutes, ...quartierRoutes, ...marquesRoutes, ...comparatifRoutes, ...puissanceRoutes, ...prisesRoutes].map(item => ({
         ...item,
         url: item.url.toLowerCase()
     }));

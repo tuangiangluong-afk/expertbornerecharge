@@ -1,5 +1,5 @@
 import { getGuideBySlug, getAllGuides } from '@/lib/mdx';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -56,15 +56,26 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
     const resolvedParams = await params;
     const guide = await getGuideBySlug(resolvedParams.slug);
+    const canonicalUrl = `https://expertbornerecharge.com/guides/${resolvedParams.slug}`;
     
     if (guide) {
         return {
             title: guide.meta.title,
             description: guide.meta.description,
+            alternates: {
+                canonical: canonicalUrl,
+            },
+            openGraph: {
+                title: guide.meta.title,
+                description: guide.meta.description,
+                type: 'article',
+                url: canonicalUrl,
+            },
+            robots: { index: true, follow: true },
         };
     }
 
-    // Try DB
+    // Try DB: if it is a DB post, canonical points to /blog/[slug] and noindex on /guides/
     const { data: post } = await supabase
         .from('blog_posts')
         .select('seo_title, title, seo_description, excerpt')
@@ -76,6 +87,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
          return {
             title: post.seo_title || post.title,
             description: post.seo_description || post.excerpt,
+            alternates: {
+                canonical: `https://expertbornerecharge.com/blog/${resolvedParams.slug}`,
+            },
+            openGraph: {
+                title: post.seo_title || post.title,
+                description: post.seo_description || post.excerpt,
+                type: 'article',
+                url: `https://expertbornerecharge.com/blog/${resolvedParams.slug}`,
+            },
+            robots: { index: false, follow: true },
         };
     }
 
@@ -90,37 +111,19 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     const resolvedParams = await params;
     
     // 1. Try Static Guide
-    let guide = await getGuideBySlug(resolvedParams.slug);
-    let dbPost = null;
+    const guide = await getGuideBySlug(resolvedParams.slug);
 
-    // 2. Try Dynamic DB Post
+    // 2. If it's a DB blog post, permanently redirect to /blog/[slug]
     if (!guide) {
-        const { data, error } = await supabase
+        const { data: post } = await supabase
             .from('blog_posts')
-            .select(`
-                *,
-                category:blog_categories(name, slug),
-                author:blog_authors(name, slug, image_url, role)
-            `)
+            .select('slug')
             .eq('slug', resolvedParams.slug)
             .eq('status', 'published')
             .single();
         
-        if (data && !error) {
-            dbPost = data;
-            // Map DB post to Guide structure for the UI
-            guide = {
-                slug: data.slug,
-                meta: {
-                    title: data.title,
-                    description: data.excerpt,
-                    date: data.published_at,
-                    readTime: data.read_time_minutes ? `${data.read_time_minutes} min` : '5 min',
-                    image: data.featured_image_url,
-                    category: data.category?.name
-                },
-                content: data.content // HTML content
-            };
+        if (post) {
+            permanentRedirect(`/blog/${resolvedParams.slug}`);
         }
     }
 
@@ -130,37 +133,21 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     let headings: string[] = [];
     let toc: any[] = [];
 
-    if (dbPost) {
-        // HTML Parsing for TOC
-        const matches = guide.content.match(/<h2.*?>(.*?)<\/h2>/g);
-        if (matches) {
-            toc = matches.map((h: string) => {
-                 const text = h.replace(/<[^>]+>/g, '');
-                 const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-                 return { text, id, level: 2 };
-            });
-            // Inject IDs into content
-            toc.forEach((h: any) => {
-                guide.content = guide.content.replace(`<h2>${h.text}</h2>`, `<h2 id="${h.id}">${h.text}</h2>`);
-            });
-        }
-    } else {
-        // MDX Parsing for TOC (Existing logic)
-        headings = guide.content.match(/^#{1,3} .+/gm) || [];
-        toc = headings.map((heading: string) => {
-            const level = heading.match(/^#+/)?.[0].length || 1;
-            const text = heading.replace(/^#+ /, '');
-            const id = text
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/(^-|-$)/g, '');
-            return { text, id, level };
-        });
-    }
+    // MDX Parsing for TOC
+    headings = guide.content.match(/^#{1,3} .+/gm) || [];
+    toc = headings.map((heading: string) => {
+        const level = heading.match(/^#+/)?.[0].length || 1;
+        const text = heading.replace(/^#+ /, '');
+        const id = text
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, '');
+        return { text, id, level };
+    });
 
     // Dynamically retrieve the current domain or fallback
     const headersList = await headers();
-    const canonicalDomain = headersList.get("x-irve-canonical-domain") || "www.expertbornerecharge.com";
+    const canonicalDomain = headersList.get("x-irve-canonical-domain") || "expertbornerecharge.com";
     const siteUrl = `https://${canonicalDomain}`; 
 
     // Article Schema for SEO/AEO
@@ -250,19 +237,15 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
 
                         {/* Content Body */}
                         <article className="prose prose-lg prose-slate prose-headings:font-bold prose-headings:text-slate-900 prose-headings:scroll-mt-32 prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-img:rounded-2xl max-w-none">
-                            {dbPost ? (
-                                <div dangerouslySetInnerHTML={{ __html: marked.parse(guide.content) }} />
-                            ) : (
-                                <MDXRemote
-                                    source={guide.content}
-                                    components={components}
-                                    options={{
-                                        mdxOptions: {
-                                            rehypePlugins: [rehypeSlug]
-                                        }
-                                    }}
-                                />
-                            )}
+                            <MDXRemote
+                                source={guide.content}
+                                components={components}
+                                options={{
+                                    mdxOptions: {
+                                        rehypePlugins: [rehypeSlug]
+                                    }
+                                }}
+                            />
                         </article>
 
                         {/* Author Box (Améliorée) */}

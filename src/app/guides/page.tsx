@@ -16,11 +16,18 @@ export const revalidate = 60; // ISR 60 seconds
 export const metadata: Metadata = {
     title: "Guides et Conseils Borne de Recharge | Expert IRVE",
     description: "Tout comprendre sur l'installation de bornes de recharge. Guides experts pour copropriété, maison individuelle et entreprises.",
+    alternates: {
+        canonical: "https://expertbornerecharge.com/guides",
+    },
+    robots: { index: true, follow: true },
 };
 
 export default async function GuidesIndex() {
     // 1. Fetch Static MDX Guides
-    const staticGuides = getAllGuides();
+    const staticGuides = getAllGuides().map((guide: any) => ({
+        ...guide,
+        href: `/guides/${guide.slug}`
+    }));
 
     // 2. Fetch Dynamic Blog Posts from Supabase
     const { data: dbPosts } = await supabase
@@ -43,7 +50,8 @@ export default async function GuidesIndex() {
         description: post.excerpt,
         date: post.published_at,
         category: post.category?.name || 'Guide',
-        readTime: post.read_time_minutes ? `${post.read_time_minutes} min` : '5 min'
+        readTime: post.read_time_minutes ? `${post.read_time_minutes} min` : '5 min',
+        href: `/blog/${post.slug}`
     }));
 
     const allGuides = [...staticGuides, ...dynamicGuides].sort((a: any, b: any) => 
@@ -78,7 +86,7 @@ export default async function GuidesIndex() {
                     {guides.map((guide: any) => (
                         <Link
                             key={guide.slug}
-                            href={`/guides/${guide.slug}`}
+                            href={guide.href || `/guides/${guide.slug}`}
                             className="group bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-xl hover:border-blue-200 transition-all duration-300 flex flex-col h-full"
                         >
                             <div className="mb-4">
