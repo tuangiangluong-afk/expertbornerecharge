@@ -1,4 +1,3 @@
-export const revalidate = 86400; // 24h ISR cache
 "use client";
 
 import { useState, useEffect } from "react";
