@@ -414,48 +414,6 @@ export function Footer({ config }: FooterProps) {
                     </div>
                 </div>
 
-                <div className="border-t border-white/10 pt-8 pb-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <span className="text-xs uppercase tracking-wider text-neutral-400 font-semibold">Suivez-nous :</span>
-                    <div className="flex items-center gap-3">
-                        <a
-                            href={SOCIAL_NETWORKS.instagram}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="Instagram Expert Borne Recharge"
-                            className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-[#E4405F] hover:border-[#E4405F] transition-all duration-200 hover:scale-110"
-                        >
-                            <InstagramIcon className="w-4 h-4" />
-                        </a>
-                        <a
-                            href={SOCIAL_NETWORKS.tiktok}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="TikTok Expert Borne Recharge"
-                            className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 hover:text-black hover:bg-[#00F2FE] hover:border-[#00F2FE] transition-all duration-200 hover:scale-110"
-                        >
-                            <TikTokIcon className="w-4 h-4" />
-                        </a>
-                        <a
-                            href={SOCIAL_NETWORKS.youtube}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="YouTube Expert Borne Recharge"
-                            className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-[#FF0000] hover:border-[#FF0000] transition-all duration-200 hover:scale-110"
-                        >
-                            <YouTubeIcon className="w-4 h-4" />
-                        </a>
-                        <a
-                            href={SOCIAL_NETWORKS.facebook}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="Facebook Expert Borne Recharge"
-                            className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-[#1877F2] hover:border-[#1877F2] transition-all duration-200 hover:scale-110"
-                        >
-                            <FacebookIcon className="w-4 h-4" />
-                        </a>
-                    </div>
-                </div>
-
                 <div className="text-xs pt-4">
                     &copy; {new Date().getFullYear()} {config.name} - Tous droits réservés.
                 </div>
