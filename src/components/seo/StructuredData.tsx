@@ -1,5 +1,3 @@
-import Script from "next/script";
-
 export default function StructuredData() {
     const baseUrl = "https://expertbornerecharge.com";
 
@@ -186,22 +184,22 @@ export default function StructuredData() {
 
     return (
         <>
-            <Script
+            <script
                 id="org-schema"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
             />
-            <Script
+            <script
                 id="website-schema"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
             />
-            <Script
+            <script
                 id="service-schema"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
             />
-            <Script
+            <script
                 id="product-schema"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
