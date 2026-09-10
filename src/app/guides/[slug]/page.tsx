@@ -185,8 +185,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     const howToSchema = toc.length >= 3 ? {
         "@context": "https://schema.org",
         "@type": "HowTo",
-        "name": guide.meta?.title || guide.title,
-        "description": guide.meta?.description || guide.description,
+        "name": guide.meta?.title || (guide as any).title || "",
+        "description": guide.meta?.description || (guide as any).description || "",
         "step": toc.filter((h: any) => h.level === 2).map((h: any, i: number) => ({
             "@type": "HowToStep",
             "position": i + 1,
