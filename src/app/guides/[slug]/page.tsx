@@ -181,10 +181,28 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         }
     };
 
+    // HowTo Schema for AEO (auto-generated from guide headings)
+    const howToSchema = toc.length >= 3 ? {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": guide.meta?.title || guide.title,
+        "description": guide.meta?.description || guide.description,
+        "step": toc.filter((h: any) => h.level === 2).map((h: any, i: number) => ({
+            "@type": "HowToStep",
+            "position": i + 1,
+            "name": h.text,
+            "text": h.text,
+            "url": `${siteUrl}/guides/${resolvedParams.slug}#${h.id}`
+        }))
+    } : null;
+
     return (
         <div className="min-h-screen bg-white text-slate-900 font-sans">
             {/* Article Schema JSON-LD */}
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+            {howToSchema && (
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+            )}
             {/* Nav */}
             <Header isHub={true} variant="default" />
 
