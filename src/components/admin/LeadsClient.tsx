@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Users, Filter, Download, Eye, Phone, Mail, Building, Home, Briefcase, X, Link as LinkIcon, Check, MapPin, CreditCard, Gift } from "lucide-react";
+import { Users, Filter, Download, Eye, Phone, Mail, Building, Home, Briefcase, X, Link as LinkIcon, Check, MapPin, CreditCard, Gift, Compass } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -263,10 +263,12 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                             <tbody className="divide-y divide-slate-100">
                                 {leads.map((lead) => {
                                     let solarInterest = false;
+                                    let attribution: any = null;
                                     try {
                                         if (lead.message) {
                                             const meta = JSON.parse(lead.message);
                                             solarInterest = meta.solar_interest;
+                                            attribution = meta.attribution;
                                         }
                                     } catch (e) { }
 
@@ -331,6 +333,31 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                                     <div className="flex items-center gap-2 text-xs text-slate-500">
                                                         <Phone size={12} /> {lead.phone}
                                                     </div>
+                                                    {attribution && (
+                                                        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                                                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+                                                                attribution.source === 'google' && attribution.medium === 'cpc' ? 'bg-amber-100 text-amber-800 border-amber-200' :
+                                                                attribution.source === 'google' ? 'bg-emerald-100 text-emerald-800 border-emerald-200' :
+                                                                attribution.source === 'facebook' || attribution.source === 'meta' ? 'bg-indigo-100 text-indigo-800 border-indigo-200' :
+                                                                'bg-slate-100 text-slate-700 border-slate-200'
+                                                            }`}>
+                                                                {attribution.source === 'google' && attribution.medium === 'cpc' ? '🎯 Google Ads' :
+                                                                 attribution.source === 'google' ? '🌱 Google SEO' :
+                                                                 attribution.source === 'facebook' || attribution.source === 'meta' ? '📱 Meta Ads' :
+                                                                 `${attribution.source} / ${attribution.medium}`}
+                                                            </span>
+                                                            {attribution.term && (
+                                                                <span className="text-[10px] font-mono bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded border border-blue-100" title="Mot-clé">
+                                                                    🔑 {attribution.term}
+                                                                </span>
+                                                            )}
+                                                            {attribution.campaign && (
+                                                                <span className="text-[10px] bg-purple-50 text-purple-700 px-1.5 py-0.5 rounded border border-purple-100" title="Campagne">
+                                                                    📢 {attribution.campaign}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
@@ -437,6 +464,31 @@ export default function LeadsClient({ initialLeads, partners }: { initialLeads: 
                                         </span>
                                     </div>
                                 </div>
+
+                                {/* Traffic Attribution Details */}
+                                {(() => {
+                                    try {
+                                        const meta = selectedLead.message ? JSON.parse(selectedLead.message) : null;
+                                        const attr = meta?.attribution;
+                                        if (!attr) return null;
+                                        return (
+                                            <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 mb-5 text-xs">
+                                                <h4 className="font-bold text-slate-700 uppercase tracking-wider text-[10px] mb-2 flex items-center gap-1.5">
+                                                    <Compass size={13} className="text-blue-600" />
+                                                    Attribution & Parcours Visiteur
+                                                </h4>
+                                                <div className="grid grid-cols-2 gap-2 text-slate-600">
+                                                    <div><span className="text-slate-400">Canal:</span> <span className="font-bold text-slate-900">{attr.source} / {attr.medium}</span></div>
+                                                    {attr.campaign && <div><span className="text-slate-400">Campagne:</span> <span className="font-bold text-slate-900">{attr.campaign}</span></div>}
+                                                    {attr.term && <div><span className="text-slate-400">Mot-clé:</span> <span className="font-mono font-bold text-blue-700">{attr.term}</span></div>}
+                                                    {attr.content && <div><span className="text-slate-400">Créatif:</span> <span className="font-bold text-slate-900">{attr.content}</span></div>}
+                                                    {attr.landing_page && <div className="col-span-2"><span className="text-slate-400">Atterrissage:</span> <span className="font-mono text-slate-800">{attr.landing_page}</span></div>}
+                                                    {attr.referrer && <div className="col-span-2"><span className="text-slate-400">Référent:</span> <span className="text-slate-500 truncate block">{attr.referrer}</span></div>}
+                                                </div>
+                                            </div>
+                                        );
+                                    } catch (e) { return null; }
+                                })()}
 
                                 {/* FREE LEAD CHECKBOX OPTION */}
                                 <div className={`p-4 rounded-xl border transition-all mb-5 ${isFree ? 'bg-emerald-50 border-emerald-300 ring-2 ring-emerald-500/20' : 'bg-slate-50 border-slate-200'}`}>
