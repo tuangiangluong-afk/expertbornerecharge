@@ -4,6 +4,7 @@ import { CityConfig } from "@/lib/db";
 import { SiteConfig } from "@/lib/sites-config";
 import { getTheme } from "@/lib/theme";
 import { Mail } from "lucide-react";
+import { AiSummarizeSection } from "./AiSummarizeSection";
 
 interface FooterProps {
     config: CityConfig | SiteConfig;
@@ -414,6 +415,7 @@ export function Footer({ config }: FooterProps) {
                     </div>
                 </div>
 
+                <AiSummarizeSection brandName={config.name} />
                 <div className="text-xs pt-4">
                     &copy; {new Date().getFullYear()} {config.name} - Tous droits réservés.
                 </div>
