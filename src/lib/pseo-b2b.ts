@@ -1,4 +1,5 @@
 import type { CityConfig } from "@/lib/db";
+import { composeLocalIntro } from "@/lib/pseo-local";
 
 export interface PseoB2bContent {
     meta_title: string;
@@ -9,130 +10,114 @@ export interface PseoB2bContent {
     expert_tip: string;
 }
 
-const REGIONAL_DATA: Record<string, { subsidyName: string; subsidyAmount: string; gridOperator: string; avgPrice: string; }> = {
-    "75": { subsidyName: "Paris Éco-Rénovation", subsidyAmount: "Jusqu'à 4 000€ (Ville de Paris + Advenir)", gridOperator: "Enedis Île-de-France", avgPrice: "1 200€ – 2 500€" },
-    "69": { subsidyName: "Métropole de Lyon Éco-Énergie", subsidyAmount: "Prime Advenir + Bonus Métropole Lyon", gridOperator: "Enedis Rhône", avgPrice: "890€ – 1 800€" },
-    "13": { subsidyName: "Région Sud Mobilité Verte", subsidyAmount: "Prime Advenir + Aide Région Sud", gridOperator: "Enedis Provence", avgPrice: "850€ – 1 700€" },
-    "06": { subsidyName: "Métropole Nice Côte d'Azur", subsidyAmount: "Prime Advenir + Aide MNCA", gridOperator: "Enedis Alpes-Maritimes", avgPrice: "950€ – 2 200€" },
-    "33": { subsidyName: "Bordeaux Métropole Climat", subsidyAmount: "Prime Advenir applicable", gridOperator: "Enedis Gironde", avgPrice: "890€ – 1 800€" },
-    "31": { subsidyName: "Toulouse Métropole Transition", subsidyAmount: "Prime Advenir applicable", gridOperator: "Enedis Haute-Garonne", avgPrice: "850€ – 1 700€" },
-    "59": { subsidyName: "MEL Mobilité Électrique", subsidyAmount: "Prime Advenir + Aide MEL", gridOperator: "Enedis Nord", avgPrice: "890€ – 1 800€" },
-    "67": { subsidyName: "Eurométropole de Strasbourg", subsidyAmount: "Prime Advenir applicable", gridOperator: "Électricité de Strasbourg", avgPrice: "890€ – 1 800€" },
-    "44": { subsidyName: "Nantes Métropole Climat", subsidyAmount: "Prime Advenir applicable", gridOperator: "Enedis Loire-Atlantique", avgPrice: "850€ – 1 600€" },
-    "34": { subsidyName: "Montpellier Méditerranée Métropole", subsidyAmount: "Prime Advenir applicable", gridOperator: "Enedis Hérault", avgPrice: "850€ – 1 700€" },
-};
-
-const DEFAULT_REGIONAL = {
-    subsidyName: "Programme national ADVENIR",
-    subsidyAmount: "Jusqu'à 300€ de crédit d'impôt + Prime Advenir (jusqu'à 960€)",
-    gridOperator: "Enedis",
-    avgPrice: "890€ – 1 800€"
-};
-
-function getEntrepriseIntro(city: string, dept: string, neighborhoods: string[]): string {
-    const hash = city.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-    const zones = neighborhoods.length > 0 ? neighborhoods.slice(0, 3).join(', ') : "vos zones d'activité locales";
-
-    const intros = [
-        `<p class="mb-4">
-            L'électrification des flottes professionnelles s'accélère à <strong>${city}</strong>. De la PME locale au grand groupe tertiaire,
-            équiper vos parkings de <strong>bornes de recharge certifiées IRVE</strong> est un atout stratégique majeur autant qu'une obligation légale.
-            Nos électriciens qualifiés interviennent à ${city} et dans les zones environnantes (comme <strong>${zones}</strong>) pour concevoir votre infrastructure de recharge.
-        </p>
-        <p>
-            Nous vous aidons à dimensionner les puissances (bornes AC 7.4-22kW ou chargeurs rapides DC 50kW) et à configurer les outils de supervision
-            pour facturer ou offrir la recharge de manière intelligente à vos collaborateurs et clients.
-        </p>`,
-
-        `<p class="mb-4">
-            Vous gérez un commerce, des bureaux ou un site industriel à <strong>${city}${dept ? ` (${dept})` : ''}</strong> et souhaitez y installer des points de recharge ?
-            Notre équipe locale d'installateurs IRVE déploie des solutions clé en main répondant précisément aux exigences de votre activité.
-            Nos chantiers couvrent l'ensemble de l'agglomération, de <strong>${neighborhoods[0] || "centre-ville"}</strong> aux zones logistiques périphériques.
-        </p>
-        <p>
-            Respect de la <strong>Loi LOM</strong>, valorisation de votre démarche RSE et attractivité pour vos salariés en voiture électrique :
-            nous optimisons chaque installation pour vous faire bénéficier des aides <strong>ADVENIR</strong> et de la récupération de TVA.
-        </p>`,
-
-        `<p class="mb-4">
-            À <strong>${city}</strong>, l'installation de bornes de recharge pour véhicules électriques est désormais incontournable pour les entreprises tertiaires et industrielles.
-            Que vous disposiez d'un parking ouvert au public, de véhicules de service ou de fonction à charger la nuit, nous concevons des infrastructures sur mesure.
-            Notre accompagnement technique inclut la visite de vos sites à <strong>${city}</strong>, l'audit de puissance électrique et la mise en relation avec nos experts certifiés.
-        </p>
-        <p>
-            Nous intégrons du <strong>Smart Charging</strong> (gestion dynamique de charge) pour éviter tout dépassement de votre abonnement d'électricité
-            et lisser la consommation de votre parking professionnel.
-        </p>`
-    ];
-
-    return intros[hash % intros.length];
+/**
+ * Gestionnaire de réseau de distribution : Enedis couvre la quasi-totalité des
+ * communes françaises, à l'exception de quelques réseaux locaux (Strasbourg
+ * avec Électricité de Strasbourg, par exemple).
+ */
+function gestionnaireReseau(city: string): string {
+    if (city.toLowerCase() === "strasbourg") return "Électricité de Strasbourg (réseau local)";
+    return "le gestionnaire de réseau de distribution";
 }
 
-function getCoproIntro(city: string, dept: string, neighborhoods: string[]): string {
-    const hash = city.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-    const neighborhoodList = neighborhoods.length > 0 ? neighborhoods.slice(0, 3).join(', ') : "les différents quartiers de la ville";
-
-    const intros = [
-        `<p class="mb-4">
-            La transition vers la voiture électrique est une réalité tangible à <strong>${city}</strong>. Pour les copropriétaires et locataires d'immeubles résidentiels,
-            accéder à un point de recharge à son propre emplacement est une attente croissante. Notre réseau d'électriciens qualifiés déploie des infrastructures
-            de recharge collectives adaptées à tous les immeubles de ${city}, y compris sur des secteurs clés comme <strong>${neighborhoodList}</strong>.
-        </p>
-        <p>
-            Grâce à la solution <strong>Tiers-Investisseur</strong>, le syndic de copropriété peut équiper l'immeuble pour <strong>0€ de reste à charge</strong>.
-            L'infrastructure principale est entièrement financée par l'opérateur partenaire, et chaque utilisateur ne paie que sa propre borne de recharge.
-        </p>`,
-
-        `<p class="mb-4">
-            Vous habitez en copropriété à <strong>${city}${dept ? ` (${dept})` : ''}</strong> et vous vous demandez comment installer une borne de recharge pour votre véhicule électrique ?
-            Au-delà du simple <strong>Droit à la Prise</strong> individuel qui peut vite saturer la puissance globale disponible de l'immeuble, nous recommandons une
-            <strong>infrastructure collective (colonne horizontale)</strong> pour une solution propre, pérenne et évolutive.
-        </p>
-        <p>
-            Nos spécialistes interviennent à ${city} pour réaliser des audits techniques gratuits et présenter le dossier de financement en Assemblée Générale.
-            Le projet bénéficie de subventions <strong>ADVENIR</strong> couvrant jusqu'à 50% du montant des travaux collectifs.
-        </p>`,
-
-        `<p class="mb-4">
-            Équiper le parking de votre immeuble résidentiel à <strong>${city}</strong> d'un réseau de bornes électriques n'a jamais été aussi simple.
-            Nous accompagnons les syndics de copropriété professionnels et bénévoles dans la mise en conformité et la valorisation de leur patrimoine immobilier.
-            Nos techniciens certifiés se déplacent sur toute la zone de ${city} (notamment <strong>${neighborhoods[0] || "centre-ville"}</strong>) pour étudier la faisabilité technique.
-        </p>
-        <p>
-            De la visite technique initiale à la mise en service, nous gérons l'ensemble des démarches administratives,
-            l'obtention des aides d'État et le raccordement au réseau électrique public.
-        </p>`
-    ];
-
-    return intros[hash % intros.length];
+function getEntrepriseIntro(city: string, dept: string, quartiers: string[]): string {
+    // Intro assemblée à partir de six emplacements factuels (voir
+    // pseo-local.ts) : l'ancienne version piochait 1 texte sur 3 par hash et
+    // annonçait des aides locales inventées ainsi qu'une plus-value de 5 à 8 %
+    // à la revente, non vérifiable.
+    return composeLocalIntro(
+        {
+            city,
+            deptCode: dept,
+            quartiers,
+            authority: gestionnaireReseau(city),
+        },
+        {
+            audience: "Les entreprises, les flottes et les parkings professionnels",
+            service: "l'audit, la fourniture et la maintenance des points de recharge",
+            norms: "la norme NF C 15-100 et le référentiel IRVE",
+            document: "l'attestation de conformité et le registre de supervision",
+            authorityLabel: "l'organisme qui valide le raccordement",
+            project: "votre projet d'électrification",
+        },
+        {
+            openers: [
+                (f) => `Vous exploitez un commerce, des bureaux ou un site industriel à ${f.city} : l'équipement en recharge des parkings répond à la loi LOM et à la demande des salariés.`,
+                (f) => `Un parking de plus de 20 places à ${f.city} doit pré-équiper une partie de ses stationnements pour la recharge, selon le statut du bâtiment.`,
+                (f) => `L'audit de recharge de vos locaux à ${f.city} commence par la puissance disponible au compteur et le trajet des câbles.`,
+                (f) => `Les besoins de recharge d'une flotte à ${f.city} se dimensionnent sur les kilomètres parcourus et les plages d'immobilisation, pas sur le nombre de véhicules.`,
+                (f) => `Sur un site professionnel à ${f.city}, la supervision et la facturation par utilisateur pèsent autant que la pose des bornes.`,
+                (f) => `Un parking ouvert au public à ${f.city} doit aussi respecter les obligations d'accessibilité et de signalisation des places équipées.`,
+            ],
+            middles: [
+                (_f, v) => `Notre intervention couvre ${v.service} : étude de puissance, choix des bornes, pose et mise en service.`,
+                (f) => `Le dimensionnement réalisé à ${f.city} tient compte du nombre de véhicules à charger simultanément et des plages horaires réelles d'utilisation.`,
+                (f, v) => `Chaque point de recharge posé à ${f.city} est déclaré, réglé et documenté : ${v.document} reste disponible pour l'exploitant.`,
+                (f) => `La pose à ${f.city} inclut la protection différentielle adaptée, la mise à la terre et l'étiquetage du tableau électrique.`,
+                (f) => `La gestion dynamique de charge évite à l'exploitant de ${f.city} de souscrire une puissance supplémentaire sans étude préalable.`,
+                (f) => `L'audit distingue à ${f.city} les emplacements prioritaires de ceux qui peuvent être équipés dans un second temps.`,
+            ],
+        },
+    );
 }
 
-function getEntrepriseTip(city: string, neighborhoods: string[]): string {
-    const hash = city.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-    const zone = neighborhoods[0] || "votre secteur";
+function getCoproIntro(city: string, dept: string, quartiers: string[]): string {
+    return composeLocalIntro(
+        {
+            city,
+            deptCode: dept,
+            quartiers,
+            authority: gestionnaireReseau(city),
+        },
+        {
+            audience: "Les copropriétés et leurs syndics",
+            service: "l'audit, l'infrastructure collective et la maintenance des points de recharge",
+            norms: "la norme NF C 15-100, le référentiel IRVE et le décret n° 2020-1720 relatif au droit à la prise",
+            document: "le registre de l'infrastructure de recharge et les conventions d'usage",
+            authorityLabel: "l'organisme qui valide le raccordement",
+            project: "votre projet d'infrastructure collective",
+        },
+        {
+            openers: [
+                (f) => `Dans un immeuble à ${f.city}, le droit à la prise permet à un copropriétaire ou locataire d'installer une borne à son emplacement, à ses frais, sans accord préalable de l'assemblée générale.`,
+                (f) => `Équiper le parking d'une copropriété de ${f.city} soulève deux questions distinctes : l'infrastructure collective et les bornes individuelles.`,
+                (f) => `Avant l'assemblée générale, l'audit réalisé à ${f.city} chiffre le câblage des parties communes et distingue l'infrastructure des équipements individuels.`,
+                (f) => `Une copropriété à ${f.city} peut faire financer l'infrastructure collective par un opérateur, chaque utilisateur payant ensuite sa propre borne.`,
+                (f) => `Le délai d'opposition du syndic à une demande de droit à la prise à ${f.city} est encadré : passé ce délai, l'installation peut être réalisée.`,
+                (f) => `Dans les immeubles anciens de ${f.city}, le point limitant est souvent la puissance souscrite pour les parties communes, pas la place disponible.`,
+            ],
+            middles: [
+                (_f, v) => `L'audit présenté au conseil syndical couvre ${v.service}, avec le tracé des colonnes et les emplacements desservis.`,
+                (f) => `Le dossier remis pour l'immeuble de ${f.city} indique ce qui relève de la décision d'assemblée générale et ce qui relève du droit à la prise individuel.`,
+                (f, v) => `Chaque installation déclarée alimente ${v.document}, ce qui évite les litiges d'usage entre résidents à ${f.city}.`,
+                (f) => `Les compteurs individuels de recharge permettent à la copropriété de ${f.city} de refacturer chaque résident à sa consommation réelle.`,
+                (f) => `Le contrat de maintenance proposé à ${f.city} couvre l'infrastructure commune et les bornes rattachées au réseau collectif.`,
+                (f) => `Les protections différentielles et la sélectivité des départs sont vérifiées à ${f.city} avant toute mise en service.`,
+            ],
+        },
+    );
+}
 
+function getEntrepriseTip(city: string, quartiers: string[]): string {
+    const zone = quartiers[0] || "votre secteur";
     const tips = [
-        `Conseil Loi LOM à ${city} : Si votre entreprise gère un parking de plus de 20 places, la loi impose d'équiper 10% des places d'ici 2026. L'ADVENIR finance jusqu'à 2 200€ par borne pour les parkings ouverts au public !`,
-        `Optimisation de charge à ${city} : Dans les bureaux situés vers ${zone}, les collaborateurs arrivent souvent à la même heure. Une supervision intelligente permet de charger les véhicules par ordre de priorité sans faire sauter le disjoncteur général.`,
-        `Fiscalité Pro à ${city} : Profitez de la récupération de 100% de la TVA sur l'électricité consommée par vos véhicules électriques d'entreprise et du suramortissement fiscal pour réduire vos coûts opérationnels.`,
-        `Attractivité des talents : Offrir la recharge gratuite ou à tarif préférentiel à vos salariés est aujourd'hui l'un des avantages en nature les plus demandés à ${city}.`
+        `À ${city}, commencez par la puissance disponible : une borne 22 kW en triphasé peut nécessiter une modification du raccordement, alors que deux bornes 7,4 kW monophasées passent souvent sans changement d'abonnement.`,
+        `Sur les sites de ${zone}, la charge nocturne des véhicules de service est le scénario le moins coûteux : il évite la pointe de journée et n'exige pas de puissance supplémentaire.`,
+        `Le référentiel IRVE impose une qualification spécifique pour l'installateur : demandez l'attestation avant signature, elle conditionne aussi l'accès aux aides ADVENIR.`,
+        `Programmer la supervision dès l'installation à ${city} permet d'ajouter la facturation par utilisateur plus tard, sans reprendre le câblage.`,
     ];
-
-    return tips[hash % tips.length];
+    return tips[city.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % tips.length];
 }
 
-function getCoproTip(city: string, neighborhoods: string[]): string {
-    const hash = city.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-    const zone = neighborhoods[0] || "votre quartier";
-
+function getCoproTip(city: string, quartiers: string[]): string {
+    const zone = quartiers[0] || "votre quartier";
     const tips = [
-        `Conseil Syndic à ${city} : Lors de la prochaine Assemblée Générale, proposez une résolution de 'Tiers-Investisseur'. Cela permet de voter l'équipement global à la majorité simple sans engager la trésorerie de la copropriété.`,
-        `Droit à la Prise à ${city} : Si vous souhaitez installer une borne à vos frais vers ${zone}, vous devez notifier votre syndic par lettre recommandée. Le syndic ne peut s'y opposer sans motif sérieux et légitime sous 3 mois.`,
-        `Financement ADVENIR en immeuble : L'aide collective finance 50% des travaux de câblage généraux de la copropriété. C'est le moment idéal pour faire voter l'infrastructure collective avant la baisse progressive des enveloppes nationales.`,
-        `Valorisation immobilière : Un appartement avec place de parking pré-équipée d'une borne de recharge se vend en moyenne 5% à 8% plus cher à ${city} par rapport à un bien non équipé.`
+        `À ${city}, l'infrastructure collective posée une fois évite de reprendre les parties communes à chaque nouvelle demande de borne individuelle.`,
+        `Dans les parkings en sous-sol de ${zone}, vérifiez le désenfumage et la ventilation : l'ajout de bornes peut y être soumis à des exigences complémentaires.`,
+        `Le droit à la prise s'exerce sans vote préalable, mais le syndic doit être informé par lettre recommandée avec la description des travaux envisagés.`,
+        `Un contrat de maintenance communiqué en assemblée générale à ${city} clarifie la répartition entre charges de copropriété et usage individuel.`,
     ];
-
-    return tips[hash % tips.length];
+    return tips[city.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % tips.length];
 }
 
 export async function getPseoB2bContent(cityConfig: CityConfig, segment: 'ENTREPRISE' | 'COPRO'): Promise<PseoB2bContent> {
@@ -140,41 +125,25 @@ export async function getPseoB2bContent(cityConfig: CityConfig, segment: 'ENTREP
     const dept = department || "";
     const postal = postalCode || "";
     const quartiers = neighborhoods || [];
-
-    const deptCode = dept.length >= 2 ? dept.substring(0, 2) : "";
-    const regionalInfo = REGIONAL_DATA[deptCode] || DEFAULT_REGIONAL;
+    const postalMention = postal ? ` (${postal})` : "";
 
     if (segment === 'ENTREPRISE') {
-        const meta_title = `Bornes de Recharge Entreprise ${city}${postal ? ` (${postal})` : ''} | Audit Flotte & Loi LOM`;
-        const meta_description = `Installation bornes de recharge pour entreprises et flottes à ${city}. Conformité Loi LOM, aides ADVENIR (${regionalInfo.subsidyAmount}), supervision intelligente. Audit gratuit.`;
+        const meta_title = `Bornes de recharge entreprise à ${city}${postalMention} | Audit flotte et loi LOM`;
+        const meta_description = `Installation et maintenance de bornes de recharge pour entreprises et flottes à ${city}. Audit de puissance, référentiel IRVE, supervision et aides ADVENIR. Visite technique sur place.`;
         const hero_title = `Bornes de recharge <span class="text-emerald-600">entreprise</span> à ${city}`;
-        const hero_badge = "Solutions Pro & Flottes";
+        const hero_badge = "Flottes, parkings et sites professionnels";
         const intro_html = getEntrepriseIntro(city, dept, quartiers);
         const expert_tip = getEntrepriseTip(city, quartiers);
 
-        return {
-            meta_title,
-            meta_description,
-            hero_title,
-            hero_badge,
-            intro_html,
-            expert_tip
-        };
-    } else {
-        const meta_title = `Installation Borne Recharge Copropriété ${city} | Étude Gratuite Syndic`;
-        const meta_description = `Infrastructure collective de recharge en copropriété à ${city}. Solution Tiers-Investisseur : 0€ pour le syndic. Aides ADVENIR. Étude gratuite.`;
-        const hero_title = `Bornes de recharge en <span class="text-purple-600">copropriété</span> à ${city}`;
-        const hero_badge = "Spécial Syndic & Copropriété";
-        const intro_html = getCoproIntro(city, dept, quartiers);
-        const expert_tip = getCoproTip(city, quartiers);
-
-        return {
-            meta_title,
-            meta_description,
-            hero_title,
-            hero_badge,
-            intro_html,
-            expert_tip
-        };
+        return { meta_title, meta_description, hero_title, hero_badge, intro_html, expert_tip };
     }
+
+    const meta_title = `Bornes de recharge copropriété à ${city}${postalMention} | Audit pour syndic`;
+    const meta_description = `Infrastructure collective de recharge en copropriété à ${city} : audit, tracé des colonnes, comptage individuel et maintenance. Droit à la prise et aides ADVENIR expliqués au conseil syndical.`;
+    const hero_title = `Bornes de recharge en <span class="text-purple-600">copropriété</span> à ${city}`;
+    const hero_badge = "Syndics et conseils syndicaux";
+    const intro_html = getCoproIntro(city, dept, quartiers);
+    const expert_tip = getCoproTip(city, quartiers);
+
+    return { meta_title, meta_description, hero_title, hero_badge, intro_html, expert_tip };
 }

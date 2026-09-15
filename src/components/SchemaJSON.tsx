@@ -120,61 +120,18 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
                         "name": `Installation Borne pour ${brand.name} ${model}`,
                         "brand": { "@type": "Brand", "name": brand.name }
                     },
-                    "hasMerchantReturnPolicy": {
-                        "@type": "MerchantReturnPolicy",
-                        "applicableCountry": "FR",
-                        "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
-                    },
-                    "shippingDetails": {
-                        "@type": "OfferShippingDetails",
-                        "shippingRate": {
-                            "@type": "MonetaryAmount",
-                            "value": "0",
-                            "currency": "EUR"
-                        },
-                        "shippingDestination": {
-                            "@type": "DefinedRegion",
-                            "addressCountry": "FR"
-                        },
-                        "deliveryTime": {
-                            "@type": "ShippingDeliveryTime",
-                            "businessDays": {
-                                "@type": "OpeningHoursSpecification",
-                                "dayOfWeek": [
-                                    "https://schema.org/Monday",
-                                    "https://schema.org/Tuesday",
-                                    "https://schema.org/Wednesday",
-                                    "https://schema.org/Thursday",
-                                    "https://schema.org/Friday"
-                                ]
-                            },
-                            "cutoffTime": "18:00:00Z",
-                            "handlingTime": {
-                                "@type": "QuantitativeValue",
-                                "minValue": 1,
-                                "maxValue": 3,
-                                "unitCode": "DAY"
-                            },
-                            "transitTime": {
-                                "@type": "QuantitativeValue",
-                                "minValue": 1,
-                                "maxValue": 5,
-                                "unitCode": "DAY"
-                            }
-                        }
-                    }
-                }))
+                                                        }))
             }
         };
     } else if (type === "Product" && vehicle) {
+        // Installation d'un équipement pour un véhicule : c'est un service rendu,
+        // pas un article de catalogue (ni SKU, ni stock, ni livraison).
         schema = {
             "@context": "https://schema.org",
-            "@type": "Product",
+            "@type": "Service",
             "name": `Installation Borne de Recharge ${vehicle.brand} ${vehicle.model}`,
             "image": [vehicle.image],
             "description": `Installation de borne de recharge à domicile pour ${vehicle.brand} ${vehicle.model}. Installateurs certifiés IRVE.`,
-            "sku": `EBR-${slugify(vehicle.brand).toUpperCase()}-${slugify(vehicle.model).toUpperCase()}`,
-            "mpn": `EBR-${slugify(vehicle.brand).toUpperCase()}-${slugify(vehicle.model).toUpperCase()}`,
             "brand": {
                 "@type": "Brand",
                 "name": vehicle.brand
@@ -186,52 +143,7 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
                 "price": "990.00",
                 "validFrom": "2026-01-01",
                 "priceValidUntil": "2026-12-31",
-                "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/NewCondition",
-                "hasMerchantReturnPolicy": {
-                    "@type": "MerchantReturnPolicy",
-                    "applicableCountry": "FR",
-                    "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
-                },
-                "shippingDetails": {
-                    "@type": "OfferShippingDetails",
-                    "shippingRate": {
-                        "@type": "MonetaryAmount",
-                        "value": "0",
-                        "currency": "EUR"
-                    },
-                    "shippingDestination": {
-                        "@type": "DefinedRegion",
-                        "addressCountry": "FR"
-                    },
-                    "deliveryTime": {
-                        "@type": "ShippingDeliveryTime",
-                        "businessDays": {
-                            "@type": "OpeningHoursSpecification",
-                            "dayOfWeek": [
-                                "https://schema.org/Monday",
-                                "https://schema.org/Tuesday",
-                                "https://schema.org/Wednesday",
-                                "https://schema.org/Thursday",
-                                "https://schema.org/Friday"
-                            ]
-                        },
-                        "cutoffTime": "18:00:00Z",
-                        "handlingTime": {
-                            "@type": "QuantitativeValue",
-                            "minValue": 1,
-                            "maxValue": 3,
-                            "unitCode": "DAY"
-                        },
-                        "transitTime": {
-                            "@type": "QuantitativeValue",
-                            "minValue": 1,
-                            "maxValue": 5,
-                            "unitCode": "DAY"
-                        }
-                    }
-                }
-            },
+                                            },
         };
     } else if (type === "B2BService" && site && b2bType) {
         const baseUrl = "https://expertbornerecharge.com";

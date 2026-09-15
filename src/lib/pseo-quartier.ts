@@ -1,4 +1,5 @@
 import type { CityConfig } from "@/lib/db";
+import { composeLocalIntro } from "@/lib/pseo-local";
 
 export interface PseoQuartierContent {
     meta_title: string;
@@ -19,11 +20,6 @@ export interface PseoQuartierContent {
         question: string;
         answer: string;
     }[];
-    client_review: {
-        author: string;
-        vehicle: string;
-        text: string;
-    };
 }
 
 export function getPseoQuartierContent(quartierName: string, city: string, cityConfig?: CityConfig): PseoQuartierContent {
@@ -35,7 +31,7 @@ export function getPseoQuartierContent(quartierName: string, city: string, cityC
             Que vous habitiez en maison individuelle, en pavillon ou au sein d'une copropriété, le passage à la mobilité électrique nécessite une infrastructure certifiée et conforme aux normes de sécurité électrique françaises.
         </p>
         <p>
-            Nos électriciens qualifiés <strong>IRVE (Indice de Recharge pour Véhicules Électriques)</strong> interviennent directement à ${quartierName} pour réaliser un diagnostic complet de votre tableau électrique, déterminer la puissance optimale (de 7,4 kW à 22 kW) et assurer une pose garantie 2 ans avec attestation de conformité Consuel.
+            Nos électriciens qualifiés <strong>IRVE (Infrastructure de Recharge pour Véhicules Électriques)</strong> interviennent directement à ${quartierName} pour réaliser un diagnostic complet de votre tableau électrique, déterminer la puissance optimale (de 7,4 kW à 22 kW) et assurer une pose garantie 2 ans avec attestation de conformité Consuel.
         </p>`,
 
         `<p class="mb-4">
@@ -68,28 +64,6 @@ export function getPseoQuartierContent(quartierName: string, city: string, cityC
         }
     ];
 
-    const reviewVariants = [
-        {
-            author: "Marc L.",
-            vehicle: "Tesla Model Y",
-            text: `Pose impeccable d'une Wallbox 7.4 kW dans mon garage à ${quartierName}. Électricien IRVE ponctuel, travail propre avec goulottes soignées. Je recommande vivement.`
-        },
-        {
-            author: "Sophie V.",
-            vehicle: "Peugeot e-208",
-            text: `Installation très rapide à ${quartierName}. L'artisan m'a aidée à remplir les papiers pour le crédit d'impôt et la prime. La recharge en heures creuses fonctionne parfaitement.`
-        },
-        {
-            author: "Alexandre B.",
-            vehicle: "Renault Mégane E-Tech",
-            text: `Devis reçu en 24h et intervention la semaine suivante à ${quartierName}. Borne connectée très facile d'utilisation, équipe très professionnelle.`
-        },
-        {
-            author: "Julien D.",
-            vehicle: "Volkswagen ID.4",
-            text: `Excellent travail pour notre copropriété à ${quartierName}. Dossier Droit à la prise validé sans souci, installation sécurisée et aux normes.`
-        }
-    ];
 
     const faqs = [
         {
@@ -111,14 +85,49 @@ export function getPseoQuartierContent(quartierName: string, city: string, cityC
         meta_description: `Installateur certifié IRVE à ${quartierName} (${city}). Pose de bornes de recharge pour particuliers et copropriétés. Devis gratuit sous 24h, crédit d'impôt 500€.`,
         hero_title: `Installation Borne de Recharge à ${quartierName}`,
         hero_badge: `Électriciens IRVE Certifiés • ${city}`,
-        intro_html: introVariants[hash % introVariants.length],
+        intro_html: composeLocalIntro(
+            {
+                city,
+                postal: cityConfig?.postalCode,
+                deptCode: cityConfig?.department,
+                region: cityConfig?.region,
+                quartiers: [quartierName, ...(cityConfig?.neighborhoods || [])],
+                authority: "le gestionnaire de réseau de distribution",
+            },
+            {
+                audience: "Les particuliers, les copropriétés et les entreprises",
+                service: "l'étude, la fourniture et la pose du point de recharge",
+                norms: "la norme NF C 15-100 et le référentiel IRVE",
+                document: "l'attestation de conformité et la fiche d'intervention",
+                authorityLabel: "l'organisme de contrôle",
+                project: "votre projet d'équipement",
+            },
+            {
+                openers: [
+                    (f) => `Vous cherchez un installateur de borne de recharge dans le secteur de ${quartierName} ? Nos électriciens IRVE s'y déplacent pour l'étude et la pose.`,
+                    (f) => `À ${quartierName}, la pose d'une Wallbox dédiée évite de recharger sur une prise domestique, limitée à 2,3 kW et inadaptée à un usage quotidien.`,
+                    (f) => `Secteur de ${quartierName} : maisons individuelles, pavillons et résidences collectives n'appellent pas la même solution de recharge.`,
+                    (f) => `Avant toute pose à ${quartierName}, l'état du tableau électrique et de la prise de terre est vérifié.`,
+                    (f) => `Notre intervention à ${quartierName} couvre l'étude, la pose et la mise en service, avec attestation de conformité.`,
+                    (f) => `Recharge à ${quartierName} : la puissance retenue (7,4 kW monophasé ou 11 kW triphasé) dépend de l'abonnement et du kilométrage quotidien.`,
+                ],
+                middles: [
+                    (f) => `Le devis remis pour ${quartierName} précise la section de câble, la protection différentielle et le trajet depuis le tableau.`,
+                    (f) => `Les équipements proposés à ${quartierName} intègrent un module de délestage : la puissance de recharge s'adapte à la consommation du logement.`,
+                    (f) => `En copropriété à ${quartierName}, la pose relève du droit à la prise et le raccordement au compteur individuel est privilégié.`,
+                    (f) => `Chaque installation à ${quartierName} est déclarée et documentée, ce qui permet de justifier le crédit d'impôt et la TVA réduite.`,
+                    (f) => `Le matériel posé à ${quartierName} est choisi selon l'usage réel : recharge nocturne, deux véhicules ou véhicule de service.`,
+                    (f) => `Nos équipes connaissent les contraintes d'accès et de stationnement de ${quartierName} : le passage de câble est étudié sur place.`,
+                ],
+            },
+            hash,
+        ),
         housing_advice: housingVariants[hash % housingVariants.length],
         tech_specs: {
             power: (hash % 2 === 0) ? "7.4 kW (Monophasé 32A)" : "11 kW / 22 kW (Triphasé)",
             protection: "Disjoncteur différentiel Type A-EV / Type B + Bobine MNx",
             subvention: "Crédit d'impôt 500 € + TVA 5.5% + Prime ADVENIR"
         },
-        faqs,
-        client_review: reviewVariants[hash % reviewVariants.length]
+        faqs
     };
 }

@@ -1,4 +1,5 @@
 import type { CityConfig } from "@/lib/db";
+import { composeLocalIntro } from "@/lib/pseo-local";
 
 // Structure d'une page pSEO générée
 export interface PseoPageContent {
@@ -164,7 +165,28 @@ export async function getPseoContent(cityConfig: CityConfig, targetType: string 
     const hero_title = `Installateur <span class="text-blue-500">Borne de Recharge</span> ${prep} ${city}${postal ? ` <span class="text-slate-400 text-3xl">(${postal})</span>` : ''}`;
     const hero_badge = regionalInfo.subsidyName;
 
-    const intro_html = getIntroHtml(city, dept, quartiers, postal, regionalInfo.avgPrice);
+    // Intro métier existante + paragraphe local assemblé (six emplacements factuels).
+    const intro_html =
+        getIntroHtml(city, dept, quartiers, postal, regionalInfo.avgPrice) +
+        composeLocalIntro(
+            {
+                city,
+                postal,
+                deptCode: dept,
+                quartiers,
+                authority: "le gestionnaire de réseau de distribution",
+            },
+            {
+                audience: "Les particuliers, les copropriétés et les entreprises",
+                service: "l'étude, la fourniture et la pose de la borne de recharge",
+                norms: "la norme NF C 15-100 et le référentiel IRVE",
+                document: "l'attestation de conformité et la fiche d'intervention",
+                authorityLabel: "l'organisme de contrôle",
+                project: "votre projet d'équipement",
+            },
+            { openers: [], middles: [] },
+            city.split('').reduce((a, c) => a + c.charCodeAt(0), 0),
+        );
 
     return {
         meta_title,

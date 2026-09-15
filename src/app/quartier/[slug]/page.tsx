@@ -250,23 +250,6 @@ export default async function QuartierPage({ params }: { params: Promise<{ slug:
                             </div>
                         </div>
 
-                        {/* Local Verified Review */}
-                        <div className="bg-white rounded-3xl p-8 shadow-sm border border-neutral-100">
-                            <div className="flex items-center justify-between mb-4">
-                                <div>
-                                    <h3 className="text-lg font-bold text-neutral-900">Avis d&apos;un client à {quartier.name}</h3>
-                                    <div className="text-xs text-neutral-500">{pseo.client_review.vehicle}</div>
-                                </div>
-                                <div className="flex items-center gap-1 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-200">
-                                    <Star size={12} className="fill-emerald-500 text-emerald-500" />
-                                    <span>Vérifié</span>
-                                </div>
-                            </div>
-                            <p className="text-neutral-700 italic text-sm leading-relaxed mb-3">
-                                &quot;{pseo.client_review.text}&quot;
-                            </p>
-                            <div className="text-xs font-bold text-neutral-900">— {pseo.client_review.author} ({quartier.name})</div>
-                        </div>
 
                         {/* Local FAQs */}
                         <div className="bg-white rounded-3xl p-8 shadow-xl border border-neutral-100">
