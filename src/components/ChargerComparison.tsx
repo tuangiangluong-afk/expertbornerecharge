@@ -40,7 +40,7 @@ const chargers: Charger[] = [
         image: "/images/chargers/wallbox-pulsar-plus.png",
         power: "7kW - 22kW",
         popular: true,
-        guideUrl: "/guides/wallbox-pulsar-plus-avis-prix-installation",
+        guideUrl: "/blog/wallbox-pulsar-plus-avis-prix-installation",
         guideLabel: "Avis & Prix Pulsar Plus →",
         specs: [
             { icon: <Zap className="w-5 h-5" />, label: "7kW - 22kW" },
