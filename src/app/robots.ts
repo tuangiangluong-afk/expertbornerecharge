@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
             {
                 userAgent: '*',
                 allow: '/',
-                disallow: ['/admin/', '/login', '/api/private/', '/llms.txt', '/openapi.json'],
+                disallow: ['/admin/', '/login', '/api/private/'],
             },
             {
                 userAgent: ['GPTBot', 'ChatGPT-User', 'ClaudeBot', 'PerplexityBot', 'Google-Extended', 'Applebot-Extended', 'Applebot', 'Bytespider', 'Amazonbot', 'Meta-ExternalAgent', 'FacebookExternalHit', 'OAI-SearchBot', 'CCBot', 'Bingbot', 'Anthropic-ai', 'Claude-Web'],

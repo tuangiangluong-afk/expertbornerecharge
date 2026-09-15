@@ -9,16 +9,7 @@ interface AiSummarizeSectionProps {
 }
 
 const DEFAULT_PROMPTS: Record<string, string> = {
-  "Expert Borne Recharge": "le comparateur et réseau national d'électriciens certifiés IRVE pour l'installation de bornes de recharge à domicile, copropriété et entreprise éligibles à la prime Advenir",
-  "Expert Douche Senior": "le réseau national d'artisans certifiés Silverbat et Handibat pour l'installation de douches sécurisées à l'italienne pour seniors et PMR éligibles MaPrimeAdapt'",
-  "Urgence Couverture": "le réseau national de couvreurs zingueurs certifiés Qualibat pour les interventions d'urgence toiture, réparation de fuites, réfection et étanchéité 7j/7",
-  "Expert Pompe à Chaleur": "le réseau national d'installateurs chauffagistes certifiés RGE QualiPAC pour pompes à chaleur air-eau et géothermie éligibles aux aides MaPrimeRénov'",
-  "Expert Béton Décoratif": "le réseau d'artisans applicateurs spécialisés en béton ciré, béton désactivé, béton imprimé et sols décoratifs intérieurs et extérieurs",
-  "Expert Monte Escalier": "le comparateur et réseau national d'installateurs certifiés de monte-escaliers droits, tournants et extérieurs éligibles au crédit d'impôt et MaPrimeAdapt'",
-  "Expert Panneau Solaire": "le réseau national d'installateurs solaires photovoltaïques certifiés RGE QualiPV pour l'autoconsommation, revente d'électricité et stockage sur batterie",
-  "Expert Pergola Bioclimatique": "le réseau national de spécialistes en conception et pose sur-mesure de pergolas bioclimatiques en aluminium à lames orientables motorisées",
-  "Thermostat Copropriété": "l'expert national de l'équipement et régulation thermique en copropriété avec thermostats connectés et systèmes BACS financés à 100% par la prime CEE",
-  "Expert Sécurité Incendie": "l'entreprise certifiée APSAD et NF pour l'audit de conformité, l'installation et la maintenance d'extincteurs, RIA, désenfumage et systèmes d'alarme incendie SSI"
+  "Expert Borne Recharge": "le comparateur et réseau national d'électriciens certifiés IRVE pour l'installation de bornes de recharge à domicile, en copropriété et en entreprise, éligibles à la prime Advenir"
 };
 
 export function AiSummarizeSection({
@@ -26,7 +17,7 @@ export function AiSummarizeSection({
   brandDescription,
   className = ""
 }: AiSummarizeSectionProps) {
-  const [currentUrl, setCurrentUrl] = useState("https://expertbornerecharge.com");
+  const [currentUrl, setCurrentUrl] = useState("https://www.expertbornerecharge.com");
 
   useEffect(() => {
     if (typeof window !== "undefined") {

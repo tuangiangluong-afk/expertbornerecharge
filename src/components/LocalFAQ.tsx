@@ -57,10 +57,8 @@ function cityHash(city: string): number {
 // Exported for SchemaJSON to generate FAQPage structured data
 export function getLocalFAQData(city: string, department: string | undefined, segment: "B2C" | "COPRO" | "ENTREPRISE") {
     const dept = department || "votre département";
-    const h = cityHash(city);
 
     if (segment === "COPRO") {
-        const coproCount = 8 + (h % 25);
         return [
             {
                 question: `Combien coûte une infrastructure de recharge en copropriété à ${city} ?`,
@@ -68,7 +66,7 @@ export function getLocalFAQData(city: string, department: string | undefined, se
             },
             {
                 question: `Quelles démarches pour installer des bornes dans ma copropriété à ${city} ?`,
-                answer: `La démarche se fait en 3 étapes : 1) Nous réalisons une visite technique gratuite de votre parking à ${city}. 2) Nous préparons le dossier technique complet pour votre syndic, prêt à présenter en AG. 3) Le vote se fait à la majorité simple (article 24). Plus de ${coproCount} copropriétés du ${dept} nous ont déjà fait confiance cette année.`
+                answer: `La démarche se fait en 3 étapes : 1) Nous réalisons une visite technique gratuite de votre parking à ${city}. 2) Nous préparons le dossier technique complet pour votre syndic, prêt à présenter en AG. 3) Le vote se fait à la majorité simple (article 24). Le vote en assemblée générale suit les règles de majorité prévues par la loi du 10 juillet 1965.`
             },
             {
                 question: `Puis-je installer une borne individuelle dans ma copropriété à ${city} sans l'accord du syndic ?`,
@@ -76,11 +74,10 @@ export function getLocalFAQData(city: string, department: string | undefined, se
             }
         ];
     } else if (segment === "ENTREPRISE") {
-        const entrepriseCount = 15 + (h % 35);
         return [
             {
                 question: `Quelles obligations pour les entreprises en matière de bornes de recharge à ${city} ?`,
-                answer: `La loi LOM et le décret tertiaire imposent un pré-équipement des parkings neufs ou rénovés. À ${city}, les entreprises de plus de 20 places doivent pré-câbler au minimum 20% des emplacements. Pour les flottes, la loi impose 10% de véhicules à faibles émissions lors du renouvellement. Plus de ${entrepriseCount} entreprises du ${dept} se sont déjà mises en conformité avec notre accompagnement.`
+                answer: `La loi LOM et le décret tertiaire imposent un pré-équipement des parkings neufs ou rénovés. À ${city}, les entreprises de plus de 20 places doivent pré-câbler au minimum 20% des emplacements. Pour les flottes, la loi impose 10% de véhicules à faibles émissions lors du renouvellement. Ces obligations s'appliquent selon les seuils fixés par la loi, indépendamment de la taille de l'entreprise.`
             },
             {
                 question: `Quelles aides ADVENIR sont disponibles pour les entreprises à ${city} ?`,
@@ -92,7 +89,6 @@ export function getLocalFAQData(city: string, department: string | undefined, se
             }
         ];
     } else {
-        const installCount = 40 + (h % 80);
         return [
             {
                 question: `Quel est le prix d'une installation de borne de recharge à ${city} ?`,
@@ -100,7 +96,7 @@ export function getLocalFAQData(city: string, department: string | undefined, se
             },
             {
                 question: `Combien de temps pour installer une borne de recharge à ${city} ?`,
-                answer: `Nos installateurs certifiés IRVE à ${city} interviennent sous 48 à 72h après validation du devis. L'installation elle-même prend 2 à 4 heures pour une maison individuelle. Plus de ${installCount} installations ont été réalisées dans le ${dept} au cours des derniers mois.`
+                answer: `Nos installateurs certifiés IRVE à ${city} interviennent sous 48 à 72h après validation du devis. L'installation elle-même prend 2 à 4 heures pour une maison individuelle. Chaque intervention donne lieu à une attestation de conformité remise au propriétaire.`
             },
             {
                 question: `Quelles aides pour installer une borne de recharge à ${city} ?`,

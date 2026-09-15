@@ -37,10 +37,22 @@ export async function sendLeadToViteUnDevis(payload: VUDLeadPayload): Promise<VU
   const token = '17812171346a2b376eaab546a2b376eaab8c';
   const siteDomain = payload.site_name || 'expertbornerecharge.fr';
   
-  const isTestMode = process.env.NODE_ENV === 'development' || payload.cat_id === '145';
-  const submitUrl = isTestMode
-    ? 'https://www.viteundevis.com/api/get.php?test=1'
-    : 'https://www.viteundevis.com/api/get.php';
+  // Garde-fou strict anti-lead test pour proteger le compte ViteUnDevis
+  const isTest = 
+    payload.cat_id === "145" ||
+    payload.email?.toLowerCase().includes("test") ||
+    payload.email?.toLowerCase().includes("example") ||
+    payload.nom?.toLowerCase().includes("test") ||
+    payload.prenom?.toLowerCase().includes("test") ||
+    payload.tel?.replace(/\s+/g, "") === "0600000000" ||
+    process.env.NODE_ENV === "development";
+
+  if (isTest) {
+    console.log("🛡️ [ViteUnDevis] Lead test detecte — Envoi annule pour ne pas polluer ViteUnDevis.");
+    return null;
+  }
+
+  const submitUrl = "https://www.viteundevis.com/api/get.php";
 
   const defaultConsentText = "J'accepte d'être contacté par téléphone par les services qui prendront en charge ma demande de devis pour la qualifier et effectuer une visite technique.";
   const textConsent = payload.consent_text || defaultConsentText;
