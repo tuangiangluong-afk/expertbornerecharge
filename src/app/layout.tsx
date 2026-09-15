@@ -70,7 +70,7 @@ export async function generateMetadata(): Promise<Metadata> {
     url: `${baseUrl}${path}`,
     images: [
       {
-        url: `${baseUrl}/images/og-image.png`,
+        url: `${baseUrl}/api/og`,
         width: 1200,
         height: 630,
         alt: "Expert Borne Recharge - Installation bornes de recharge IRVE",
@@ -81,7 +81,7 @@ export async function generateMetadata(): Promise<Metadata> {
     card: "summary_large_image",
     title: "Expert Borne Recharge - Installation Bornes IRVE",
     description: "Installation de bornes de recharge électriques. Réseau d'installateurs certifiés IRVE. Devis gratuit.",
-    images: [`${baseUrl}/images/og-image.png`],
+    images: [`${baseUrl}/api/og`],
   },
   icons: {
     icon: "/icon.png",

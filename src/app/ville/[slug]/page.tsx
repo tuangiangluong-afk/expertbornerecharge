@@ -52,6 +52,10 @@ export async function generateMetadata({
         description: pseo.meta_description,
         alternates: {
             canonical: canonicalUrl,
+            languages: {
+                "fr-FR": canonicalUrl,
+                "x-default": canonicalUrl,
+            },
         },
         openGraph: {
             title: pseo.meta_title,
@@ -59,7 +63,7 @@ export async function generateMetadata({
             siteName: site.name,
             images: [
                 {
-                    url: site.heroImage,
+                    url: `https://expertbornerecharge.com/api/og?q=${resolvedParams.slug}`,
                     width: 1200,
                     height: 630,
                     alt: `Installation borne de recharge à ${site.city}`

@@ -53,6 +53,10 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
         description: pseo.meta_description,
         alternates: {
             canonical: canonicalUrl,
+            languages: {
+                "fr-FR": canonicalUrl,
+                "x-default": canonicalUrl,
+            },
         },
         openGraph: {
             title: pseo.meta_title,
