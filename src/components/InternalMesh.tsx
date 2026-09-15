@@ -131,7 +131,7 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
                                     { label: "Maison Individuelle", href: "/solutions/maison" },
                                     { label: "Borne en Copropriété", href: "/solutions/copropriete" },
                                     { label: "Borne en Entreprise", href: "/solutions/entreprise" },
-                                    { label: "Prix & Tarifs 2026", href: "/guides/cout-installation-borne-recharge" },
+                                    { label: "Prix & Tarifs 2026", href: "/guides/borne-7kw-vs-11kw-prix-installation" },
                                     { label: "Aides & Subventions", href: "/guides/aides-subventions-borne-recharge" }
                                 ].map((link, i) => (
                                     <li key={i}>

@@ -14,7 +14,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-    title: "Blog Borne de Recharge & Véhicules Électriques | Expert IRVE",
+    title: "Blog borne de recharge et véhicules électriques",
     description: "Guides, actualités et conseils d'experts pour réussir votre installation de borne de recharge électrique à domicile ou en entreprise.",
     alternates: {
         canonical: "https://expertbornerecharge.com/blog",

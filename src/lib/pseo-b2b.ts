@@ -129,7 +129,7 @@ export async function getPseoB2bContent(cityConfig: CityConfig, segment: 'ENTREP
 
     if (segment === 'ENTREPRISE') {
         const meta_title = `Bornes de recharge entreprise à ${city} | Loi LOM`;
-        const meta_description = `Installation et maintenance de bornes de recharge pour entreprises et flottes à ${city}. Audit de puissance, référentiel IRVE, supervision et aides ADVENIR. Visite technique sur place.`;
+        const meta_description = `Bornes de recharge pour entreprises et flottes à ${city} : audit de puissance, IRVE, supervision et aides ADVENIR.`;
         const hero_title = `Bornes de recharge <span class="text-emerald-600">entreprise</span> à ${city}`;
         const hero_badge = "Flottes, parkings et sites professionnels";
         const intro_html = getEntrepriseIntro(city, dept, quartiers);

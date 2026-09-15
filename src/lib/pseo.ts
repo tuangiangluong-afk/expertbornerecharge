@@ -159,7 +159,7 @@ export async function getPseoContent(cityConfig: CityConfig, targetType: string 
     const prep = isFrance ? "en" : "à";
 
     // Meta title optimisé pour le CTR
-    const meta_title = `Installateur Borne de Recharge ${isFrance ? "en France" : city}${postal ? ` (${postal})` : ''} | Devis Gratuit IRVE`;
+    const meta_title = `Borne de recharge à ${isFrance ? "France" : city} | Devis IRVE`;
     const meta_description = `Installation borne de recharge ${prep} ${city} par un électricien certifié IRVE. ${realPrice} avant aides. ${regionalInfo.subsidyAmount}. Devis gratuit en 2 min.`;
 
     const hero_title = `Installateur <span class="text-blue-500">Borne de Recharge</span> ${prep} ${city}${postal ? ` <span class="text-slate-400 text-3xl">(${postal})</span>` : ''}`;

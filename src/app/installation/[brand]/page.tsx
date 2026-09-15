@@ -171,7 +171,7 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
                                         Consultez nos dossiers d&apos;experts pour préparer votre projet d&apos;installation à domicile :
                                     </p>
                                     <div className="grid sm:grid-cols-2 gap-3">
-                                        <Link href="/guides/tesla-wall-connector-installation-france" className="p-4 bg-white rounded-xl border border-slate-200 hover:border-blue-500 hover:shadow-sm transition block group">
+                                        <Link href="/guides/recharger-tesla-domicile" className="p-4 bg-white rounded-xl border border-slate-200 hover:border-blue-500 hover:shadow-sm transition block group">
                                             <span className="font-bold text-slate-900 group-hover:text-blue-600 block text-sm mb-1">Tesla Wall Connector Gen 3</span>
                                             <span className="text-xs text-slate-500">Installation, installateur agréé &amp; prix 2026</span>
                                         </Link>

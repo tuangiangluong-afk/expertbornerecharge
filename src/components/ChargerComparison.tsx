@@ -26,7 +26,7 @@ const chargers: Charger[] = [
         tagline: "Idéal pour les propriétaires Tesla",
         image: "/images/chargers/tesla-wall-connector.png",
         power: "7kW - 22kW",
-        guideUrl: "/guides/tesla-wall-connector-installation-france",
+        guideUrl: "/guides/recharger-tesla-domicile",
         guideLabel: "Dossier Wall Connector Gen 3 →",
         specs: [
             { icon: <Zap className="w-5 h-5" />, label: "7kW - 22kW" },
@@ -53,7 +53,7 @@ const chargers: Charger[] = [
         tagline: "Robuste & Sécurisé",
         image: "/images/chargers/schneider-evlink.png",
         power: "3kW - 22kW",
-        guideUrl: "/guides/schneider-evlink-pro-ac-installation",
+        guideUrl: "/guides/schneider-charge-avis-installation",
         guideLabel: "Guide Schneider EVlink Pro →",
         specs: [
             { icon: <Zap className="w-5 h-5" />, label: "3kW - 22kW" },

@@ -293,12 +293,12 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                             </p>
                             <div className="grid sm:grid-cols-2 gap-4">
                                 {[
-                                    { slug: "tesla-wall-connector-installation-france", title: "Tesla Wall Connector Gen 3", desc: "Guide de pose, compatibilité & prix d'installation 2026" },
+                                    { slug: "recharger-tesla-domicile", title: "Tesla Wall Connector Gen 3", desc: "Guide de pose, compatibilité & prix d'installation 2026" },
                                     { slug: "recharger-tesla-domicile", title: "Recharger sa Tesla à Domicile", desc: "Wallbox vs prise renforcée : temps de charge et rentabilité" },
-                                    { slug: "schneider-evlink-pro-ac-installation", title: "Schneider EVlink Pro AC", desc: "Avis technique, caractéristiques et retour d'expérience" },
-                                    { slug: "comparatif-wallbox-schneider-legrand", title: "Comparatif Schneider vs Legrand", desc: "Quelle borne choisir pour sa maison individuelle ?" },
-                                    { slug: "cout-installation-borne-recharge", title: "Prix & Coût Installation Borne", desc: "Budget complet avec pose IRVE et déduction d'aides" },
-                                    { slug: "obligation-installateur-irve-particulier", title: "Obligation Installateur IRVE", desc: "Que dit la loi pour les particuliers et assurances ?" },
+                                    { slug: "schneider-charge-avis-installation", title: "Schneider EVlink Pro AC", desc: "Avis technique, caractéristiques et retour d'expérience" },
+                                    { slug: "comparatif-borne-7kw-11kw-22kw", title: "Comparatif Schneider vs Legrand", desc: "Quelle borne choisir pour sa maison individuelle ?" },
+                                    { slug: "borne-7kw-vs-11kw-prix-installation", title: "Prix & Coût Installation Borne", desc: "Budget complet avec pose IRVE et déduction d'aides" },
+                                    { slug: "installation-borne-recharge-entreprise", title: "Obligation Installateur IRVE", desc: "Que dit la loi pour les particuliers et assurances ?" },
                                 ]
                                     .filter(item => item.slug !== resolvedParams.slug)
                                     .slice(0, 4)

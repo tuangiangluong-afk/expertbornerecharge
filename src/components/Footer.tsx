@@ -264,7 +264,7 @@ export function Footer({ config }: FooterProps) {
                             <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Guides Techniques & Avis</h5>
                             <ul className="space-y-3 text-sm">
                                 <li>
-                                    <Link href="/guides/tesla-wall-connector-installation-france" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides/recharger-tesla-domicile" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                         Tesla Wall Connector (Installation & Prix)
                                     </Link>
@@ -276,19 +276,19 @@ export function Footer({ config }: FooterProps) {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/guides/schneider-evlink-pro-ac-installation" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides/schneider-charge-avis-installation" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                         Schneider EVlink Pro AC : Avis & Pose
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/guides/comparatif-wallbox-schneider-legrand" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides/comparatif-borne-7kw-11kw-22kw" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                         Comparatif Wallbox Schneider vs Legrand
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/guides/cout-installation-borne-recharge" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/guides/borne-7kw-vs-11kw-prix-installation" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
                                         Coût Installation Borne de Recharge 2026
                                     </Link>
