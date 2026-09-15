@@ -35,6 +35,7 @@ export async function generateStaticParams() {
 import { headers } from "next/headers";
 import { getPseoBrandContent } from "@/lib/pseo-brand";
 import { HelpCircle, Sparkles, Clock } from "lucide-react";
+import LocalSources from "@/components/LocalSources";
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
     const { slug, brand: brandSlug } = await params;
@@ -355,6 +356,7 @@ export default async function CityBrandPage({ params }: { params: Params }) {
             <FAQ themeColor="blue" />
             <Reviews site={site} themeColor="blue" />
             <InternalMesh city={site.city} config={site} />
+            <LocalSources site={site} path={`/ville/${slug}/${brandSlug}`} />
             <Footer config={site} />
         </div>
     );

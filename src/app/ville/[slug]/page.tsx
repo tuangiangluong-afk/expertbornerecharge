@@ -1,5 +1,6 @@
 export const revalidate = 86400; // 24h ISR cache
 import LocalAeoSection from "@/components/LocalAeoSection";
+import LocalSources from "@/components/LocalSources";
 import { getCityByCleanSlug, CITIES } from "@/lib/db";
 import { getPseoContent } from "@/lib/pseo";
 import { CheckCircle, Zap, TrendingDown, Home, Building2, Briefcase, Award, ArrowRight, Shield, Calendar } from "lucide-react";
@@ -168,6 +169,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             </section>
 
             <LocalAeoSection site={site} />
+            <LocalSources site={site} />
 
             <section className="py-16 bg-slate-50 border-y border-slate-200" id="simulateur">
                 <div className="container mx-auto px-4">
