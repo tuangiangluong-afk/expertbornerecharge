@@ -128,7 +128,7 @@ export async function getPseoB2bContent(cityConfig: CityConfig, segment: 'ENTREP
     const postalMention = postal ? ` (${postal})` : "";
 
     if (segment === 'ENTREPRISE') {
-        const meta_title = `Bornes de recharge entreprise à ${city}${postalMention} | Audit flotte et loi LOM`;
+        const meta_title = `Bornes de recharge entreprise à ${city} | Loi LOM`;
         const meta_description = `Installation et maintenance de bornes de recharge pour entreprises et flottes à ${city}. Audit de puissance, référentiel IRVE, supervision et aides ADVENIR. Visite technique sur place.`;
         const hero_title = `Bornes de recharge <span class="text-emerald-600">entreprise</span> à ${city}`;
         const hero_badge = "Flottes, parkings et sites professionnels";
@@ -138,7 +138,7 @@ export async function getPseoB2bContent(cityConfig: CityConfig, segment: 'ENTREP
         return { meta_title, meta_description, hero_title, hero_badge, intro_html, expert_tip };
     }
 
-    const meta_title = `Bornes de recharge copropriété à ${city}${postalMention} | Audit pour syndic`;
+    const meta_title = `Bornes de recharge copropriété à ${city} | Audit`;
     const meta_description = `Infrastructure collective de recharge en copropriété à ${city} : audit, tracé des colonnes, comptage individuel et maintenance. Droit à la prise et aides ADVENIR expliqués au conseil syndical.`;
     const hero_title = `Bornes de recharge en <span class="text-purple-600">copropriété</span> à ${city}`;
     const hero_badge = "Syndics et conseils syndicaux";

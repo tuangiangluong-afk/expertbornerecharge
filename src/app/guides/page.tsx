@@ -14,7 +14,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export const revalidate = 60; // ISR 60 seconds
 
 export const metadata: Metadata = {
-    title: "Guides et Conseils Borne de Recharge | Expert IRVE",
+    title: "Guides bornes de recharge : prix et IRVE",
     description: "Tout comprendre sur l'installation de bornes de recharge. Guides experts pour copropriété, maison individuelle et entreprises.",
     alternates: {
         canonical: "https://expertbornerecharge.com/guides",

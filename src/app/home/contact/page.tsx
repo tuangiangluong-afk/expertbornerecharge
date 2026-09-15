@@ -6,6 +6,12 @@ import { ArrowLeft, Mail, Phone, MapPin, Zap, CheckCircle } from "lucide-react";
 import { getTheme } from "@/lib/theme";
 import Header from "@/components/Header";
 
+export const metadata = {
+    title: "Contact : audit de puissance et devis borne",
+    description: "Particuliers, copropriétés et entreprises : demandez l'audit de puissance et le devis d'installation de votre point de recharge.",
+};
+
+
 export default function HubContactPage() {
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-blue-500 selection:text-white">
