@@ -136,14 +136,6 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
                 "@type": "Brand",
                 "name": vehicle.brand
             },
-            "offers": {
-                "@type": "Offer",
-                "url": `https://expertbornerecharge.com/vehicules/${slugify(vehicle.brand).toLowerCase()}/${vehicle.id}#simulateur`,
-                "priceCurrency": "EUR",
-                "price": "990.00",
-                "validFrom": "2026-01-01",
-                "priceValidUntil": "2026-12-31",
-                                            },
         };
     } else if (type === "B2BService" && site && b2bType) {
         const baseUrl = "https://expertbornerecharge.com";
