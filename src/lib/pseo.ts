@@ -67,78 +67,6 @@ function getExpertTip(city: string, dept: string, neighborhoods: string[], price
     return tips[hash % tips.length];
 }
 
-// 5 variantes d'introductions ultra-riches et structurées (3 paragraphes chacune)
-function getIntroHtml(city: string, dept: string, neighborhoods: string[], postalCode: string, avgPrice: string): string {
-    const hash = city.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-    const isFrance = city.toLowerCase() === "france";
-    const prep = isFrance ? "en" : "à";
-
-    const neighborhoodMention = neighborhoods.length >= 2
-        ? `Nos artisans électriciens se déplacent dans tous les secteurs de la commune : <strong>${neighborhoods.slice(0, 3).join(', ')}</strong> ainsi que dans les localités périphériques.`
-        : "Nos installateurs qualifiés assurent une couverture totale de l'ensemble de votre secteur et de ses environs.";
-
-    const postalCodeMention = postalCode ? ` (${postalCode})` : "";
-
-    const intros = [
-        `<p class="mb-4 leading-relaxed">
-            Vous souhaitez faire poser une <strong>borne de recharge électrique</strong> ${prep} <strong>${city}${postalCodeMention}</strong> ? 
-            Face à l'essor des véhicules 100% électriques et hybrides rechargeables, disposer d'une borne de recharge dédiée à domicile ou sur son lieu de travail constitue la solution la plus rapide, économique et sécurisée pour recharger votre batterie au quotidien.
-            ${neighborhoodMention}
-        </p>
-        <p class="mb-4 leading-relaxed">
-            En faisant appel à un électricien détenteur de la qualification <strong>IRVE (Infrastructure de Recharge pour Véhicules Électriques)</strong> ${prep} ${city}, vous avez l'assurance d'un raccordement conforme à la norme <strong>NF C 15-100</strong> et aux exigences des constructeurs automobiles. Le coût moyen d'une installation clé en main se situe entre <strong>${avgPrice}</strong> selon la distance au tableau électrique.
-        </p>
-        <p class="leading-relaxed">
-            Bénéficiez immédiatement du <strong>crédit d'impôt de 500€</strong>, de la TVA réduite à 5,5% et des subventions du programme national ADVENIR. Nos artisans partenaires établissent un devis gratuit et personnalisé sous 24h après étude de votre installation électrique.
-        </p>`,
-
-        `<p class="mb-4 leading-relaxed">
-            Faites installer votre <strong>Wallbox à ${city}</strong>${dept ? ` (${dept})` : ''} par un installateur certifié et reconnu. 
-            Recharger sur une simple prise domestique présente des risques de surchauffe et limite la puissance à 2,3 kW, nécessitant plus de 20 heures pour une charge complète. Une borne murale de 7,4 kW ou 11 kW réduit ce délai à seulement quelques heures tout en préservant la longévité de votre batterie.
-        </p>
-        <p class="mb-4 leading-relaxed">
-            ${neighborhoodMention} Que votre projet concerne une maison individuelle, un emplacement de parking en copropriété ou une flotte professionnelle, nous concevons une installation sur mesure avec passage de câble discret et protection différentielle dédiée. Budget moyen constaté : <strong>${avgPrice}</strong> tout compris avant déduction des aides.
-        </p>
-        <p class="leading-relaxed">
-            De la visite technique préliminaire jusqu'à la remise de l'attestation de conformité, nous prenons en charge la gestion administrative de votre dossier de primes pour minimiser votre reste à charge réel.
-        </p>`,
-
-        `<p class="mb-4 leading-relaxed">
-            À <strong>${city}</strong>, la transition vers la mobilité électrique s'accélère. Pour accompagner cette évolution, notre réseau d'électriciens certifiés IRVE vous propose un service complet d'installation et de maintenance de bornes de recharge privées et professionnelles.
-            ${neighborhoodMention}
-        </p>
-        <p class="mb-4 leading-relaxed">
-            La loi française impose l'intervention d'un technicien certifié IRVE pour tout équipement de recharge d'une puissance supérieure à 3,7 kW. Cette certification est la condition indispensable pour que votre assurance habitation couvre l'installation et pour débloquer les aides financières de l'État. Pour une pose réalisée dans les règles de l'art ${prep} ${city}, comptez un investissement moyen de <strong>${avgPrice}</strong>.
-        </p>
-        <p class="leading-relaxed">
-            Nos bornes intelligentes sont équipées de modules de gestion dynamique pour moduler la charge en fonction des appareils électroménagers en marche, évitant toute surconsommation ou disjonction inopinée de votre compteur.
-        </p>`,
-
-        `<p class="mb-4 leading-relaxed">
-            Recherchez-vous le meilleur <strong>installateur de borne électrique à ${city}${postalCodeMention}</strong> ? 
-            Nous vous mettons en relation avec les installateurs les plus qualifiés de votre département, formés aux dernières technologies de recharge pilotable (Schneider, Legrand, Wallbox, Circontrol, Zaptec, Tesla Wall Connector).
-        </p>
-        <p class="mb-4 leading-relaxed">
-            ${neighborhoodMention} En maison individuelle comme en immeuble collectif, nos installateurs procèdent à une étude précise de la puissance disponible sur votre tableau de répartition et déterminent le tracé de câble optimal pour sécuriser l'installation. Tarifs moyens de référence à ${city} : <strong>${avgPrice}</strong> (matériel et main-d'œuvre certifiée inclus).
-        </p>
-        <p class="leading-relaxed">
-            Profitez des dispositifs d'aide en vigueur : prime ADVENIR jusqu'à 960€ en résidentiel collectif, crédit d'impôt forfaitaire de 500€ par borne et taux de TVA allégé à 5,5%. Demandez votre étude de faisabilité et votre devis gratuit dès aujourd'hui.
-        </p>`,
-
-        `<p class="mb-4 leading-relaxed">
-            Installer une <strong>borne de recharge rapide et sécurisée à ${city}</strong> n'a jamais été aussi simple. Notre équipe d'électriciens locaux agréés IRVE intervient sous 48 heures pour évaluer vos besoins et configurer la solution de recharge parfaitement adaptée à votre véhicule et à vos habitudes de déplacement.
-        </p>
-        <p class="mb-4 leading-relaxed">
-            ${neighborhoodMention} Grâce à un équipement adapté doté d'une programmation horaire, vous rechargez automatiquement votre voiture pendant les heures creuses, réduisant jusqu'à 70% le coût de vos trajets par rapport à un véhicule thermique. Le budget moyen observé sur le secteur de ${city} est compris entre <strong>${avgPrice}</strong> avant aides.
-        </p>
-        <p class="leading-relaxed">
-            Tous nos chantiers bénéficient de la garantie décennale et du suivi après-vente. Obtenez une estimation détaillée immédiate et lancez votre projet en toute sérénité avec nos spécialistes de proximité.
-        </p>`
-    ];
-
-    return intros[hash % intros.length];
-}
-
 // ============================================
 // Génération du contenu pSEO — données réelles
 // ============================================
@@ -165,28 +93,45 @@ export async function getPseoContent(cityConfig: CityConfig, targetType: string 
     const hero_title = `Installateur <span class="text-blue-500">Borne de Recharge</span> ${prep} ${city}${postal ? ` <span class="text-slate-400 text-3xl">(${postal})</span>` : ''}`;
     const hero_badge = regionalInfo.subsidyName;
 
-    // Intro métier existante + paragraphe local assemblé (six emplacements factuels).
-    const intro_html =
-        getIntroHtml(city, dept, quartiers, postal, regionalInfo.avgPrice) +
-        composeLocalIntro(
-            {
-                city,
-                postal,
-                deptCode: dept,
-                quartiers,
-                authority: "le gestionnaire de réseau de distribution",
-            },
-            {
-                audience: "Les particuliers, les copropriétés et les entreprises",
-                service: "l'étude, la fourniture et la pose de la borne de recharge",
-                norms: "la norme NF C 15-100 et le référentiel IRVE",
-                document: "l'attestation de conformité et la fiche d'intervention",
-                authorityLabel: "l'organisme de contrôle",
-                project: "votre projet d'équipement",
-            },
-            { openers: [], middles: [] },
-            city.split('').reduce((a, c) => a + c.charCodeAt(0), 0),
-        );
+    // Intro : six emplacements factuels assemblés par pseo-local.ts. Les
+    // accroches et la prestation viennent de la verticale, les quatre autres
+    // emplacements sont mutualisés. L'ancienne version piochait un texte parmi
+    // cinq par hash, donc toutes les communes recevaient la même introduction à
+    // un mot près : le motif « doorway ».
+    const intro_html = composeLocalIntro(
+        {
+            city,
+            postal,
+            deptCode: dept,
+            region,
+            quartiers,
+            authority: regionalInfo.gridOperator,
+        },
+        {
+            audience: "Les particuliers, les copropriétés et les entreprises",
+            service: "l'étude, la fourniture et la pose de la borne de recharge",
+            norms: "la norme NF C 15-100 et le référentiel IRVE",
+            document: "l'attestation de conformité IRVE et la fiche d'intervention",
+            authorityLabel: "le gestionnaire du réseau public de distribution",
+            project: "votre projet d'équipement de recharge",
+        },
+        {
+            openers: [
+                (f) => `Besoin d'une borne de recharge à ${f.city}${f.postal ? ` (${f.postal})` : ""} ? Nos électriciens qualifiés IRVE étudient votre tableau électrique et posent une wallbox 7,4 ou 11 kW en une demi-journée.`,
+                (f) => `À ${f.city}, recharger sur une simple prise domestique plafonne à 2,3 kW et dépasse vingt heures : une borne murale dédiée ramène ce délai à quelques heures.`,
+                (f) => `Vous cherchez un installateur de borne de recharge à ${f.city} ? Nos équipes interviennent ${f.quartiers?.length ? `dans les secteurs de ${f.quartiers.slice(0, 3).join(", ")}` : "sur toute la commune"} et dans les communes limitrophes.`,
+                (f) => `Faire poser une borne à ${f.city} met l'installation en conformité avec la NF C 15-100 et sécurise la charge de votre véhicule au quotidien.`,
+                (f) => `Le budget d'une installation clé en main à ${f.city} se situe autour de ${realPrice} avant déduction des aides.`,
+            ],
+            middles: [
+                () => `Le chantier couvre l'étude de la puissance disponible, la fourniture de la borne, le passage de câble et la pose du disjoncteur différentiel dédié.`,
+                () => `Nous prenons en charge la mise en service, l'attestation de conformité et le calcul des aides : crédit d'impôt de 500 €, TVA à 5,5 % et prime Advenir.`,
+                (f) => `En copropriété à ${f.city}, nous préparons le dossier technique pour l'assemblée générale au titre du droit à la prise (décret 2020-1720) et coordonnons les travaux avec le syndic.`,
+                (f) => `Sur ${f.city}, la pose se fait en une demi-journée : tests de charge, réglage du délestage dynamique et prise en main de la borne.`,
+                () => `Chaque devis détaille la puissance retenue, la longueur de câble, le prix du matériel et le reste à charge après ${regionalInfo.subsidyName}.`,
+            ],
+        },
+    );
 
     return {
         meta_title,

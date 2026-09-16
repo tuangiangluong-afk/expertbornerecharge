@@ -1,5 +1,6 @@
 import type { BrandData } from "@/data/brands";
 import type { CityConfig } from "@/lib/db";
+import { composeLocalIntro } from "@/lib/pseo-local";
 
 export interface PseoBrandContent {
     meta_title: string;
@@ -114,7 +115,40 @@ export function getPseoBrandContent(city: string, brand: BrandData, site?: CityC
         meta_description: `Installation certifiée IRVE de bornes de recharge pour ${brand.name} (${modelsList}) à ${city}. Charge ${brand.chargeTime}, délestage Linky, crédit d'impôt 500€. Devis gratuit sous 24h.`,
         hero_title: `Installation Borne ${brand.name} à ${city}`,
         hero_badge: `Installateurs Certifiés IRVE • ${city}`,
-        intro_html: introVariants[hash % introVariants.length],
+        intro_html: composeLocalIntro(
+            {
+                city,
+                postal: site?.postalCode,
+                deptCode: dept,
+                region: site?.region,
+                quartiers: site?.neighborhoods,
+                authority: "le gestionnaire de réseau de distribution",
+            },
+            {
+                audience: "Les propriétaires de véhicules électriques",
+                service: "l'étude, la fourniture et la pose de la borne de recharge",
+                norms: "la norme NF C 15-100 section 722 et le décret n° 2017-26",
+                document: "l'attestation de conformité et la fiche d'intervention",
+                authorityLabel: "l'organisme de contrôle",
+                project: "votre projet de recharge à domicile",
+            },
+            {
+                openers: [
+                    (f) => `Vous roulez en ${brand.name} (${modelsList}) à ${f.city}${f.postal ? ` (${f.postal})` : ""} : une borne murale certifiée IRVE préserve la chimie de votre batterie.`,
+                    (f) => `À ${f.city}, recharger une ${brand.name} sur une prise domestique peut dépasser vingt-quatre heures : une wallbox 7,4 ou 11 kW ramène la charge à ${brand.chargeTime}.`,
+                    (f) => `Votre ${brand.name} dispose d'un chargeur embarqué ${brand.maxPower} : l'installation à ${f.city} se cale sur cette puissance.`,
+                    (f) => `En maison individuelle comme en copropriété à ${f.city}, la pose d'une borne pour ${brand.name} suit la NF C 15-100 section 722.`,
+                    (f) => `Le budget d'une installation clé en main pour ${brand.name} à ${f.city} dépend de la distance au tableau : le crédit d'impôt de 500 € et la TVA à 5,5 % s'y appliquent.`,
+                ],
+                middles: [
+                    () => `La prestation comprend le tirage de ligne en câble R2V 3G10 mm², la mise en service et la validation Consuel.`,
+                    () => `Le délestage dynamique asservi au compteur Linky évite la disjonction générale quand la maison consomme en même temps.`,
+                    () => `En copropriété, la convention technique avec le syndic est prise en charge au titre du droit à la prise (décret 2020-1720).`,
+                    () => `Le matériel est fixé en étanchéité IP54/IK10 en extérieur, sur socle ou sur mur selon la configuration.`,
+                    () => `La puissance de charge maximale est réglée sur le chargeur embarqué du véhicule, sans risque pour l'installation.`,
+                ],
+            },
+        ),
         battery_charging_table: chargingTable,
         local_advice: localAdviceVariants[hash % localAdviceVariants.length],
         faqs
