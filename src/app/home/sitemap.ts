@@ -84,7 +84,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 2. PARTNER CITIES
     // ========================================
     const cityRoutes: MetadataRoute.Sitemap = validTargets.map((target) => ({
-        url: `${baseUrl}/ville/${target.slug}`,
+        url: `${baseUrl}/ville/${slugify(target.name)}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.9, // High priority - main money pages
@@ -190,13 +190,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const b2bRoutes: MetadataRoute.Sitemap = validTargets.flatMap((target) => {
         return [
             {
-                url: `${baseUrl}/ville/${target.slug}/copropriete`,
+                url: `${baseUrl}/ville/${slugify(target.name)}/copropriete`,
                 lastModified: new Date(),
                 changeFrequency: 'weekly' as const,
                 priority: 0.95,
             },
             {
-                url: `${baseUrl}/ville/${target.slug}/entreprise`,
+                url: `${baseUrl}/ville/${slugify(target.name)}/entreprise`,
                 lastModified: new Date(),
                 changeFrequency: 'weekly' as const,
                 priority: 0.95,
@@ -209,7 +209,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // ========================================
     const cityBrandRoutes: MetadataRoute.Sitemap = validTargets.flatMap((target) => {
         return brands.map(brand => ({
-            url: `${baseUrl}/ville/${target.slug}/${brand.slug}`,
+            url: `${baseUrl}/ville/${slugify(target.name)}/${brand.slug}`,
             lastModified: new Date(),
             changeFrequency: 'weekly' as const,
             priority: 0.85,

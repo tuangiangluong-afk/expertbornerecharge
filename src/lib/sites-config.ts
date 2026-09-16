@@ -1,3 +1,4 @@
+import { slugify } from "@/lib/slugify";
 /**
  * IRVE Multi-Domain Site Configuration
  * 
@@ -945,4 +946,12 @@ export function isMainHub(hostname: string): boolean {
  */
 export function getHubConfig(): SiteConfig {
     return _hubConfig;
+}
+
+// Le slug public est derive du nom de la commune avec le meme slugify que la
+// route /ville/[slug] : les slugs ecrits a la main laissaient tomber les accents
+// (« Munchen » -> m-nchen, « Nimes » -> n-mes) et cassaient le maillage, le
+// sitemap et les liens internes.
+for (const site of Object.values(SITES)) {
+    site.slug = slugify(site.city);
 }

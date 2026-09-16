@@ -70,7 +70,7 @@ export function getCityBySlug(slug: string): CityConfig | null {
 }
 
 export function getCityByCleanSlug(cleanSlug: string): CityConfig | null {
-    return Object.values(CITIES).find(c => slugify(c.city) === cleanSlug) || null;
+    return Object.values(CITIES).find(c => slugify(c.city) === cleanSlug || c.slug === cleanSlug) || null;
 }
 
 // ========================================
@@ -118,7 +118,12 @@ const ADAPTED_SITES = Object.entries(SITES).reduce((acc, [key, site]) => {
     return acc;
 }, {} as Record<string, CityConfig>);
 
-export const CITIES: Record<string, CityConfig> = {
-    ...ADAPTED_SITES, // From integrated SITES
-    ...generatePartnerCities()
-};
+export const CITIES: Record<string, CityConfig> = Object.fromEntries(
+    // Le slug est derive du nom de la commune avec le meme slugify que la route
+    // /ville/[slug] : sinon les accents produisent deux slugs differents et tous
+    // les liens du maillage partent en 404 (ex. « Nimes » -> n-mes vs nimes).
+    Object.entries({ ...ADAPTED_SITES, ...generatePartnerCities() }).map(([key, city]) => [
+        key,
+        { ...city, slug: slugify(city.city) },
+    ])
+);
