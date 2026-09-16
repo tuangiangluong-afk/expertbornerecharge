@@ -12,7 +12,7 @@ export default async function robots({
         rules: {
             userAgent: "*",
             allow: "/",
-            disallow: ["/api/", "/admin/", "/login"],
+            disallow: ["/api/", "/admin/", "/login", "/llms.txt", "/openapi.json"],
         },
         sitemap: `${baseUrl}/sitemap.xml`,
     };
