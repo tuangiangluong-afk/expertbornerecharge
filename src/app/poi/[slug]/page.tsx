@@ -1,5 +1,9 @@
 export const revalidate = 86400; // 24h ISR cache
+// Tous les POI valides sont prérendus (la racine du layout lit headers(), donc le
+// rendu « à la demande » d'un paramètre inconnu plantait en 500).
+export const dynamicParams = false;
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 import { Phone, MapPin, ArrowRight, Building2 } from "lucide-react";
 import CallButton from "@/components/CallButton";
 import Link from "next/link";
@@ -36,16 +40,25 @@ function getPOI(slug: string) {
     return undefined;
 }
 
-export async function generateStaticParams() {
-    const allPois = [
+// Tous les slugs réellement servables : config nationale + zones des villes partenaires.
+function getAllPoiSlugs(): string[] {
+    const slugs = new Set<string>([
         ...NATIONAL_CONFIG.points_of_interest.hotels,
         ...NATIONAL_CONFIG.points_of_interest.nightlife,
-        ...NATIONAL_CONFIG.points_of_interest.monuments
-    ];
+        ...NATIONAL_CONFIG.points_of_interest.monuments,
+    ].map(slugify));
 
-    return allPois.map(poi => ({
-        slug: slugify(poi),
-    }));
+    for (const target of NATIONAL_TARGETS) {
+        for (const place of target.top_places) {
+            slugs.add(slugify(place));
+        }
+    }
+
+    return [...slugs];
+}
+
+export async function generateStaticParams() {
+    return getAllPoiSlugs().map(slug => ({ slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -54,9 +67,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     if (!poi) return {};
 
+    const headersList = await headers();
+    const canonicalDomain = headersList.get("x-irve-canonical-domain") || "expertbornerecharge.com";
+
     return {
         title: clampTitle(`Installation Borne ${poi} - Devis & Expert IRVE`),
         description: clampDescription(`Besoin d'une borne de recharge à ${poi} ? Électricien certifié IRVE, installation rapide et devis gratuit sous 24h. Service national.`),
+        alternates: {
+            canonical: `https://${canonicalDomain}/poi/${resolvedParams.slug}`,
+        },
     };
 }
 
