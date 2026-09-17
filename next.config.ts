@@ -81,6 +81,18 @@ const nextConfig: NextConfig = {
         destination: '/service',
         permanent: true,
       },
+      {
+        // Ancienne URL accentuée « Citroën » : elle renvoyait un 301 vers une
+        // forme encodée qui n'existe pas (404). On la ramène sur la route ASCII.
+        source: '/vehicules/citroën',
+        destination: '/vehicules/citroen',
+        permanent: true,
+      },
+      {
+        source: '/vehicules/citroën/:slug',
+        destination: '/vehicules/citroen/:slug',
+        permanent: true,
+      },
     ];
   },
   async headers() {

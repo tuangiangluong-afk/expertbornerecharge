@@ -22,6 +22,12 @@ export const SEO_DESTINATIONS: SeoDestination[] = [
     { slug: 'la-defense', name: 'La Défense', type: 'place', keywords: ['La Défense', 'Affaires'] },
 ];
 
+/**
+ * Slugs de services qui redirigent (301) vers une autre URL dans next.config.ts.
+ * Un sitemap ne doit contenir que des URL finales en 200, jamais des redirections.
+ */
+export const REDIRECTED_SERVICE_SLUGS = ['installation-borne-entreprise', 'installation-rapide'];
+
 export const SEO_SERVICES: SeoService[] = [
     {
         slug: 'installation-borne-maison',

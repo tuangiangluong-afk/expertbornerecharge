@@ -4,11 +4,13 @@ import LeadForm from "@/components/LeadForm";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
+import { clampDescription, clampTitle } from "@/lib/seo-meta";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import Image from "next/image";
 
 export const metadata = {
-    title: "Installation Borne de Recharge Maison : Le Guide Complet 2026",
-    description: "Tout savoir sur l'installation d'une Wallbox en maison individuelle. Prix, Crédit d'Impôt, Puissance (7kW vs 22kW), et comparatif des meilleures bornes.",
+    title: clampTitle("Installation Borne de Recharge Maison : Le Guide 2026"),
+    description: clampDescription("Tout savoir sur l'installation d'une Wallbox en maison individuelle. Prix, Crédit d'Impôt, Puissance (7kW vs 22kW), et comparatif des meilleures bornes."),
 };
 
 export default function SolutionMaison() {
@@ -22,6 +24,13 @@ export default function SolutionMaison() {
             {/* HERO SECTION - CONTENT FOCUSED (Updated Design) */}
             <section className="relative pt-32 pb-16 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
                 <div className="container mx-auto px-4">
+                    <Breadcrumbs
+                        className="mb-10"
+                        items={[
+                            { name: "Accueil", href: "/" },
+                            { name: "Solution maison individuelle", href: "/solutions/maison" },
+                        ]}
+                    />
                     <div className="grid lg:grid-cols-12 gap-12 items-center">
 
                         {/* Left: Content + Lead Form */}

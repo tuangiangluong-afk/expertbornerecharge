@@ -1,5 +1,6 @@
 import type { CityConfig } from "@/lib/db";
 import { composeLocalIntro } from "@/lib/pseo-local";
+import { clampDescription, clampTitle } from "@/lib/seo-meta";
 
 export interface PseoQuartierContent {
     meta_title: string;
@@ -81,8 +82,8 @@ export function getPseoQuartierContent(quartierName: string, city: string, cityC
     ];
 
     return {
-        meta_title: `Installation Borne Recharge ${quartierName} - ${city} | Devis IRVE Gratuit`,
-        meta_description: `Installateur certifié IRVE à ${quartierName} (${city}). Pose de bornes de recharge pour particuliers et copropriétés. Devis gratuit sous 24h, crédit d'impôt 500€.`,
+        meta_title: clampTitle(`Installation Borne Recharge ${quartierName} - ${city} | Devis IRVE Gratuit`),
+        meta_description: clampDescription(`Installateur certifié IRVE à ${quartierName} (${city}). Pose de bornes de recharge pour particuliers et copropriétés. Devis gratuit sous 24h, crédit d'impôt 500€.`),
         hero_title: `Installation Borne de Recharge à ${quartierName}`,
         hero_badge: `Électriciens IRVE Certifiés • ${city}`,
         intro_html: composeLocalIntro(

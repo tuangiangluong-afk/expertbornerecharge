@@ -10,6 +10,8 @@ import { Footer } from '@/components/Footer';
 import { getHubConfig } from '@/lib/sites-config';
 import LeadForm from '@/components/LeadForm';
 import CrossLinker from '@/components/CrossLinker';
+import { clampDescription, clampTitle } from '@/lib/seo-meta';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 
 interface PageProps {
     params: Promise<{ brand: string }>;
@@ -24,8 +26,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (!brand) return {};
 
     return {
-        title: `Installation Borne de Recharge ${brand.name} : Prix & Devis ${year}`,
-        description: `Installateur certifié IRVE pour votre ${brand.name} (${brand.models.join(', ')}). Devis gratuit, crédit d'impôt et installation sous 7 jours. Expert ${brand.name} ${year}.`,
+        title: clampTitle(`Installation Borne ${brand.name} : Prix & Devis ${year}`),
+        description: clampDescription(`Installateur certifié IRVE pour votre ${brand.name} (${brand.models.join(', ')}). Devis gratuit, crédit d'impôt et installation sous 7 jours. Expert ${brand.name} ${year}.`),
+        alternates: {
+            canonical: `https://expertbornerecharge.com/installation/${brand.slug}`,
+        },
+        robots: { index: true, follow: true },
     };
 }
 
@@ -69,6 +75,13 @@ export default async function BrandPage({ params, searchParams }: PageProps) {
 
             {/* Hero */}
             <div className="bg-slate-900 text-white pt-32 pb-20 px-6">
+                <Breadcrumbs
+                    className="mx-auto max-w-4xl mb-10 [&_a]:text-slate-300 [&_span]:text-white [&_ol]:text-slate-300"
+                    items={[
+                        { name: "Accueil", href: "/" },
+                        { name: brand.name, href: `/installation/${brand.slug}` },
+                    ]}
+                />
                 <div className="mx-auto max-w-4xl text-center">
                     <span className="inline-block py-1 px-3 rounded-full bg-blue-600/20 text-blue-400 text-sm font-bold mb-4 border border-blue-600/30">
                         Expert {brand.name} {year}

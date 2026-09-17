@@ -7,6 +7,7 @@ import { DepartmentMap } from "@/components/DepartmentMap";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { DEPARTMENTS } from "@/config/departments";
+import { clampDescription, clampTitle } from "@/lib/seo-meta";
 
 type Props = {
     params: Promise<{ slug: string }>
@@ -18,8 +19,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!dept) return { title: "Département introuvable" };
 
     return {
-        title: `Installation Borne de Recharge ${dept.name} (${dept.code}) | Expert Borne Recharge`,
-        description: `Installateur IRVE certifié dans le ${dept.code} (${dept.name}). Devis gratuit pour borne de recharge électrique sous 24h.`,
+        title: clampTitle(`Borne de Recharge ${dept.name} (${dept.code}) | Devis IRVE`),
+        description: clampDescription(`Installateur IRVE certifié dans le ${dept.code} (${dept.name}). Devis gratuit pour borne de recharge électrique sous 24h.`),
     };
 }
 

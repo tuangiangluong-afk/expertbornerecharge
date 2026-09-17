@@ -1,4 +1,5 @@
 import type { CityConfig } from "@/lib/db";
+import { clampDescription, clampTitle } from "@/lib/seo-meta";
 import { composeLocalIntro } from "@/lib/pseo-local";
 
 // Structure d'une page pSEO générée
@@ -87,8 +88,8 @@ export async function getPseoContent(cityConfig: CityConfig, targetType: string 
     const prep = isFrance ? "en" : "à";
 
     // Meta title optimisé pour le CTR
-    const meta_title = `Borne de recharge à ${isFrance ? "France" : city} | Devis IRVE`;
-    const meta_description = `Installation borne de recharge ${prep} ${city} par un électricien certifié IRVE. ${realPrice} avant aides. ${regionalInfo.subsidyAmount}. Devis gratuit en 2 min.`;
+    const meta_title = clampTitle(`Borne de recharge à ${isFrance ? "France" : city} | Devis IRVE`);
+    const meta_description = clampDescription(`Installation borne de recharge ${prep} ${city} par un électricien certifié IRVE. ${realPrice} avant aides. ${regionalInfo.subsidyAmount}. Devis gratuit en 2 min.`);
 
     const hero_title = `Installateur <span class="text-blue-500">Borne de Recharge</span> ${prep} ${city}${postal ? ` <span class="text-slate-400 text-3xl">(${postal})</span>` : ''}`;
     const hero_badge = regionalInfo.subsidyName;

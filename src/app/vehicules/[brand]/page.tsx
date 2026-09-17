@@ -1,5 +1,7 @@
 export const revalidate = 86400; // 24h ISR cache
 import { getVehiclesByBrand, getAllVehicles } from "@/data/vehicles";
+import { clampDescription, clampTitle, ogImageUrl } from "@/lib/seo-meta";
+import { slugify } from "@/lib/slugify";
 import { notFound } from "next/navigation";
 import SafeImage from "@/components/SafeImage";
 import Link from "next/link";
@@ -11,8 +13,10 @@ import LeadForm from "@/components/LeadForm";
 export async function generateStaticParams() {
     const vehicles = getAllVehicles();
     const brands = Array.from(new Set(vehicles.map((v) => v.brand.toLowerCase())));
+    // Slug ASCII : « Citroën » arrivait encodé et la route ne matchait pas,
+    // ce qui faisait un 301 suivi d'un 404.
     return brands.map((brand) => ({
-        brand: brand,
+        brand: slugify(brand),
     }));
 }
 
@@ -23,21 +27,33 @@ export async function generateMetadata({ params }: { params: Promise<{ brand: st
 
     const brandName = models[0].brand;
     const modelNames = models.map(m => m.model).slice(0, 3).join(', ');
-    const canonicalUrl = `https://expertbornerecharge.com/vehicules/${resolvedParams.brand.toLowerCase()}`;
+    const brandSlug = slugify(resolvedParams.brand);
+    const canonicalUrl = `https://expertbornerecharge.com/vehicules/${brandSlug}`;
+    const title = clampTitle(`Installation Borne Recharge ${brandName} | Devis IRVE`);
+    const description = clampDescription(`Installation certifiée IRVE de bornes de recharge pour ${brandName} (${modelNames}). Devis gratuit sous 24h, matériel garanti 2 ans, crédit d'impôt 500€.`);
+    // Cette page n'avait aucune image de partage : aperçu vide sur les messageries.
+    const ogImage = models[0].image || ogImageUrl({ q: brandSlug, sub: `Bornes pour ${brandName}` });
 
     return {
-        title: `Installation Borne Recharge ${brandName} | Devis IRVE Gratuit`,
-        description: `Installation certifiée IRVE de bornes de recharge pour ${brandName} (${modelNames}). Devis gratuit sous 24h, matériel garanti 2 ans, crédit d'impôt 500€.`,
+        title,
+        description,
         alternates: {
             canonical: canonicalUrl,
         },
         openGraph: {
-            title: `Installation Borne Recharge ${brandName} | Devis IRVE Gratuit`,
-            description: `Borne de recharge adaptée pour ${brandName} (${modelNames}). Installation professionnelle certifiée IRVE.`,
+            title,
+            description: clampDescription(`Borne de recharge adaptée pour ${brandName} (${modelNames}). Installation professionnelle certifiée IRVE.`),
             siteName: "Expert Borne Recharge",
             locale: "fr_FR",
             type: "website",
             url: canonicalUrl,
+            images: [{ url: ogImage, width: 1200, height: 630, alt: `Installation borne de recharge ${brandName}` }],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title,
+            description,
+            images: [ogImage],
         },
         robots: { index: true, follow: true },
     };
@@ -51,7 +67,7 @@ export default async function BrandPage({ params }: { params: Promise<{ brand: s
 
     const realBrandName = models[0].brand;
     const heroImage = models[0].image; // Dynamic Hero Image based on first model
-    const brandLower = resolvedParams.brand.toLowerCase();
+    const brandLower = slugify(resolvedParams.brand);
 
     // Technical calculations
     const avgBattery = Math.round(models.reduce((sum, m) => sum + (m.battery || 60), 0) / models.length);
@@ -240,7 +256,7 @@ export default async function BrandPage({ params }: { params: Promise<{ brand: s
                     {models.map((model) => (
                         <Link
                             key={model.id}
-                            href={`/vehicules/${model.brand.toLowerCase()}/${model.id}`}
+                            href={`/vehicules/${slugify(model.brand)}/${model.id}`}
                             className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-200"
                         >
                             <div className="relative h-48 w-full bg-slate-100">

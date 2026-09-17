@@ -4,11 +4,13 @@ import LeadFormPro from "@/components/LeadFormPro";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
+import { clampDescription, clampTitle } from "@/lib/seo-meta";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import Image from "next/image";
 
 export const metadata = {
-    title: "Bornes de Recharge Entreprise & Flottes : Obligations LOM et Solutions",
-    description: "Équipez votre parking d'entreprise. Obligations loi LOM, avantages fiscaux, rechargement collaborateurs et visiteurs. Devis pour flotte pro.",
+    title: clampTitle("Bornes de Recharge Entreprise & Flottes : Obligations LOM 2026"),
+    description: clampDescription("Équipez votre parking d'entreprise. Obligations loi LOM, avantages fiscaux, rechargement collaborateurs et visiteurs. Devis pour flotte pro."),
 };
 
 export default function SolutionEntreprise() {
@@ -21,6 +23,13 @@ export default function SolutionEntreprise() {
             {/* HERO (Updated Design) */}
             <section className="relative pt-32 pb-16 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
                 <div className="container mx-auto px-4">
+                    <Breadcrumbs
+                        className="mb-10"
+                        items={[
+                            { name: "Accueil", href: "/" },
+                            { name: "Solution entreprise & flottes", href: "/solutions/entreprise" },
+                        ]}
+                    />
                     <div className="grid lg:grid-cols-12 gap-12 items-center">
 
                         {/* Left: Content + Lead Form */}

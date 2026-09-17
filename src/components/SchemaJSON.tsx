@@ -15,6 +15,7 @@ interface SchemaJSONProps {
 
 import { slugify } from "@/lib/slugify";
 import { getLocalFAQData } from "@/components/LocalFAQ";
+import { speakableSpecification } from "@/lib/seo-meta";
 
 export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems, b2bType, faqSegment }: SchemaJSONProps) {
     let schema = {};
@@ -72,7 +73,11 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
             "areaServed": {
                 "@type": "City",
                 "name": site.city
-            }
+            },
+            // Les pages locales portaient déjà un fil d'Ariane et une FAQ, mais
+            // aucun marqueur speakable : les assistants vocaux n'avaient pas de
+            // réponse à lire. On déclare le H1 et le premier paragraphe local.
+            "speakable": speakableSpecification(["h1", "section p:first-of-type", "[data-speakable]"])
             };
     } else if (type === "Service" && site && brand) {
         // Schema Service pour les pages Ville x Marque
@@ -121,7 +126,8 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
                         "brand": { "@type": "Brand", "name": brand.name }
                     },
                                                         }))
-            }
+            },
+            "speakable": speakableSpecification(["h1", "section p:first-of-type"])
         };
     } else if (type === "Product" && vehicle) {
         // Installation d'un équipement pour un véhicule : c'est un service rendu,
@@ -136,6 +142,8 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
                 "@type": "Brand",
                 "name": vehicle.brand
             },
+            // 82 pages véhicules n'avaient aucune réponse lisible par un assistant.
+            "speakable": speakableSpecification(["h1", "article p:first-of-type", "h3"])
         };
     } else if (type === "B2BService" && site && b2bType) {
         const baseUrl = "https://expertbornerecharge.com";
@@ -163,7 +171,8 @@ export default function SchemaJSON({ type, site, vehicle, brand, breadcrumbItems
             "areaServed": {
                 "@type": "City",
                 "name": site.city
-            }
+            },
+            "speakable": speakableSpecification(["h1", "section p:first-of-type"])
         };
     } else if (type === "Organization" && site) {
         schema = {

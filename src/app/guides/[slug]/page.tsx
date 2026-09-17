@@ -4,12 +4,13 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import Link from 'next/link';
 import Image from 'next/image';
 import Header from '@/components/Header';
-import { ArrowLeft, Clock, Calendar, Zap, ArrowRight } from 'lucide-react';
+import { Clock, Calendar, Zap, ArrowRight } from 'lucide-react';
 import SimulatorWidget from '@/components/blog/SimulatorWidget';
 import LocalLinker from '@/components/blog/LocalLinker';
 import { createClient } from "@supabase/supabase-js";
 import { marked } from 'marked';
 import { headers } from 'next/headers';
+import { breadcrumbList, clampDescription, clampTitle, ogImageUrl } from '@/lib/seo-meta';
 
 // Initialize Supabase Client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
@@ -59,17 +60,33 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const canonicalUrl = `https://expertbornerecharge.com/guides/${resolvedParams.slug}`;
     
     if (guide) {
+        const title = clampTitle(guide.meta.title);
+        const description = clampDescription(guide.meta.description);
+        // Carte de partage : l'image éditoriale du guide quand elle existe,
+        // sinon la carte générée par /api/og. Sans ce repli, og:image était
+        // absent et les messageries affichaient un aperçu sans visuel.
+        const ogImage = guide.meta.image
+            ? new URL(guide.meta.image, 'https://expertbornerecharge.com').toString()
+            : ogImageUrl({ q: resolvedParams.slug, sub: title });
+
         return {
-            title: guide.meta.title,
-            description: guide.meta.description,
+            title,
+            description,
             alternates: {
                 canonical: canonicalUrl,
             },
             openGraph: {
-                title: guide.meta.title,
-                description: guide.meta.description,
+                title,
+                description,
                 type: 'article',
                 url: canonicalUrl,
+                images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title,
+                description,
+                images: [ogImage],
             },
             robots: { index: true, follow: true },
         };
@@ -84,17 +101,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         .single();
     
     if (post) {
+        const title = clampTitle(post.seo_title || post.title);
+        const description = clampDescription(post.seo_description || post.excerpt);
+
          return {
-            title: post.seo_title || post.title,
-            description: post.seo_description || post.excerpt,
+            title,
+            description,
             alternates: {
                 canonical: `https://expertbornerecharge.com/blog/${resolvedParams.slug}`,
             },
             openGraph: {
-                title: post.seo_title || post.title,
-                description: post.seo_description || post.excerpt,
+                title,
+                description,
                 type: 'article',
                 url: `https://expertbornerecharge.com/blog/${resolvedParams.slug}`,
+                images: [{ url: ogImageUrl({ q: resolvedParams.slug, sub: title }), width: 1200, height: 630, alt: title }],
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title,
+                description,
+                images: [ogImageUrl({ q: resolvedParams.slug, sub: title })],
             },
             robots: { index: false, follow: true },
         };
@@ -181,6 +208,14 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         }
     };
 
+    // Fil d'Ariane : il était absent des 96 pages blog + guides, donc Google
+    // affichait l'URL brute à la place du chemin dans les résultats.
+    const breadcrumbSchema = breadcrumbList([
+        { name: "Accueil", url: "https://expertbornerecharge.com" },
+        { name: "Guides", url: "https://expertbornerecharge.com/guides" },
+        { name: guide.meta.title, url: `${siteUrl}/guides/${resolvedParams.slug}` },
+    ]);
+
     // HowTo Schema for AEO (auto-generated from guide headings)
     const howToSchema = toc.length >= 3 ? {
         "@context": "https://schema.org",
@@ -200,6 +235,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         <div className="min-h-screen bg-white text-slate-900 font-sans">
             {/* Article Schema JSON-LD */}
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
             {howToSchema && (
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
             )}
@@ -214,10 +250,20 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                     <div>
                         {/* Header Article */}
                         <div className="mb-10">
-                            <Link href="/guides" className="inline-flex items-center text-sm text-slate-500 hover:text-blue-600 mb-6 group">
-                                <ArrowLeft size={16} className="mr-2 group-hover:-translate-x-1 transition-transform" />
-                                Retour aux guides
-                            </Link>
+                            {/* Fil d'Ariane visible, aligné sur le BreadcrumbList balisé */}
+                            <nav aria-label="Fil d'Ariane" className="mb-6">
+                                <ol className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+                                    <li>
+                                        <Link href="/" className="hover:text-blue-600 transition-colors">Accueil</Link>
+                                    </li>
+                                    <li aria-hidden="true" className="text-slate-300">/</li>
+                                    <li>
+                                        <Link href="/guides" className="hover:text-blue-600 transition-colors">Guides</Link>
+                                    </li>
+                                    <li aria-hidden="true" className="text-slate-300">/</li>
+                                    <li className="text-slate-900 font-medium truncate max-w-[240px]">{guide.meta.title}</li>
+                                </ol>
+                            </nav>
 
                             {/* Meta Data */}
                             <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 mb-6">

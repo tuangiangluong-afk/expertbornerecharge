@@ -1,5 +1,6 @@
 import type { CityConfig } from "@/lib/db";
 import { composeLocalIntro } from "@/lib/pseo-local";
+import { clampDescription, clampTitle } from "@/lib/seo-meta";
 
 export interface PseoB2bContent {
     meta_title: string;
@@ -128,8 +129,8 @@ export async function getPseoB2bContent(cityConfig: CityConfig, segment: 'ENTREP
     const postalMention = postal ? ` (${postal})` : "";
 
     if (segment === 'ENTREPRISE') {
-        const meta_title = `Bornes de recharge entreprise à ${city} | Loi LOM`;
-        const meta_description = `Bornes de recharge pour entreprises et flottes à ${city} : audit de puissance, IRVE, supervision et aides ADVENIR.`;
+        const meta_title = clampTitle(`Bornes de recharge entreprise à ${city} | Loi LOM`);
+        const meta_description = clampDescription(`Bornes de recharge pour entreprises et flottes à ${city} : audit de puissance, IRVE, supervision et aides ADVENIR.`);
         const hero_title = `Bornes de recharge <span class="text-emerald-600">entreprise</span> à ${city}`;
         const hero_badge = "Flottes, parkings et sites professionnels";
         const intro_html = getEntrepriseIntro(city, dept, quartiers);
@@ -138,8 +139,8 @@ export async function getPseoB2bContent(cityConfig: CityConfig, segment: 'ENTREP
         return { meta_title, meta_description, hero_title, hero_badge, intro_html, expert_tip };
     }
 
-    const meta_title = `Bornes de recharge copropriété à ${city} | Audit`;
-    const meta_description = `Infrastructure collective de recharge en copropriété à ${city} : audit, tracé des colonnes, comptage individuel et maintenance. Droit à la prise et aides ADVENIR expliqués au conseil syndical.`;
+    const meta_title = clampTitle(`Bornes de recharge copropriété à ${city} | Audit`);
+    const meta_description = clampDescription(`Infrastructure collective de recharge en copropriété à ${city} : audit, tracé des colonnes, comptage individuel et maintenance. Droit à la prise et aides ADVENIR expliqués au conseil syndical.`);
     const hero_title = `Bornes de recharge en <span class="text-purple-600">copropriété</span> à ${city}`;
     const hero_badge = "Syndics et conseils syndicaux";
     const intro_html = getCoproIntro(city, dept, quartiers);

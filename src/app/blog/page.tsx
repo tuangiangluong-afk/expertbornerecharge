@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@supabase/supabase-js";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import { Calendar, ArrowRight } from "lucide-react";
 
 import type { Metadata } from 'next';
@@ -37,6 +38,13 @@ export default async function BlogIndex() {
     return (
         <main className="min-h-screen bg-stone-50 py-24">
             <div className="container mx-auto px-4">
+                <Breadcrumbs
+                    className="mb-10"
+                    items={[
+                        { name: "Accueil", href: "/" },
+                        { name: "Blog", href: "/blog" },
+                    ]}
+                />
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h1 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-6">
                         Le Blog de la Recharge Électrique

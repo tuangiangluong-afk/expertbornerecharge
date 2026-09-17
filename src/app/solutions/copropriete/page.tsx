@@ -4,11 +4,13 @@ import LeadFormPro from "@/components/LeadFormPro";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
+import { clampDescription, clampTitle } from "@/lib/seo-meta";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import Image from "next/image";
 
 export const metadata = {
-    title: "Installation Borne Recharge Copropriété : Guide Syndic & Droit à la Prise",
-    description: "Tout comprendre sur la recharge en copropriété. Droit à la prise, infrastructure collective, subventions ADVENIR et gestion de la facturation.",
+    title: clampTitle("Borne Recharge Copropriété : Guide Syndic & Droit à la Prise"),
+    description: clampDescription("Tout comprendre sur la recharge en copropriété. Droit à la prise, infrastructure collective, subventions ADVENIR et gestion de la facturation."),
 };
 
 export default function SolutionCopro() {
@@ -21,6 +23,13 @@ export default function SolutionCopro() {
             {/* HERO (Updated Design) */}
             <section className="relative pt-32 pb-16 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
                 <div className="container mx-auto px-4">
+                    <Breadcrumbs
+                        className="mb-10"
+                        items={[
+                            { name: "Accueil", href: "/" },
+                            { name: "Solution copropriété", href: "/solutions/copropriete" },
+                        ]}
+                    />
                     <div className="grid lg:grid-cols-12 gap-12 items-center">
 
                         {/* Left: Content + Lead Form */}

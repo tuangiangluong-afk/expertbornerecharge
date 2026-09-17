@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 import { NATIONAL_TARGETS } from '@/config/national-targets';
-import { SEO_SERVICES } from '@/lib/seo-data';
+import { REDIRECTED_SERVICE_SLUGS, SEO_SERVICES } from '@/lib/seo-data';
 import { NATIONAL_CONFIG } from '@/config/national';
 import { slugify } from '@/lib/slugify';
 import { brands } from '@/data/brands';
@@ -94,12 +94,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // ========================================
     // 5. SERVICE PAGES
     // ========================================
-    const serviceRoutes: MetadataRoute.Sitemap = SEO_SERVICES.map((service) => ({
-        url: `${baseUrl}/service/${service.slug}`,
-        lastModified: new Date(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.7,
-    }));
+    const serviceRoutes: MetadataRoute.Sitemap = SEO_SERVICES
+        .filter((service) => !REDIRECTED_SERVICE_SLUGS.includes(service.slug))
+        .map((service) => ({
+            url: `${baseUrl}/service/${service.slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.7,
+        }));
 
     // ========================================
     // 6. GUIDE PAGES (POIs)
@@ -131,7 +133,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 8. VEHICLE PAGES
     // ========================================
     const vehicles = getAllVehicles();
-    const vehicleBrandRoutes: MetadataRoute.Sitemap = Array.from(new Set(vehicles.map((v) => v.brand.toLowerCase()))).map((brand) => ({
+    // slugify : « Citroën » doit sortir en /vehicules/citroen. La forme
+    // accentuée n'était pas routable et le sitemap annonçait alors un 301
+    // qui finissait en 404.
+    const vehicleBrandRoutes: MetadataRoute.Sitemap = Array.from(new Set(vehicles.map((v) => slugify(v.brand)))).map((brand) => ({
         url: `${baseUrl}/vehicules/${brand}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
@@ -139,7 +144,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
     const vehicleRoutes: MetadataRoute.Sitemap = vehicles.map((vehicle) => ({
-        url: `${baseUrl}/vehicules/${vehicle.brand.toLowerCase()}/${vehicle.id}`,
+        url: `${baseUrl}/vehicules/${slugify(vehicle.brand)}/${vehicle.id}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.7,

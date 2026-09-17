@@ -7,10 +7,11 @@ import LeadForm from '@/components/LeadForm';
 import Header from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { getHubConfig } from '@/lib/sites-config';
+import { clampDescription, clampTitle } from '@/lib/seo-meta';
 
 export const metadata: Metadata = {
-    title: "Fiscalité Borne de Recharge Entreprise 2026 | Guide Complet & Avantages",
-    description: "Tout savoir sur la fiscalité des bornes de recharge en entreprise : Amortissement, TVA, Crédit d'impôt et Aides Advenir. Optimisez votre flotte électrique.",
+    title: clampTitle("Fiscalité Borne de Recharge Entreprise 2026 | Guide"),
+    description: clampDescription("Tout savoir sur la fiscalité des bornes de recharge en entreprise : Amortissement, TVA, Crédit d'impôt et Aides Advenir. Optimisez votre flotte électrique."),
 };
 
 export default function FiscalitePage() {

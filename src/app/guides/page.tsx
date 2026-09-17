@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import { Calendar, Clock, ArrowRight, BookOpen } from 'lucide-react';
 import type { Metadata } from 'next';
 import { createClient } from "@supabase/supabase-js";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 
 // Initialize Supabase Client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
@@ -72,6 +73,13 @@ export default async function GuidesIndex() {
             <Header isHub={true} variant="default" />
 
             <main className="container mx-auto px-4 py-16 pt-32">
+                <Breadcrumbs
+                    className="mb-10"
+                    items={[
+                        { name: "Accueil", href: "/" },
+                        { name: "Guides", href: "/guides" },
+                    ]}
+                />
                 <div className="text-center mb-16">
                     <h1 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
                         Le Centre de Ressources IRVE

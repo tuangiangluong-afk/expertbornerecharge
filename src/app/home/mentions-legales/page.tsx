@@ -2,6 +2,7 @@ export const revalidate = 86400; // 24h ISR cache
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 
 export const metadata: Metadata = {
     title: "Mentions Légales - Expert Borne Recharge",
@@ -29,6 +30,13 @@ export default function MentionsLegales() {
             </nav>
 
             <main className="container mx-auto max-w-3xl px-4 py-12 lg:py-20">
+                <Breadcrumbs
+                    className="mb-8"
+                    items={[
+                        { name: "Accueil", href: "/" },
+                        { name: "Mentions légales", href: "/mentions-legales" },
+                    ]}
+                />
                 <h1 className="mb-8 text-4xl font-extrabold tracking-tight text-neutral-900 sm:text-5xl">
                     Mentions Légales
                 </h1>

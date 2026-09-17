@@ -1,5 +1,7 @@
 export const revalidate = 86400; // 24h ISR cache
 import { getAllVehicles, getVehicleById } from "@/data/vehicles";
+import { clampDescription, clampTitle } from "@/lib/seo-meta";
+import { slugify } from "@/lib/slugify";
 import { notFound } from "next/navigation";
 import SafeImage from "@/components/SafeImage";
 import Link from "next/link";
@@ -11,7 +13,7 @@ import Header from "@/components/Header";
 export async function generateStaticParams() {
     const vehicles = getAllVehicles();
     return vehicles.map((v) => ({
-        brand: v.brand.toLowerCase(),
+        brand: slugify(v.brand),
         slug: v.id,
     }));
 }
@@ -21,17 +23,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const vehicle = getVehicleById(resolvedParams.slug);
     if (!vehicle) return {};
 
-    const canonicalUrl = `https://expertbornerecharge.com/vehicules/${vehicle.brand.toLowerCase()}/${vehicle.id}`;
+    const canonicalUrl = `https://expertbornerecharge.com/vehicules/${slugify(vehicle.brand)}/${vehicle.id}`;
+    const title = clampTitle(`Borne de Recharge ${vehicle.brand} ${vehicle.model} - Devis & Prix`);
+    const description = clampDescription(`Installateur agréé pour ${vehicle.brand} ${vehicle.model}. Temps de charge : ${calculateChargeTime(vehicle.battery, 7)}h. Obtenez votre devis en 24h. Certification IRVE.`);
 
     return {
-        title: `Installation Borne de Recharge ${vehicle.brand} ${vehicle.model} - Devis & Prix`,
-        description: `Installateur agréé pour ${vehicle.brand} ${vehicle.model}. Temps de charge : ${calculateChargeTime(vehicle.battery, 7)}h. Obtenez votre devis en 24h. Certified IRVE.`,
+        title,
+        description,
         alternates: {
             canonical: canonicalUrl,
         },
         openGraph: {
-            title: `Installation Borne de Recharge ${vehicle.brand} ${vehicle.model}`,
-            description: `Installateur agréé pour ${vehicle.brand} ${vehicle.model}. Temps de charge : ${calculateChargeTime(vehicle.battery, 7)}h. Obtenez votre devis en 24h. Certified IRVE.`,
+            title,
+            description,
             siteName: "Expert Borne Recharge",
             locale: "fr_FR",
             type: "website",
@@ -44,6 +48,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
                     alt: `Installation Borne ${vehicle.brand} ${vehicle.model}`
                 }
             ]
+        },
+        twitter: {
+            card: "summary_large_image",
+            title,
+            description,
+            images: [vehicle.image],
         },
         robots: { index: true, follow: true },
     };
@@ -81,8 +91,8 @@ export default async function VehiclePage({ params }: { params: Promise<{ slug: 
                 breadcrumbItems={[
                     { name: "Accueil", item: "https://expertbornerecharge.com" },
                     { name: "Véhicules", item: "https://expertbornerecharge.com/vehicules" },
-                    { name: vehicle.brand, item: `https://expertbornerecharge.com/vehicules/${vehicle.brand.toLowerCase()}` },
-                    { name: vehicle.model, item: `https://expertbornerecharge.com/vehicules/${vehicle.brand.toLowerCase()}/${vehicle.id}` }
+                    { name: vehicle.brand, item: `https://expertbornerecharge.com/vehicules/${slugify(vehicle.brand)}` },
+                    { name: vehicle.model, item: `https://expertbornerecharge.com/vehicules/${slugify(vehicle.brand)}/${vehicle.id}` }
                 ]}
             />
             {/* Navbar simplified */}

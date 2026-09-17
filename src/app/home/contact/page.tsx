@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, Mail, Phone, MapPin, Zap, CheckCircle } from "lucide-react";
 import { getTheme } from "@/lib/theme";
 import Header from "@/components/Header";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 
 export const metadata = {
     title: "Contact : audit de puissance et devis borne",
@@ -23,6 +24,13 @@ export default function HubContactPage() {
                 <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#f1f5f9_1px,transparent_1px),linear-gradient(to_bottom,#f1f5f9_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
 
                 <div className="mx-auto max-w-4xl text-center relative z-10">
+                    <Breadcrumbs
+                        className="mb-8 flex justify-center"
+                        items={[
+                            { name: "Accueil", href: "/" },
+                            { name: "Contact", href: "/contact" },
+                        ]}
+                    />
                     <span className="inline-flex items-center rounded-full bg-blue-50 border border-blue-200 px-4 py-1.5 text-xs font-bold text-blue-700 mb-8 tracking-widest uppercase">
                         <Zap size={12} className="mr-2 fill-blue-600" />
                         Service National

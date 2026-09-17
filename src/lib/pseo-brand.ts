@@ -1,6 +1,7 @@
 import type { BrandData } from "@/data/brands";
 import type { CityConfig } from "@/lib/db";
 import { composeLocalIntro } from "@/lib/pseo-local";
+import { clampDescription, clampTitle } from "@/lib/seo-meta";
 
 export interface PseoBrandContent {
     meta_title: string;
@@ -111,8 +112,8 @@ export function getPseoBrandContent(city: string, brand: BrandData, site?: CityC
     ];
 
     return {
-        meta_title: `Installateur Borne ${brand.name} à ${city}${postal} | Devis IRVE Gratuit 24h`,
-        meta_description: `Installation certifiée IRVE de bornes de recharge pour ${brand.name} (${modelsList}) à ${city}. Charge ${brand.chargeTime}, délestage Linky, crédit d'impôt 500€. Devis gratuit sous 24h.`,
+        meta_title: clampTitle(`Installateur Borne ${brand.name} à ${city}${postal} | Devis IRVE Gratuit 24h`),
+        meta_description: clampDescription(`Installation certifiée IRVE de bornes de recharge pour ${brand.name} (${modelsList}) à ${city}. Charge ${brand.chargeTime}, délestage Linky, crédit d'impôt 500€. Devis gratuit sous 24h.`),
         hero_title: `Installation Borne ${brand.name} à ${city}`,
         hero_badge: `Installateurs Certifiés IRVE • ${city}`,
         intro_html: composeLocalIntro(

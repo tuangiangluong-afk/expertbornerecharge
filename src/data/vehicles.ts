@@ -558,8 +558,12 @@ export function getVehicleById(id: string) {
     return VEHICLES.find(v => v.id === id);
 }
 
+import { slugify } from "@/lib/slugify";
+
 export function getVehiclesByBrand(brand: string) {
-    return VEHICLES.filter(v => v.brand.toLowerCase() === brand.toLowerCase());
+    // Comparaison sur les slugs : « Citroën » ne peut pas être routé tel quel,
+    // son URL porte /vehicules/citroen. Les deux formes doivent matcher.
+    return VEHICLES.filter(v => slugify(v.brand) === slugify(brand));
 }
 
 export function getAllBrands() {

@@ -12,6 +12,9 @@ import { Footer } from "@/components/Footer";
 import { InternalMesh } from "@/components/InternalMesh";
 
 // Helper
+import { clampDescription, clampTitle } from "@/lib/seo-meta";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
+
 function getService(slug: string) {
     return SEO_SERVICES.find(s => s.slug === slug);
 }
@@ -29,8 +32,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     if (!service) return {};
 
     return {
-        title: `${service.title} - Service National | Expert Borne Recharge`,
-        description: `${service.description}. Service disponible dans toute la France avec notre réseau d'installateurs partenaires.`,
+        title: clampTitle(`${service.title} - Service National IRVE`),
+        description: clampDescription(`${service.description}. Service disponible dans toute la France avec notre réseau d'installateurs partenaires.`),
     };
 }
 
@@ -75,6 +78,15 @@ export default async function NationalServicePage({ params }: { params: Promise<
                 <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900"></div>
                 <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
 
+                <div className="container mx-auto px-4 relative z-10">
+                    <Breadcrumbs
+                        className="mb-10 [&_a]:text-neutral-300 [&_span]:text-white [&_ol]:text-neutral-300"
+                        items={[
+                            { name: "Accueil", href: "/" },
+                            { name: service.title, href: `/service/${service.slug}` },
+                        ]}
+                    />
+                </div>
                 <div className="container mx-auto px-4 relative z-10 grid md:grid-cols-2 gap-12 items-center">
                     <div>
                         <span className="inline-block py-1 px-3 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">

@@ -2,6 +2,7 @@ export const revalidate = 86400; // 24h ISR cache
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 
 export const metadata: Metadata = {
     title: "Conditions Générales de Vente - Expert Borne Recharge",
@@ -28,6 +29,13 @@ export default function CGV() {
             </nav>
 
             <main className="container mx-auto max-w-3xl px-4 py-12 lg:py-20">
+                <Breadcrumbs
+                    className="mb-8"
+                    items={[
+                        { name: "Accueil", href: "/" },
+                        { name: "CGV", href: "/cgv" },
+                    ]}
+                />
                 <h1 className="mb-8 text-4xl font-extrabold tracking-tight text-neutral-900 sm:text-5xl">
                     Conditions Générales de Vente (CGV)
                 </h1>

@@ -1,5 +1,8 @@
 export const revalidate = 86400; // 24h ISR cache
 import { getAllBrands, getAllVehicles } from "@/data/vehicles";
+import { slugify } from "@/lib/slugify";
+import { clampTitle } from "@/lib/seo-meta";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import Link from "next/link";
 import { ArrowLeft, Car, Zap } from "lucide-react";
 import Logo from "@/components/Logo";
@@ -8,7 +11,7 @@ import Header from "@/components/Header";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Quelle borne de recharge pour ma voiture électrique ? | Expert IRVE",
+    title: clampTitle("Quelle borne de recharge pour ma voiture électrique ?"),
     description: "Sélectionnez la marque de votre véhicule pour découvrir la borne de recharge idéale, la puissance maximale acceptée et le temps de charge à domicile.",
     alternates: {
         canonical: "https://expertbornerecharge.com/vehicules",
@@ -26,6 +29,13 @@ export default function VehiclesIndexPage() {
             <Header isHub={true} variant="default" />
 
             <main className="container mx-auto px-4 py-12 pt-32">
+                <Breadcrumbs
+                    className="mb-10"
+                    items={[
+                        { name: "Accueil", href: "/" },
+                        { name: "Véhicules", href: "/vehicules" },
+                    ]}
+                />
                 <div className="text-center mb-16">
                     <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">
                         Trouvez la borne pour <span className="text-blue-600">votre voiture</span>
@@ -41,7 +51,7 @@ export default function VehiclesIndexPage() {
                         return (
                             <Link
                                 key={brand}
-                                href={`/vehicules/${brand.toLowerCase()}`}
+                                href={`/vehicules/${slugify(brand)}`}
                                 className="group bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-500 hover:shadow-xl transition-all flex flex-col items-center text-center"
                             >
                                 <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">

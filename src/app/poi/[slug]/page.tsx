@@ -10,6 +10,7 @@ import { BookingWidget } from "@/components/BookingWidget";
 import { Footer } from "@/components/Footer";
 import { InternalMesh } from "@/components/InternalMesh";
 import { slugify } from "@/lib/slugify";
+import { clampDescription, clampTitle } from "@/lib/seo-meta";
 
 // Helper to find POI in National Config
 import { NATIONAL_TARGETS } from "@/config/national-targets";
@@ -54,8 +55,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     if (!poi) return {};
 
     return {
-        title: `Installation Borne ${poi} - Devis & Expert IRVE | Expert Borne Recharge`,
-        description: `Besoin d&apos;une borne de recharge à ${poi} ? Électricien certifié IRVE, installation rapide et devis gratuit sous 24h. Service national.`,
+        title: clampTitle(`Installation Borne ${poi} - Devis & Expert IRVE`),
+        description: clampDescription(`Besoin d'une borne de recharge à ${poi} ? Électricien certifié IRVE, installation rapide et devis gratuit sous 24h. Service national.`),
     };
 }
 

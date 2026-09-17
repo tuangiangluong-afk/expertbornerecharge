@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isMainHub } from "@/lib/sites-config";
+import { slugify } from "@/lib/slugify";
 
 export const config = {
     matcher: [
@@ -47,6 +48,28 @@ export default async function middleware(req: NextRequest) {
         }
     }
 
+
+    // 0.1 bis Normalisation des accents
+    // Toutes les routes du site utilisent des slugs ASCII. Une URL accentuée
+    // (ex. /vehicules/citroën, héritée d'un ancien sitemap) n'est donc routable
+    // nulle part : selon la casse de son encodage elle répondait 301 puis 404.
+    // On la ramène en 301 vers sa forme slugifiée.
+    try {
+        const decodedPath = decodeURIComponent(cleanPath);
+        if (/[^\x00-\x7F]/.test(decodedPath)) {
+            const asciiPath = decodedPath
+                .split("/")
+                .map((segment) => (segment ? slugify(segment) : segment))
+                .join("/");
+            if (asciiPath && asciiPath !== cleanPath) {
+                return applySecurityHeaders(
+                    NextResponse.redirect(new URL(`${asciiPath}${url.search}`, url.origin), 301),
+                );
+            }
+        }
+    } catch {
+        // Encodage pourri : on laisse Next répondre, sans casser la requête.
+    }
 
     // 0.2 Domain Normalization (www -> non-www redirect)
     if (hostname.startsWith("www.") && !hostname.includes("localhost") && !hostname.includes("192.168.")) {

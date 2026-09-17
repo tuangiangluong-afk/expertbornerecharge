@@ -15,6 +15,7 @@ import { VillesVoisines } from "@/components/VillesVoisines";
 import { LocalFAQ } from "@/components/LocalFAQ";
 
 import { getPseoB2bContent } from "@/lib/pseo-b2b";
+import { ogImageUrl } from "@/lib/seo-meta";
 
 // ========================================
 // PSEO B2B — Copropriété x Ville
@@ -63,6 +64,20 @@ export async function generateMetadata({
             siteName: "Expert Borne Recharge",
             locale: "fr_FR",
             type: "website",
+            url: canonicalUrl,
+            // 74 pages B2B (copropriété + entreprise) partaient sans og:image.
+            images: [{
+                url: ogImageUrl({ q: site.city, sub: "Bornes en copropriété et droit à la prise" }),
+                width: 1200,
+                height: 630,
+                alt: `Bornes de recharge en copropriété à ${site.city}`,
+            }],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: b2bContent.meta_title,
+            description: b2bContent.meta_description,
+            images: [ogImageUrl({ q: site.city, sub: "Bornes en copropriété et droit à la prise" })],
         },
         robots: { index: true, follow: true },
     };

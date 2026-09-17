@@ -10,6 +10,7 @@ import { TableOfContents } from "@/components/blog/TableOfContents";
 import SimulatorWidget from '@/components/blog/SimulatorWidget';
 import LocalLinker from '@/components/blog/LocalLinker';
 import { marked } from 'marked';
+import { breadcrumbList, clampDescription, clampTitle, ogImageUrl } from '@/lib/seo-meta';
 
 // Initialize Supabase Client (No specific hook yet in this project structure)
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
@@ -88,22 +89,35 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     }
 
     const canonicalUrl = `https://expertbornerecharge.com/blog/${slug}`;
+    const title = clampTitle(post.seo_title || post.title);
+    const description = clampDescription(post.seo_description || post.excerpt);
+
+    // Repli sur la carte générée par /api/og : les articles sans image à la une
+    // n'avaient aucun og:image, donc aucun aperçu visuel au partage.
+    const ogImage = post.featured_image_url
+        || ogImageUrl({ q: slug, sub: description });
 
     return {
-        title: post.seo_title || `${post.title} | Expert Borne Recharge`,
-        description: post.seo_description || post.excerpt,
+        title,
+        description,
         alternates: {
             canonical: canonicalUrl,
         },
         openGraph: {
-            title: post.title,
-            description: post.excerpt,
+            title,
+            description,
             url: canonicalUrl,
-            images: post.featured_image_url ? [post.featured_image_url] : [],
+            images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
             type: 'article',
             publishedTime: post.published_at,
             modifiedTime: post.updated_at,
             authors: [post.author_name || 'Expert Borne Recharge'],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+            images: [ogImage],
         },
         robots: { index: true, follow: true },
     };
@@ -174,6 +188,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             "cssSelector": ["h1", "article h2", "article p:first-of-type", ".prose > p:first-child"]
         }
     };
+    const breadcrumbSchema = breadcrumbList([
+        { name: "Accueil", url: "https://expertbornerecharge.com" },
+        { name: "Blog", url: "https://expertbornerecharge.com/blog" },
+        { name: post.title, url: `https://expertbornerecharge.com/blog/${slug}` },
+    ]);
+
     // HowTo Schema for AEO (auto-generated when headings >= 3)
     const howToSchema = (headers && headers.length >= 3) ? {
         "@context": "https://schema.org",
@@ -194,6 +214,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
              <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
             {howToSchema && (
                 <script
