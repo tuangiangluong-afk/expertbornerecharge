@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-    const INDEXNOW_KEY = "d857c21382b142dcb53f9459750f5cc4";
+    const INDEXNOW_KEY = "f524188a726691e30cc0f19c7f7c27c1";
     const HOST = "expertbornerecharge.com";
     const KEY_LOCATION = `https://${HOST}/${INDEXNOW_KEY}.txt`;
 
@@ -30,31 +30,35 @@ export async function GET() {
         // Limit to 10,000 URLs as per IndexNow restrictions
         const payloadUrls = urls.slice(0, 10000);
 
-        // Prepare IndexNow payload
-        const payload = {
-            host: HOST,
-            key: INDEXNOW_KEY,
-            keyLocation: KEY_LOCATION,
-            urlList: payloadUrls
-        };
-
-        // Ping Bing/IndexNow
-        const response = await fetch("https://api.indexnow.org/indexnow", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-            },
-            body: JSON.stringify(payload),
-        });
-
-        if (!response.ok) {
-            throw new Error(`IndexNow Error: ${response.statusText}`);
+        // Submit in chunks: IndexNow rejects oversized single batches
+        const CHUNK = 400;
+        let sent = 0;
+        for (let i = 0; i < payloadUrls.length; i += CHUNK) {
+            const batch = payloadUrls.slice(i, i + CHUNK);
+            const payload = {
+                host: HOST,
+                key: INDEXNOW_KEY,
+                keyLocation: KEY_LOCATION,
+                urlList: batch,
+            };
+            const response = await fetch("https://api.indexnow.org/indexnow", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                },
+                body: JSON.stringify(payload),
+            });
+            if (!response.ok) {
+                throw new Error(`IndexNow Error: HTTP ${response.status} on batch ${i / CHUNK + 1}`);
+            }
+            sent += batch.length;
+            await new Promise((r) => setTimeout(r, 250));
         }
 
         return NextResponse.json({
             success: true,
             provider: "IndexNow",
-            count: payloadUrls.length,
+            count: sent,
             message: "Ping sent successfully using sitemap URLs"
         });
 
