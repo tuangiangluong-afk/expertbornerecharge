@@ -56,6 +56,11 @@ def main():
             print(f"NOCHANGE (already redirected) {name}"); continue
         if ANCHOR not in text:
             print(f"SKIP (anchor missing) {name}"); continue
+        if "async redirects" in text:
+            # This repo already defines redirects() (e.g. Andrieu brand 301s).
+            # Blind insertion would create a duplicate key -> TS2300 -> build
+            # fail. Requires MANUAL merge into the existing redirects() array.
+            print(f"SKIP (has existing redirects() - merge by hand) {name}"); continue
         if not git_clean(ROOT / name):
             print(f"SKIP (dirty) {name}"); continue
         if dry:
