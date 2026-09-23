@@ -22,6 +22,12 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.expertbornerecharge.com' }],
+        destination: 'https://expertbornerecharge.com/:path*',
+        permanent: true,
+      },
+      {
         source: '/guides/assurance-borne-recharge-couverture',
         destination: '/guides',
         permanent: true,
@@ -117,6 +123,24 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/openapi.json",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
+      {
+        source: "/api/og/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
+      {
+        source: "/api/og",
         headers: [
           {
             key: "X-Robots-Tag",

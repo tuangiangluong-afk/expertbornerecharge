@@ -32,7 +32,7 @@ export default function robots(): MetadataRoute.Robots {
                 allow: '/',
                 // /llms.txt et /openapi.json ne sont pas des pages : on les
                 // retire de l'index général sans les priver des agents d'IA.
-                disallow: ['/_next/', ...PRIVATE_PATHS, '/llms.txt', '/openapi.json'],
+                disallow: ['/_next/', ...PRIVATE_PATHS, '/llms.txt', '/openapi.json', '/api/og', '/api/og/'],
             },
             {
                 userAgent: BOT_USER_AGENTS,
