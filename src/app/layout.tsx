@@ -136,6 +136,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-neutral-900 text-neutral-50`}
       >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://expertbornerecharge.com/#organization", "name": "Expert Borne Recharge", "url": "https://expertbornerecharge.com", "logo": {"@type": "ImageObject", "url": "https://expertbornerecharge.com/favicon.ico"}, "sameAs": ["https://www.youtube.com/@ExpertBorneRecharge", "https://www.instagram.com/expertbornerecharge", "https://www.tiktok.com/@expertbornerecharge", "https://www.facebook.com/expertbornereharge"]}, {"@type": "WebSite", "@id": "https://expertbornerecharge.com/#website", "url": "https://expertbornerecharge.com", "name": "Expert Borne Recharge", "inLanguage": "fr", "publisher": {"@id": "https://expertbornerecharge.com/#organization"}}, {"@type": "WebPage", "@id": "https://expertbornerecharge.com/#webpage", "url": "https://expertbornerecharge.com", "name": "Expert Borne Recharge", "isPartOf": {"@id": "https://expertbornerecharge.com/#website"}, "about": {"@id": "https://expertbornerecharge.com/#organization"}, "publisher": {"@id": "https://expertbornerecharge.com/#organization"}, "datePublished": "2026-01-06T00:00:00Z", "dateModified": "2026-09-26T00:00:00Z"}]}).replace(/</g, '\\u003c') }}
+      />
         {/* AnswerShaper Local Tag */}
         <Script src="https://answershaper.com/api/v1/m2m/local-tag/13.js" strategy="lazyOnload" defer />
 
