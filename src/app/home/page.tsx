@@ -47,7 +47,7 @@ export default function HomePage() {
     }));
 
     return (
-        <div className="min-h-screen font-sans text-slate-900 bg-white">
+        <div role="main" className="min-h-screen font-sans text-slate-900 bg-white">
             {/* NAVIGATION - Light Tech-Trust Style */}
             <Header isHub={true} variant="default" />
 
