@@ -449,7 +449,7 @@ export default function LeadFormPro({
                                 : 'Audit Infrastructure Entreprise'
                             }
                         </h3>
-                        <p className="text-white/80 text-sm">Gratuit • Sans engagement • Réponse sous 24h</p>
+                        <p className="text-white/80 text-sm">Gratuit • Sans engagement • Réponse sous 24h<span className="sr-only">.</span></p>
                     </div>
                 </div>
 
@@ -677,7 +677,7 @@ export default function LeadFormPro({
                                     className={`w-full px-4 py-3 rounded-xl border border-neutral-300 ${palette.ring} transition outline-none`}
                                 />
                                 {formData.phone && !FRENCH_PHONE_REGEX.test(formData.phone.replace(/\s/g, '')) && (
-                                    <p className="text-xs text-red-500 mt-1">Format invalide. Ex: 06 12 34 56 78</p>
+                                    <p className="text-xs text-red-500 mt-1">Format invalide. Ex: 06 12 34 56 78<span className="sr-only">.</span></p>
                                 )}
                             </div>
 

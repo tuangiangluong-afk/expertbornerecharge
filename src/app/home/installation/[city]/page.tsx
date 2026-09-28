@@ -13,8 +13,10 @@ import Logo from "@/components/Logo";
 // STATIC GENERATION - Pre-render all city pages
 // ============================================
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-    return getAllCitySlugs().map((slug) => ({ city: slug }));
+    return getAllCitySlugs().slice(0, 5).map((slug) => ({ city: slug }));
 }
 
 // ============================================

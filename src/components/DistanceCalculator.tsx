@@ -112,7 +112,7 @@ export function DistanceCalculator({ city }: DistanceCalculatorProps) {
                                 <span className="font-bold text-lg">Estimation</span>
                                 <span className="font-extrabold text-3xl">{result.price} €</span>
                             </div>
-                            <p className="text-[10px] opacity-80 mt-1 text-center font-medium uppercase tracking-wider">Prix indicatif soumis à confirmation</p>
+                            <p className="text-[10px] opacity-80 mt-1 text-center font-medium uppercase tracking-wider">Prix indicatif soumis à confirmation<span className="sr-only">.</span></p>
                         </div>
                     </div>
                 )}

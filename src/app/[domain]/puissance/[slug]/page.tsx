@@ -8,12 +8,14 @@ import LeadForm from "@/components/LeadForm";
 import { getSiteConfig } from "@/lib/sites-config";
 import { CITIES } from "@/lib/db";
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   const filePath = path.join(process.cwd(), "src", "data", "puissances.json");
   if (!fs.existsSync(filePath)) return [];
-  const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+  const data = JSON.parse(fs.readFileSync(filePath, "utf-8")).slice(0, 2);
   
-  const domains = Object.values(CITIES).map(c => c.domain || c.slug);
+  const domains = Object.values(CITIES).map(c => c.domain || c.slug).filter(Boolean).slice(0, 2);
   const params = [];
   for (const d of data) {
     for (const domain of domains) {

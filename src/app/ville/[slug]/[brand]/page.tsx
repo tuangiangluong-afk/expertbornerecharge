@@ -16,12 +16,16 @@ import { CheckCircle, Zap, Shield, BatteryCharging, ArrowRight, Award } from "lu
 
 type Params = Promise<{ slug: string; brand: string }>;
 
-// Generate all combinations of City x Brand
+export const dynamicParams = true;
+
+// Pre-render top 6 combinations at build time; others are generated on-demand (ISR 24h)
 export async function generateStaticParams() {
     const params: { slug: string; brand: string }[] = [];
+    const topCities = Object.values(CITIES).slice(0, 3);
+    const topBrands = brands.slice(0, 2);
 
-    Object.values(CITIES).forEach(city => {
-        brands.forEach(brand => {
+    topCities.forEach(city => {
+        topBrands.forEach(brand => {
             params.push({
                 slug: slugify(city.city),
                 brand: brand.slug

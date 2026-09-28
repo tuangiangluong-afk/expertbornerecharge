@@ -131,7 +131,7 @@ export function BookingWidget({ city, compact = false }: BookingWidgetProps) {
 
             <div className="mb-6 text-center">
                 <h3 className="text-2xl font-bold text-neutral-900">Devis Express IRVE</h3>
-                <p className="text-neutral-500 text-sm">Réponse sous 24h • 100% Gratuit</p>
+                <p className="text-neutral-500 text-sm">Réponse sous 24h • 100% Gratuit<span className="sr-only">.</span></p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">

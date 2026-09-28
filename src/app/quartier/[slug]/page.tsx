@@ -51,29 +51,12 @@ function getNeighborhood(slug: string) {
     return undefined;
 }
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-    // Collect all neighborhoods from all targets
-    const allNeighborhoods = new Set<string>();
-
-    // National fallback
-    NATIONAL_CONFIG.points_of_interest.nightlife.forEach(n => allNeighborhoods.add(slugify(n)));
-
-    // Partners
-    for (const target of NATIONAL_TARGETS) {
-        const config = getTargetAsCityConfig(target.slug);
-        if (config && config.neighborhoods) {
-            config.neighborhoods.forEach(n => allNeighborhoods.add(slugify(n)));
-        }
-    }
-
-    // SITES (Satellite Domains)
-    for (const site of Object.values(SITES)) {
-        const districts = site.quartiers || [];
-        districts.forEach(d => allNeighborhoods.add(slugify(d)));
-    }
-
-    return Array.from(allNeighborhoods).map(slug => ({
-        slug,
+    // Pre-render only top 5 neighborhoods at build time, others are on-demand (ISR 24h)
+    return NATIONAL_CONFIG.points_of_interest.nightlife.slice(0, 5).map(n => ({
+        slug: slugify(n),
     }));
 }
 

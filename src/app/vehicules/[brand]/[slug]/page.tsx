@@ -10,8 +10,10 @@ import SimulatorWidget from "@/components/blog/SimulatorWidget";
 import Logo from "@/components/Logo";
 import Header from "@/components/Header";
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-    const vehicles = getAllVehicles();
+    const vehicles = getAllVehicles().slice(0, 5);
     return vehicles.map((v) => ({
         brand: slugify(v.brand),
         slug: v.id,

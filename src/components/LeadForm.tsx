@@ -388,7 +388,7 @@ export default function LeadForm({
                     </div>
                     <div>
                         <h3 className="font-bold text-lg">Simulateur d&apos;Éligibilité</h3>
-                        <p className="text-white/80 text-sm">Aides & Devis Gratuit</p>
+                        <p className="text-white/80 text-sm">Aides & Devis Gratuit<span className="sr-only">.</span></p>
                     </div>
                 </div>
 

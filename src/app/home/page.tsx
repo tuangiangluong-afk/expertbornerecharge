@@ -47,9 +47,10 @@ export default function HomePage() {
     }));
 
     return (
-        <div role="main" className="min-h-screen font-sans text-slate-900 bg-white">
+        <div className="min-h-screen font-sans text-slate-900 bg-white">
             {/* NAVIGATION - Light Tech-Trust Style */}
             <Header isHub={true} variant="default" />
+            <main>
 
             {/* ============================================ */}
             {/* HERO - Light Tech-Trust Style */}
@@ -96,7 +97,7 @@ export default function HomePage() {
                                         <div className="p-1 bg-gradient-to-r from-blue-600 to-blue-500"></div>
                                         <div className="p-6 md:p-8">
                                             <div className="mb-6">
-                                                <h3 className="text-lg font-bold text-slate-900">Testez votre éligibilité</h3>
+                                                <h3 className="text-lg font-bold text-slate-900">Testez votre éligibilité<span className="sr-only">.</span></h3>
                                                 <p className="text-sm text-slate-500">Réponse immédiate • Gratuit • Sans engagement</p>
                                             </div>
                                             <LeadForm
@@ -187,7 +188,7 @@ export default function HomePage() {
                         <div className="text-center mb-12">
                             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
                                 Jusqu&apos;à <span className="text-yellow-400">2 460€</span> d&apos;aides cumulables
-                            </h2>
+                            <span className="sr-only">.</span></h2>
                             <p className="text-blue-100 text-lg">
                                 Profitez de toutes les aides disponibles en 2026
                             </p>
@@ -222,7 +223,7 @@ export default function HomePage() {
                             </div>
                             <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
                                 Essence vs Recharge à domicile
-                            </h2>
+                            <span className="sr-only">.</span></h2>
                             <p className="text-slate-600 text-lg max-w-2xl mx-auto">
                                 Rechargez votre véhicule à la maison et économisez jusqu&apos;à <strong>1 500€ par an</strong>
                             </p>
@@ -238,7 +239,7 @@ export default function HomePage() {
                                                 <span className="text-2xl">⛽</span>
                                             </div>
                                             <div>
-                                                <h3 className="font-bold text-lg text-red-900">Essence / Diesel</h3>
+                                                <h3 className="font-bold text-lg text-red-900">Essence / Diesel<span className="sr-only">.</span></h3>
                                                 <p className="text-sm text-red-600">Coût mensuel moyen</p>
                                             </div>
                                         </div>
@@ -268,7 +269,7 @@ export default function HomePage() {
                                                 <Zap className="text-green-600" size={24} />
                                             </div>
                                             <div>
-                                                <h3 className="font-bold text-lg text-green-900">Recharge domicile</h3>
+                                                <h3 className="font-bold text-lg text-green-900">Recharge domicile<span className="sr-only">.</span></h3>
                                                 <p className="text-sm text-green-600">Coût mensuel moyen</p>
                                             </div>
                                         </div>
@@ -307,7 +308,7 @@ export default function HomePage() {
                         <div className="text-center mb-12">
                             <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
                                 Une solution pour chaque projet
-                            </h2>
+                            <span className="sr-only">.</span></h2>
                             <p className="text-slate-600 text-lg">
                                 Maison, copropriété ou entreprise : nos installateurs s&apos;adaptent
                             </p>
@@ -364,7 +365,7 @@ export default function HomePage() {
                         <div className="text-center mb-12">
                             <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
                                 Nos installateurs par ville
-                            </h2>
+                            <span className="sr-only">.</span></h2>
                             <p className="text-slate-600 text-lg">
                                 Trouvez un expert certifié IRVE près de chez vous
                             </p>
@@ -417,7 +418,7 @@ export default function HomePage() {
                                 </span>
                                 <h3 className="text-2xl font-bold text-slate-900">
                                     Rechargez votre véhicule 100% gratuitement grâce à l&apos;énergie solaire
-                                </h3>
+                                <span className="sr-only">.</span></h3>
                                 <p className="text-slate-600 text-sm leading-relaxed">
                                     Couplée à des panneaux photovoltaïques en toiture, votre borne de recharge intelligente pilote automatiquement la charge sur le surplus d&apos;électricité verte en journée pour rouler à coût nul.
                                 </p>
@@ -436,6 +437,7 @@ export default function HomePage() {
                 </div>
             </section>
 
+            </main>
             <Footer config={hub} />
 
             {/* Mobile Sticky CTA */}
