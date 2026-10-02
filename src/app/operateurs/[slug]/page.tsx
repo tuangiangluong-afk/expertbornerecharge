@@ -12,6 +12,8 @@ import LeadForm from "@/components/LeadForm";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import { ShieldCheck, Zap, ArrowRight, Star, Building2, Home, Scale, Award, Info, AlertTriangle, TrendingDown, CheckCircle, XCircle, Clock, FileText, Cpu } from "lucide-react";
 
+import { ogImageUrl } from "@/lib/seo-meta";
+
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
@@ -30,6 +32,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = `Avis ${operator.name} (2026) : Tarifs, Coûts Cachés & Devis Pose IRVE`;
   const description = `Avis complet et audit indépendant sur ${operator.name} en 2026. Marge d'intermédiaire (${operator.middlemanCommissionRate}), prix moyen (${operator.estimatedBasePrice}), avis clients vérifiés et arbitrage direct électricien IRVE.`;
   const url = `https://expertbornerecharge.com/operateurs/${operator.slug}`;
+  const ogImage = ogImageUrl({
+    q: `Avis ${operator.name}`,
+    sub: `Tarif moyen ${operator.estimatedBasePrice} • Marge ${operator.middlemanCommissionRate} • Arbitrage IRVE 2026`,
+    badge: "AUDIT OPÉRATEUR 2026",
+  });
 
   return {
     title,
@@ -46,9 +53,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: "article",
       images: [
         {
-          url: "https://expertbornerecharge.com/icon.png",
-          width: 512,
-          height: 512,
+          url: ogImage,
+          width: 1200,
+          height: 630,
           alt: `Audit Avis ${operator.name} 2026`,
         }
       ]
@@ -57,7 +64,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: "summary_large_image",
       title,
       description,
-      images: ["https://expertbornerecharge.com/icon.png"],
+      images: [ogImage],
     },
     robots: { index: true, follow: true }
   };
@@ -142,8 +149,8 @@ export default async function OperatorDetailPage({ params }: PageProps) {
       "name": "Expert Borne Recharge",
       "url": "https://expertbornerecharge.com"
     },
-    "datePublished": "2026-01-15",
-    "dateModified": "2026-03-25",
+    "datePublished": operator.publishedAt,
+    "dateModified": operator.updatedAt,
     "reviewRating": {
       "@type": "Rating",
       "ratingValue": operator.rating,
@@ -186,6 +193,16 @@ export default async function OperatorDetailPage({ params }: PageProps) {
               <Star className="w-4 h-4 fill-amber-400 text-amber-400 mr-1.5" />
               {operator.rating} / 5 <span className="text-xs font-normal text-slate-500 ml-1.5">({operator.reviewCount} avis vérifiés)</span>
             </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 font-medium mb-3">
+            <span className="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-600 font-semibold">
+              Audit publié le {new Date(operator.publishedAt).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+            </span>
+            <span>•</span>
+            <span className="px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200/60">
+              Barème vérifié le {new Date(operator.updatedAt).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+            </span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
@@ -432,6 +449,74 @@ export default async function OperatorDetailPage({ params }: PageProps) {
                 </p>
               </details>
             ))}
+          </div>
+        </section>
+
+        {/* Recommended Expert Guides */}
+        <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-12">
+          <div className="flex items-center gap-2 mb-2">
+            <FileText className="w-5 h-5 text-blue-600" />
+            <h3 className="text-xl font-bold text-slate-900">
+              Guides Pratiques & Réglementation Associés
+            </h3>
+          </div>
+          <p className="text-sm text-slate-600 mb-6">
+            Approfondissez votre projet avec nos dossiers juridiques et techniques certifiés 2026.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Link
+              href="/guides/aides-subventions-borne-recharge"
+              className="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50/50 hover:border-blue-300 transition group flex flex-col justify-between"
+            >
+              <div>
+                <span className="text-xs font-bold text-blue-600 uppercase tracking-wide">Fiscalité 2026</span>
+                <h4 className="font-bold text-slate-900 text-sm mt-1 group-hover:text-blue-600">
+                  Crédit d&apos;impôt 500 € & Aides Advenir
+                </h4>
+                <p className="text-xs text-slate-600 mt-1 line-clamp-2">
+                  Conditions d&apos;éligibilité, mentions obligatoires sur devis IRVE et cumul des primes.
+                </p>
+              </div>
+              <span className="text-xs text-blue-600 font-semibold mt-3 flex items-center gap-1">
+                Lire le guide →
+              </span>
+            </Link>
+
+            <Link
+              href="/guides/borne-copropriete-droit-a-la-prise-advenir-2026"
+              className="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50/50 hover:border-blue-300 transition group flex flex-col justify-between"
+            >
+              <div>
+                <span className="text-xs font-bold text-blue-600 uppercase tracking-wide">Copropriété</span>
+                <h4 className="font-bold text-slate-900 text-sm mt-1 group-hover:text-blue-600">
+                  Droit à la Prise & Démarches Syndic
+                </h4>
+                <p className="text-xs text-slate-600 mt-1 line-clamp-2">
+                  Comment installer une borne en parking collectif sans blocage de l&apos;AG.
+                </p>
+              </div>
+              <span className="text-xs text-blue-600 font-semibold mt-3 flex items-center gap-1">
+                Lire le guide →
+              </span>
+            </Link>
+
+            <Link
+              href="/guides/borne-7kw-vs-11kw-prix-installation"
+              className="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50/50 hover:border-blue-300 transition group flex flex-col justify-between"
+            >
+              <div>
+                <span className="text-xs font-bold text-blue-600 uppercase tracking-wide">Technique</span>
+                <h4 className="font-bold text-slate-900 text-sm mt-1 group-hover:text-blue-600">
+                  Borne 7,4 kW vs 11 kW vs 22 kW
+                </h4>
+                <p className="text-xs text-slate-600 mt-1 line-clamp-2">
+                  Monophasé ou triphasé : calculer la puissance exacte pour éviter de disjoncter.
+                </p>
+              </div>
+              <span className="text-xs text-blue-600 font-semibold mt-3 flex items-center gap-1">
+                Lire le guide →
+              </span>
+            </Link>
           </div>
         </section>
 

@@ -4,7 +4,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import Link from 'next/link';
 import Image from 'next/image';
 import Header from '@/components/Header';
-import { Clock, Calendar, Zap, ArrowRight } from 'lucide-react';
+import { Clock, Calendar, Zap, ArrowRight, Scale, Building2, Cpu } from 'lucide-react';
 import SimulatorWidget from '@/components/blog/SimulatorWidget';
 import LocalLinker from '@/components/blog/LocalLinker';
 import { createClient } from "@supabase/supabase-js";
@@ -361,6 +361,77 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                                             <p className="text-xs text-slate-500 leading-relaxed">{item.desc}</p>
                                         </Link>
                                     ))}
+                            </div>
+                        </div>
+
+                        {/* Audit Opérateurs & Comparatifs Matériels 2026 */}
+                        <div className="mt-8 p-8 bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl shadow-lg not-prose">
+                            <div className="flex items-center justify-between mb-4">
+                                <h3 className="text-xl font-bold flex items-center gap-2 text-white">
+                                    <Scale className="text-emerald-400" size={22} />
+                                    Audits Réseaux &amp; Comparatifs Bornes 2026
+                                </h3>
+                                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                                    Mise à jour 2026
+                                </span>
+                            </div>
+                            <p className="text-sm text-slate-300 mb-6">
+                                Évitez les surcommissions des intermédiaires. Comparez les réseaux nationaux et les fiches techniques des fabricants :
+                            </p>
+                            <div className="grid sm:grid-cols-3 gap-3">
+                                <Link
+                                    href="/operateurs"
+                                    className="p-4 bg-slate-800/80 hover:bg-slate-700/80 rounded-2xl border border-slate-700 hover:border-emerald-400 transition-all group flex flex-col justify-between"
+                                >
+                                    <div>
+                                        <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase mb-1">
+                                            <Building2 size={14} /> Opérateurs
+                                        </div>
+                                        <h4 className="font-bold text-sm text-white group-hover:text-emerald-300 mb-1">
+                                            14 Réseaux au Crible
+                                        </h4>
+                                        <p className="text-xs text-slate-400">ChargeGuru, IZI by EDF, Zeplug, Waat : marges et avis.</p>
+                                    </div>
+                                    <span className="text-xs font-semibold text-emerald-400 mt-3 inline-flex items-center gap-1">
+                                        Voir l&apos;annuaire →
+                                    </span>
+                                </Link>
+
+                                <Link
+                                    href="/marques"
+                                    className="p-4 bg-slate-800/80 hover:bg-slate-700/80 rounded-2xl border border-slate-700 hover:border-blue-400 transition-all group flex flex-col justify-between"
+                                >
+                                    <div>
+                                        <div className="flex items-center gap-2 text-blue-400 text-xs font-bold uppercase mb-1">
+                                            <Cpu size={14} /> Matériel
+                                        </div>
+                                        <h4 className="font-bold text-sm text-white group-hover:text-blue-300 mb-1">
+                                            Benchmark Bornes 7-22 kW
+                                        </h4>
+                                        <p className="text-xs text-slate-400">Tesla, Schneider, Wallbox, Hager, Legrand : specs & prix.</p>
+                                    </div>
+                                    <span className="text-xs font-semibold text-blue-400 mt-3 inline-flex items-center gap-1">
+                                        Voir les bornes →
+                                    </span>
+                                </Link>
+
+                                <Link
+                                    href="/comparatifs"
+                                    className="p-4 bg-slate-800/80 hover:bg-slate-700/80 rounded-2xl border border-slate-700 hover:border-indigo-400 transition-all group flex flex-col justify-between"
+                                >
+                                    <div>
+                                        <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold uppercase mb-1">
+                                            <Scale size={14} /> Duels
+                                        </div>
+                                        <h4 className="font-bold text-sm text-white group-hover:text-indigo-300 mb-1">
+                                            17 Matchs Directs
+                                        </h4>
+                                        <p className="text-xs text-slate-400">Face-à-face impartiaux et matrices de décision nettes.</p>
+                                    </div>
+                                    <span className="text-xs font-semibold text-indigo-400 mt-3 inline-flex items-center gap-1">
+                                        Voir les duels →
+                                    </span>
+                                </Link>
                             </div>
                         </div>
                     </div>

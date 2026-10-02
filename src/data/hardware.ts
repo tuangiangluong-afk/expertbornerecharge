@@ -1,5 +1,7 @@
 export interface HardwareProduct {
   slug: string;
+  publishedAt: string;
+  updatedAt: string;
   brand: string;
   modelName: string;
   tagline: string;
@@ -36,6 +38,8 @@ export interface HardwareProduct {
 export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   {
     slug: "tesla-wall-connector-gen-3",
+    publishedAt: "2025-09-15",
+    updatedAt: "2026-09-20",
     image: "/images/chargers/tesla-wall-connector.png",
     brand: "Tesla",
     modelName: "Wall Connector (Génération 3)",
@@ -99,6 +103,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "schneider-charge",
+    publishedAt: "2025-09-22",
+    updatedAt: "2026-09-21",
     image: "/images/chargers/schneider-charge.png",
     brand: "Schneider Electric",
     modelName: "Schneider Charge",
@@ -120,7 +126,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "ManoMano / Distributeur Pro",
     affiliateUrl: "/go/schneider-charge",
-    associatedDuelSlugs: ["schneider-charge-vs-hager-witty","prise-green-up-vs-borne-7kw"],
+    associatedDuelSlugs: ["schneider-charge-vs-hager-witty", "prise-green-up-vs-borne-7kw", "legrand-green-up-one-vs-schneider-charge"],
     associatedOperatorSlugs: ["chargeguru","izi-by-edf","proxiserve","totalenergies","enedis-colonne-horizontale"],
     pros: [
       "Prise T2S avec obturateurs assurant une conformité totale à la réglementation française",
@@ -161,8 +167,10 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "wallbox-pulsar-plus",
+    publishedAt: "2025-09-29",
+    updatedAt: "2026-09-22",
     image: "/images/chargers/wallbox-pulsar-plus.png",
-    associatedDuelSlugs: ["tesla-wall-connector-vs-wallbox-pulsar-plus"],
+    associatedDuelSlugs: ["tesla-wall-connector-vs-wallbox-pulsar-plus", "wallbox-pulsar-plus-vs-wallbox-pulsar-max"],
     associatedOperatorSlugs: ["chargeguru", "totalenergies", "mon-rezo"],
     brand: "Wallbox",
     modelName: "Pulsar Plus",
@@ -224,6 +232,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "wallbox-pulsar-max",
+    publishedAt: "2025-10-06",
+    updatedAt: "2026-09-23",
     image: "/images/chargers/wallbox-pulsar-max.png",
     brand: "Wallbox",
     modelName: "Pulsar Max",
@@ -246,7 +256,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "ManoMano / Amazon",
     affiliateUrl: "/go/wallbox-pulsar-max",
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["wallbox-pulsar-plus-vs-wallbox-pulsar-max"],
     associatedOperatorSlugs: ["chargeguru"],
     pros: [
       "Finition mate texturée ultra-résistante aux rayures et indice anti-chocs IK10",
@@ -286,6 +296,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "hager-witty-start",
+    publishedAt: "2025-10-14",
+    updatedAt: "2026-09-24",
     image: "/images/chargers/hager-witty-start.png",
     brand: "Hager",
     modelName: "Witty Start (XEV1K)",
@@ -307,7 +319,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "Distributeur Pro / Rexel",
     affiliateUrl: "/go/hager-witty-start",
-    associatedDuelSlugs: ["schneider-charge-vs-hager-witty"],
+    associatedDuelSlugs: ["schneider-charge-vs-hager-witty", "hager-witty-start-vs-hager-witty-solar"],
     associatedOperatorSlugs: ["chargeguru","izi-by-edf","proxiserve","bornes-solutions"],
     pros: [
       "Fiabilité légendaire de la marque alsacienne Hager : quasi zéro retour SAV",
@@ -348,6 +360,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "hager-witty-solar",
+    publishedAt: "2025-10-21",
+    updatedAt: "2026-09-25",
     image: "/images/chargers/hager-witty-solar.png",
     brand: "Hager",
     modelName: "Witty Solaire (XEV1K-Solar)",
@@ -369,7 +383,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "Distributeur Spécialisé",
     affiliateUrl: "/go/hager-witty-solar",
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["hager-witty-start-vs-hager-witty-solar", "myenergi-zappi-vs-sma-ev-charger"],
     associatedOperatorSlugs: ["engie-my-power"],
     pros: [
       "Permet de rouler 'gratuitement' grâce au surplus de vos panneaux solaires",
@@ -409,6 +423,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "legrand-green-up-one",
+    publishedAt: "2025-10-28",
+    updatedAt: "2026-09-26",
     image: "/images/chargers/legrand-green-up-one.png",
     brand: "Legrand",
     modelName: "Green'up One",
@@ -430,7 +446,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "ManoMano / Leroy Merlin Pro",
     affiliateUrl: "/go/legrand-green-up-one",
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["legrand-green-up-one-vs-schneider-charge"],
     associatedOperatorSlugs: ["proxiserve","zeplug"],
     pros: [
       "Intégration native dans l'application Legrand Home + Control (avec vos interrupteurs et prises)",
@@ -470,6 +486,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "legrand-prise-green-up",
+    publishedAt: "2025-11-05",
+    updatedAt: "2026-09-27",
     image: "/images/chargers/legrand-prise-green-up.png",
     brand: "Legrand",
     modelName: "Prise Renforcée Green'up Access (Pack complet)",
@@ -532,8 +550,10 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "myenergi-zappi-v2",
+    publishedAt: "2025-11-13",
+    updatedAt: "2026-09-28",
     image: "/images/chargers/myenergi-zappi.png",
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["myenergi-zappi-vs-sma-ev-charger"],
     associatedOperatorSlugs: ["engie-my-power"],
     brand: "MyEnergi",
     modelName: "Zappi V2.1",
@@ -595,6 +615,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "abb-terra-ac",
+    publishedAt: "2025-11-21",
+    updatedAt: "2026-09-29",
     image: "/images/chargers/abb-terra-ac.png",
     brand: "ABB",
     modelName: "Terra AC Wallbox",
@@ -616,7 +638,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "Distributeur Pro",
     affiliateUrl: "/go/abb-terra-ac",
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["abb-terra-ac-vs-autel-maxicharger"],
     associatedOperatorSlugs: ["chargeguru","waat"],
     pros: [
       "Composants de qualité industrielle ABB conçus pour durer 15 ans",
@@ -656,8 +678,10 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "autel-maxicharger",
+    publishedAt: "2025-11-28",
+    updatedAt: "2026-09-30",
     image: "/images/chargers/autel-maxicharger.png",
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["abb-terra-ac-vs-autel-maxicharger"],
     associatedOperatorSlugs: ["chargeguru"],
     brand: "Autel",
     modelName: "MaxiCharger AC Wallbox",
@@ -717,6 +741,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "evbox-elvi",
+    publishedAt: "2025-12-06",
+    updatedAt: "2026-10-01",
     image: "/images/chargers/evbox-elvi.png",
     brand: "EVBox",
     modelName: "Elvi V2",
@@ -738,7 +764,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "Distributeur Pro",
     affiliateUrl: "/go/evbox-elvi",
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["alfen-eve-single-vs-evbox-elvi"],
     associatedOperatorSlugs: ["totalenergies","zeplug"],
     pros: [
       "Architecture modulaire en 3 pièces clipsables, très facile à faire évoluer",
@@ -778,6 +804,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "alfen-eve-single-pro",
+    publishedAt: "2025-12-15",
+    updatedAt: "2026-10-01",
     image: "/images/chargers/alfen-eve-single.png",
     brand: "Alfen",
     modelName: "Eve Single Pro-line",
@@ -799,7 +827,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "Distributeur Pro Spécialisé",
     affiliateUrl: "/go/alfen-eve-single",
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["alfen-eve-single-vs-evbox-elvi"],
     associatedOperatorSlugs: ["waat","parknplug","bornes-solutions"],
     pros: [
       "Magnifique écran couleur affichant le coût en direct, la vitesse et le temps restant",
@@ -839,8 +867,10 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "sma-ev-charger",
+    publishedAt: "2025-12-24",
+    updatedAt: "2026-10-02",
     image: "/images/chargers/sma-ev-charger.png",
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["myenergi-zappi-vs-sma-ev-charger"],
     associatedOperatorSlugs: ["engie-my-power"],
     brand: "SMA",
     modelName: "SMA EV Charger 7.4 / 22",

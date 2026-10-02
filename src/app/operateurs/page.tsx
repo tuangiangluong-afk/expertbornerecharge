@@ -8,6 +8,14 @@ import LeadForm from "@/components/LeadForm";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import { ShieldCheck, Zap, ArrowRight, Star, Building2, Home, Scale, Award, Info, AlertTriangle, TrendingDown, Cpu } from "lucide-react";
 
+import { ogImageUrl } from "@/lib/seo-meta";
+
+const hubOgImage = ogImageUrl({
+  q: "Opérateurs Recharge",
+  sub: "Audit indépendant des 14 grands réseaux IRVE 2026 : avis, tarifs et marges",
+  badge: "AUDIT OPÉRATEURS 2026",
+});
+
 export const metadata: Metadata = {
   title: "Avis & Tarifs des Opérateurs de Recharge 2026 : Le Comparatif Indépendant",
   description: "ChargeGuru, IZI by EDF, Zeplug, Waat, TotalEnergies... Décryptage des offres, audit des marges d'intermédiaire et arbitrage pour éviter les surcommissions.",
@@ -23,9 +31,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://expertbornerecharge.com/icon.png",
-        width: 512,
-        height: 512,
+        url: hubOgImage,
+        width: 1200,
+        height: 630,
         alt: "Opérateurs de bornes de recharge 2026",
       }
     ]
@@ -34,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Avis & Tarifs des Opérateurs de Recharge 2026 : Le Comparatif Indépendant",
     description: "ChargeGuru, IZI by EDF, Zeplug, Waat... Audit des marges d'intermédiaire.",
-    images: ["https://expertbornerecharge.com/icon.png"],
+    images: [hubOgImage],
   },
   robots: { index: true, follow: true }
 };

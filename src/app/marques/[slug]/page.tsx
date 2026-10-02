@@ -12,7 +12,8 @@ import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
 import LeadForm from "@/components/LeadForm";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
-import { Zap, ShieldCheck, Star, ExternalLink, ArrowRight, Sun, Cpu, Check, AlertTriangle, CheckCircle, XCircle, Wrench, HelpCircle, Scale, Building2 } from "lucide-react";
+import { Zap, ShieldCheck, Star, ExternalLink, ArrowRight, Sun, Cpu, Check, AlertTriangle, CheckCircle, XCircle, Wrench, HelpCircle, Scale, Building2, FileText } from "lucide-react";
+import { ogImageUrl } from "@/lib/seo-meta";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -47,6 +48,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const description = `Fiche technique complète ${product.brand} ${product.modelName}. Puissance ${product.maxPowerKw} kW, délestage dynamique TIC Linky, prix d'installation et devis électricien IRVE agréé.`;
     const url = `https://expertbornerecharge.com/marques/${product.slug}`;
     const imageUrl = `https://expertbornerecharge.com${product.image}`;
+    const ogCardUrl = ogImageUrl({
+      q: `${product.brand} ${product.modelName}`,
+      sub: `Puissance ${product.maxPowerKw} kW • Matériel ${product.estimatedHardwarePrice} • Pose IRVE et aides 2026`,
+      badge: "FICHE TECHNIQUE MATÉRIEL",
+    });
 
     return {
       title,
@@ -63,6 +69,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         type: "article",
         images: [
           {
+            url: ogCardUrl,
+            width: 1200,
+            height: 630,
+            alt: `${product.brand} ${product.modelName} 2026`,
+          },
+          {
             url: imageUrl,
             width: 1024,
             height: 1024,
@@ -74,7 +86,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         card: "summary_large_image",
         title,
         description,
-        images: [imageUrl],
+        images: [ogCardUrl],
       },
       robots: { index: true, follow: true }
     };
@@ -85,6 +97,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const title = legacyItem.title;
     const description = legacyItem.meta_description;
     const url = `https://expertbornerecharge.com/marques/${legacyItem.slug}`;
+    const ogCardUrl = ogImageUrl({
+      q: legacyItem.h1 || legacyItem.title,
+      sub: "Fiche constructeur et guide d'installation IRVE 2026",
+      badge: "MARQUE & FABRICANT",
+    });
 
     return {
       title,
@@ -99,11 +116,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         siteName: "Expert Borne Recharge",
         locale: "fr_FR",
         type: "article",
+        images: [
+          {
+            url: ogCardUrl,
+            width: 1200,
+            height: 630,
+            alt: legacyItem.title,
+          }
+        ]
       },
       twitter: {
         card: "summary_large_image",
         title,
         description,
+        images: [ogCardUrl],
       },
       robots: { index: true, follow: true }
     };
@@ -247,8 +273,8 @@ export default async function ProductOrBrandDetailPage({ params }: PageProps) {
           "name": "Expert Borne Recharge",
           "url": "https://expertbornerecharge.com"
         },
-        "datePublished": "2026-01-15",
-        "dateModified": "2026-03-25",
+        "datePublished": product.publishedAt,
+        "dateModified": product.updatedAt,
         "reviewBody": product.verdict,
         "reviewRating": {
           "@type": "Rating",
@@ -298,7 +324,7 @@ export default async function ProductOrBrandDetailPage({ params }: PageProps) {
               </div>
 
               <div className="w-full md:w-2/3">
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                   <span className="text-xs font-semibold px-3 py-1 rounded-full bg-blue-100 text-blue-800">
                     {product.brand} · {product.category}
                   </span>
@@ -306,6 +332,16 @@ export default async function ProductOrBrandDetailPage({ params }: PageProps) {
                     <Star className="w-4 h-4 fill-amber-400 text-amber-400 mr-1.5" />
                     {product.rating} / 5 <span className="text-xs font-normal text-slate-500 ml-1">({product.reviewCount} avis certifiés)</span>
                   </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 font-medium mb-3">
+                  <span className="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-600 font-semibold">
+                    Fiche publiée le {new Date(product.publishedAt).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+                  </span>
+                  <span>•</span>
+                  <span className="px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200/60">
+                    Tarifs vérifiés le {new Date(product.updatedAt).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+                  </span>
                 </div>
 
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
@@ -586,6 +622,74 @@ export default async function ProductOrBrandDetailPage({ params }: PageProps) {
 
             <div className="bg-white rounded-2xl p-6 text-slate-900 shadow-xl max-w-2xl mx-auto">
               <LeadForm domain="expertbornerecharge.com" city="France" targetType="MIXED" />
+            </div>
+          </section>
+
+          {/* Recommended Expert Guides */}
+          <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-12">
+            <div className="flex items-center gap-2 mb-2">
+              <FileText className="w-5 h-5 text-blue-600" />
+              <h3 className="text-xl font-bold text-slate-900">
+                Guides & Réglementation Recommandés
+              </h3>
+            </div>
+            <p className="text-sm text-slate-600 mb-6">
+              Tout savoir sur l&apos;installation, le pilotage énergétique et les aides fiscales 2026.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <Link
+                href="/guides/aides-subventions-borne-recharge"
+                className="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50/50 hover:border-blue-300 transition group flex flex-col justify-between"
+              >
+                <div>
+                  <span className="text-xs font-bold text-blue-600 uppercase tracking-wide">Aides 2026</span>
+                  <h4 className="font-bold text-slate-900 text-sm mt-1 group-hover:text-blue-600">
+                    Crédit d&apos;impôt 500 € & TVA 5,5%
+                  </h4>
+                  <p className="text-xs text-slate-600 mt-1 line-clamp-2">
+                    Comment déduire 500 € pour la pose de cette borne par un artisan IRVE agréé.
+                  </p>
+                </div>
+                <span className="text-xs text-blue-600 font-semibold mt-3 flex items-center gap-1">
+                  Consulter le guide →
+                </span>
+              </Link>
+
+              <Link
+                href="/guides/recharge-solaire-surplus-photovoltaique"
+                className="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50/50 hover:border-blue-300 transition group flex flex-col justify-between"
+              >
+                <div>
+                  <span className="text-xs font-bold text-blue-600 uppercase tracking-wide">Énergie Solaire</span>
+                  <h4 className="font-bold text-slate-900 text-sm mt-1 group-hover:text-blue-600">
+                    Autoconsommation & Surplus Solaire
+                  </h4>
+                  <p className="text-xs text-slate-600 mt-1 line-clamp-2">
+                    Piloter sa recharge avec ses panneaux solaires et optimiser son retour sur investissement.
+                  </p>
+                </div>
+                <span className="text-xs text-blue-600 font-semibold mt-3 flex items-center gap-1">
+                  Consulter le guide →
+                </span>
+              </Link>
+
+              <Link
+                href="/guides/borne-7kw-vs-11kw-prix-installation"
+                className="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50/50 hover:border-blue-300 transition group flex flex-col justify-between"
+              >
+                <div>
+                  <span className="text-xs font-bold text-blue-600 uppercase tracking-wide">Puissance Électrique</span>
+                  <h4 className="font-bold text-slate-900 text-sm mt-1 group-hover:text-blue-600">
+                    7,4 kW vs 11 kW vs 22 kW
+                  </h4>
+                  <p className="text-xs text-slate-600 mt-1 line-clamp-2">
+                    Calcul de la section de câble, du disjoncteur différentiel et choix de l&apos;abonnement Enedis.
+                  </p>
+                </div>
+                <span className="text-xs text-blue-600 font-semibold mt-3 flex items-center gap-1">
+                  Consulter le guide →
+                </span>
+              </Link>
             </div>
           </section>
 

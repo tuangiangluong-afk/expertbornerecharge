@@ -260,7 +260,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 10. Opérateurs nationaux
     const operateurRoutes: MetadataRoute.Sitemap = OPERATORS.map((op) => ({
         url: `${BASE_URL}/operateurs/${op.slug}`,
-        lastModified: new Date(),
+        lastModified: new Date(op.updatedAt),
         changeFrequency: 'weekly' as const,
         priority: 0.85,
     }));
@@ -268,7 +268,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 11. Bornes & Matériels (Hardware)
     const hardwareRoutes: MetadataRoute.Sitemap = HARDWARE_PRODUCTS.map((prod) => ({
         url: `${BASE_URL}/marques/${prod.slug}`,
-        lastModified: new Date(),
+        lastModified: new Date(prod.updatedAt),
         changeFrequency: 'weekly' as const,
         priority: 0.85,
     }));
@@ -276,7 +276,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 12. Duels & Comparatifs directs
     const duelRoutes: MetadataRoute.Sitemap = DUELS.map((duel) => ({
         url: `${BASE_URL}/comparatif/${duel.slug}`,
-        lastModified: new Date(),
+        lastModified: new Date(duel.updatedAt),
         changeFrequency: 'weekly' as const,
         priority: 0.85,
     }));

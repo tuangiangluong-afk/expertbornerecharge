@@ -9,7 +9,8 @@ import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
 import LeadForm from "@/components/LeadForm";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
-import { Scale, Zap, ShieldCheck, ArrowRight, CheckCircle, XCircle } from "lucide-react";
+import { Scale, Zap, ShieldCheck, ArrowRight, CheckCircle, XCircle, FileText } from "lucide-react";
+import { ogImageUrl } from "@/lib/seo-meta";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -43,6 +44,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const title = duel.title;
     const description = duel.metaDescription;
     const url = `https://expertbornerecharge.com/comparatif/${duel.slug}`;
+    const ogCardUrl = ogImageUrl({
+      q: `${duel.entityA.name} vs ${duel.entityB.name}`,
+      sub: "Comparatif technique, tarifs, pose IRVE et matrice de décision 2026",
+      badge: "DUEL FACE-À-FACE 2026",
+    });
 
     return {
       title,
@@ -59,9 +65,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         type: "article",
         images: [
           {
-            url: "https://expertbornerecharge.com/icon.png",
-            width: 512,
-            height: 512,
+            url: ogCardUrl,
+            width: 1200,
+            height: 630,
             alt: duel.title,
           }
         ]
@@ -70,7 +76,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         card: "summary_large_image",
         title,
         description,
-        images: ["https://expertbornerecharge.com/icon.png"],
+        images: [ogCardUrl],
       },
       robots: { index: true, follow: true }
     };
@@ -81,6 +87,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const title = legacy.title;
     const description = legacy.meta_description;
     const url = `https://expertbornerecharge.com/comparatif/${legacy.slug}`;
+    const ogCardUrl = ogImageUrl({
+      q: legacy.h1 || legacy.title,
+      sub: "Guide comparatif et analyse technique IRVE 2026",
+      badge: "COMPARATIF EXPERT",
+    });
 
     return {
       title,
@@ -95,11 +106,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         siteName: "Expert Borne Recharge",
         locale: "fr_FR",
         type: "article",
+        images: [
+          {
+            url: ogCardUrl,
+            width: 1200,
+            height: 630,
+            alt: legacy.title,
+          }
+        ]
       },
       twitter: {
         card: "summary_large_image",
         title,
         description,
+        images: [ogCardUrl],
       },
       robots: { index: true, follow: true }
     };
@@ -170,13 +190,17 @@ export default async function DuelOrComparativeDetailPage({ params }: PageProps)
       "@type": "Article",
       "headline": duel.title,
       "description": duel.metaDescription,
-      "datePublished": "2026-01-15",
-      "dateModified": "2026-03-28",
+      "datePublished": duel.publishedAt,
+      "dateModified": duel.updatedAt,
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": `https://expertbornerecharge.com/comparatif/${duel.slug}`
       },
-      "image": "https://expertbornerecharge.com/icon.png",
+      "image": ogImageUrl({
+        q: `${duel.entityA.name} vs ${duel.entityB.name}`,
+        sub: "Comparatif technique, tarifs, pose IRVE et matrice de décision 2026",
+        badge: "DUEL FACE-À-FACE 2026",
+      }),
       "author": {
         "@type": "Organization",
         "name": "Expert Borne Recharge",
@@ -192,21 +216,39 @@ export default async function DuelOrComparativeDetailPage({ params }: PageProps)
       }
     };
 
+    const tableSchema = {
+      "@context": "https://schema.org",
+      "@type": "Table",
+      "about": `${duel.entityA.name} vs ${duel.entityB.name}`,
+      "name": `Tableau comparatif : ${duel.entityA.name} contre ${duel.entityB.name}`
+    };
+
     return (
       <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-200">
         <Header isHub={true} variant="default" themeColor="blue" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(tableSchema) }} />
 
         <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <Breadcrumbs items={breadcrumbs} />
 
           {/* Hero Card */}
           <section className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm mt-6 mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold uppercase tracking-wide mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold uppercase tracking-wide mb-3">
               <Scale className="w-3.5 h-3.5" />
               Duel & Arbitrage 2026
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 font-medium mb-3">
+              <span className="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-600 font-semibold">
+                Duel publié le {new Date(duel.publishedAt).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+              </span>
+              <span>•</span>
+              <span className="px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200/60">
+                Tarifs vérifiés le {new Date(duel.updatedAt).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+              </span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
@@ -397,6 +439,74 @@ export default async function DuelOrComparativeDetailPage({ params }: PageProps)
                   </span>
                 </Link>
               ))}
+            </div>
+          </section>
+
+          {/* Recommended Expert Guides */}
+          <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-12">
+            <div className="flex items-center gap-2 mb-2">
+              <FileText className="w-5 h-5 text-blue-600" />
+              <h3 className="text-xl font-bold text-slate-900">
+                Guides & Réglementation Associés
+              </h3>
+            </div>
+            <p className="text-sm text-slate-600 mb-6">
+              Complétez votre réflexion avec nos dossiers techniques et administratifs de référence 2026.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <Link
+                href="/guides/aides-subventions-borne-recharge"
+                className="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50/50 hover:border-blue-300 transition group flex flex-col justify-between"
+              >
+                <div>
+                  <span className="text-xs font-bold text-blue-600 uppercase tracking-wide">Aides de l&apos;État</span>
+                  <h4 className="font-bold text-slate-900 text-sm mt-1 group-hover:text-blue-600">
+                    Crédit d&apos;impôt 500 € & TVA 5,5%
+                  </h4>
+                  <p className="text-xs text-slate-600 mt-1 line-clamp-2">
+                    Comment financer votre installation et vérifier la qualification IRVE de votre électricien.
+                  </p>
+                </div>
+                <span className="text-xs text-blue-600 font-semibold mt-3 flex items-center gap-1">
+                  Lire le guide fiscal →
+                </span>
+              </Link>
+
+              <Link
+                href="/guides/borne-7kw-vs-11kw-prix-installation"
+                className="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50/50 hover:border-blue-300 transition group flex flex-col justify-between"
+              >
+                <div>
+                  <span className="text-xs font-bold text-blue-600 uppercase tracking-wide">Dimensionnement</span>
+                  <h4 className="font-bold text-slate-900 text-sm mt-1 group-hover:text-blue-600">
+                    7,4 kW vs 11 kW vs 22 kW
+                  </h4>
+                  <p className="text-xs text-slate-600 mt-1 line-clamp-2">
+                    Comprendre le monophasé, le triphasé et l&apos;impact sur votre facture d&apos;énergie.
+                  </p>
+                </div>
+                <span className="text-xs text-blue-600 font-semibold mt-3 flex items-center gap-1">
+                  Lire le guide puissance →
+                </span>
+              </Link>
+
+              <Link
+                href="/guides/borne-copropriete-droit-a-la-prise-advenir-2026"
+                className="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50/50 hover:border-blue-300 transition group flex flex-col justify-between"
+              >
+                <div>
+                  <span className="text-xs font-bold text-blue-600 uppercase tracking-wide">Copropriété</span>
+                  <h4 className="font-bold text-slate-900 text-sm mt-1 group-hover:text-blue-600">
+                    Droit à la Prise & Advenir
+                  </h4>
+                  <p className="text-xs text-slate-600 mt-1 line-clamp-2">
+                    Les démarches juridiques incontournables face au syndic et au conseil syndical.
+                  </p>
+                </div>
+                <span className="text-xs text-blue-600 font-semibold mt-3 flex items-center gap-1">
+                  Lire le guide copro →
+                </span>
+              </Link>
             </div>
           </section>
 

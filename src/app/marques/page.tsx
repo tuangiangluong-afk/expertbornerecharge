@@ -9,6 +9,14 @@ import LeadForm from "@/components/LeadForm";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import { Zap, ShieldCheck, Star, ExternalLink, ArrowRight, Sun, Cpu, Check, HelpCircle, Scale, Building2 } from "lucide-react";
 
+import { ogImageUrl } from "@/lib/seo-meta";
+
+const marquesOgImage = ogImageUrl({
+  q: "Bornes & Matériel",
+  sub: "Benchmark 2026 des meilleures bornes de recharge 7 à 22 kW : fiches techniques et prix posé IRVE",
+  badge: "BENCHMARK MATÉRIEL 2026",
+});
+
 export const metadata: Metadata = {
   title: "Les Meilleures Bornes de Recharge 2026 : Comparatif, Prix & Fiches Techniques",
   description: "Tesla Wall Connector, Schneider Charge, Wallbox Pulsar, Hager Witty, Legrand Green'up... Fiches techniques complètes, compatibilité solaire TIC Linky et devis pose IRVE.",
@@ -24,9 +32,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://expertbornerecharge.com/icon.png",
-        width: 512,
-        height: 512,
+        url: marquesOgImage,
+        width: 1200,
+        height: 630,
         alt: "Bornes de recharge homologuées IRVE 2026",
       }
     ]
@@ -35,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Les Meilleures Bornes de Recharge 2026 : Comparatif & Fiches Techniques",
     description: "Tesla, Schneider, Wallbox, Hager, Legrand... Comparatif et devis pose IRVE.",
-    images: ["https://expertbornerecharge.com/icon.png"],
+    images: [marquesOgImage],
   },
   robots: { index: true, follow: true }
 };

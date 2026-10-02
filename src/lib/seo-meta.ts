@@ -68,14 +68,13 @@ export function clampDescription(value: string, max: number = DESCRIPTION_MAX): 
  * modèle), `sub` l'accroche secondaire.
  */
 export function ogImageUrl(
-    params: { q?: string; sub?: string; baseUrl?: string } = {},
+    params: { q?: string; sub?: string; badge?: string; baseUrl?: string } = {},
 ): string {
     const baseUrl = (params.baseUrl || "https://expertbornerecharge.com").replace(/\/$/, "");
     const search = new URLSearchParams();
-    // Bornes identiques à celles appliquées par /api/og (q sur le grand
-    // libellé, sub sur l'accroche) : sinon l'image est rognée en silence.
-    if (params.q) search.set("q", params.q.slice(0, 48));
-    if (params.sub) search.set("sub", params.sub.slice(0, 92));
+    if (params.q) search.set("q", params.q.slice(0, 64));
+    if (params.sub) search.set("sub", params.sub.slice(0, 120));
+    if (params.badge) search.set("badge", params.badge.slice(0, 36));
     const query = search.toString();
 
     return `${baseUrl}${OG_IMAGE_PATH}${query ? `?${query}` : ""}`;

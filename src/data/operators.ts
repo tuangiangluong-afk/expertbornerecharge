@@ -1,5 +1,7 @@
 export interface Operator {
   slug: string;
+  publishedAt: string;
+  updatedAt: string;
   name: string;
   shortName: string;
   category: "Opérateur Copropriété" | "Installateur National Réseau" | "Énergéticien" | "Gestionnaire de Réseau";
@@ -35,6 +37,8 @@ export interface Operator {
 export const OPERATORS: Operator[] = [
   {
     slug: "chargeguru",
+    publishedAt: "2025-09-12",
+    updatedAt: "2026-09-18",
     name: "ChargeGuru",
     shortName: "ChargeGuru",
     category: "Installateur National Réseau",
@@ -101,6 +105,8 @@ export const OPERATORS: Operator[] = [
   },
   {
     slug: "izi-by-edf",
+    publishedAt: "2025-09-18",
+    updatedAt: "2026-09-20",
     name: "IZI by EDF",
     shortName: "IZI by EDF",
     category: "Énergéticien",
@@ -111,7 +117,7 @@ export const OPERATORS: Operator[] = [
     middlemanCommissionRate: "25 % à 35 % de marge commerciale opérateur",
     installationDelay: "2 à 4 semaines",
     installedHardwareSlugs: ["schneider-charge","hager-witty-start","wallbox-pulsar-plus"],
-    associatedDuelSlugs: ["chargeguru-vs-izi-by-edf"],
+    associatedDuelSlugs: ["chargeguru-vs-izi-by-edf", "izi-by-edf-vs-leroy-merlin"],
     pros: [
       "Marque rassurante adossée au groupe EDF",
       "Offre couplée intéressante avec le tarif EDF Vert Électrique Auto (heures creuses avantageuses)",
@@ -167,6 +173,8 @@ export const OPERATORS: Operator[] = [
   },
   {
     slug: "zeplug",
+    publishedAt: "2025-09-25",
+    updatedAt: "2026-09-21",
     name: "Zeplug",
     shortName: "Zeplug",
     category: "Opérateur Copropriété",
@@ -177,7 +185,7 @@ export const OPERATORS: Operator[] = [
     middlemanCommissionRate: "Modèle locatif avec récurrence captive sur 3 à 5 ans",
     installationDelay: "3 à 6 mois pour l'infrastructure collective en copropriété",
     installedHardwareSlugs: ["schneider-charge","legrand-green-up-one","evbox-elvi"],
-    associatedDuelSlugs: ["zeplug-vs-waat"],
+    associatedDuelSlugs: ["zeplug-vs-waat", "zeplug-vs-bornes-solutions"],
     pros: [
       "Zéro euro à débourser pour la copropriété (financement intégral de l'infrastructure par Zeplug)",
       "Compteur électrique dédié indépendant du compteur des parties communes",
@@ -233,6 +241,8 @@ export const OPERATORS: Operator[] = [
   },
   {
     slug: "waat",
+    publishedAt: "2025-10-02",
+    updatedAt: "2026-09-22",
     name: "Waat",
     shortName: "Waat",
     category: "Opérateur Copropriété",
@@ -295,6 +305,8 @@ export const OPERATORS: Operator[] = [
   },
   {
     slug: "bornes-solutions",
+    publishedAt: "2025-10-09",
+    updatedAt: "2026-09-24",
     name: "Bornes Solutions",
     shortName: "Bornes Solutions",
     category: "Opérateur Copropriété",
@@ -305,7 +317,7 @@ export const OPERATORS: Operator[] = [
     middlemanCommissionRate: "Frais de comptage et de gestion de l'infrastructure partagée",
     installationDelay: "3 à 6 mois en copropriété existante",
     installedHardwareSlugs: ["schneider-charge","hager-witty-start","alfen-eve-single-pro"],
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["zeplug-vs-bornes-solutions"],
     pros: [
       "Expertise du groupe OCEA Smart Building dans la répartition des charges d'énergie",
       "Conventionnement avec le programme LogiVolt de la Banque des Territoires",
@@ -357,6 +369,8 @@ export const OPERATORS: Operator[] = [
   },
   {
     slug: "totalenergies",
+    publishedAt: "2025-10-16",
+    updatedAt: "2026-09-25",
     name: "TotalEnergies Services Recharge",
     shortName: "TotalEnergies",
     category: "Énergéticien",
@@ -367,7 +381,7 @@ export const OPERATORS: Operator[] = [
     middlemanCommissionRate: "25 % à 35 % de marge de distribution",
     installationDelay: "3 à 5 semaines",
     installedHardwareSlugs: ["evbox-elvi","schneider-charge","wallbox-pulsar-plus"],
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["totalenergies-vs-engie-my-power"],
     pros: [
       "Offre d'électricité 'Heures Super Creuses' avec 50 % de réduction de 2h à 6h du matin",
       "Réseau national d'installateurs qualifiés IRVE",
@@ -419,6 +433,8 @@ export const OPERATORS: Operator[] = [
   },
   {
     slug: "engie-my-power",
+    publishedAt: "2025-10-23",
+    updatedAt: "2026-09-26",
     name: "Engie My Power & Vianeo",
     shortName: "Engie",
     category: "Énergéticien",
@@ -429,7 +445,7 @@ export const OPERATORS: Operator[] = [
     middlemanCommissionRate: "28 % à 36 % de marge commerciale opérateur",
     installationDelay: "3 à 6 semaines",
     installedHardwareSlugs: ["schneider-charge","hager-witty-solar","myenergi-zappi-v2"],
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["totalenergies-vs-engie-my-power"],
     pros: [
       "Optimisation de la recharge avec l'autoconsommation solaire (solution Engie My Power)",
       "Marque reconnue avec garanties solides",
@@ -477,6 +493,8 @@ export const OPERATORS: Operator[] = [
   },
   {
     slug: "proxiserve",
+    publishedAt: "2025-11-04",
+    updatedAt: "2026-09-27",
     name: "Proxiserve",
     shortName: "Proxiserve",
     category: "Installateur National Réseau",
@@ -487,7 +505,7 @@ export const OPERATORS: Operator[] = [
     middlemanCommissionRate: "20 % à 30 % de marge d'entreprise générale",
     installationDelay: "2 à 3 semaines (réseau d'agences locales)",
     installedHardwareSlugs: ["schneider-charge","hager-witty-start","legrand-green-up-one"],
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["chargeguru-vs-izi-by-edf", "izi-by-edf-vs-leroy-merlin"],
     pros: [
       "Réseau de techniciens salariés dans de nombreuses agences régionales",
       "Partenariats constructeurs automobiles historiques (Renault, Stellantis, BMW)",
@@ -539,6 +557,8 @@ export const OPERATORS: Operator[] = [
   },
   {
     slug: "mon-rezo",
+    publishedAt: "2025-11-12",
+    updatedAt: "2026-09-28",
     name: "Mon Réseau Électrique (E-Station)",
     shortName: "Mon Rézo",
     category: "Installateur National Réseau",
@@ -549,7 +569,7 @@ export const OPERATORS: Operator[] = [
     middlemanCommissionRate: "22 % à 30 % de commission de mise en relation",
     installationDelay: "2 à 4 semaines",
     installedHardwareSlugs: ["schneider-charge","wallbox-pulsar-plus"],
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["zeplug-vs-waat", "zeplug-vs-bornes-solutions"],
     pros: [
       "Large choix multimarques de bornes (Wallbox, Hager, Enelion)",
       "Accompagnement réactif et devis digitalisé",
@@ -597,6 +617,8 @@ export const OPERATORS: Operator[] = [
   },
   {
     slug: "sowee",
+    publishedAt: "2025-11-20",
+    updatedAt: "2026-09-29",
     name: "Sowee (Station Connectée Borne)",
     shortName: "Sowee",
     category: "Énergéticien",
@@ -607,7 +629,7 @@ export const OPERATORS: Operator[] = [
     middlemanCommissionRate: "25 % à 35 % de marge packagée",
     installationDelay: "3 à 5 semaines",
     installedHardwareSlugs: ["schneider-charge","hager-witty-start"],
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["chargeguru-vs-izi-by-edf", "totalenergies-vs-engie-my-power"],
     pros: [
       "Pilotage intelligent de la charge pour éviter les dépassements de puissance Linky",
       "Écosystème domotique complet (gestion chauffage + recharge électrique)",
@@ -655,6 +677,8 @@ export const OPERATORS: Operator[] = [
   },
   {
     slug: "yespark",
+    publishedAt: "2025-11-27",
+    updatedAt: "2026-09-30",
     name: "Yespark Recharge",
     shortName: "Yespark",
     category: "Opérateur Copropriété",
@@ -665,7 +689,7 @@ export const OPERATORS: Operator[] = [
     middlemanCommissionRate: "Modèle locatif mensuel sans apport initial",
     installationDelay: "Immédiat (accès à des places de parking déjà équipées)",
     installedHardwareSlugs: ["schneider-charge", "wallbox-pulsar-plus"],
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["yespark-vs-parknplug"],
     pros: [
       "Zéro travaux chez soi, idéal pour les locataires ou résidences sans parking adapté",
       "Sans engagement de durée (résiliation mensuelle en 1 clic)",
@@ -713,6 +737,8 @@ export const OPERATORS: Operator[] = [
   },
   {
     slug: "parknplug",
+    publishedAt: "2025-12-05",
+    updatedAt: "2026-10-01",
     name: "Park'n Plug",
     shortName: "Park'n Plug",
     category: "Opérateur Copropriété",
@@ -723,7 +749,7 @@ export const OPERATORS: Operator[] = [
     middlemanCommissionRate: "Marge d'ingénierie et redevance récurrente de gestion",
     installationDelay: "3 à 6 mois en copropriété",
     installedHardwareSlugs: ["alfen-eve-single-pro","schneider-charge"],
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["yespark-vs-parknplug"],
     pros: [
       "Bureau d'études intégré pour le dimensionnement électrique précis des colonnes de parkings",
       "Éligibilité aux subventions Advenir et dispositifs d'avances",
@@ -771,6 +797,8 @@ export const OPERATORS: Operator[] = [
   },
   {
     slug: "logivolt",
+    publishedAt: "2025-12-14",
+    updatedAt: "2026-10-01",
     name: "LogiVolt Territoires",
     shortName: "LogiVolt",
     category: "Gestionnaire de Réseau",
@@ -781,7 +809,7 @@ export const OPERATORS: Operator[] = [
     middlemanCommissionRate: "Dispositif public (frais financiers mutualisés et amortis sur les raccordements)",
     installationDelay: "4 à 8 mois pour le déploiement complet",
     installedHardwareSlugs: ["schneider-charge","hager-witty-start","waat"],
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["zeplug-vs-bornes-solutions", "zeplug-vs-waat"],
     pros: [
       "Zéro avance de trésorerie pour le syndicat des copropriétaires",
       "Soutien de la Caisse des Dépôts et de l'État (Banque des Territoires)",
@@ -833,6 +861,8 @@ export const OPERATORS: Operator[] = [
   },
   {
     slug: "enedis-colonne-horizontale",
+    publishedAt: "2025-12-22",
+    updatedAt: "2026-10-02",
     name: "Enedis (Réseau Public Colonne Horizontale)",
     shortName: "Enedis",
     category: "Gestionnaire de Réseau",
@@ -843,7 +873,7 @@ export const OPERATORS: Operator[] = [
     middlemanCommissionRate: "Tarif public réglementé fixé par la Commission de Régulation de l'Énergie (CRE)",
     installationDelay: "6 à 12 mois selon la complexité du raccordement au réseau de distribution",
     installedHardwareSlugs: ["schneider-charge","hager-witty-start","tesla-wall-connector-gen-3","wallbox-pulsar-plus"],
-    associatedDuelSlugs: [],
+    associatedDuelSlugs: ["zeplug-vs-waat", "zeplug-vs-bornes-solutions"],
     pros: [
       "Neutralité et indépendance totale : chaque résident a son propre compteur Linky",
       "Liberté absolue de choisir son fournisseur d'électricité (EDF, Total, Enercoop, Tempo)",

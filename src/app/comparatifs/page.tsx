@@ -8,6 +8,14 @@ import LeadForm from "@/components/LeadForm";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import { Scale, ArrowRight, CheckCircle, Zap, Building2, Cpu } from "lucide-react";
 
+import { ogImageUrl } from "@/lib/seo-meta";
+
+const comparatifsOgImage = ogImageUrl({
+  q: "Duels & Comparatifs",
+  sub: "Face-à-face impartiaux : 17 duels opérateurs et bornes de recharge décryptés",
+  badge: "COMPARATIF 2026",
+});
+
 export const metadata: Metadata = {
   title: "Comparatifs & Duels Bornes de Recharge 2026 : Le Face-à-Face",
   description: "ChargeGuru vs IZI by EDF, Zeplug vs Waat, Tesla vs Wallbox, Schneider vs Hager... Nos duels comparatifs complets avec matrices de décision pour choisir le bon matériel.",
@@ -23,9 +31,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://expertbornerecharge.com/icon.png",
-        width: 512,
-        height: 512,
+        url: comparatifsOgImage,
+        width: 1200,
+        height: 630,
         alt: "Comparatifs et Duels Bornes de Recharge 2026",
       }
     ]
@@ -34,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Comparatifs & Duels Bornes de Recharge 2026",
     description: "ChargeGuru vs IZI, Zeplug vs Waat, Tesla vs Wallbox... Le face-à-face.",
-    images: ["https://expertbornerecharge.com/icon.png"],
+    images: [comparatifsOgImage],
   },
   robots: { index: true, follow: true }
 };

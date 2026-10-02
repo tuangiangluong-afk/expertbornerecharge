@@ -23,6 +23,9 @@ const BRAND = {
 };
 
 function pretty(raw: string): string {
+    if (raw.includes(" ")) {
+        return raw;
+    }
     return raw
         .split("-")
         .map((w) => (w.length > 1 ? w.charAt(0).toUpperCase() + w.slice(1) : w.toUpperCase()))
@@ -31,9 +34,11 @@ function pretty(raw: string): string {
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
-    const q = (searchParams.get("q") || "").slice(0, 48);
-    const sub = (searchParams.get("sub") || BRAND.baseline).slice(0, 92);
-    const city = q ? pretty(q) : "";
+    const q = (searchParams.get("q") || "").slice(0, 64);
+    const sub = (searchParams.get("sub") || BRAND.baseline).slice(0, 120);
+    const badge = (searchParams.get("badge") || "").slice(0, 36);
+    const title = q ? pretty(q) : "";
+    const titleFontSize = title.length > 36 ? 54 : title.length > 24 ? 68 : 82;
 
     return new ImageResponse(
         (
@@ -45,40 +50,63 @@ export async function GET(request: Request) {
                     height: "100%",
                     backgroundColor: "#0f172a",
                     backgroundImage: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
-                    padding: "56px 64px",
+                    padding: "52px 64px",
                     justifyContent: "space-between",
                     fontFamily: "sans-serif",
                 }}
             >
-                <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-                    <div style={{ display: "flex", width: 16, height: 62, backgroundColor: BRAND.color, borderRadius: 4 }} />
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                        <div style={{ display: "flex", color: "#f8fafc", fontSize: 36, fontWeight: 700 }}>{BRAND.name}</div>
-                        <div style={{ display: "flex", color: "#94a3b8", fontSize: 22, marginTop: 4 }}>{BRAND.domain}</div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+                        <div style={{ display: "flex", width: 14, height: 56, backgroundColor: BRAND.color, borderRadius: 4 }} />
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                            <div style={{ display: "flex", color: "#f8fafc", fontSize: 32, fontWeight: 700 }}>{BRAND.name}</div>
+                            <div style={{ display: "flex", color: "#94a3b8", fontSize: 20, marginTop: 2 }}>{BRAND.domain}</div>
+                        </div>
                     </div>
+                    {badge ? (
+                        <div
+                            style={{
+                                display: "flex",
+                                backgroundColor: "rgba(5, 150, 105, 0.18)",
+                                border: "1.5px solid rgba(5, 150, 105, 0.55)",
+                                color: "#34d399",
+                                padding: "8px 20px",
+                                borderRadius: 9999,
+                                fontSize: 18,
+                                fontWeight: 700,
+                                letterSpacing: "0.06em",
+                            }}
+                        >
+                            {badge}
+                        </div>
+                    ) : null}
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                    {city ? (
-                        <div style={{ display: "flex", color: "#f8fafc", fontSize: 84, fontWeight: 800, lineHeight: 1.05 }}>
-                            {city}
+                    {title ? (
+                        <div style={{ display: "flex", color: "#f8fafc", fontSize: titleFontSize, fontWeight: 800, lineHeight: 1.1 }}>
+                            {title}
                         </div>
                     ) : null}
                     <div
                         style={{
                             display: "flex",
                             color: BRAND.color,
-                            fontSize: 34,
+                            fontSize: 30,
                             fontWeight: 600,
-                            marginTop: city ? 12 : 0,
-                            maxWidth: 1000,
+                            marginTop: title ? 16 : 0,
+                            maxWidth: 1040,
+                            lineHeight: 1.25,
                         }}
                     >
                         {sub}
                     </div>
                 </div>
 
-                <div style={{ display: "flex", color: "#cbd5e1", fontSize: 24 }}>{BRAND.cta}</div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 20 }}>
+                    <div style={{ display: "flex", color: "#cbd5e1", fontSize: 22, fontWeight: 500 }}>{BRAND.cta}</div>
+                    <div style={{ display: "flex", color: "#64748b", fontSize: 18 }}>Installation certifiée IRVE • Qualifelec</div>
+                </div>
             </div>
         ),
         {
