@@ -40,6 +40,18 @@ export default function Header({
 
     const navLinks = [
         {
+                "href": "/operateurs",
+                "text": "Opérateurs"
+        },
+        {
+                "href": "/marques",
+                "text": "Bornes"
+        },
+        {
+                "href": "/comparatifs",
+                "text": "Comparatifs"
+        },
+        {
                 "href": "/vehicules",
                 "text": "Véhicules"
         },

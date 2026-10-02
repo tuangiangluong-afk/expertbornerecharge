@@ -261,42 +261,42 @@ export function Footer({ config }: FooterProps) {
 
                         {/* Column 3: Guides & Comparatifs GSC Targets */}
                         <div>
-                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Guides Techniques & Avis</h5>
+                            <h5 className="text-white font-bold mb-6 text-lg tracking-tight">Opérateurs & Matériels</h5>
                             <ul className="space-y-3 text-sm">
                                 <li>
-                                    <Link href="/guides/recharger-tesla-domicile" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                    <Link href="/operateurs" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Tesla Wall Connector (Installation & Prix)
+                                        <strong>Avis Opérateurs (ChargeGuru, Zeplug, IZI...)</strong>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/marques" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                        <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
+                                        <strong>Bornes & Fiches Techniques (Tesla, Hager...)</strong>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/comparatifs" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
+                                        <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
+                                        <strong>Duels & Comparatifs Directs</strong>
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/guides/recharger-tesla-domicile" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Recharger sa Tesla à Domicile
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/guides/schneider-charge-avis-installation" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
-                                        <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Schneider EVlink Pro AC : Avis & Pose
+                                        Tesla Wall Connector (Prix & Installation)
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/guides/comparatif-borne-7kw-11kw-22kw" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Comparatif Wallbox Schneider vs Legrand
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/guides/borne-7kw-vs-11kw-prix-installation" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
-                                        <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        Coût Installation Borne de Recharge 2026
+                                        Borne 7 kW vs 11 kW vs 22 kW
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/guides" className="text-neutral-400 hover:text-white transition flex items-center gap-2 group">
                                         <span className={`w-1 h-1 rounded-full bg-neutral-600 group-hover:${theme.classes.bg} transition`}></span>
-                                        <strong>Tous nos Guides AEO & IRVE</strong>
+                                        Tous nos Guides IRVE & Aides 2026
                                     </Link>
                                 </li>
                             </ul>

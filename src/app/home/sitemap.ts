@@ -7,6 +7,9 @@ import { brands } from '@/data/brands';
 import { getAllVehicles } from '@/data/vehicles';
 import { getAllGuides } from '@/lib/mdx';
 import { createClient } from '@supabase/supabase-js';
+import { OPERATORS } from '@/data/operators';
+import { HARDWARE_PRODUCTS } from '@/data/hardware';
+import { DUELS } from '@/data/comparatives';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://expertbornerecharge.com';
@@ -38,6 +41,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 0.9,
+        },
+        {
+            url: `${baseUrl}/operateurs`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9,
+        },
+        {
+            url: `${baseUrl}/marques`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9,
+        },
+        {
+            url: `${baseUrl}/comparatifs`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.85,
         },
         {
             url: `${baseUrl}/guides`,
@@ -221,6 +242,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }));
     });
 
+    // ========================================
+    // 13. OPERATEURS & RESEAUX NATIONAUX
+    // ========================================
+    const operateurRoutes: MetadataRoute.Sitemap = OPERATORS.map((op) => ({
+        url: `${baseUrl}/operateurs/${op.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.85,
+    }));
+
+    // ========================================
+    // 14. BORNES & MATERIELS (HARDWARE)
+    // ========================================
+    const hardwareRoutes: MetadataRoute.Sitemap = HARDWARE_PRODUCTS.map((prod) => ({
+        url: `${baseUrl}/marques/${prod.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.85,
+    }));
+
+    // ========================================
+    // 15. DUELS & COMPARATIFS DIRECTS
+    // ========================================
+    const duelRoutes: MetadataRoute.Sitemap = DUELS.map((duel) => ({
+        url: `${baseUrl}/comparatif/${duel.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.85,
+    }));
+
     return [
         ...coreRoutes,
         ...cityRoutes,
@@ -233,6 +284,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ...blogRoutes,
         ...b2bRoutes,
         ...cityBrandRoutes,
+        ...operateurRoutes,
+        ...hardwareRoutes,
+        ...duelRoutes,
     ].map(item => ({
         ...item,
         url: item.url.toLowerCase()
