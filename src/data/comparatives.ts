@@ -6,6 +6,7 @@ export interface DuelComparison {
   entityA: {
     name: string;
     type: "Opérateur" | "Borne" | "Prise";
+    slug: string;
     priceEst: string;
     pros: string[];
     cons: string[];
@@ -14,6 +15,7 @@ export interface DuelComparison {
   entityB: {
     name: string;
     type: "Opérateur" | "Borne" | "Prise";
+    slug: string;
     priceEst: string;
     pros: string[];
     cons: string[];
@@ -32,6 +34,7 @@ export interface DuelComparison {
   };
   arbitrageCtaTitle: string;
   arbitrageCtaText: string;
+  relatedDuelSlugs: string[];
   faq: { question: string; answer: string }[];
 }
 
@@ -44,6 +47,7 @@ export const DUELS: DuelComparison[] = [
     entityA: {
       name: "ChargeGuru",
       type: "Opérateur",
+      slug: "chargeguru",
       priceEst: "1 390 € à 2 100 € TTC posé",
       pros: ["Large catalogue multimarques", "Parcours client 100% digitalisé", "Présence nationale"],
       cons: ["Tarif 300 € à 500 € plus cher qu'un artisan en direct", "Qualité variable selon le sous-traitant"],
@@ -52,6 +56,7 @@ export const DUELS: DuelComparison[] = [
     entityB: {
       name: "IZI by EDF",
       type: "Opérateur",
+      slug: "izi-by-edf",
       priceEst: "1 250 € à 1 950 € TTC posé",
       pros: ["Solidité de la marque EDF", "Offre couplée avantageuse avec EDF Vert Électrique", "Garantie de pose assurée"],
       cons: ["Catalogue de bornes restreint", "Avenants fréquents lors de la visite technique"],
@@ -79,6 +84,11 @@ export const DUELS: DuelComparison[] = [
     },
     arbitrageCtaTitle: "Évitez la marge d'intermédiaire de ChargeGuru et d'IZI by EDF",
     arbitrageCtaText: "Les techniciens qui interviennent pour ChargeGuru ou IZI by EDF sont des artisans électriciens IRVE indépendants de votre région. En demandant un chiffrage en direct, vous économisez 300 € à 600 € sur la même installation.",
+    relatedDuelSlugs: [
+      "zeplug-vs-waat",
+      "schneider-charge-vs-hager-witty",
+      "tesla-wall-connector-vs-wallbox-pulsar-plus"
+    ],
     faq: [
       {
         question: "Qui est le moins cher entre ChargeGuru et IZI by EDF ?",
@@ -87,6 +97,18 @@ export const DUELS: DuelComparison[] = [
       {
         question: "Les deux permettent-ils de toucher le crédit d'impôt ?",
         answer: "Oui, les deux prestataires font obligatoirement appel à des techniciens qualifiés IRVE, condition indispensable pour déduire 500 € sur votre déclaration de revenus."
+      },
+      {
+        question: "Comment éviter la surcommission de ChargeGuru ou IZI by EDF ?",
+        answer: "En effectuant une demande de devis comparatif direct auprès d'électriciens IRVE locaux sur Expert Borne Recharge, vous bénéficiez du même artisan technicien sans la marge de 28% à 38% prélevée par la plateforme nationale."
+      },
+      {
+        question: "Quel est le délai moyen d'intervention constaté ?",
+        answer: "IZI by EDF intervient en 2 à 4 semaines en moyenne, contre 3 à 5 semaines pour ChargeGuru, sous réserve de la disponibilité du matériel et du planning de l'artisan sous-traitant."
+      },
+      {
+        question: "Que se passe-t-il en cas de panne ou SAV ?",
+        answer: "Avec IZI by EDF, vous contactez le support central EDF qui mandate un technicien. ChargeGuru dispose également d'un service client centralisé mais les délais de SAV peuvent être rallongés car la responsabilité est partagée avec l'artisan poseur."
       }
     ]
   },
@@ -98,6 +120,7 @@ export const DUELS: DuelComparison[] = [
     entityA: {
       name: "Zeplug",
       type: "Opérateur",
+      slug: "zeplug",
       priceEst: "Borne : 499-899 € + Abonnement 15,90-29,90 €/mois + kWh",
       pros: ["Zéro euro pour la copropriété", "Compteur électrique indépendant du TGBT", "Gestion locative sans souci"],
       cons: ["Abonnement obligatoire à vie pour recharger", "Prix du kWh fixé unilatéralement par Zeplug", "Système propriétaire fermé"],
@@ -106,6 +129,7 @@ export const DUELS: DuelComparison[] = [
     entityB: {
       name: "Waat",
       type: "Opérateur",
+      slug: "waat",
       priceEst: "Borne : 650-1 100 € + Supervision (6-15 €/mois)",
       pros: ["Bornes interopérables répondant au protocole ouvert OCPP", "Flexibilité investissement copro ou tiers-financement", "Frais mensuels plus modérés"],
       cons: ["Démarches administratives parfois plus techniques", "Nécessite souvent une contribution financière initiale"],
@@ -133,10 +157,31 @@ export const DUELS: DuelComparison[] = [
     },
     arbitrageCtaTitle: "Pensez aussi à la colonne horizontale Enedis !",
     arbitrageCtaText: "Avant de signer avec Zeplug ou Waat pour 10 ans, étudiez la solution publique Enedis. Financée à 100% par le TURPE, elle amène un compteur Linky à chaque place : vous payez votre électricité au tarif réglementé sans AUCUN abonnement d'opérateur privé.",
+    relatedDuelSlugs: [
+      "chargeguru-vs-izi-by-edf",
+      "prise-green-up-vs-borne-7kw",
+      "schneider-charge-vs-hager-witty"
+    ],
     faq: [
       {
         question: "Zeplug est-il vraiment gratuit pour la copropriété ?",
         answer: "Oui, le syndicat des copropriétaires ne paye rien pour installer le câble d'alimentation principal dans le parking. Zeplug se rémunère uniquement sur les utilisateurs finaux via le prix de la borne, l'abonnement mensuel et la marge sur chaque kWh."
+      },
+      {
+        question: "Peut-on résilier son abonnement Zeplug en gardant sa borne ?",
+        answer: "Non, chez Zeplug la borne est indissociable du contrat d'exploitation de l'infrastructure. Si vous résiliez l'abonnement, la borne est désactivée car le courant passe par le compteur privé Zeplug."
+      },
+      {
+        question: "Pourquoi Waat est-il considéré comme plus ouvert ?",
+        answer: "Waat installe des bornes compatibles OCPP (Open Charge Point Protocol). Si la copropriété décide de changer d'opérateur de supervision après quelques années, les bornes physiques restent opérationnelles avec le nouveau prestataire."
+      },
+      {
+        question: "Quelle est la différence avec la solution Enedis (colonne horizontale) ?",
+        answer: "Avec le réseau Enedis, le réseau électrique du parking appartient au domaine public concédé. Chaque résident a son propre compteur Linky et choisit librement son fournisseur d'électricité (EDF, Total, etc.), sans payer aucun abonnement de supervision à un opérateur tiers."
+      },
+      {
+        question: "Quelles aides Advenir s'appliquent en copropriété en 2026 ?",
+        answer: "Le programme Advenir finance 50% de l'infrastructure collective (plafond 8 000 €) et jusqu'à 960 € par borne individuelle installée sur une place dédiée."
       }
     ]
   },
@@ -148,6 +193,7 @@ export const DUELS: DuelComparison[] = [
     entityA: {
       name: "Tesla Wall Connector (Gen 3)",
       type: "Borne",
+      slug: "tesla-wall-connector-gen-3",
       priceEst: "500 € à 550 € TTC (matériel seul)",
       pros: ["Rapport puissance/prix imbattable", "Câble 7,3m inclus avec bouton Tesla", "Design verre trempé élégant", "22 kW triphasé inclus"],
       cons: ["Pas de délestage direct TIC Linky", "Câble non détachable (non T2S)", "Moins de stats de coût pour véhicules non-Tesla"],
@@ -156,6 +202,7 @@ export const DUELS: DuelComparison[] = [
     entityB: {
       name: "Wallbox Pulsar Plus",
       type: "Borne",
+      slug: "wallbox-pulsar-plus",
       priceEst: "599 € à 749 € TTC (matériel seul)",
       pros: ["Format ultra-compact (16 cm)", "Application myWallbox très complète avec suivi en euros", "Compatibilité recharge solaire Eco-Smart"],
       cons: ["Boîtier de délestage Power Boost en supplément (+120 €)", "Câble attaché", "Coque plastique plus légère"],
@@ -183,10 +230,31 @@ export const DUELS: DuelComparison[] = [
     },
     arbitrageCtaTitle: "Faites poser votre Tesla ou Wallbox par un pro IRVE",
     arbitrageCtaText: "Achetez votre borne au meilleur prix en ligne et confiez sa pose à un électricien qualifié IRVE local pour bénéficier du crédit d'impôt de 500 € et de la TVA réduite à 5,5 %.",
+    relatedDuelSlugs: [
+      "schneider-charge-vs-hager-witty",
+      "prise-green-up-vs-borne-7kw",
+      "chargeguru-vs-izi-by-edf"
+    ],
     faq: [
       {
         question: "Puis-je installer le Wall Connector Tesla moi-même ?",
         answer: "La loi française (décret IRVE de 2017) impose qu'au-delà de 3,7 kW, toute installation soit réalisée par un professionnel qualifié IRVE. De plus, l'auto-installation vous prive du crédit d'impôt de 500 € et de la couverture d'assurance en cas de sinistre."
+      },
+      {
+        question: "Le Wall Connector Tesla charge-t-il les autres marques de voitures électriques ?",
+        answer: "Oui, le connecteur Type 2 est le standard européen universel. Il recharge parfaitement une Peugeot e-208, une Renault Mégane E-Tech, une MG4 ou une Volkswagen ID.4."
+      },
+      {
+        question: "La Wallbox Pulsar Plus gère-t-elle le délestage avec le compteur Linky ?",
+        answer: "Oui, via le module optionnel Power Boost ou EM112 installé au tableau électrique. La borne ajuste sa puissance en temps réel pour ne jamais faire disjoncter le compteur de la maison."
+      },
+      {
+        question: "Quelle est la différence de garantie entre Tesla et Wallbox ?",
+        answer: "Tesla offre une garantie de 4 ans pour un usage résidentiel privé. Wallbox garantit la Pulsar Plus pendant 3 ans (extensible à 5 ans)."
+      },
+      {
+        question: "Laquelle est la plus facile à intégrer avec des panneaux solaires ?",
+        answer: "La Wallbox Pulsar Plus est nettement supérieure sur le solaire : sa fonction Eco-Smart fonctionne avec n'importe quel onduleur photovoltaïque pour charger 100% à l'énergie solaire gratuite."
       }
     ]
   },
@@ -198,6 +266,7 @@ export const DUELS: DuelComparison[] = [
     entityA: {
       name: "Schneider Charge",
       type: "Borne",
+      slug: "schneider-charge",
       priceEst: "649 € à 799 € TTC",
       pros: ["Prise T2S 100% conforme NF C 15-100", "Connectée Wi-Fi/Bluetooth d'origine", "Écosystème domotique Wiser moderne"],
       cons: ["Câble non fourni", "Application nécessitant parfois des mises à jour"],
@@ -206,6 +275,7 @@ export const DUELS: DuelComparison[] = [
     entityB: {
       name: "Hager Witty Start",
       type: "Borne",
+      slug: "hager-witty-start",
       priceEst: "790 € à 950 € TTC",
       pros: ["Fiabilité industrielle légendaire (zéro panne)", "Délestage direct par liaison filaire TIC Linky sans boîtier", "Fabrication alsacienne"],
       cons: ["Design austère et lourd", "Pas de Wi-Fi sur version Start (verrouillage mécanique à clé)"],
@@ -233,10 +303,31 @@ export const DUELS: DuelComparison[] = [
     },
     arbitrageCtaTitle: "Faites chiffrer l'installation par un électricien agréé Schneider ou Hager",
     arbitrageCtaText: "Comparez gratuitement 3 devis d'installateurs qualifiés IRVE près de chez vous pour obtenir le meilleur prix matériel + pose avec le crédit d'impôt de 500 € déduit.",
+    relatedDuelSlugs: [
+      "tesla-wall-connector-vs-wallbox-pulsar-plus",
+      "prise-green-up-vs-borne-7kw",
+      "chargeguru-vs-izi-by-edf"
+    ],
     faq: [
       {
         question: "Les deux bornes sont-elles éligibles au crédit d'impôt ?",
-        answer: "Oui, Schneider Charge et Hager Witty répondent aux exigences techniques les plus strictes de la réglementation française."
+        answer: "Oui, Schneider Charge et Hager Witty répondent aux exigences techniques les plus strictes de la réglementation française (norme NF C 15-100 et prise T2S avec obturateurs)."
+      },
+      {
+        question: "Pourquoi les électriciens français recommandent-ils souvent Hager ?",
+        answer: "Hager est historiquement le fabricant alsacien le plus réputé pour les tableaux électriques. La Witty Start est réputée quasi indestructible et son raccordement filaire TIC Linky ne tombe jamais en panne."
+      },
+      {
+        question: "Schneider Charge nécessite-t-elle un abonnement payant ?",
+        answer: "Non, l'application Wiser de Schneider Electric est 100% gratuite et permet de planifier les heures creuses, consulter la consommation et verrouiller la borne à distance."
+      },
+      {
+        question: "Peut-on brider ces bornes à 3,7 kW ou 7,4 kW selon son abonnement ?",
+        answer: "Oui, les deux bornes permettent de régler le courant maximum (de 10A à 32A) lors de l'installation par micro-interrupteurs ou via l'application pour s'adapter à votre puissance souscrite."
+      },
+      {
+        question: "Quel est le surcoût de pose pour un délestage dynamique Linky ?",
+        answer: "Pour Hager Witty, le câble TIC se branche directement dans la borne (surcoût de 30 à 60 € de câble). Pour Schneider Charge, le module radio ou filaire Wiser coûte entre 80 € et 120 €."
       }
     ]
   },
@@ -248,6 +339,7 @@ export const DUELS: DuelComparison[] = [
     entityA: {
       name: "Prise Legrand Green'up (3,7 kW)",
       type: "Prise",
+      slug: "legrand-prise-green-up",
       priceEst: "400 € à 700 € TTC posée",
       pros: ["Prix d'installation 2 à 3 fois moins cher", "Sécurité totale par rapport à une prise standard", "Aucun abonnement électrique à augmenter"],
       cons: ["Recharge lente (15-20 km d'autonomie par heure)", "Pas de crédit d'impôt borne de 500 €", "Pas de délestage dynamique"],
@@ -256,6 +348,7 @@ export const DUELS: DuelComparison[] = [
     entityB: {
       name: "Borne de Recharge 7,4 kW (32A)",
       type: "Borne",
+      slug: "schneider-charge",
       priceEst: "1 150 € à 1 600 € TTC posée (avant crédit d'impôt)",
       pros: ["Recharge 3 fois plus rapide (40 à 50 km par heure)", "Crédit d'impôt de 500 € et TVA 5,5%", "Délestage dynamique et programmation heures creuses"],
       cons: ["Coût d'investissement initial plus élevé", "Nécessite souvent de passer son compteur à 9 kVA ou 12 kVA"],
@@ -283,10 +376,31 @@ export const DUELS: DuelComparison[] = [
     },
     arbitrageCtaTitle: "Faites chiffrer les deux solutions par un électricien qualifié",
     arbitrageCtaText: "Demandez à votre installateur un devis comparatif Green'up vs Borne 7 kW. Avec le crédit d'impôt de 500 € et la TVA à 5,5 %, la borne 7 kW est souvent bien plus accessible qu'on ne le pense !",
+    relatedDuelSlugs: [
+      "tesla-wall-connector-vs-wallbox-pulsar-plus",
+      "schneider-charge-vs-hager-witty",
+      "zeplug-vs-waat"
+    ],
     faq: [
       {
         question: "La prise Green'up nécessite-t-elle un électricien IRVE ?",
         answer: "Législativement, la qualification IRVE n'est obligatoire qu'au-dessus de 3,7 kW. Néanmoins, pour des raisons de garantie d'assurance et de dimensionnement de la ligne dédiée 3x2,5mm², faire appel à un électricien qualifié reste vivement conseillé."
+      },
+      {
+        question: "Pourquoi la prise Green'up ne donne-t-elle pas droit au crédit d'impôt de 500 € ?",
+        answer: "L'administration fiscale réserve le crédit d'impôt aux systèmes de charge pilotables pour véhicules électriques (définis par l'article 200 quater C du CGI). Les prises renforcées en sont exclues."
+      },
+      {
+        question: "Peut-on faire disjoncter sa maison avec une prise Green'up ?",
+        answer: "Oui, si votre puissance souscrite est de 6 kVA et que la prise tire 16A (3,7 kW) en même temps qu'un four, une pompe à chaleur ou un lave-linge, car la prise Green'up ne possède pas de délestage dynamique."
+      },
+      {
+        question: "Quel est le coût en électricité aux 100 km sur une prise Green'up vs borne ?",
+        answer: "Le coût du kWh est strictement identique. Cependant, avec une borne 7,4 kW, vous pouvez concentrer 100% de votre charge pendant les heures super-creuses (ex: tarif Tempo EDF à 0,13 €/kWh), ce qui réduit la facture annuelle de 40%."
+      },
+      {
+        question: "Peut-on remplacer plus tard une prise Green'up par une borne ?",
+        answer: "Attention : la prise Green'up est câblée en 2,5 mm² protégé par un disjoncteur 20A. Une borne 7,4 kW nécessite impérativement un câble de section 6 mm² ou 10 mm² et un disjoncteur 40A Type F ou B. Il faudra donc repasser un câble."
       }
     ]
   }

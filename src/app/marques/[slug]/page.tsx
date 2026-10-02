@@ -5,12 +5,14 @@ import Image from "next/image";
 import fs from "fs";
 import path from "path";
 import { HARDWARE_PRODUCTS } from "@/data/hardware";
+import { OPERATORS } from "@/data/operators";
+import { DUELS } from "@/data/comparatives";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
 import LeadForm from "@/components/LeadForm";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
-import { Zap, ShieldCheck, Star, ExternalLink, ArrowRight, Sun, Cpu, Check, AlertTriangle, CheckCircle, XCircle, Wrench, HelpCircle } from "lucide-react";
+import { Zap, ShieldCheck, Star, ExternalLink, ArrowRight, Sun, Cpu, Check, AlertTriangle, CheckCircle, XCircle, Wrench, HelpCircle, Scale, Building2 } from "lucide-react";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -41,11 +43,38 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const product = HARDWARE_PRODUCTS.find((p) => p.slug === slug);
 
   if (product) {
+    const title = `${product.brand} ${product.modelName} : Prix, Avis & Fiche Technique 2026`;
+    const description = `Fiche technique complète ${product.brand} ${product.modelName}. Puissance ${product.maxPowerKw} kW, délestage dynamique TIC Linky, prix d'installation et devis électricien IRVE agréé.`;
+    const url = `https://expertbornerecharge.com/marques/${product.slug}`;
+    const imageUrl = `https://expertbornerecharge.com${product.image}`;
+
     return {
-      title: `${product.brand} ${product.modelName} : Prix, Avis & Fiche Technique 2026`,
-      description: `Fiche technique complète ${product.brand} ${product.modelName}. Puissance ${product.maxPowerKw} kW, délestage dynamique TIC Linky, prix d'installation et devis électricien IRVE agréé.`,
+      title,
+      description,
       alternates: {
-        canonical: `https://expertbornerecharge.com/marques/${product.slug}`,
+        canonical: url,
+      },
+      openGraph: {
+        title,
+        description,
+        url,
+        siteName: "Expert Borne Recharge",
+        locale: "fr_FR",
+        type: "article",
+        images: [
+          {
+            url: imageUrl,
+            width: 1024,
+            height: 1024,
+            alt: `${product.brand} ${product.modelName}`,
+          }
+        ]
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [imageUrl],
       },
       robots: { index: true, follow: true }
     };
@@ -53,11 +82,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const legacyItem = getMarquesJsonData().find((m: any) => m.slug === slug);
   if (legacyItem) {
+    const title = legacyItem.title;
+    const description = legacyItem.meta_description;
+    const url = `https://expertbornerecharge.com/marques/${legacyItem.slug}`;
+
     return {
-      title: legacyItem.title,
-      description: legacyItem.meta_description,
+      title,
+      description,
       alternates: {
-        canonical: `https://expertbornerecharge.com/marques/${legacyItem.slug}`,
+        canonical: url,
+      },
+      openGraph: {
+        title,
+        description,
+        url,
+        siteName: "Expert Borne Recharge",
+        locale: "fr_FR",
+        type: "article",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
       },
       robots: { index: true, follow: true }
     };
@@ -84,6 +130,49 @@ export default async function ProductOrBrandDetailPage({ params }: PageProps) {
       { name: "Bornes & Marques", href: "/marques" },
       { name: `${product.brand} ${product.modelName}`, href: `/marques/${product.slug}` }
     ];
+
+    // Find associated duels
+    const associatedDuels = DUELS.filter(
+      (d) =>
+        (product.associatedDuelSlugs || []).includes(d.slug) ||
+        d.entityA.slug === product.slug ||
+        d.entityB.slug === product.slug
+    );
+
+    // Find associated operators
+    const associatedOperators = (product.associatedOperatorSlugs || [])
+      .map((opSlug) => OPERATORS.find((o) => o.slug === opSlug))
+      .filter(Boolean);
+
+    // Find sibling products
+    const siblingProducts = HARDWARE_PRODUCTS.filter(
+      (p) => p.slug !== product.slug && (p.category === product.category || p.brand === product.brand)
+    ).slice(0, 3);
+
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://expertbornerecharge.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Bornes & Marques",
+          "item": "https://expertbornerecharge.com/marques"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": `${product.brand} ${product.modelName}`,
+          "item": `https://expertbornerecharge.com/marques/${product.slug}`
+        }
+      ]
+    };
 
     const productSchema = {
       "@context": "https://schema.org",
@@ -155,9 +244,11 @@ export default async function ProductOrBrandDetailPage({ params }: PageProps) {
         "@type": "Review",
         "author": {
           "@type": "Organization",
-          "name": "Expert Borne Recharge"
+          "name": "Expert Borne Recharge",
+          "url": "https://expertbornerecharge.com"
         },
         "datePublished": "2026-01-15",
+        "dateModified": "2026-03-25",
         "reviewBody": product.verdict,
         "reviewRating": {
           "@type": "Rating",
@@ -183,6 +274,7 @@ export default async function ProductOrBrandDetailPage({ params }: PageProps) {
     return (
       <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-200">
         <Header isHub={true} variant="default" themeColor="blue" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
@@ -193,7 +285,7 @@ export default async function ProductOrBrandDetailPage({ params }: PageProps) {
           <section className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm mt-6 mb-10">
             <div className="flex flex-col md:flex-row gap-8 items-center">
               <div className="w-full md:w-1/3 flex justify-center">
-                <div className="relative w-64 h-64 rounded-2xl bg-slate-900 p-2 shadow-inner border border-slate-700 overflow-hidden flex items-center justify-center">
+                <div className="relative w-64 h-64 rounded-2xl bg-slate-100 p-2 border border-slate-200 overflow-hidden flex items-center justify-center">
                   <Image
                     src={product.image}
                     alt={`${product.brand} ${product.modelName}`}
@@ -219,84 +311,175 @@ export default async function ProductOrBrandDetailPage({ params }: PageProps) {
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
                   {product.brand} {product.modelName}
                 </h1>
-                <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">
-                  {product.tagline}. Puissance jusqu&apos;à {product.maxPowerKw} kW, raccordement sécurisé conforme NF C 15-100 et éligible aux 500 € de crédit d&apos;impôt.
+                <p className="text-sm sm:text-base text-slate-600 mb-6 leading-relaxed">
+                  {product.tagline}
                 </p>
 
-                {/* Dual Action CTA Box */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-slate-100">
+                {/* Price Matrix */}
+                <div className="grid grid-cols-2 gap-3 mb-6 text-left">
+                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                    <span className="text-xs text-slate-500 block mb-0.5">Matériel seul (en ligne) :</span>
+                    <strong className="text-lg font-bold text-blue-700">{product.estimatedHardwarePrice}</strong>
+                    <span className="text-xs text-slate-400 block mt-0.5">{product.affiliateStore}</span>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200">
+                    <span className="text-xs text-emerald-800 block mb-0.5">Fourniture + Pose IRVE :</span>
+                    <strong className="text-lg font-bold text-emerald-700">{product.averageInstalledPrice}</strong>
+                    <span className="text-xs text-emerald-600 block mt-0.5">
+                      {product.taxCreditEligible ? "Crédit d'impôt 500 € déductible" : "TVA 5,5 % incluse"}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Dual CTAs */}
+                <div className="flex flex-col sm:flex-row gap-3">
                   <a
                     href="#devis-pose"
-                    className="inline-flex items-center justify-center gap-1.5 w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition-colors shadow-sm"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-md transition-colors"
                   >
-                    Devis Pose IRVE (500 € déduits)
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    Devis Pose par un Pro IRVE
+                    <ArrowRight className="w-4 h-4" />
                   </a>
-
                   <a
                     href={product.affiliateUrl}
                     target="_blank"
                     rel="nofollow sponsored"
-                    className="inline-flex items-center justify-center gap-1.5 w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-colors"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm transition-colors"
                   >
-                    Matériel seul ({product.estimatedHardwarePrice})
-                    <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                    Acheter le matériel ({product.affiliateStore})
+                    <ExternalLink className="w-4 h-4 text-slate-400" />
                   </a>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* Technical Specifications Matrix */}
+          {/* Technical Specs Bento Grid */}
           <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-10">
             <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
               <Cpu className="w-6 h-6 text-blue-600" />
-              Spécifications Techniques Détaillées
+              Spécifications Électriques & Normes
             </h2>
 
-            <div className="divide-y divide-slate-100 text-sm">
-              <div className="py-3 flex justify-between items-center">
-                <span className="text-slate-500 font-medium">Puissance maximale</span>
-                <strong className="text-slate-900">{product.maxPowerKw} kW (Réglable de 1,4 à {product.maxPowerKw} kW)</strong>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                <span className="text-xs text-slate-500 block mb-1">Puissance de charge max</span>
+                <strong className="text-base text-slate-900">{product.maxPowerKw} kW ({product.maxCurrentAmps}A)</strong>
               </div>
-              <div className="py-3 flex justify-between items-center">
-                <span className="text-slate-500 font-medium">Intensité maximale</span>
-                <strong className="text-slate-900">{product.maxCurrentAmps} Ampères</strong>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                <span className="text-xs text-slate-500 block mb-1">Tension d&apos;alimentation</span>
+                <strong className="text-base text-slate-900">{product.voltage}</strong>
               </div>
-              <div className="py-3 flex justify-between items-center">
-                <span className="text-slate-500 font-medium">Type d&apos;alimentation</span>
-                <span className="text-slate-900 font-semibold">{product.voltage}</span>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                <span className="text-xs text-slate-500 block mb-1">Type de connecteur</span>
+                <strong className="text-base text-slate-900">{product.connectorType}</strong>
               </div>
-              <div className="py-3 flex justify-between items-center">
-                <span className="text-slate-500 font-medium">Type de prise / connecteur</span>
-                <span className="text-slate-900 font-semibold text-right max-w-xs">{product.connectorType}</span>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                <span className="text-xs text-slate-500 block mb-1">Câble de recharge</span>
+                <strong className="text-base text-slate-900">
+                  {product.cableIncluded ? `Inclus (${product.cableLengthMeters} mètres)` : "Non inclus (prise socle T2S)"}
+                </strong>
               </div>
-              <div className="py-3 flex justify-between items-center">
-                <span className="text-slate-500 font-medium">Délestage dynamique</span>
-                <span className="text-slate-900 font-semibold text-right max-w-xs">{product.dynamicLoadShedding}</span>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                <span className="text-xs text-slate-500 block mb-1">Délestage dynamique</span>
+                <strong className="text-base text-slate-900">{product.dynamicLoadShedding}</strong>
               </div>
-              <div className="py-3 flex justify-between items-center">
-                <span className="text-slate-500 font-medium">Compatibilité panneaux solaires</span>
-                <span className="text-slate-900 font-semibold text-right max-w-xs">{product.solarCompatibility}</span>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                <span className="text-xs text-slate-500 block mb-1">Compatibilité Solaire</span>
+                <strong className="text-base text-slate-900">{product.solarCompatibility}</strong>
               </div>
-              <div className="py-3 flex justify-between items-center">
-                <span className="text-slate-500 font-medium">Indice de protection & résistance</span>
-                <strong className="text-slate-900">{product.ipRating}</strong>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                <span className="text-xs text-slate-500 block mb-1">Indice de protection</span>
+                <strong className="text-base text-slate-900">{product.ipRating}</strong>
               </div>
-              <div className="py-3 flex justify-between items-center">
-                <span className="text-slate-500 font-medium">Connectivité & Pilotage</span>
-                <span className="text-slate-900 font-semibold">{product.connectivity.join(", ")}</span>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                <span className="text-xs text-slate-500 block mb-1">Connectivité</span>
+                <strong className="text-base text-slate-900">{product.connectivity.join(" · ")}</strong>
               </div>
-              <div className="py-3 flex justify-between items-center">
-                <span className="text-slate-500 font-medium">Protections au tableau requises</span>
-                <span className="text-slate-900 font-semibold text-right max-w-xs">{product.protectionRequired}</span>
-              </div>
-              <div className="py-3 flex justify-between items-center">
-                <span className="text-slate-500 font-medium">Aides & Fiscalité</span>
-                <span className="text-emerald-700 font-bold">Crédit d&apos;impôt 500 € + TVA 5,5 %</span>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                <span className="text-xs text-slate-500 block mb-1">Protection tableau requise</span>
+                <strong className="text-xs text-slate-900 leading-tight block">{product.protectionRequired}</strong>
               </div>
             </div>
           </section>
+
+          {/* Associated Duels Section */}
+          {associatedDuels.length > 0 && (
+            <section className="bg-indigo-50 border border-indigo-200 rounded-2xl p-6 mb-10">
+              <div className="flex items-start gap-3">
+                <Scale className="w-5 h-5 text-indigo-700 flex-shrink-0 mt-1" />
+                <div className="w-full">
+                  <h3 className="text-base font-bold text-indigo-950 mb-1">
+                    Duels & Face-à-Face impliquant la {product.brand} {product.modelName}
+                  </h3>
+                  <p className="text-xs text-indigo-800 mb-4">
+                    Consultez nos comparatifs directs critère par critère pour trancher avant d&apos;acheter :
+                  </p>
+                  <div className="space-y-2">
+                    {associatedDuels.map((d) => (
+                      <Link
+                        key={d.slug}
+                        href={`/comparatif/${d.slug}`}
+                        className="block p-3.5 rounded-xl bg-white border border-indigo-100 hover:border-indigo-400 hover:shadow-sm transition group"
+                      >
+                        <div className="flex items-center justify-between">
+                          <strong className="text-xs sm:text-sm font-bold text-indigo-950 group-hover:text-indigo-600 transition">
+                            {d.title}
+                          </strong>
+                          <ArrowRight className="w-4 h-4 text-indigo-500 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                        <p className="text-xs text-slate-500 mt-1 line-clamp-1">
+                          {d.directAnswerSummary}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Associated Operators Section */}
+          {associatedOperators.length > 0 && (
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-10">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                  <Building2 className="w-5 h-5 text-blue-600" />
+                  Réseaux Nationaux Installant ce Matériel
+                </h2>
+                <Link href="/operateurs" className="text-xs font-semibold text-blue-600 hover:underline">
+                  Voir tous les opérateurs →
+                </Link>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-600 mb-6">
+                Des grands groupes proposent l&apos;installation clé en main de cette borne, mais appliquent une marge d&apos;intermédiaire. Consultez nos audits indépendants :
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {associatedOperators.map((op: any) => (
+                  <Link
+                    key={op.slug}
+                    href={`/operateurs/${op.slug}`}
+                    className="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-blue-300 transition group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex justify-between items-center mb-1">
+                        <strong className="text-slate-900 font-bold text-sm group-hover:text-blue-600 transition">
+                          Avis {op.name}
+                        </strong>
+                        <span className="text-xs text-rose-700 bg-rose-50 px-2 py-0.5 rounded font-semibold border border-rose-100">
+                          Marge : {op.middlemanCommissionRate.split(" ")[0]}%
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-500 line-clamp-2 mb-2">{op.tagline}</p>
+                    </div>
+                    <div className="text-xs font-bold text-blue-600 inline-flex items-center gap-1 pt-2 border-t border-slate-200/60">
+                      Lire l&apos;audit & arbitrage <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Suitable Vehicles */}
           <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-10">
@@ -354,6 +537,37 @@ export default async function ProductOrBrandDetailPage({ params }: PageProps) {
               {product.verdict}
             </p>
           </section>
+
+          {/* Sibling Products */}
+          {siblingProducts.length > 0 && (
+            <section className="mb-10">
+              <h3 className="text-lg font-bold text-slate-900 mb-4">
+                Découvrez aussi dans la même catégorie
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {siblingProducts.map((p) => (
+                  <Link
+                    key={p.slug}
+                    href={`/marques/${p.slug}`}
+                    className="p-4 bg-white border border-slate-200 rounded-xl hover:border-blue-400 transition group flex flex-col justify-between"
+                  >
+                    <div>
+                      <strong className="block text-slate-900 font-bold text-sm group-hover:text-blue-600 transition">
+                        {p.brand} {p.modelName}
+                      </strong>
+                      <span className="text-xs text-blue-700 font-semibold block mb-1">
+                        {p.maxPowerKw} kW · {p.estimatedHardwarePrice}
+                      </span>
+                      <span className="text-xs text-slate-500 line-clamp-2">{p.tagline}</span>
+                    </div>
+                    <div className="mt-3 text-xs font-bold text-blue-600 inline-flex items-center gap-1">
+                      Voir la fiche <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* LeadForm Anchor */}
           <section id="devis-pose" className="bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-xl text-white mb-12 scroll-mt-20">

@@ -6,13 +6,35 @@ import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
 import LeadForm from "@/components/LeadForm";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
-import { ShieldCheck, Zap, ArrowRight, Star, Building2, Home, Scale, Award, Info, AlertTriangle, TrendingDown } from "lucide-react";
+import { ShieldCheck, Zap, ArrowRight, Star, Building2, Home, Scale, Award, Info, AlertTriangle, TrendingDown, Cpu } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Avis & Tarifs des Opérateurs de Recharge 2026 : Le Comparatif Indépendant",
   description: "ChargeGuru, IZI by EDF, Zeplug, Waat, TotalEnergies... Décryptage des offres, audit des marges d'intermédiaire et arbitrage pour éviter les surcommissions.",
   alternates: {
     canonical: "https://expertbornerecharge.com/operateurs",
+  },
+  openGraph: {
+    title: "Avis & Tarifs des Opérateurs de Recharge 2026 : Le Comparatif Indépendant",
+    description: "ChargeGuru, IZI by EDF, Zeplug, Waat... Audit des marges d'intermédiaire et devis directs d'électriciens IRVE.",
+    url: "https://expertbornerecharge.com/operateurs",
+    siteName: "Expert Borne Recharge",
+    locale: "fr_FR",
+    type: "website",
+    images: [
+      {
+        url: "https://expertbornerecharge.com/icon.png",
+        width: 512,
+        height: 512,
+        alt: "Opérateurs de bornes de recharge 2026",
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Avis & Tarifs des Opérateurs de Recharge 2026 : Le Comparatif Indépendant",
+    description: "ChargeGuru, IZI by EDF, Zeplug, Waat... Audit des marges d'intermédiaire.",
+    images: ["https://expertbornerecharge.com/icon.png"],
   },
   robots: { index: true, follow: true }
 };
@@ -24,6 +46,25 @@ export default function OperateursHubPage() {
     { name: "Accueil", href: "/" },
     { name: "Opérateurs & Réseaux Nationaux", href: "/operateurs" }
   ];
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Accueil",
+        "item": "https://expertbornerecharge.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Opérateurs & Réseaux Nationaux",
+        "item": "https://expertbornerecharge.com/operateurs"
+      }
+    ]
+  };
 
   const hubSchema = {
     "@context": "https://schema.org",
@@ -42,6 +83,7 @@ export default function OperateursHubPage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-200">
       <Header isHub={true} variant="default" themeColor="blue" />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubSchema) }} />
 
       <main className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -50,20 +92,38 @@ export default function OperateursHubPage() {
         {/* Hero Section */}
         <section className="text-center max-w-3xl mx-auto my-10">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold tracking-wide uppercase mb-4">
-            <Scale className="w-3.5 h-3.5" />
+            <Building2 className="w-3.5 h-3.5 text-blue-600" />
             Audit Indépendant 2026
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 mb-5 leading-tight">
-            Les Réseaux & Opérateurs Nationaux au Crible
+            Les Grands Opérateurs de Recharge au Crible
           </h1>
           <p className="text-lg text-slate-600 leading-relaxed mb-6">
-            ChargeGuru, IZI by EDF, Zeplug, Waat, TotalEnergies... Nous décryptons leurs tarifs réels, pointons leurs marges d&apos;intermédiation et vous aidons à choisir entre formule packagée et artisan IRVE direct.
+            ChargeGuru, IZI by EDF, Zeplug, Waat, TotalEnergies, Bornes Solutions... Nous analysons en toute transparence leurs grilles tarifaires, les marges d&apos;intermédiation prélevées sur les artisans, et vous donnons les clés pour arbitrer.
           </p>
 
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-5 text-left flex items-start gap-3 text-amber-900 text-sm">
+          {/* Quick Cross-Nav Bar */}
+          <div className="flex flex-wrap justify-center gap-3 text-xs font-semibold mb-6">
+            <Link
+              href="/marques"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:border-blue-400 hover:text-blue-600 shadow-sm transition"
+            >
+              <Cpu className="w-4 h-4 text-blue-600" />
+              Voir les Bornes & Matériels testés →
+            </Link>
+            <Link
+              href="/comparatifs"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:border-indigo-400 hover:text-indigo-600 shadow-sm transition"
+            >
+              <Scale className="w-4 h-4 text-indigo-600" />
+              Voir les Duels & Comparatifs directs →
+            </Link>
+          </div>
+
+          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-5 text-left flex items-start gap-3 text-amber-950 text-sm">
             <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
             <div>
-              <strong className="font-semibold">La règle d&apos;or de l&apos;arbitrage :</strong> La plupart des grands réseaux sous-traitent la pose à des artisans électriciens IRVE indépendants en prélevant <strong>25 % à 40 % de commission</strong>. En passant directement par un pro IRVE local, vous réalisez une économie moyenne de <strong>350 € à 700 €</strong> sur la même prestation.
+              <strong className="font-semibold">La règle d&apos;or de l&apos;automobiliste averti :</strong> La quasi-totalité des opérateurs nationaux sous-traitent l&apos;installation à des artisans électriciens IRVE locaux en prélevant <strong>25 % à 40 % de commission</strong>. En passant en direct avec un électricien qualifié de votre secteur, vous obtenez la même garantie pour 300 € à 650 € de moins.
             </div>
           </div>
         </section>
@@ -93,28 +153,24 @@ export default function OperateursHubPage() {
                 </h2>
                 <p className="text-xs text-slate-500 mb-4">{op.tagline}</p>
 
-                <div className="space-y-2 mb-4 text-xs text-slate-600">
+                <div className="space-y-2 mb-4 text-xs">
                   <div className="flex justify-between py-1 border-b border-slate-100">
-                    <span className="text-slate-500">Cibles :</span>
-                    <span className="font-medium text-slate-800">{op.targetMarket.join(", ")}</span>
+                    <span className="text-slate-500">Tarif moyen posé :</span>
+                    <span className="font-bold text-slate-900">{op.estimatedBasePrice.split("(")[0]}</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-slate-100">
-                    <span className="text-slate-500">Tarif estimé :</span>
-                    <span className="font-semibold text-blue-700 text-right">{op.estimatedBasePrice}</span>
+                    <span className="text-slate-500">Marge réseau estimée :</span>
+                    <span className="font-semibold text-rose-700">{op.middlemanCommissionRate.split(" ")[0]} {op.middlemanCommissionRate.split(" ")[1]}</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-slate-100">
-                    <span className="text-slate-500">Surcommission :</span>
-                    <span className="font-semibold text-rose-600 text-right">{op.middlemanCommissionRate}</span>
-                  </div>
-                  <div className="flex justify-between py-1">
-                    <span className="text-slate-500">Délai pose :</span>
+                    <span className="text-slate-500">Délai d&apos;installation :</span>
                     <span className="font-medium text-slate-800">{op.installationDelay}</span>
                   </div>
                 </div>
 
-                <div className="bg-slate-50 rounded-xl p-3 mb-4 text-xs text-slate-600">
-                  <strong className="text-slate-800 block mb-1">Notre avis synthétique :</strong>
-                  {op.strengthsSummary}
+                <div className="bg-emerald-50 rounded-xl p-3 mb-4 text-xs text-emerald-950 border border-emerald-100">
+                  <strong className="text-emerald-900 block mb-0.5">Gain en direct artisan :</strong>
+                  {op.arbitrageVerdict.savingsEstimate}
                 </div>
               </div>
 

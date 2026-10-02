@@ -9,6 +9,8 @@ export interface Operator {
   estimatedBasePrice: string;
   middlemanCommissionRate: string;
   installationDelay: string;
+  installedHardwareSlugs?: string[];
+  associatedDuelSlugs?: string[];
   pros: string[];
   cons: string[];
   hiddenCostsWarning: string;
@@ -42,6 +44,8 @@ export const OPERATORS: Operator[] = [
     estimatedBasePrice: "1 390 € à 2 100 € TTC posé (hors aides)",
     middlemanCommissionRate: "28 % à 38 % de commission d'intermédiation réseau",
     installationDelay: "3 à 5 semaines après validation du devis",
+    installedHardwareSlugs: ["wallbox-pulsar-plus","schneider-charge","abb-terra-ac","hager-witty-start"],
+    associatedDuelSlugs: ["chargeguru-vs-izi-by-edf"],
     pros: [
       "Large choix de bornes (Wallbox Pulsar, Schneider Charge, ABB)",
       "Accompagnement administratif sur les dossiers d'aides (crédit d'impôt, Advenir)",
@@ -65,7 +69,7 @@ export const OPERATORS: Operator[] = [
     rating: 4.3,
     reviewCount: 1420,
     faq: [
-      {
+{
         question: "ChargeGuru installe-t-il les bornes avec ses propres équipes ?",
         answer: "ChargeGuru dispose de quelques techniciens en propre mais s'appuie principalement sur un réseau d'artisans électriciens sous-traitants qualifiés IRVE répartis sur toute la France."
       },
@@ -76,6 +80,18 @@ export const OPERATORS: Operator[] = [
       {
         question: "Peut-on obtenir le crédit d'impôt de 500 € avec ChargeGuru ?",
         answer: "Oui, la pose étant effectuée par un professionnel qualifié IRVE avec facture mentionnant les spécificités de la borne, vous êtes éligible au crédit d'impôt de 500 € et à la TVA réduite à 5,5 %."
+      },
+      {
+        question: "Pourquoi faire appel à un artisan IRVE direct plutôt qu'à ChargeGuru ?",
+        answer: "ChargeGuru sous-traite la pose à des électriciens IRVE locaux tout en appliquant une commission réseau de 28 % à 38 %. En comparant 3 artisans IRVE locaux en direct sur Expert Borne Recharge, vous bénéficiez du même artisan qualifié sans payer la marge d'intermédiaire commerciale, soit une économie moyenne de 350 € à 650 €."
+      },
+      {
+        question: "La visite technique est-elle gratuite avec ChargeGuru ?",
+        answer: "La pré-visite technique s'effectue généralement en visioconférence sur photos de votre tableau électrique et de votre garage. Si une visite sur site est nécessaire pour configuration complexe, elle peut être facturée ou déduite de la commande finale."
+      },
+      {
+        question: "Quelles sont les garanties incluses sur l'installation ChargeGuru ?",
+        answer: "L'installation bénéficie de la garantie décennale de l'artisan sous-traitant (obligatoire pour tout chantier électrique) et de la garantie constructeur de 2 à 3 ans sur la borne sélectionnée."
       }
     ],
     overview: "ChargeGuru est l'un des leaders français de l'installation de bornes de recharge pour particuliers, copropriétés et flottes professionnelles. Racheté par le groupe espagnol Iberdrola, l'opérateur propose un parcours digitalisé bien rodé.",
@@ -94,6 +110,8 @@ export const OPERATORS: Operator[] = [
     estimatedBasePrice: "1 250 € à 1 950 € TTC posé (hors aides)",
     middlemanCommissionRate: "25 % à 35 % de marge commerciale opérateur",
     installationDelay: "2 à 4 semaines",
+    installedHardwareSlugs: ["schneider-charge","hager-witty-start","wallbox-pulsar-plus"],
+    associatedDuelSlugs: ["chargeguru-vs-izi-by-edf"],
     pros: [
       "Marque rassurante adossée au groupe EDF",
       "Offre couplée intéressante avec le tarif EDF Vert Électrique Auto (heures creuses avantageuses)",
@@ -117,7 +135,7 @@ export const OPERATORS: Operator[] = [
     rating: 4.1,
     reviewCount: 2850,
     faq: [
-      {
+{
         question: "Faut-il être client EDF pour faire installer une borne par IZI by EDF ?",
         answer: "Non, les services d'installation IZI by EDF sont accessibles à tous les consommateurs, quel que soit leur fournisseur d'électricité (Engie, TotalEnergies, Enercoop, etc.)."
       },
@@ -128,6 +146,18 @@ export const OPERATORS: Operator[] = [
       {
         question: "Comment se déroule la visite technique ?",
         answer: "La visite peut se faire en visio ou sur place par l'artisan mandaté afin de valider la puissance disponible au disjoncteur d'abonné et le chemin de câble."
+      },
+      {
+        question: "Peut-on bénéficier du crédit d'impôt de 500 € avec IZI by EDF ?",
+        answer: "Oui, la pose étant obligatoirement réalisée par un professionnel qualifié IRVE, la facture émise par IZI by EDF est 100 % conforme pour déduire 500 € lors de votre déclaration fiscale."
+      },
+      {
+        question: "Comment éviter les suppléments tarifaires imprévus avec IZI by EDF ?",
+        answer: "Fournissez des photos précises de l'emplacement du compteur, du disjoncteur général, du tableau électrique et du cheminement exact des câbles pour que le devis initial intègre dès le départ le bon métrage et évite tout avenant le jour J."
+      },
+      {
+        question: "L'offre IZI by EDF impose-t-elle de souscrire un contrat d'électricité EDF ?",
+        answer: "Non, l'offre d'installation de borne est dissociable de votre contrat de fourniture d'énergie. Cependant, EDF propose des réductions sur le matériel si vous souscrivez simultanément leur contrat Vert Électrique Auto."
       }
     ],
     overview: "IZI by EDF est la branche travaux de rénovation énergétique et de transition écologique d'EDF. Elle commercialise des solutions de recharge pour particuliers avec une forte mise en avant des offres d'énergie associées.",
@@ -146,6 +176,8 @@ export const OPERATORS: Operator[] = [
     estimatedBasePrice: "Borne : 499 € à 899 € TTC + Abonnement 15,90 € à 29,90 €/mois + forfait kWh",
     middlemanCommissionRate: "Modèle locatif avec récurrence captive sur 3 à 5 ans",
     installationDelay: "3 à 6 mois pour l'infrastructure collective en copropriété",
+    installedHardwareSlugs: ["schneider-charge","legrand-green-up-one","evbox-elvi"],
+    associatedDuelSlugs: ["zeplug-vs-waat"],
     pros: [
       "Zéro euro à débourser pour la copropriété (financement intégral de l'infrastructure par Zeplug)",
       "Compteur électrique dédié indépendant du compteur des parties communes",
@@ -169,7 +201,7 @@ export const OPERATORS: Operator[] = [
     rating: 3.9,
     reviewCount: 890,
     faq: [
-      {
+{
         question: "Comment Zeplug se finance-t-il si la copropriété ne paye rien ?",
         answer: "Zeplug finance l'installation du câble d'infrastructure principal grâce aux abonnements mensuels facturés à chaque utilisateur et à la marge réalisée sur la revente des kWh consommés."
       },
@@ -180,6 +212,18 @@ export const OPERATORS: Operator[] = [
       {
         question: "Que se passe-t-il si je vends mon appartement avec une borne Zeplug ?",
         answer: "Le nouvel acquéreur peut reprendre l'abonnement Zeplug ou demander la résiliation. En cas de résiliation, la borne est désactivée."
+      },
+      {
+        question: "Quelle est la durée d'engagement chez Zeplug en copropriété ?",
+        answer: "Le contrat cadre d'infrastructure signé avec la copropriété court généralement sur une durée de 10 ans renouvelable. L'abonnement individuel de l'utilisateur est résiliable selon les conditions du contrat de service particulier (avec frais de déconnexion éventuels)."
+      },
+      {
+        question: "Peut-on utiliser sa propre borne avec le réseau Zeplug ?",
+        answer: "Non, l'infrastructure Zeplug est un réseau propriétaire fermé. Vous devez impérativement acquérir ou louer une borne certifiée et configurée par Zeplug pour communiquer avec leur compteur divisionnaire."
+      },
+      {
+        question: "Comment se déroule la refacturation de l'électricité chez Zeplug ?",
+        answer: "Zeplug relève la consommation de votre borne via carte SIM 4G intégrée et vous envoie une facture mensuelle unique incluant l'abonnement au service et le montant des kWh consommés au tarif fixé par Zeplug."
       }
     ],
     overview: "Zeplug est l'un des premiers opérateurs à avoir démocratisé la recharge en copropriété via un modèle sans frais pour l'assemblée générale. La société a fusionné avec ChargePoint en Europe pour accélérer son déploiement.",
@@ -198,6 +242,8 @@ export const OPERATORS: Operator[] = [
     estimatedBasePrice: "Borne : 650 € à 1 100 € TTC posée + abonnement supervision (6 € à 15 €/mois)",
     middlemanCommissionRate: "Marge matérielle + redevance mensuelle de supervision logicielle",
     installationDelay: "2 à 5 mois en copropriété",
+    installedHardwareSlugs: ["alfen-eve-single-pro","schneider-charge","abb-terra-ac"],
+    associatedDuelSlugs: ["zeplug-vs-waat"],
     pros: [
       "Flexibilité entre achat de l'infrastructure par la copro ou tiers-financement",
       "Plateforme de supervision ouverte et bornes conformes au protocole OCPP",
@@ -228,6 +274,18 @@ export const OPERATORS: Operator[] = [
       {
         question: "Les bornes Waat sont-elles bridées à un seul opérateur ?",
         answer: "Non, Waat utilise des bornes interopérables répondant à la norme OCPP, ce qui permet théoriquement de changer d'opérateur de supervision sans remplacer le matériel physique."
+      },
+      {
+        question: "Les bornes Waat sont-elles compatibles avec toutes les voitures électriques ?",
+        answer: "Oui, les bornes installées par Waat sont équipées d'un socle de prise Type 2 avec obturateurs (T2S) conforme à la norme NF C 15-100, compatible avec 100 % des véhicules électriques et hybrides rechargeables du marché européen."
+      },
+      {
+        question: "Quelle est la différence entre l'offre Waat investissement copro et tiers-investisseur ?",
+        answer: "En investissement copro, le syndicat des copropriétaires achète l'infrastructure (avec 50 % d'aide Advenir) et reste propriétaire du réseau. En tiers-investisseur, Waat finance l'infrastructure et la copropriété n'avance aucun fond, mais les résidents paient un abonnement mensuel d'exploitation plus élevé."
+      },
+      {
+        question: "Waat propose-t-il des bornes pour les entreprises et flottes professionnelles ?",
+        answer: "Oui, Waat dispose d'une division B2B complète avec logiciel de supervision de flotte, refacturation automatique aux collaborateurs et badge RFID d'authentification sécurisée."
       }
     ],
     overview: "Waat s'est imposé comme l'un des principaux challengers de Zeplug en copropriété, avec un positionnement axé sur la modularité technique et l'interopérabilité des bornes.",
@@ -246,6 +304,8 @@ export const OPERATORS: Operator[] = [
     estimatedBasePrice: "Borne individuelle : 750 € à 1 200 € TTC posée + service de comptage",
     middlemanCommissionRate: "Frais de comptage et de gestion de l'infrastructure partagée",
     installationDelay: "3 à 6 mois en copropriété existante",
+    installedHardwareSlugs: ["schneider-charge","hager-witty-start","alfen-eve-single-pro"],
+    associatedDuelSlugs: [],
     pros: [
       "Expertise du groupe OCEA Smart Building dans la répartition des charges d'énergie",
       "Conventionnement avec le programme LogiVolt de la Banque des Territoires",
@@ -269,13 +329,25 @@ export const OPERATORS: Operator[] = [
     rating: 4.0,
     reviewCount: 410,
     faq: [
-      {
+{
         question: "Qui paye l'infrastructure avec Bornes Solutions ?",
         answer: "Grâce au dispositif LogiVolt ou à des avances de tiers-financement, la copropriété n'avance pas de trésorerie : le coût est amorti via les raccordements progressifs des usagers."
       },
       {
         question: "Les bornes installées sont-elles éligibles au crédit d'impôt ?",
         answer: "Oui, la quote-part privative d'achat et de pose de la borne donne droit au crédit d'impôt de 500 € pour le copropriétaire résident."
+      },
+      {
+        question: "Qui est Bornes Solutions et à quel groupe appartient-il ?",
+        answer: "Bornes Solutions est un opérateur historique de bornes en copropriété et résidentiel collectif, filiale du groupe OCEA Smart Building, spécialiste du comptage et du sous-comptage d'énergie en France."
+      },
+      {
+        question: "Quelles sont les aides Advenir obtenues avec Bornes Solutions ?",
+        answer: "Bornes Solutions est labellisé Advenir, ce qui permet de déduire jusqu'à 50 % des coûts de l'infrastructure collective (plafond de 8 000 €) et jusqu'à 960 € par point de recharge privatif."
+      },
+      {
+        question: "Quel est le coût moyen de l'abonnement mensuel Bornes Solutions ?",
+        answer: "L'abonnement de supervision et de maintenance varie généralement entre 9,90 € et 19,90 € TTC par mois selon les services souscrits (télé-relève, assistance dépannage 24/7 et assurance dommage)."
       }
     ],
     overview: "Bornes Solutions est la filiale dédiée à la mobilité électrique d'OCEA Smart Building, leader français du télé-relevé et de la répartition des fluides en copropriété.",
@@ -294,6 +366,8 @@ export const OPERATORS: Operator[] = [
     estimatedBasePrice: "1 290 € à 1 890 € TTC posé (hors aides)",
     middlemanCommissionRate: "25 % à 35 % de marge de distribution",
     installationDelay: "3 à 5 semaines",
+    installedHardwareSlugs: ["evbox-elvi","schneider-charge","wallbox-pulsar-plus"],
+    associatedDuelSlugs: [],
     pros: [
       "Offre d'électricité 'Heures Super Creuses' avec 50 % de réduction de 2h à 6h du matin",
       "Réseau national d'installateurs qualifiés IRVE",
@@ -317,13 +391,25 @@ export const OPERATORS: Operator[] = [
     rating: 4.0,
     reviewCount: 1680,
     faq: [
-      {
+{
         question: "L'offre TotalEnergies est-elle intéressante sans changer de contrat d'électricité ?",
         answer: "Le forfait matériel et pose reste compétitif, mais l'intérêt économique majeur réside dans le couplage avec l'offre d'électricité Heures Super Creuses."
       },
       {
         question: "Quel modèle de borne installe TotalEnergies ?",
         answer: "TotalEnergies propose généralement des bornes connectées 7,4 kW compatibles avec le pilotage intelligent pour déclencher la charge automatiquement aux heures les moins chères."
+      },
+      {
+        question: "TotalEnergies installe-t-il des bornes en direct pour les particuliers ?",
+        answer: "TotalEnergies s'appuie sur son réseau de techniciens certifiés et de sous-traitants IRVE partenaires pour assurer les visites techniques préalables et la mise en service à domicile."
+      },
+      {
+        question: "Y a-t-il des avantages tarifaires sur le kWh avec TotalEnergies ?",
+        answer: "TotalEnergies propose des formules d'électricité avec option Charge Heures Creuses (réduction substantielle entre 2h et 6h du matin), permettant de recharger à coût très optimisé."
+      },
+      {
+        question: "Quelle borne est principalement proposée par TotalEnergies ?",
+        answer: "TotalEnergies préconise principalement des bornes connectées 7,4 kW à 22 kW de marques reconnues comme Schneider Electric, EVBox et Wallbox, dotées de pilotage intelligent."
       }
     ],
     overview: "TotalEnergies accélère massivement sur la mobilité électrique avec le déploiement de stations de recharge ultra-rapides et une gamme d'offres résidentielles couplées à ses offres de fourniture d'électricité.",
@@ -342,6 +428,8 @@ export const OPERATORS: Operator[] = [
     estimatedBasePrice: "1 350 € à 1 990 € TTC posé",
     middlemanCommissionRate: "28 % à 36 % de marge commerciale opérateur",
     installationDelay: "3 à 6 semaines",
+    installedHardwareSlugs: ["schneider-charge","hager-witty-solar","myenergi-zappi-v2"],
+    associatedDuelSlugs: [],
     pros: [
       "Optimisation de la recharge avec l'autoconsommation solaire (solution Engie My Power)",
       "Marque reconnue avec garanties solides",
@@ -365,9 +453,21 @@ export const OPERATORS: Operator[] = [
     rating: 3.9,
     reviewCount: 1120,
     faq: [
-      {
+{
         question: "Peut-on coupler la borne Engie avec des panneaux solaires existants ?",
         answer: "Oui, Engie propose des options de délestage et de pilotage intelligent pour synchroniser la charge avec la production solaire de l'habitat."
+      },
+      {
+        question: "Engie installe-t-il des bornes couplées avec panneaux solaires ?",
+        answer: "Oui, la division Engie My Power est spécialisée dans l'autoconsommation photovoltaïque couplée à la borne de recharge, avec gestion dynamique des flux pour recharger en priorité avec l'électricité solaire produite sur votre toit."
+      },
+      {
+        question: "Quel est le tarif d'une borne Engie avec pose comprise ?",
+        answer: "Le forfait de base démarre autour de 1 350 € TTC posé pour une borne 7,4 kW monophasée, avant déduction du crédit d'impôt de 500 € pour les particuliers éligibles."
+      },
+      {
+        question: "Engie assure-t-il la conformité Consuel de l'installation ?",
+        answer: "L'installateur IRVE partenaire d'Engie fournit l'attestation de conformité réglementaire indispensable pour votre assureur habitation et pour la garantie de parfait achèvement."
       }
     ],
     overview: "Engie commercialise des bornes de recharge pour particuliers à travers ses branches Engie Home Services et Engie My Power, en ciblant notamment les propriétaires de maisons individuelles et les projets mixtes solaire + mobilité.",
@@ -386,6 +486,8 @@ export const OPERATORS: Operator[] = [
     estimatedBasePrice: "1 190 € à 1 750 € TTC posé",
     middlemanCommissionRate: "20 % à 30 % de marge d'entreprise générale",
     installationDelay: "2 à 3 semaines (réseau d'agences locales)",
+    installedHardwareSlugs: ["schneider-charge","hager-witty-start","legrand-green-up-one"],
+    associatedDuelSlugs: [],
     pros: [
       "Réseau de techniciens salariés dans de nombreuses agences régionales",
       "Partenariats constructeurs automobiles historiques (Renault, Stellantis, BMW)",
@@ -409,13 +511,25 @@ export const OPERATORS: Operator[] = [
     rating: 4.1,
     reviewCount: 3100,
     faq: [
-      {
+{
         question: "Suis-je obligé d'utiliser Proxiserve si ma concession me le recommande ?",
         answer: "Absolument pas. Vous avez la liberté totale de choisir votre installateur IRVE. Les aides d'État (crédit d'impôt 500 €) s'appliquent avec n'importe quel professionnel qualifié IRVE."
       },
       {
         question: "Proxiserve emploie-t-il ses propres techniciens ?",
         answer: "Oui, Proxiserve dispose d'un réseau important d'agences avec des techniciens salariés qualifiés IRVE, complété ponctuellement par des sous-traitants agréés."
+      },
+      {
+        question: "Proxiserve est-il agréé par les constructeurs automobiles ?",
+        answer: "Oui, Proxiserve est le partenaire officiel de nombreux constructeurs automobiles (Renault, Stellantis, BMW, Nissan) pour installer les bornes des acquéreurs de véhicules neufs en concession."
+      },
+      {
+        question: "Pourquoi les devis Proxiserve sont-ils parfois plus chers qu'un artisan local ?",
+        answer: "Proxiserve est un grand groupe national avec des coûts de structure importants et des commissions versées aux concessions partenaires, ce qui se traduit par un prix de pose 20 % à 30 % plus élevé qu'un installateur IRVE indépendant."
+      },
+      {
+        question: "Combien de temps dure l'intervention d'installation Proxiserve ?",
+        answer: "La pose en maison individuelle prend généralement une demi-journée (3 à 5 heures) pour une configuration standard à proximité immédiate du tableau électrique principal."
       }
     ],
     overview: "Proxiserve est l'un des pionniers de la pose de bornes en France, fort de partenariats exclusifs signés avec les plus grands constructeurs automobiles européens.",
@@ -434,6 +548,8 @@ export const OPERATORS: Operator[] = [
     estimatedBasePrice: "1 250 € à 1 800 € TTC posé",
     middlemanCommissionRate: "22 % à 30 % de commission de mise en relation",
     installationDelay: "2 à 4 semaines",
+    installedHardwareSlugs: ["schneider-charge","wallbox-pulsar-plus"],
+    associatedDuelSlugs: [],
     pros: [
       "Large choix multimarques de bornes (Wallbox, Hager, Enelion)",
       "Accompagnement réactif et devis digitalisé",
@@ -457,9 +573,21 @@ export const OPERATORS: Operator[] = [
     rating: 4.2,
     reviewCount: 380,
     faq: [
-      {
+{
         question: "Les devis sont-ils gratuits ?",
         answer: "Oui, l'établissement du devis et l'étude technique préliminaire sont entièrement gratuits et sans engagement."
+      },
+      {
+        question: "Quel est le modèle d'opérateur proposé par Mon Rézo ?",
+        answer: "Mon Rézo se positionne comme opérateur tiers-investisseur pour les copropriétés et parkings d'immeubles, prenant en charge le coût de l'infrastructure en contrepartie d'abonnements d'usage."
+      },
+      {
+        question: "Les résidents non-possesseurs de VE doivent-ils payer quelque chose ?",
+        answer: "Non, le modèle tiers-financeur de Mon Rézo garantit que zéro euro n'est réclamé aux copropriétaires qui n'utilisent pas de véhicule électrique."
+      },
+      {
+        question: "Comment est mesurée la consommation d'énergie de chaque place ?",
+        answer: "Chaque borne intègre un compteur certifié MID (Measuring Instruments Directive) avec transmission automatisée des données de consommation pour facturation au centime près."
       }
     ],
     overview: "Mon Réseau Électrique fédère des installateurs IRVE indépendants à travers une plateforme digitale facilitant le dimensionnement et la mise en conformité des installations.",
@@ -478,6 +606,8 @@ export const OPERATORS: Operator[] = [
     estimatedBasePrice: "1 350 € à 1 950 € TTC posé",
     middlemanCommissionRate: "25 % à 35 % de marge packagée",
     installationDelay: "3 à 5 semaines",
+    installedHardwareSlugs: ["schneider-charge","hager-witty-start"],
+    associatedDuelSlugs: [],
     pros: [
       "Pilotage intelligent de la charge pour éviter les dépassements de puissance Linky",
       "Écosystème domotique complet (gestion chauffage + recharge électrique)",
@@ -501,9 +631,21 @@ export const OPERATORS: Operator[] = [
     rating: 3.8,
     reviewCount: 520,
     faq: [
-      {
+{
         question: "La borne Sowee nécessite-t-elle la station connectée Sowee ?",
         answer: "Elle peut fonctionner seule, mais tout l'intérêt commercial et fonctionnel repose sur l'intégration avec la station connectée pour optimiser la facture d'électricité."
+      },
+      {
+        question: "Sowee est-elle une filiale d'EDF ?",
+        answer: "Oui, Sowee est une filiale à 100 % du groupe EDF, spécialisée dans les objets connectés, la domotique et la gestion intelligente de l'énergie dans le foyer."
+      },
+      {
+        question: "Quelle est la particularité de la station connectée Sowee avec borne ?",
+        answer: "La station Sowee pilote la borne en fonction des heures creuses, des tarifs de l'électricité et de la puissance totale disponible pour maximiser les économies d'énergie."
+      },
+      {
+        question: "Peut-on installer une borne Sowee sans être client électricité Sowee ?",
+        answer: "Les offres d'installation sont souvent couplées pour offrir une remise commerciale, mais il est possible d'obtenir la prestation avec maintien de son fournisseur actuel."
       }
     ],
     overview: "Sowee est la filiale domotique d'EDF qui propose des solutions de pilotage intelligent du chauffage et de la recharge automobile.",
@@ -522,6 +664,8 @@ export const OPERATORS: Operator[] = [
     estimatedBasePrice: "89 € à 190 €/mois (place de parking + borne incluse selon la ville)",
     middlemanCommissionRate: "Modèle locatif mensuel sans apport initial",
     installationDelay: "Immédiat (accès à des places de parking déjà équipées)",
+    installedHardwareSlugs: ["schneider-charge", "wallbox-pulsar-plus"],
+    associatedDuelSlugs: [],
     pros: [
       "Zéro travaux chez soi, idéal pour les locataires ou résidences sans parking adapté",
       "Sans engagement de durée (résiliation mensuelle en 1 clic)",
@@ -545,9 +689,21 @@ export const OPERATORS: Operator[] = [
     rating: 4.4,
     reviewCount: 2200,
     faq: [
-      {
+{
         question: "À qui s'adresse l'offre Yespark Recharge ?",
         answer: "Aux automobilistes vivant en appartement sans garage ou dont la copropriété tarde à voter les travaux de recharge. Vous louez une place équipée dans un parking voisin."
+      },
+      {
+        question: "Comment fonctionne l'offre Yespark pour la recharge de voiture électrique ?",
+        answer: "Yespark, leader de la location de places de parking en sous-sol, équipe ses parkings de bornes de recharge pour proposer des forfaits mensuels combinant stationnement garanti et recharge illimitée ou au forfait."
+      },
+      {
+        question: "L'offre Yespark s'adresse-t-elle aux locataires sans parking privé ?",
+        answer: "Oui, c'est la solution idéale pour les citadins habitant en immeuble ancien sans parking qui souhaitent recharger leur véhicule chaque nuit à proximité immédiate de leur domicile."
+      },
+      {
+        question: "Les bornes Yespark sont-elles partagées ou privatives ?",
+        answer: "La place de parking louée chez Yespark est strictement privative, tout comme la borne de recharge qui y est installée."
       }
     ],
     overview: "Yespark transforme des parkings souterrains d'immeubles ou de bailleurs sociaux en hubs de stationnement et de recharge partagés.",
@@ -566,6 +722,8 @@ export const OPERATORS: Operator[] = [
     estimatedBasePrice: "Borne : 790 € à 1 290 € TTC posée + frais de supervision",
     middlemanCommissionRate: "Marge d'ingénierie et redevance récurrente de gestion",
     installationDelay: "3 à 6 mois en copropriété",
+    installedHardwareSlugs: ["alfen-eve-single-pro","schneider-charge"],
+    associatedDuelSlugs: [],
     pros: [
       "Bureau d'études intégré pour le dimensionnement électrique précis des colonnes de parkings",
       "Éligibilité aux subventions Advenir et dispositifs d'avances",
@@ -589,9 +747,21 @@ export const OPERATORS: Operator[] = [
     rating: 4.1,
     reviewCount: 320,
     faq: [
-      {
+{
         question: "Park'n Plug gère-t-il les démarches avec le syndic ?",
         answer: "Oui, Park'n Plug fournit des dossiers clés en main pour l'Assemblée Générale comprenant les résolutions types, les plans de câblage et les simulations financières."
+      },
+      {
+        question: "Quelle est la technologie utilisée par Park'n Plug en copropriété ?",
+        answer: "Park'n Plug installe une infrastructure en bus d'alimentation sécurisée avec bornes intelligentes communicantes et plateforme de supervision en ligne dédiée au conseil syndical."
+      },
+      {
+        question: "La solution Park'n Plug permet-elle l'arbitrage des heures creuses ?",
+        answer: "Oui, la supervision permet aux résidents de programmer leur recharge exclusivement pendant les plages horaires les plus économiques de leur abonnement."
+      },
+      {
+        question: "Quelles sont les qualifications des poseurs Park'n Plug ?",
+        answer: "Toutes les interventions sont assurées par des techniciens titulaires de la mention IRVE Niveau P2 ou P3 requise pour les installations collectives en bâtiment d'habitation."
       }
     ],
     overview: "Park'n Plug est un opérateur spécialisé dans l'infrastructure de recharge pour les parcs de stationnement partagés et les copropriétés résidentielles.",
@@ -610,6 +780,8 @@ export const OPERATORS: Operator[] = [
     estimatedBasePrice: "0 € pour la copropriété / Raccordement individuel lors de l'achat de la borne",
     middlemanCommissionRate: "Dispositif public (frais financiers mutualisés et amortis sur les raccordements)",
     installationDelay: "4 à 8 mois pour le déploiement complet",
+    installedHardwareSlugs: ["schneider-charge","hager-witty-start","waat"],
+    associatedDuelSlugs: [],
     pros: [
       "Zéro avance de trésorerie pour le syndicat des copropriétaires",
       "Soutien de la Caisse des Dépôts et de l'État (Banque des Territoires)",
@@ -633,13 +805,25 @@ export const OPERATORS: Operator[] = [
     rating: 4.5,
     reviewCount: 560,
     faq: [
-      {
+{
         question: "Qu'est-ce que le dispositif LogiVolt ?",
         answer: "LogiVolt est une initiative de la Banque des Territoires (Caisse des Dépôts) qui préfinance l'infrastructure électrique collective des parkings de copropriété pour lever le frein financier du vote en AG."
       },
       {
         question: "Qui rembourse LogiVolt ?",
         answer: "Ce sont les seuls copropriétaires qui demandent à installer une borne qui remboursent progressivement l'infrastructure via un droit de raccordement individuel au moment de leur installation."
+      },
+      {
+        question: "Qu'est-ce que LogiVolt et quel est le rôle de la Caisse des Dépôts ?",
+        answer: "LogiVolt Territoires est une société créée par la Banque des Territoires (Groupe Caisse des Dépôts) pour financer à 100 % l'infrastructure de recharge dans les copropriétés sans aucun reste à charge pour le syndicat des copropriétaires."
+      },
+      {
+        question: "Comment LogiVolt se rembourse-t-il sur les copropriétaires ?",
+        answer: "LogiVolt applique un droit de connexion remboursé uniquement par les utilisateurs qui demandent le raccordement d'une borne sur leur place, étalé sur la durée."
+      },
+      {
+        question: "Pourquoi LogiVolt est-il un concurrent direct de Zeplug et Waat ?",
+        answer: "LogiVolt offre une garantie de neutralité publique (Caisse des Dépôts) et permet à la copropriété de choisir librement son opérateur de travaux et de maintenance, contrairement aux systèmes captifs."
       }
     ],
     overview: "Créé par la Banque des Territoires, LogiVolt est le dispositif public de référence pour accélérer l'équipement des 10 millions de places de stationnement en copropriété en France.",
@@ -658,6 +842,8 @@ export const OPERATORS: Operator[] = [
     estimatedBasePrice: "0 € pour la copropriété / Quote-part individuelle Linky d'environ 600 € à 1 000 €",
     middlemanCommissionRate: "Tarif public réglementé fixé par la Commission de Régulation de l'Énergie (CRE)",
     installationDelay: "6 à 12 mois selon la complexité du raccordement au réseau de distribution",
+    installedHardwareSlugs: ["schneider-charge","hager-witty-start","tesla-wall-connector-gen-3","wallbox-pulsar-plus"],
+    associatedDuelSlugs: [],
     pros: [
       "Neutralité et indépendance totale : chaque résident a son propre compteur Linky",
       "Liberté absolue de choisir son fournisseur d'électricité (EDF, Total, Enercoop, Tempo)",
@@ -682,13 +868,25 @@ export const OPERATORS: Operator[] = [
     rating: 4.6,
     reviewCount: 4800,
     faq: [
-      {
+{
         question: "Pourquoi choisir Enedis plutôt qu'un opérateur privé en copropriété ?",
         answer: "Parce que vous évitez d'être captif d'un contrat privé avec abonnement obligatoire. Vous rechargez au prix de marché réel de l'électricité avec votre propre contrat individuel."
       },
       {
         question: "Combien de temps faut-il pour qu'Enedis installe le réseau public ?",
         answer: "Le délai moyen varie entre 6 et 10 mois entre le vote en AG et la mise sous tension de la colonne électrique de parking."
+      },
+      {
+        question: "Pourquoi la colonne horizontale Enedis est-elle la solution la plus recommandée par l'AVERE ?",
+        answer: "Parce qu'elle intègre le réseau du parking au Réseau Public de Distribution d'Électricité (RPD). Chaque copropriétaire dispose de son propre compteur Linky officiel et conserve la liberté absolue de choisir son fournisseur d'énergie et son tarif."
+      },
+      {
+        question: "Quel est le coût réel pour la copropriété avec la solution Enedis ?",
+        answer: "0 € pour la copropriété lors du vote en AG. Enedis préfinance l'intégralité des travaux d'infrastructure dans le cadre du dispositif légal LOM. Seuls les résidents qui installent une borne paient une quote-part réglementée lors de leur raccordement."
+      },
+      {
+        question: "Peut-on faire poser n'importe quelle borne de recharge sur une colonne Enedis ?",
+        answer: "Oui, 100 % des bornes du marché (Tesla, Schneider, Hager, Wallbox, Legrand) sont compatibles car chaque place bénéficie d'une alimentation 230V monophasée standard indépendante."
       }
     ],
     overview: "La solution 'Réseau Public de Distribution' d'Enedis étend le réseau public d'électricité au sous-sol des copropriétés. Elle permet à chaque place de disposer d'un compteur Linky dédié, finançable sans avance grâce au TURPE (loi Climat et Résilience).",

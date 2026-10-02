@@ -1,13 +1,16 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { OPERATORS } from "@/data/operators";
+import { HARDWARE_PRODUCTS } from "@/data/hardware";
+import { DUELS } from "@/data/comparatives";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
 import LeadForm from "@/components/LeadForm";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
-import { ShieldCheck, Zap, ArrowRight, Star, Building2, Home, Scale, Award, Info, AlertTriangle, TrendingDown, CheckCircle, XCircle, Clock, FileText } from "lucide-react";
+import { ShieldCheck, Zap, ArrowRight, Star, Building2, Home, Scale, Award, Info, AlertTriangle, TrendingDown, CheckCircle, XCircle, Clock, FileText, Cpu } from "lucide-react";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -24,11 +27,37 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const operator = OPERATORS.find((o) => o.slug === slug);
   if (!operator) return {};
 
+  const title = `Avis ${operator.name} (2026) : Tarifs, Coûts Cachés & Devis Pose IRVE`;
+  const description = `Avis complet et audit indépendant sur ${operator.name} en 2026. Marge d'intermédiaire (${operator.middlemanCommissionRate}), prix moyen (${operator.estimatedBasePrice}), avis clients vérifiés et arbitrage direct électricien IRVE.`;
+  const url = `https://expertbornerecharge.com/operateurs/${operator.slug}`;
+
   return {
-    title: `Avis ${operator.name} : Tarifs, Coûts Cachés & Devis 2026`,
-    description: `Avis complet sur ${operator.name} en 2026. Grille tarifaire, marge d'intermédiaire (${operator.middlemanCommissionRate}), avis clients vérifiés et alternatives en direct.`,
+    title,
+    description,
     alternates: {
-      canonical: `https://expertbornerecharge.com/operateurs/${operator.slug}`,
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Expert Borne Recharge",
+      locale: "fr_FR",
+      type: "article",
+      images: [
+        {
+          url: "https://expertbornerecharge.com/icon.png",
+          width: 512,
+          height: 512,
+          alt: `Audit Avis ${operator.name} 2026`,
+        }
+      ]
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["https://expertbornerecharge.com/icon.png"],
     },
     robots: { index: true, follow: true }
   };
@@ -47,11 +76,51 @@ export default async function OperatorDetailPage({ params }: PageProps) {
     { name: operator.name, href: `/operateurs/${operator.slug}` }
   ];
 
+  // Match installed hardware models
+  const installedHardware = (operator.installedHardwareSlugs || [])
+    .map((hSlug) => HARDWARE_PRODUCTS.find((p) => p.slug === hSlug))
+    .filter(Boolean);
+
+  // Match associated duels
+  const associatedDuels = DUELS.filter(
+    (d) =>
+      (operator.associatedDuelSlugs || []).includes(d.slug) ||
+      d.entityA.slug === operator.slug ||
+      d.entityB.slug === operator.slug
+  );
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Accueil",
+        "item": "https://expertbornerecharge.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Opérateurs & Réseaux Nationaux",
+        "item": "https://expertbornerecharge.com/operateurs"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": operator.name,
+        "item": `https://expertbornerecharge.com/operateurs/${operator.slug}`
+      }
+    ]
+  };
+
   const orgSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": operator.name,
+    "url": `https://expertbornerecharge.com/operateurs/${operator.slug}`,
     "description": operator.tagline,
+    "priceRange": operator.estimatedBasePrice,
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": operator.rating,
@@ -70,8 +139,11 @@ export default async function OperatorDetailPage({ params }: PageProps) {
     },
     "author": {
       "@type": "Organization",
-      "name": "Expert Borne Recharge"
+      "name": "Expert Borne Recharge",
+      "url": "https://expertbornerecharge.com"
     },
+    "datePublished": "2026-01-15",
+    "dateModified": "2026-03-25",
     "reviewRating": {
       "@type": "Rating",
       "ratingValue": operator.rating,
@@ -96,6 +168,7 @@ export default async function OperatorDetailPage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-200">
       <Header isHub={true} variant="default" themeColor="blue" />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
@@ -194,6 +267,93 @@ export default async function OperatorDetailPage({ params }: PageProps) {
             </ul>
           </div>
         </section>
+
+        {/* Associated Duels Callout If Any */}
+        {associatedDuels.length > 0 && (
+          <section className="bg-indigo-50 border border-indigo-200 rounded-2xl p-6 mb-10">
+            <div className="flex items-start gap-3">
+              <Scale className="w-5 h-5 text-indigo-700 flex-shrink-0 mt-1" />
+              <div className="w-full">
+                <h3 className="text-base font-bold text-indigo-950 mb-1">
+                  Face-à-Face Comparatif : {operator.shortName} au banc d&apos;essai
+                </h3>
+                <p className="text-xs text-indigo-800 mb-4">
+                  Découvrez nos duels directs avec tableau comparatif critère par critère et matrice de décision :
+                </p>
+                <div className="space-y-2">
+                  {associatedDuels.map((d) => (
+                    <Link
+                      key={d.slug}
+                      href={`/comparatif/${d.slug}`}
+                      className="block p-3.5 rounded-xl bg-white border border-indigo-100 hover:border-indigo-400 hover:shadow-sm transition group"
+                    >
+                      <div className="flex items-center justify-between">
+                        <strong className="text-xs sm:text-sm font-bold text-indigo-950 group-hover:text-indigo-600 transition">
+                          {d.title}
+                        </strong>
+                        <ArrowRight className="w-4 h-4 text-indigo-500 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                      <p className="text-xs text-slate-500 mt-1 line-clamp-1">
+                        {d.directAnswerSummary}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Installed Hardware Cross-linking */}
+        {installedHardware.length > 0 && (
+          <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-10">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                <Cpu className="w-5 h-5 text-blue-600" />
+                Bornes & Matériels Recommandés avec {operator.shortName}
+              </h2>
+              <Link href="/marques" className="text-xs font-semibold text-blue-600 hover:underline">
+                Voir toutes les bornes →
+              </Link>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-600 mb-6">
+              Cet opérateur s&apos;appuie sur du matériel certifié conforme aux normes NF C 15-100. Découvrez les fiches techniques complètes de ces bornes :
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {installedHardware.map((hw: any) => (
+                <Link
+                  key={hw.slug}
+                  href={`/marques/${hw.slug}`}
+                  className="group p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-blue-300 hover:shadow-sm transition flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="relative w-full h-28 mb-3 bg-white rounded-lg p-2 border border-slate-100 overflow-hidden">
+                      <Image
+                        src={hw.image}
+                        alt={`${hw.brand} ${hw.modelName}`}
+                        fill
+                        className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                    </div>
+                    <strong className="block text-slate-900 font-bold text-sm mb-0.5 group-hover:text-blue-600 transition">
+                      {hw.brand} {hw.modelName}
+                    </strong>
+                    <span className="text-xs text-blue-700 font-semibold block mb-1">
+                      {hw.maxPowerKw} kW · {hw.estimatedHardwarePrice}
+                    </span>
+                    <span className="text-xs text-slate-500 line-clamp-2">
+                      {hw.tagline}
+                    </span>
+                  </div>
+                  <div className="mt-3 text-xs font-bold text-blue-600 inline-flex items-center gap-1">
+                    Fiche & avis <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Hidden Costs & Contractual Fine Print */}
         <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-10">

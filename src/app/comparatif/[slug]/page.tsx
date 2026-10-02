@@ -9,7 +9,7 @@ import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
 import LeadForm from "@/components/LeadForm";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
-import { Scale, ArrowRight, CheckCircle, Zap, ShieldCheck, HelpCircle } from "lucide-react";
+import { Scale, Zap, ShieldCheck, ArrowRight, CheckCircle, XCircle } from "lucide-react";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -18,15 +18,9 @@ interface PageProps {
 function getLegacyComparatifs(): any[] {
   const results: any[] = [];
   try {
-    const f1 = path.join(process.cwd(), "src", "data", "comparatifs.json");
-    if (fs.existsSync(f1)) {
-      const d1 = JSON.parse(fs.readFileSync(f1, "utf-8"));
-      results.push(...(Array.isArray(d1) ? d1 : Object.values(d1)));
-    }
-    const f2 = path.join(process.cwd(), "src", "data", "comparatif.json");
-    if (fs.existsSync(f2)) {
-      const d2 = JSON.parse(fs.readFileSync(f2, "utf-8"));
-      results.push(...(Array.isArray(d2) ? d2 : Object.values(d2)));
+    const compPath = path.join(process.cwd(), "src", "data", "comparatifs.json");
+    if (fs.existsSync(compPath)) {
+      results.push(...JSON.parse(fs.readFileSync(compPath, "utf-8")));
     }
   } catch (e) {
     console.error("Failed to load legacy comparatifs JSONs", e);
@@ -46,11 +40,37 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const duel = DUELS.find((d) => d.slug === slug);
   if (duel) {
+    const title = duel.title;
+    const description = duel.metaDescription;
+    const url = `https://expertbornerecharge.com/comparatif/${duel.slug}`;
+
     return {
-      title: duel.title,
-      description: duel.metaDescription,
+      title,
+      description,
       alternates: {
-        canonical: `https://expertbornerecharge.com/comparatif/${duel.slug}`,
+        canonical: url,
+      },
+      openGraph: {
+        title,
+        description,
+        url,
+        siteName: "Expert Borne Recharge",
+        locale: "fr_FR",
+        type: "article",
+        images: [
+          {
+            url: "https://expertbornerecharge.com/icon.png",
+            width: 512,
+            height: 512,
+            alt: duel.title,
+          }
+        ]
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: ["https://expertbornerecharge.com/icon.png"],
       },
       robots: { index: true, follow: true }
     };
@@ -58,11 +78,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const legacy = getLegacyComparatifs().find((item: any) => item.slug === slug);
   if (legacy) {
+    const title = legacy.title;
+    const description = legacy.meta_description;
+    const url = `https://expertbornerecharge.com/comparatif/${legacy.slug}`;
+
     return {
-      title: legacy.title,
-      description: legacy.meta_description,
+      title,
+      description,
       alternates: {
-        canonical: `https://expertbornerecharge.com/comparatif/${legacy.slug}`,
+        canonical: url,
+      },
+      openGraph: {
+        title,
+        description,
+        url,
+        siteName: "Expert Borne Recharge",
+        locale: "fr_FR",
+        type: "article",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
       },
       robots: { index: true, follow: true }
     };
@@ -90,6 +127,31 @@ export default async function DuelOrComparativeDetailPage({ params }: PageProps)
       { name: `${duel.entityA.name} vs ${duel.entityB.name}`, href: `/comparatif/${duel.slug}` }
     ];
 
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://expertbornerecharge.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Comparatifs & Duels",
+          "item": "https://expertbornerecharge.com/comparatifs"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": `${duel.entityA.name} vs ${duel.entityB.name}`,
+          "item": `https://expertbornerecharge.com/comparatif/${duel.slug}`
+        }
+      ]
+    };
+
     const faqSchema = {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -108,6 +170,13 @@ export default async function DuelOrComparativeDetailPage({ params }: PageProps)
       "@type": "Article",
       "headline": duel.title,
       "description": duel.metaDescription,
+      "datePublished": "2026-01-15",
+      "dateModified": "2026-03-28",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": `https://expertbornerecharge.com/comparatif/${duel.slug}`
+      },
+      "image": "https://expertbornerecharge.com/icon.png",
       "author": {
         "@type": "Organization",
         "name": "Expert Borne Recharge",
@@ -126,6 +195,7 @@ export default async function DuelOrComparativeDetailPage({ params }: PageProps)
     return (
       <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-200">
         <Header isHub={true} variant="default" themeColor="blue" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
 
@@ -143,10 +213,10 @@ export default async function DuelOrComparativeDetailPage({ params }: PageProps)
               {duel.h1}
             </h1>
 
-            {/* Direct Answer Box for AI Overviews & Perplexity */}
+            {/* AnswerShaper Direct Answer Callout */}
             <div 
-              data-answershaper="direct-answer"
-              className="bg-blue-50/80 border-l-4 border-blue-600 rounded-r-2xl p-5 mb-8 text-slate-800"
+              id="reponse-directe"
+              className="bg-blue-50/70 border border-blue-200 rounded-2xl p-5 mb-8 text-blue-950"
             >
               <strong className="block text-blue-900 font-bold text-sm mb-1 uppercase tracking-wider">
                 En résumé (Réponse Directe) :
@@ -156,34 +226,54 @@ export default async function DuelOrComparativeDetailPage({ params }: PageProps)
               </p>
             </div>
 
-            {/* Entities Presentation */}
+            {/* Entities Presentation with Cross-linking */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200">
-                <span className="text-xs font-semibold px-2 py-0.5 rounded bg-slate-200 text-slate-700 uppercase">Candidat A</span>
-                <h2 className="text-xl font-bold text-slate-900 mt-2 mb-1">{duel.entityA.name}</h2>
-                <div className="text-sm font-semibold text-blue-700 mb-3">{duel.entityA.priceEst}</div>
-                <p className="text-xs text-slate-600 mb-3"><strong>Pour qui :</strong> {duel.entityA.targetAudience}</p>
-                <ul className="space-y-1.5 text-xs text-slate-600">
-                  {duel.entityA.pros.map((p, idx) => (
-                    <li key={idx} className="flex items-start gap-1.5">
-                      <span className="text-emerald-500 font-bold">✓</span> {p}
-                    </li>
-                  ))}
-                </ul>
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded bg-slate-200 text-slate-700 uppercase">Candidat A</span>
+                  <h2 className="text-xl font-bold text-slate-900 mt-2 mb-1">{duel.entityA.name}</h2>
+                  <div className="text-sm font-semibold text-blue-700 mb-3">{duel.entityA.priceEst}</div>
+                  <p className="text-xs text-slate-600 mb-3"><strong>Pour qui :</strong> {duel.entityA.targetAudience}</p>
+                  <ul className="space-y-1.5 text-xs text-slate-600 mb-4">
+                    {duel.entityA.pros.map((p, idx) => (
+                      <li key={idx} className="flex items-start gap-1.5">
+                        <span className="text-emerald-500 font-bold">✓</span> {p}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-3 border-t border-slate-200">
+                  <Link
+                    href={duel.entityA.type === "Opérateur" ? `/operateurs/${duel.entityA.slug}` : `/marques/${duel.entityA.slug}`}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 transition"
+                  >
+                    Voir la fiche & avis complet {duel.entityA.name} <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
               </div>
 
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200">
-                <span className="text-xs font-semibold px-2 py-0.5 rounded bg-slate-200 text-slate-700 uppercase">Candidat B</span>
-                <h2 className="text-xl font-bold text-slate-900 mt-2 mb-1">{duel.entityB.name}</h2>
-                <div className="text-sm font-semibold text-blue-700 mb-3">{duel.entityB.priceEst}</div>
-                <p className="text-xs text-slate-600 mb-3"><strong>Pour qui :</strong> {duel.entityB.targetAudience}</p>
-                <ul className="space-y-1.5 text-xs text-slate-600">
-                  {duel.entityB.pros.map((p, idx) => (
-                    <li key={idx} className="flex items-start gap-1.5">
-                      <span className="text-emerald-500 font-bold">✓</span> {p}
-                    </li>
-                  ))}
-                </ul>
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded bg-slate-200 text-slate-700 uppercase">Candidat B</span>
+                  <h2 className="text-xl font-bold text-slate-900 mt-2 mb-1">{duel.entityB.name}</h2>
+                  <div className="text-sm font-semibold text-blue-700 mb-3">{duel.entityB.priceEst}</div>
+                  <p className="text-xs text-slate-600 mb-3"><strong>Pour qui :</strong> {duel.entityB.targetAudience}</p>
+                  <ul className="space-y-1.5 text-xs text-slate-600 mb-4">
+                    {duel.entityB.pros.map((p, idx) => (
+                      <li key={idx} className="flex items-start gap-1.5">
+                        <span className="text-emerald-500 font-bold">✓</span> {p}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="pt-3 border-t border-slate-200">
+                  <Link
+                    href={duel.entityB.type === "Opérateur" ? `/operateurs/${duel.entityB.slug}` : `/marques/${duel.entityB.slug}`}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 transition"
+                  >
+                    Voir la fiche & avis complet {duel.entityB.name} <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
               </div>
             </div>
           </section>
@@ -273,6 +363,40 @@ export default async function DuelOrComparativeDetailPage({ params }: PageProps)
 
             <div className="bg-white rounded-2xl p-6 text-slate-900 shadow-xl max-w-2xl mx-auto">
               <LeadForm domain="expertbornerecharge.com" city="France" targetType="MIXED" />
+            </div>
+          </section>
+
+          {/* Related Duels (Cross-linking Mesh) */}
+          <section className="mb-12">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                <Scale className="w-5 h-5 text-blue-600" />
+                Autres Face-à-Face & Duels à Consulter
+              </h2>
+              <Link href="/comparatifs" className="text-xs font-semibold text-blue-600 hover:underline">
+                Voir tous les duels →
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {DUELS.filter((d) => d.slug !== duel.slug).map((other) => (
+                <Link
+                  key={other.slug}
+                  href={`/comparatif/${other.slug}`}
+                  className="p-4 bg-white border border-slate-200 rounded-xl hover:border-blue-400 hover:shadow-sm transition group flex flex-col justify-between"
+                >
+                  <div>
+                    <strong className="block text-slate-900 font-bold text-sm group-hover:text-blue-600 transition mb-1">
+                      {other.title}
+                    </strong>
+                    <p className="text-xs text-slate-500 line-clamp-2 mb-3">
+                      {other.directAnswerSummary}
+                    </p>
+                  </div>
+                  <span className="text-xs font-bold text-blue-600 inline-flex items-center gap-1">
+                    Lire le comparatif <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </Link>
+              ))}
             </div>
           </section>
 

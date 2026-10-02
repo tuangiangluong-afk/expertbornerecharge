@@ -7,13 +7,35 @@ import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
 import LeadForm from "@/components/LeadForm";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
-import { Zap, ShieldCheck, Star, ExternalLink, ArrowRight, Sun, Cpu, Check, HelpCircle } from "lucide-react";
+import { Zap, ShieldCheck, Star, ExternalLink, ArrowRight, Sun, Cpu, Check, HelpCircle, Scale, Building2 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Les Meilleures Bornes de Recharge 2026 : Comparatif, Prix & Fiches Techniques",
   description: "Tesla Wall Connector, Schneider Charge, Wallbox Pulsar, Hager Witty, Legrand Green'up... Fiches techniques complètes, compatibilité solaire TIC Linky et devis pose IRVE.",
   alternates: {
     canonical: "https://expertbornerecharge.com/marques",
+  },
+  openGraph: {
+    title: "Les Meilleures Bornes de Recharge 2026 : Comparatif, Prix & Fiches Techniques",
+    description: "Tesla, Schneider, Wallbox, Hager, Legrand... Spécifications techniques complètes, prix matériel seul vs pose IRVE clé en main.",
+    url: "https://expertbornerecharge.com/marques",
+    siteName: "Expert Borne Recharge",
+    locale: "fr_FR",
+    type: "website",
+    images: [
+      {
+        url: "https://expertbornerecharge.com/icon.png",
+        width: 512,
+        height: 512,
+        alt: "Bornes de recharge homologuées IRVE 2026",
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Les Meilleures Bornes de Recharge 2026 : Comparatif & Fiches Techniques",
+    description: "Tesla, Schneider, Wallbox, Hager, Legrand... Comparatif et devis pose IRVE.",
+    images: ["https://expertbornerecharge.com/icon.png"],
   },
   robots: { index: true, follow: true }
 };
@@ -26,6 +48,25 @@ export default function MarquesHubPage() {
     { name: "Bornes & Matériel", href: "/marques" }
   ];
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Accueil",
+        "item": "https://expertbornerecharge.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Bornes & Matériel",
+        "item": "https://expertbornerecharge.com/marques"
+      }
+    ]
+  };
+
   const itemListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -36,6 +77,7 @@ export default function MarquesHubPage() {
       "position": idx + 1,
       "name": `${prod.brand} ${prod.modelName}`,
       "url": `https://expertbornerecharge.com/marques/${prod.slug}`,
+      "image": `https://expertbornerecharge.com${prod.image}`,
       "description": prod.tagline
     }))
   };
@@ -43,6 +85,7 @@ export default function MarquesHubPage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-200">
       <Header isHub={true} variant="default" themeColor="blue" />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
 
       <main className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -60,6 +103,24 @@ export default function MarquesHubPage() {
           <p className="text-lg text-slate-600 leading-relaxed mb-6">
             Tesla, Schneider Electric, Wallbox, Hager, Legrand, MyEnergi... Découvrez nos fiches techniques détaillées, les spécifications de délestage dynamique TIC Linky, l&apos;optimisation photovoltaïque et la double monétisation matériel seul vs pose clé en main.
           </p>
+
+          {/* Quick Cross-Nav Bar */}
+          <div className="flex flex-wrap justify-center gap-3 text-xs font-semibold mb-6">
+            <Link
+              href="/operateurs"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:border-blue-400 hover:text-blue-600 shadow-sm transition"
+            >
+              <Building2 className="w-4 h-4 text-blue-600" />
+              Voir les Opérateurs & Réseaux nationaux →
+            </Link>
+            <Link
+              href="/comparatifs"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:border-indigo-400 hover:text-indigo-600 shadow-sm transition"
+            >
+              <Scale className="w-4 h-4 text-indigo-600" />
+              Voir les Duels & Comparatifs directs →
+            </Link>
+          </div>
 
           <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 sm:p-5 text-left flex items-start gap-3 text-blue-950 text-sm">
             <ShieldCheck className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
@@ -158,22 +219,22 @@ export default function MarquesHubPage() {
           ))}
         </section>
 
-        {/* LeadForm Installation Section */}
-        <section className="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white my-16 shadow-xl relative overflow-hidden">
-          <div className="relative z-10 max-w-2xl mx-auto text-center mb-8">
+        {/* LeadForm Section */}
+        <section className="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white my-16 shadow-xl">
+          <div className="max-w-2xl mx-auto text-center mb-8">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-800 text-blue-200 text-xs font-semibold mb-3">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              Installation Conforme & Aides d&apos;État
+              Devis Raccordement & Pose IRVE
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold mb-3">
-              Faites chiffrer la pose de votre borne
+              Faites Poser Votre Borne par un Pro Certifié
             </h2>
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-              Vous avez déjà choisi votre borne ou vous hésitez encore ? Obtenez 3 devis comparatifs auprès d&apos;électriciens IRVE certifiés près de chez vous avec le crédit d&apos;impôt de 500 € déduit.
+              Comparez 3 devis sans engagement d&apos;installateurs qualifiés IRVE de votre secteur. Sécurisez votre crédit d&apos;impôt de 500 € et votre garantie décennale.
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 sm:p-8 text-slate-900 shadow-2xl max-w-3xl mx-auto relative z-10">
+          <div className="bg-white rounded-2xl p-6 sm:p-8 text-slate-900 shadow-2xl max-w-3xl mx-auto">
             <LeadForm domain="expertbornerecharge.com" city="France" targetType="MIXED" />
           </div>
         </section>

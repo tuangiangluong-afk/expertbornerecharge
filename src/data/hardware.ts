@@ -22,6 +22,8 @@ export interface HardwareProduct {
   tvaRate: string;
   affiliateStore: string;
   affiliateUrl: string;
+  associatedDuelSlugs?: string[];
+  associatedOperatorSlugs?: string[];
   pros: string[];
   cons: string[];
   verdict: string;
@@ -56,6 +58,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "Tesla Direct / ManoMano",
     affiliateUrl: "/go/tesla-wall-connector",
+    associatedDuelSlugs: ["tesla-wall-connector-vs-wallbox-pulsar-plus"],
+    associatedOperatorSlugs: ["enedis-colonne-horizontale"],
     pros: [
       "Tarif matériel imbattable pour une borne 22 kW avec câble de 7,3 m inclus",
       "Bouton d'ouverture de trappe magique pour les propriétaires de Tesla",
@@ -71,13 +75,25 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     rating: 4.8,
     reviewCount: 3450,
     faq: [
-      {
+{
         question: "Le Tesla Wall Connector fonctionne-t-il avec d'autres marques de voitures ?",
         answer: "Oui, à 100 %. La prise Type 2 est le standard européen universel. Il recharge parfaitement une Peugeot, une Renault, une Volkswagen, une BMW ou une Hyundai."
       },
       {
         question: "Est-elle éligible au crédit d'impôt de 500 € ?",
         answer: "Oui, à condition impérative qu'elle soit fournie et installée par un électricien qualifié IRVE mention P1 ou P2."
+      },
+      {
+        question: "Le Wall Connector Tesla est-il compatible avec les voitures électriques non-Tesla ?",
+        answer: "Oui, il est équipé d'un câble attaché avec connecteur Type 2 standard européen et recharge 100 % des véhicules électriques (Renault, Peugeot, Volkswagen, BMW, Hyundai, etc.)."
+      },
+      {
+        question: "Peut-on l'installer en monophasé 7,4 kW ou triphasé 22 kW ?",
+        answer: "Le Wall Connector est commutable : il peut être câblé en monophasé 230V jusqu'à 32A (7,4 kW) ou en triphasé 400V jusqu'à 32A (22 kW) selon votre abonnement électrique."
+      },
+      {
+        question: "Le câble de 7,3 mètres est-il pratique au quotidien ?",
+        answer: "La longueur de 7,3 m est l'une des plus généreuses du marché, permettant de recharger facilement que la voiture soit garée en marche avant ou en marche arrière sans déplacer le véhicule."
       }
     ]
   },
@@ -104,6 +120,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "ManoMano / Distributeur Pro",
     affiliateUrl: "/go/schneider-charge",
+    associatedDuelSlugs: ["schneider-charge-vs-hager-witty","prise-green-up-vs-borne-7kw"],
+    associatedOperatorSlugs: ["chargeguru","izi-by-edf","proxiserve","totalenergies","enedis-colonne-horizontale"],
     pros: [
       "Prise T2S avec obturateurs assurant une conformité totale à la réglementation française",
       "Délestage dynamique ultra-simple via connexion directe au compteur Linky",
@@ -119,15 +137,33 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     rating: 4.7,
     reviewCount: 1820,
     faq: [
-      {
+{
         question: "Pourquoi la prise T2S avec obturateurs est-elle importante en France ?",
         answer: "La norme NF C 15-100 impose des obturateurs de sécurité enfant sur toute prise domestique jusqu'à 32A pour éviter tout contact direct avec les broches sous tension."
+      },
+      {
+        question: "La borne Schneider Charge est-elle conforme à la norme NF C 15-100 ?",
+        answer: "Oui, elle dispose d'une prise T2S avec obturateurs de sécurité enfants, exigence réglementaire absolue en France pour les installations résidentielles privées."
+      },
+      {
+        question: "Comment fonctionne l'application Wiser avec la borne Schneider Charge ?",
+        answer: "L'application mobile gratuite Wiser permet de programmer la recharge pendant les heures creuses, de suivre la consommation en kWh et en euros, et de verrouiller la borne à distance en Wi-Fi."
+      },
+      {
+        question: "Quel est le temps nécessaire pour recharger une batterie de 60 kWh sur Schneider Charge ?",
+        answer: "À 7,4 kW (32A monophasé), il faut environ 7h30 pour récupérer 100 % d'autonomie (soit environ 40 km d'autonomie par heure de charge)."
+      },
+      {
+        question: "Faut-il un disjoncteur spécifique pour Schneider Charge ?",
+        answer: "Oui, la réglementation impose un disjoncteur 40A courbe C associé à un interrupteur différentiel 30mA Type F (ou Type B) pour sécuriser le circuit contre les courants résiduels continus."
       }
     ]
   },
   {
     slug: "wallbox-pulsar-plus",
     image: "/images/chargers/wallbox-pulsar-plus.png",
+    associatedDuelSlugs: ["tesla-wall-connector-vs-wallbox-pulsar-plus"],
+    associatedOperatorSlugs: ["chargeguru", "totalenergies", "mon-rezo"],
     brand: "Wallbox",
     modelName: "Pulsar Plus",
     tagline: "La borne intelligente la plus compacte du marché mondial",
@@ -164,9 +200,25 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     rating: 4.6,
     reviewCount: 2900,
     faq: [
-      {
+{
         question: "La Wallbox Pulsar Plus permet-elle de charger en heures creuses ?",
         answer: "Oui, l'application myWallbox permet de définir des plages horaires strictes pour que la charge démarre automatiquement pendant vos heures creuses EDF ou Tempo."
+      },
+      {
+        question: "Comment activer le délestage dynamique Power Boost sur la Wallbox Pulsar Plus ?",
+        answer: "Le module de délestage Power Boost s'installe dans le tableau électrique et communique via un câble blindé avec la borne pour moduler la puissance en temps réel selon la consommation des autres appareils de la maison."
+      },
+      {
+        question: "Peut-on recharger avec l'énergie solaire grâce à la fonction Eco-Smart ?",
+        answer: "Oui, l'application myWallbox propose deux modes solaires : le mode Full Green (recharge 100 % à l'énergie solaire excédentaire) et le mode Eco (mix énergie solaire + réseau)."
+      },
+      {
+        question: "La Wallbox Pulsar Plus peut-elle être installée en extérieur ?",
+        answer: "Oui, son boîtier étanche est certifié IP54 contre la pluie et la poussière et résiste aux impacts avec un indice IK08."
+      },
+      {
+        question: "Quelle est la garantie constructeur de la Pulsar Plus ?",
+        answer: "Wallbox offre une garantie de 3 ans pièces, extensible jusqu'à 5 ans via leur service de garantie prolongée."
       }
     ]
   },
@@ -194,6 +246,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "ManoMano / Amazon",
     affiliateUrl: "/go/wallbox-pulsar-max",
+    associatedDuelSlugs: [],
+    associatedOperatorSlugs: ["chargeguru"],
     pros: [
       "Finition mate texturée ultra-résistante aux rayures et indice anti-chocs IK10",
       "Commande vocale compatible Alexa et Google Assistant",
@@ -208,9 +262,25 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     rating: 4.7,
     reviewCount: 940,
     faq: [
-      {
+{
         question: "Quelle est la différence entre la Pulsar Plus et la Pulsar Max ?",
         answer: "La Pulsar Max bénéficie d'une coque renforcée IK10, d'un processeur plus rapide, d'une compatibilité avec les assistants vocaux et d'une installation simplifiée pour l'électricien."
+      },
+      {
+        question: "Quelles sont les différences entre la Pulsar Max et la Pulsar Plus ?",
+        answer: "La Pulsar Max bénéficie d'une coque renforcée certifiée IK10 (résistance maximale aux chocs), de la compatibilité avec commande vocale (Alexa et Google Assistant), d'un support mural Easy-install plus rapide pour l'installateur et d'un processeur plus rapide."
+      },
+      {
+        question: "La Pulsar Max est-elle éligible au crédit d'impôt de 500 € ?",
+        answer: "Oui, étant un système de charge pilotable installé par un technicien qualifié IRVE, elle ouvre droit au crédit d'impôt de 500 € et à la TVA à 5,5 %."
+      },
+      {
+        question: "Peut-on partager la puissance entre deux bornes Pulsar Max ?",
+        answer: "Oui, la fonctionnalité Power Sharing permet de connecter jusqu'à 25 bornes Wallbox sur le même circuit électrique avec répartition automatique et équitable de la puissance disponible."
+      },
+      {
+        question: "Quelle application utiliser pour piloter la Pulsar Max ?",
+        answer: "L'application myWallbox (iOS et Android) ou le portail web myWallbox permettent la programmation horaire, le suivi des coûts et le verrouillage automatique de la borne."
       }
     ]
   },
@@ -237,6 +307,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "Distributeur Pro / Rexel",
     affiliateUrl: "/go/hager-witty-start",
+    associatedDuelSlugs: ["schneider-charge-vs-hager-witty"],
+    associatedOperatorSlugs: ["chargeguru","izi-by-edf","proxiserve","bornes-solutions"],
     pros: [
       "Fiabilité légendaire de la marque alsacienne Hager : quasi zéro retour SAV",
       "Prise T2S robuste avec verrouillage mécanique du câble pendant la charge",
@@ -252,9 +324,25 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     rating: 4.8,
     reviewCount: 2150,
     faq: [
-      {
+{
         question: "Pourquoi les électriciens recommandent-ils souvent Hager Witty ?",
         answer: "Hager est le fabricant de référence du tableau électrique en France. Ses bornes sont faciles à raccorder, extrêmement fiables et disposent d'un SAV basé en Alsace."
+      },
+      {
+        question: "Pourquoi choisir Hager Witty Start plutôt qu'une borne connectée en Wi-Fi ?",
+        answer: "La Witty Start privilégie la fiabilité mécanique et l'absence totale de pannes électroniques : pas de bugs d'application, pas de perte de réseau Wi-Fi, verrouillage sécurisé par clé physique et délestage filaire direct avec le compteur Linky."
+      },
+      {
+        question: "Comment se branche le câble de délestage TIC Linky sur Hager Witty ?",
+        answer: "Deux fils de télé-information client (TIC) relient directement les bornes I1 et I2 du compteur Linky à la carte électronique de la borne, sans nécessiter de module radio ou de passerelle payante."
+      },
+      {
+        question: "Où est fabriquée la borne Hager Witty Start ?",
+        answer: "Les bornes de la gamme Hager Witty sont intégralement conçues et fabriquées en France, dans les usines Hager situées en Alsace (Obernai)."
+      },
+      {
+        question: "La borne Hager Witty Start est-elle garantie contre les intempéries ?",
+        answer: "Oui, elle affiche un indice de protection IP54 et IK10, ce qui la rend parfaitement adaptée à une installation en extérieur non abritée sur un potelet ou sur une façade de garage."
       }
     ]
   },
@@ -281,6 +369,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "Distributeur Spécialisé",
     affiliateUrl: "/go/hager-witty-solar",
+    associatedDuelSlugs: [],
+    associatedOperatorSlugs: ["engie-my-power"],
     pros: [
       "Permet de rouler 'gratuitement' grâce au surplus de vos panneaux solaires",
       "Transition automatique mono/triphasé pour démarrer la charge solaire dès 1,4 kW de production",
@@ -295,9 +385,25 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     rating: 4.7,
     reviewCount: 420,
     faq: [
-      {
+{
         question: "À partir de quelle puissance solaire la borne Hager démarre-t-elle ?",
         answer: "Elle démarre dès 6A en monophasé, soit environ 1 380 Watts de surplus solaire disponible sur votre toiture."
+      },
+      {
+        question: "Comment la borne Hager Witty Solaire communique-t-elle avec les panneaux photovoltaïques ?",
+        answer: "Elle analyse la production solaire via le gestionnaire d'énergie Hager ou directement via les tores de mesure au tableau pour n'injecter dans la batterie que les surplus d'électricité solaire non consommés par la maison."
+      },
+      {
+        question: "Peut-on forcer la charge rapide si le soleil ne brille pas ?",
+        answer: "Oui, un simple appui sur le bouton en façade permet de basculer instantanément en mode Boost (charge à pleine puissance 7,4 kW sur le réseau) en cas d'urgence de déplacement."
+      },
+      {
+        question: "La Hager Witty Solaire fonctionne-t-elle avec n'importe quel onduleur (Enphase, SolarEdge, SMA) ?",
+        answer: "Oui, la détection des surplus se fait au niveau du tableau électrique principal et est totalement indépendante de la marque des onduleurs ou micro-onduleurs solaires."
+      },
+      {
+        question: "Quel est le temps d'amortissement d'une borne solaire Hager ?",
+        answer: "En rechargeant 60 % à 80 % de vos kilomètres annuels avec l'électricité solaire gratuite de votre toit, la borne est amortie en moyenne en 3 à 4 ans par rapport au tarif réseau standard."
       }
     ]
   },
@@ -324,6 +430,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "ManoMano / Leroy Merlin Pro",
     affiliateUrl: "/go/legrand-green-up-one",
+    associatedDuelSlugs: [],
+    associatedOperatorSlugs: ["proxiserve","zeplug"],
     pros: [
       "Intégration native dans l'application Legrand Home + Control (avec vos interrupteurs et prises)",
       "Très simple d'utilisation pour toute la famille",
@@ -338,9 +446,25 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     rating: 4.5,
     reviewCount: 1100,
     faq: [
-      {
+{
         question: "Peut-on programmer la charge avec Legrand Green'up One ?",
         answer: "Oui, via l'application smartphone Legrand Home + Control en Bluetooth ou Wi-Fi."
+      },
+      {
+        question: "Quelle est la différence entre Legrand Green'up One et la prise Green'up ?",
+        answer: "La prise Green'up est une prise renforcée limitée à 3,7 kW (16A), tandis que la borne Green'up One délivre jusqu'à 7,4 kW (32A) ou 22 kW (triphasé), soit une charge 2 à 3 fois plus rapide, avec éligibilité au crédit d'impôt de 500 €."
+      },
+      {
+        question: "La borne Legrand Green'up One est-elle fabriquée en France ?",
+        answer: "Oui, Legrand est un groupe industriel français basé à Limoges et conçoit ses solutions de recharge selon les normes de sécurité les plus strictes."
+      },
+      {
+        question: "L'application Legrand Home + Control gère-t-elle la borne ?",
+        answer: "Oui, la borne Green'up One s'intègre nativement dans l'écosystème Legrand Home + Control aux côtés de vos interrupteurs, thermostats et disjoncteurs connectés."
+      },
+      {
+        question: "Peut-on brider la puissance de la borne Green'up One ?",
+        answer: "L'installateur IRVE peut configurer la borne à 3,7 kW, 4,6 kW, 5,8 kW ou 7,4 kW selon la capacité de votre abonnement électrique existant."
       }
     ]
   },
@@ -367,6 +491,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "10 % (logement > 2 ans)",
     affiliateStore: "Amazon / ManoMano",
     affiliateUrl: "/go/prise-green-up",
+    associatedDuelSlugs: ["prise-green-up-vs-borne-7kw"],
+    associatedOperatorSlugs: ["proxiserve"],
     pros: [
       "Coût imbattable : 3 fois moins cher qu'une borne de recharge",
       "Sécurité totale : contacts argentés évitant toute surchauffe par rapport à une prise standard",
@@ -382,15 +508,33 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     rating: 4.8,
     reviewCount: 6200,
     faq: [
-      {
+{
         question: "Pourquoi ne pas charger sur une prise domestique standard plutôt qu'une Green'up ?",
         answer: "Une prise standard n'est pas conçue pour délivrer 10A à 16A en continu pendant 8 heures. Le risque d'échauffement des câbles et d'incendie est réel. La prise Green'up dispose de contacts renforcés et d'un disjoncteur différentiel dédié."
+      },
+      {
+        question: "Pourquoi une prise Green'up charge-t-elle plus vite qu'une prise classique ?",
+        answer: "La prise Green'up intègre un aimant breveté détecté par le câble de recharge du véhicule (câble avec système Green'up), autorisant une puissance continue de 16A (3,7 kW) sans risque d'échauffement, contre 8A à 10A (2,3 kW) sur une prise standard."
+      },
+      {
+        question: "Quel disjoncteur différentiel doit obligatoirement protéger la prise Green'up ?",
+        answer: "Le pack Green'up comprend obligatoirement un disjoncteur différentiel 20A courbe C, 30mA Type F (ou Hpi) pour couper le circuit en cas de fuite de courant."
+      },
+      {
+        question: "La prise Green'up convient-elle pour une Tesla ou une grosse batterie ?",
+        answer: "Elle convient si vous roulez moins de 40 à 50 km par jour. En revanche, pour remplir une batterie de 60 kWh de 20 % à 80 %, il faudra compter environ 12 à 14 heures de charge."
+      },
+      {
+        question: "Peut-on installer la prise Green'up en extérieur sous la pluie ?",
+        answer: "Oui, la prise Green'up Plexo est certifiée IP66 (étanche aux jets d'eau puissants) et IK08 (résistance aux chocs), idéale sur un mur extérieur ou un potelet de jardin."
       }
     ]
   },
   {
     slug: "myenergi-zappi-v2",
     image: "/images/chargers/myenergi-zappi.png",
+    associatedDuelSlugs: [],
+    associatedOperatorSlugs: ["engie-my-power"],
     brand: "MyEnergi",
     modelName: "Zappi V2.1",
     tagline: "La reine incontestée de la recharge solaire avec 3 modes intelligents",
@@ -427,9 +571,25 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     rating: 4.8,
     reviewCount: 1650,
     faq: [
-      {
+{
         question: "Comment fonctionne le mode ECO+ de la Zappi ?",
         answer: "La Zappi surveille en temps réel ce que votre maison consomme et ce que vos panneaux solaires produisent. S'il y a plus de 1,4 kW de surplus réinjecté, elle envoie exactement cette énergie dans la batterie du véhicule. Si un nuage passe, elle met la charge en pause."
+      },
+      {
+        question: "Pourquoi la borne Zappi est-elle considérée comme la meilleure pour le solaire ?",
+        answer: "La Zappi dispose de 3 modes intelligents uniques : Eco (maintient la puissance minimale avec apport réseau si besoin), Eco+ (charge UNIQUEMENT avec 100 % de surplus solaire gratuit, pause automatique si un nuage passe) et Fast (charge maximale 7,4 kW ou 22 kW)."
+      },
+      {
+        question: "Faut-il installer un boîtier de communication Harvi avec la Zappi ?",
+        answer: "Le boîtier sans fil Harvi est fortement recommandé car il évite de tirer un câble entre le compteur électrique et la borne en transmettant les données de production solaire par radio."
+      },
+      {
+        question: "La Zappi est-elle compatible avec les batteries domestiques (Tesla Powerwall, etc.) ?",
+        answer: "Oui, elle gère intelligemment la priorité de charge entre la batterie domestique de la maison et la batterie du véhicule électrique."
+      },
+      {
+        question: "Peut-on verrouiller l'accès à la borne Zappi ?",
+        answer: "Oui, elle intègre un code PIN de sécurité sur son écran LCD pour empêcher toute utilisation non autorisée si elle est installée dans une allée accessible."
       }
     ]
   },
@@ -456,6 +616,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "Distributeur Pro",
     affiliateUrl: "/go/abb-terra-ac",
+    associatedDuelSlugs: [],
+    associatedOperatorSlugs: ["chargeguru","waat"],
     pros: [
       "Composants de qualité industrielle ABB conçus pour durer 15 ans",
       "Lecteur de badge RFID inclus pour verrouiller la borne contre le vol d'électricité",
@@ -470,15 +632,33 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     rating: 4.6,
     reviewCount: 880,
     faq: [
-      {
+{
         question: "À quoi sert la certification MID sur la borne ABB ?",
         answer: "La certification MID garantit la précision légale de la mesure d'électricité consommée. Elle est exigée par les entreprises pour rembourser fiscalement les recharges à domicile des salariés."
+      },
+      {
+        question: "Quelles sont les caractéristiques de l'ABB Terra AC Wallbox ?",
+        answer: "L'ABB Terra AC offre une connectivité complète (Wi-Fi, Bluetooth, Ethernet, 4G optionnelle), un lecteur de badges RFID intégré, un compteur de kWh certifié MID et une compatibilité OCPP 1.6J pour la supervision."
+      },
+      {
+        question: "L'ABB Terra AC est-elle adaptée pour une copropriété ou une entreprise ?",
+        answer: "C'est l'une des bornes les plus utilisées en résidentiel collectif et petit tertiaire grâce à son authentification par carte RFID et sa gestion fine des droits d'accès."
+      },
+      {
+        question: "Quelle est l'application mobile pour piloter la borne ABB ?",
+        answer: "L'application TerraConfig permet à l'installateur de paramétrer la borne, et l'application ChargerSync permet à l'utilisateur de suivre ses sessions de charge et ses dépenses."
+      },
+      {
+        question: "La borne ABB Terra AC dispose-t-elle d'un délestage dynamique ?",
+        answer: "Oui, elle peut être raccordée à un compteur d'énergie compatible Modbus pour adapter sa puissance de charge et éviter toute disjonction générale."
       }
     ]
   },
   {
     slug: "autel-maxicharger",
     image: "/images/chargers/autel-maxicharger.png",
+    associatedDuelSlugs: [],
+    associatedOperatorSlugs: ["chargeguru"],
     brand: "Autel",
     modelName: "MaxiCharger AC Wallbox",
     tagline: "La technologie de pointe avec triple connectivité 4G/Wi-Fi et design moderne",
@@ -513,9 +693,25 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     rating: 4.5,
     reviewCount: 710,
     faq: [
-      {
+{
         question: "Comment connecter une borne dans un sous-sol sans Wi-Fi ?",
         answer: "La borne Autel avec modem 4G intégré fonctionne avec une simple carte SIM de données, vous permettant de piloter la borne même au 2ème sous-sol."
+      },
+      {
+        question: "Quels sont les atouts de la borne Autel MaxiCharger AC ?",
+        answer: "Elle se distingue par un design ultra-moderne avec indicateur LED dynamique, une triple connectivité (4G, Wi-Fi, Bluetooth), un lecteur RFID et une application mobile très poussée avec diagnostic de santé de batterie."
+      },
+      {
+        question: "L'Autel MaxiCharger fonctionne-t-elle sans connexion Internet ?",
+        answer: "Oui, l'authentification par carte RFID ou par détection Bluetooth de votre smartphone permet de lancer la charge même dans un sous-sol sans couverture réseau."
+      },
+      {
+        question: "Quelle est la résistance aux chocs de l'Autel MaxiCharger ?",
+        answer: "Elle bénéficie d'une certification IP65 (étanchéité totale à la poussière et aux projections d'eau) et d'un indice IK08 contre les chocs mécaniques."
+      },
+      {
+        question: "La borne Autel est-elle éligible aux 500 € de crédit d'impôt ?",
+        answer: "Oui, lorsqu'elle est installée par un électricien certifié IRVE et bridée selon la réglementation en vigueur."
       }
     ]
   },
@@ -542,6 +738,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "Distributeur Pro",
     affiliateUrl: "/go/evbox-elvi",
+    associatedDuelSlugs: [],
+    associatedOperatorSlugs: ["totalenergies","zeplug"],
     pros: [
       "Architecture modulaire en 3 pièces clipsables, très facile à faire évoluer",
       "Câble facilement interchangeable si vous passez d'un câble 5m à 8m",
@@ -556,9 +754,25 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     rating: 4.4,
     reviewCount: 1150,
     faq: [
-      {
+{
         question: "Que signifie la modularité de l'EVBox Elvi ?",
         answer: "Le socle mural est fixé définitivement. Le bloc de charge et le câble se clipsent dessus et peuvent être remplacés ou mis à niveau en 2 minutes sans toucher au câblage électrique."
+      },
+      {
+        question: "Pourquoi la borne EVBox Elvi est-elle dite modulaire ?",
+        answer: "L'EVBox Elvi est conçue en deux parties : un socle mural de fixation et une station débrochable. Elle permet de passer facilement de 3,7 kW à 22 kW ou de remplacer un composant sans réintervention lourde sur le câblage."
+      },
+      {
+        question: "Où est fabriquée la borne EVBox Elvi ?",
+        answer: "EVBox est un fabricant historique né aux Pays-Bas, l'un des pionniers européens de la mobilité électrique avec plus de 500 000 points de charge installés dans le monde."
+      },
+      {
+        question: "L'EVBox Elvi est-elle compatible avec les badges de recharge d'entreprise ?",
+        answer: "Oui, son lecteur RFID est compatible avec toutes les cartes et badges RFID standards (ISO 14443) utilisés par les gestionnaires de flotte d'entreprise."
+      },
+      {
+        question: "Quelle application utiliser avec l'EVBox Elvi ?",
+        answer: "L'application EVBox Connect permet de configurer le comportement de la borne, gérer les cartes RFID et activer l'autodémarrage sécurisé."
       }
     ]
   },
@@ -585,6 +799,8 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     tvaRate: "5,5 %",
     affiliateStore: "Distributeur Pro Spécialisé",
     affiliateUrl: "/go/alfen-eve-single",
+    associatedDuelSlugs: [],
+    associatedOperatorSlugs: ["waat","parknplug","bornes-solutions"],
     pros: [
       "Magnifique écran couleur affichant le coût en direct, la vitesse et le temps restant",
       "Gestionnaire de charge de groupe le plus performant du marché (recharge de 2 à 20 véhicules simultanés)",
@@ -599,15 +815,33 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     rating: 4.8,
     reviewCount: 920,
     faq: [
-      {
+{
         question: "Pourquoi choisir Alfen pour une entreprise ou une profession libérale ?",
         answer: "Son écran couleur personnalisable permet d'afficher les instructions claires et un logo, et son lecteur RFID permet de facturer les clients ou employés en toute simplicité."
+      },
+      {
+        question: "Pourquoi l'Alfen Eve Single Pro est-elle la référence des flottes et copropriétés ?",
+        answer: "Elle intègre un écran couleur 3,5 pouces d'une grande clarté, un compteur d'énergie certifié MID obligatoire pour la refacturation fiscale des kWh en entreprise, et une intelligence de réseau de pointe (Smart Charging Network)."
+      },
+      {
+        question: "La borne Alfen peut-elle être raccordée à un système de supervision tiers ?",
+        answer: "Oui, Alfen est 100 % ouvert et compatible avec tous les superviseurs du marché (Waat, Freshmile, Virta, Izivia, Dreev) grâce au protocole OCPP 1.6 et 2.0.1."
+      },
+      {
+        question: "Comment fonctionne le Smart Charging Network d'Alfen ?",
+        answer: "Jusqu'à 100 bornes Alfen peuvent communiquer entre elles en réseau local pour se répartir la puissance maximale du transformateur ou du TGBT sans jamais disjoncter."
+      },
+      {
+        question: "L'Alfen Eve Single est-elle adaptée pour un particulier en maison ?",
+        answer: "Elle est parfois installée par des conducteurs exigeants ou des salariés en télétravail dont l'employeur rembourse les recharges à domicile sur relevé MID certifié."
       }
     ]
   },
   {
     slug: "sma-ev-charger",
     image: "/images/chargers/sma-ev-charger.png",
+    associatedDuelSlugs: [],
+    associatedOperatorSlugs: ["engie-my-power"],
     brand: "SMA",
     modelName: "SMA EV Charger 7.4 / 22",
     tagline: "La borne native pour les propriétaires d'onduleurs solaires SMA",
@@ -643,9 +877,25 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
     rating: 4.7,
     reviewCount: 390,
     faq: [
-      {
+{
         question: "Faut-il obligatoirement des panneaux solaires pour utiliser la borne SMA ?",
         answer: "Non, elle fonctionne comme une borne standard connectée au réseau. Mais sa valeur ajoutée unique réside dans sa communication native avec le Sunny Home Manager."
+      },
+      {
+        question: "Pourquoi choisir la borne SMA EV Charger avec une installation solaire SMA ?",
+        answer: "Elle s'intègre nativement avec l'onduleur SMA et le Sunny Home Manager 2.0 pour une optimisation prédictive basée sur les prévisions météorologiques locales et vos habitudes de déplacement."
+      },
+      {
+        question: "La borne SMA est-elle capable de basculer automatiquement de monophasé à triphasé ?",
+        answer: "Oui, la borne 22 kW dispose de la commutation automatique de phase (de 1,3 kW à 22 kW), permettant de démarrer la charge solaire dès un faible ensoleillement (dès 1,3 kW de surplus)."
+      },
+      {
+        question: "Quelle application permet de piloter la borne SMA ?",
+        answer: "L'application SMA Energy permet de surveiller la production solaire, la consommation du foyer et de régler le mode de charge de la voiture en un clic."
+      },
+      {
+        question: "La borne SMA est-elle protégée contre les surtensions ?",
+        answer: "Oui, elle intègre des composants de détection et de protection industrielle avancés conformément aux standards de qualité allemands de SMA Solar Technology."
       }
     ]
   }
