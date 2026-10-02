@@ -90,11 +90,43 @@ export default function MarquesHubPage() {
     }))
   };
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Quelle est la meilleure borne de recharge pour maison individuelle en 2026 ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La Wallbox Pulsar Plus / Max et la Schneider Charge figurent parmi les plus polyvalentes grâce à leur compacité et leur délestage dynamique fiable. Pour les propriétaires de panneaux solaires, la Myenergi Zappi v2 ou la Hager Witty Solar permettent de maximiser l'autoconsommation sans surcoût réseau."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Faut-il choisir une borne 7,4 kW (monophasé) ou 22 kW (triphasé) ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "En maison individuelle française, le 7,4 kW monophasé (32A) est la norme : il recharge 100 % de la batterie en 6 à 8 heures pendant les heures creuses, sans exiger un abonnement Enedis triphasé coûteux. Le 22 kW triphasé n'est utile que pour les gros rouleurs équipés d'un véhicule acceptant 22 kW en courant alternatif (comme la Renault Zoe ou la Mégane E-Tech)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Pourquoi le délestage dynamique est-il obligatoire en pratique ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le délestage dynamique ajuste en temps réel la puissance allouée à la borne selon la consommation du reste du logement (four, pompe à chaleur, chauffe-eau). Cela évite tout risque de disjonction générale du compteur Linky sans nécessiter une hausse d'abonnement électrique."
+        }
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-200">
       <Header isHub={true} variant="default" themeColor="blue" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <main className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <Breadcrumbs items={breadcrumbs} />

@@ -7,16 +7,93 @@ import LeadForm from '@/components/LeadForm';
 import Header from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { getHubConfig } from '@/lib/sites-config';
-import { clampDescription, clampTitle } from '@/lib/seo-meta';
+import { clampDescription, clampTitle, ogImageUrl } from '@/lib/seo-meta';
+
+const fiscaliteOgImage = ogImageUrl({
+    q: "Fiscalité Borne Entreprise",
+    sub: "Amortissement, TVA récupérable à 100% et aides Advenir 2026",
+    badge: "GUIDE FISCALITÉ FLOTTE 2026",
+});
 
 export const metadata: Metadata = {
     title: clampTitle("Fiscalité Borne de Recharge Entreprise 2026 | Guide"),
     description: clampDescription("Tout savoir sur la fiscalité des bornes de recharge en entreprise : Amortissement, TVA, Crédit d'impôt et Aides Advenir. Optimisez votre flotte électrique."),
+    alternates: {
+        canonical: "https://expertbornerecharge.com/fiscalite-entreprise-borne",
+    },
+    openGraph: {
+        title: "Fiscalité Borne de Recharge Entreprise 2026 | Guide & Aides",
+        description: "Amortissement exceptionnel, TVA 100% récupérable et prime Advenir. Transformez vos bornes de recharge en levier d'économies d'impôt.",
+        url: "https://expertbornerecharge.com/fiscalite-entreprise-borne",
+        siteName: "Expert Borne Recharge",
+        locale: "fr_FR",
+        type: "article",
+        images: [{ url: fiscaliteOgImage, width: 1200, height: 630, alt: "Fiscalité borne de recharge entreprise 2026" }],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Fiscalité Borne de Recharge Entreprise 2026 | Guide & Aides",
+        description: "Amortissement, TVA récupérable et aides Advenir pour flotte d'entreprise.",
+        images: [fiscaliteOgImage],
+    },
+    robots: { index: true, follow: true },
 };
 
 export default function FiscalitePage() {
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Accueil",
+                "item": "https://expertbornerecharge.com",
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Fiscalité Entreprise",
+                "item": "https://expertbornerecharge.com/fiscalite-entreprise-borne",
+            },
+        ],
+    };
+
+    const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "La TVA sur l'électricité de recharge est-elle récupérable pour une entreprise ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Oui, la TVA sur l'électricité est récupérable à 100% pour les véhicules utilitaires et les véhicules particuliers (VP) s'ils sont 100% électriques, contrairement aux carburants thermiques.",
+                },
+            },
+            {
+                "@type": "Question",
+                "name": "Quel est le montant de la prime ADVENIR pour une entreprise en 2026 ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Pour un parking privé à destination de flotte ou de salariés, la prime ADVENIR peut atteindre jusqu'à 600 € par point de recharge. Pour un parking ouvert au public, elle peut atteindre jusqu'à 2 200 € par point de charge.",
+                },
+            },
+            {
+                "@type": "Question",
+                "name": "La recharge au bureau est-elle considérée comme un avantage en nature pour le salarié ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Non, l'utilisation d'une borne de recharge sur le lieu de travail mise à disposition par l'employeur est exonérée d'impôt sur le revenu et de cotisations sociales car considérée comme un avantage en nature négligeable.",
+                },
+            },
+        ],
+    };
+
     return (
         <div className="min-h-screen bg-neutral-50 flex flex-col">
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
             <div className="fixed top-0 w-full z-50">
                 <Header isHub={true} variant="default" />
             </div>

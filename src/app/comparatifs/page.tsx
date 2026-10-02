@@ -88,11 +88,43 @@ export default function ComparatifsHubPage() {
     }))
   };
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Comment départager deux bornes ou deux opérateurs de recharge ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Les 4 critères déterminants sont : la gestion du délestage dynamique (liaison TIC Linky ou pince ampèremétrique), la compatibilité solaire si vous avez des panneaux, le coût total pose comprise avec qualification IRVE, et l'absence de verrouillage propriétaire sur l'application mobile."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Les duels comparent-ils les prix réels ou seulement le catalogue matériel ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Nos benchmarks comparent à la fois le coût du matériel nu et le budget réel tout compris (fourniture + pose certifiée IRVE + protections électriques différentielles + délestage), déduction faite du crédit d'impôt de 500 € et de la TVA réduite à 5,5 %."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Peut-on faire installer une borne achetée soi-même sur internet ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Attention : si vous achetez le matériel vous-même et ne payez que la main d'œuvre à un artisan, vous perdez le bénéfice du taux de TVA réduit à 5,5 % sur le matériel (facturé à 20 %) et vous compliquez la prise en charge du crédit d'impôt de 500 €. Le devis global matériel + pose par un installateur IRVE est systématiquement plus avantageux fiscalement."
+        }
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-200">
       <Header isHub={true} variant="default" themeColor="blue" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <main className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <Breadcrumbs items={breadcrumbs} />

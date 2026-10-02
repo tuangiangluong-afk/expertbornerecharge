@@ -82,6 +82,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: 'weekly',
             priority: 0.8,
         },
+        {
+            url: `${BASE_URL}/fiscalite-entreprise-borne`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.85,
+        },
+        {
+            url: `${BASE_URL}/outils/generateur-lettre-syndic`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.75,
+        },
         // Legal pages — low priority (thin content)
         {
             url: `${BASE_URL}/mentions-legales`,

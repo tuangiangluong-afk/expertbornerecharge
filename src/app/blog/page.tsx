@@ -6,6 +6,7 @@ import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import { Calendar, ArrowRight } from "lucide-react";
 
 import type { Metadata } from 'next';
+import { ogImageUrl } from "@/lib/seo-meta";
 
 // Initialize Supabase Client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
@@ -14,11 +15,32 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const revalidate = 60;
 
+const blogOgImage = ogImageUrl({
+    q: "Blog Borne Recharge",
+    sub: "Actualités, guides d'installation IRVE et conseils d'experts 2026",
+    badge: "ACTUALITÉS & CONSEILS IRVE",
+});
+
 export const metadata: Metadata = {
     title: "Blog borne de recharge et véhicules électriques",
     description: "Guides, actualités et conseils d'experts pour réussir votre installation de borne de recharge électrique à domicile ou en entreprise.",
     alternates: {
         canonical: "https://expertbornerecharge.com/blog",
+    },
+    openGraph: {
+        title: "Blog borne de recharge et véhicules électriques 2026",
+        description: "Guides, actualités et conseils d'experts pour réussir votre installation de borne de recharge électrique à domicile ou en entreprise.",
+        url: "https://expertbornerecharge.com/blog",
+        siteName: "Expert Borne Recharge",
+        locale: "fr_FR",
+        type: "website",
+        images: [{ url: blogOgImage, width: 1200, height: 630, alt: "Blog Expert Borne Recharge 2026" }],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Blog borne de recharge et véhicules électriques 2026",
+        description: "Guides, actualités et conseils d'experts pour réussir votre installation IRVE.",
+        images: [blogOgImage],
     },
     robots: { index: true, follow: true },
 };

@@ -6,6 +6,7 @@ import { Calendar, Clock, ArrowRight, BookOpen } from 'lucide-react';
 import type { Metadata } from 'next';
 import { createClient } from "@supabase/supabase-js";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
+import { ogImageUrl } from "@/lib/seo-meta";
 
 // Initialize Supabase Client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
@@ -14,11 +15,32 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const revalidate = 60; // ISR 60 seconds
 
+const guidesOgImage = ogImageUrl({
+    q: "Guides IRVE",
+    sub: "Prix, réglementation et installation de bornes de recharge",
+    badge: "GUIDES EXPERTS 2026",
+});
+
 export const metadata: Metadata = {
     title: "Guides bornes de recharge : prix et IRVE",
     description: "Tout comprendre sur l'installation de bornes de recharge. Guides experts pour copropriété, maison individuelle et entreprises.",
     alternates: {
         canonical: "https://expertbornerecharge.com/guides",
+    },
+    openGraph: {
+        title: "Guides bornes de recharge : prix, IRVE et aides 2026",
+        description: "Tout comprendre sur l'installation de bornes de recharge. Guides experts pour copropriété, maison individuelle et entreprises.",
+        url: "https://expertbornerecharge.com/guides",
+        siteName: "Expert Borne Recharge",
+        locale: "fr_FR",
+        type: "website",
+        images: [{ url: guidesOgImage, width: 1200, height: 630, alt: "Guides bornes de recharge IRVE 2026" }],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Guides bornes de recharge : prix, IRVE et aides 2026",
+        description: "Guides experts pour copropriété, maison individuelle et entreprises.",
+        images: [guidesOgImage],
     },
     robots: { index: true, follow: true },
 };

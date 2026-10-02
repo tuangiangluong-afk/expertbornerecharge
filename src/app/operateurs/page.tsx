@@ -88,11 +88,43 @@ export default function OperateursHubPage() {
     }))
   };
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Pourquoi passer par un électricien IRVE direct plutôt qu'un grand opérateur national ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Les grands opérateurs nationaux (ChargeGuru, IZI by EDF, Zeplug) sous-traitent l'intervention à des électriciens IRVE locaux tout en prélevant une marge commerciale de 25 % à 42 %. En sollicitant directement un installateur IRVE indépendant local, vous réalisez une économie moyenne de 300 € à 650 € pour la même prestation et le même matériel garanti."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quel est le délai moyen d'installation d'une borne chez les opérateurs ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le délai varie de 2 à 4 semaines chez les opérateurs en maison individuelle, contre 3 à 6 mois en copropriété avec vote en AG. En direct avec un artisan IRVE local, la pose peut intervenir sous 5 à 10 jours ouvrés."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Tous les opérateurs permettent-ils de bénéficier du crédit d'impôt de 500 € ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui, tant que la fourniture et la pose sont facturées par une entreprise qualifiée IRVE et que la borne installée intègre un système de pilotage énergétique intelligent (norme NF EN 61851-1)."
+        }
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-200">
       <Header isHub={true} variant="default" themeColor="blue" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(hubSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <main className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <Breadcrumbs items={breadcrumbs} />

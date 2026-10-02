@@ -1,8 +1,9 @@
 export const revalidate = 86400; // 24h ISR cache
 import { getHubConfig, SITES, SiteConfig } from "@/lib/sites-config";
-import { Zap, Award, ArrowRight, Building2, Home, Briefcase, CheckCircle } from "lucide-react";
+import { Zap, Award, ArrowRight, Building2, Home, Briefcase, CheckCircle, Scale, Cpu, BookOpen, Car, Calculator, FileText } from "lucide-react";
 import LocalLinker from "@/components/blog/LocalLinker";
 import type { Metadata } from "next";
+import { ogImageUrl } from "@/lib/seo-meta";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -20,10 +21,42 @@ import GrantsCalculator from "@/components/GrantsCalculator";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FloatingCTA from "@/components/FloatingCTA";
 
+const homeOgImage = ogImageUrl({
+    q: "Expert Borne Recharge",
+    sub: "Comparez 3 devis gratuits d'installateurs IRVE certifiés",
+    badge: "RÉSEAU NATIONAL IRVE 2026",
+});
+
 export const metadata: Metadata = {
     title: "Comparez les Devis Borne de Recharge | Expert Borne Recharge",
     description: "Recevez jusqu'à 3 devis gratuits d'installateurs certifiés IRVE. Comparez les prix et économisez jusqu'à 2 460€ grâce aux aides. Réseau national.",
     keywords: ["devis borne de recharge", "comparateur borne recharge", "installation IRVE", "borne électrique devis"],
+    alternates: {
+        canonical: "https://expertbornerecharge.com",
+    },
+    openGraph: {
+        title: "Comparez les Devis Borne de Recharge | Expert Borne Recharge",
+        description: "Recevez jusqu'à 3 devis gratuits d'installateurs certifiés IRVE. Comparez les prix et économisez jusqu'à 2 460€ grâce aux aides.",
+        url: "https://expertbornerecharge.com",
+        siteName: "Expert Borne Recharge",
+        locale: "fr_FR",
+        type: "website",
+        images: [
+            {
+                url: homeOgImage,
+                width: 1200,
+                height: 630,
+                alt: "Expert Borne Recharge - Comparez les devis IRVE 2026",
+            }
+        ]
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Comparez les Devis Borne de Recharge | Expert Borne Recharge",
+        description: "3 devis gratuits d'installateurs certifiés IRVE. Économisez jusqu'à 2 460€.",
+        images: [homeOgImage],
+    },
+    robots: { index: true, follow: true },
 };
 
 export default function HomePage() {
@@ -380,6 +413,50 @@ export default function HomePage() {
 
                         <div className="mb-16">
                             <CityCards cities={cities} />
+                        </div>
+                    </div>
+                </section>
+
+                {/* ============================================ */}
+                {/* CLUSTER HUBS — INTERNAL LINKING (SEO) */}
+                {/* ============================================ */}
+                <section className="py-20 bg-white border-t border-slate-100">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider mb-4">
+                                <BookOpen size={16} />
+                                Base de Connaissances 2026
+                            </div>
+                            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+                                Tout savoir avant d&apos;installer votre borne
+                            </h2>
+                            <p className="text-slate-600 text-lg max-w-2xl mx-auto">
+                                Audits opérateurs, comparatifs matériel, guides réglementaires et compatibilité véhicules — des ressources expertes pour décider en toute confiance.
+                            </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                            {[
+                                { icon: Building2, title: "Audit des Opérateurs", desc: "ChargeGuru, IZI by EDF, Zeplug, Waat... Analyse des marges d'intermédiaire et arbitrage.", href: "/operateurs", color: "blue" },
+                                { icon: Cpu, title: "Bornes & Matériels", desc: "Wallbox, Tesla, Schneider, Hager, Legrand... Specs techniques et prix vérifiés.", href: "/marques", color: "indigo" },
+                                { icon: Scale, title: "Comparatifs & Duels", desc: "17 face-à-face critère par critère. Matrices de décision neutres et directes.", href: "/comparatifs", color: "violet" },
+                                { icon: Car, title: "Compatibilité Véhicules", desc: "Puissance max acceptée, temps de charge et borne idéale par modèle.", href: "/vehicules", color: "emerald" },
+                                { icon: FileText, title: "Guides & Réglementation", desc: "IRVE, droit à la prise, NFC 15-100, prime Advenir... Tout décrypté.", href: "/guides", color: "amber" },
+                                { icon: Calculator, title: "Fiscalité Entreprise", desc: "Amortissement, TVA, crédit d'impôt : transformez vos bornes en levier fiscal.", href: "/fiscalite-entreprise-borne", color: "rose" },
+                            ].map((hub, i) => (
+                                <Link key={i} href={hub.href} className="group">
+                                    <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200 group-hover:shadow-lg group-hover:border-blue-400 transition-all h-full flex flex-col">
+                                        <div className={`w-12 h-12 bg-${hub.color}-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                                            <hub.icon className={`text-${hub.color}-600`} size={24} />
+                                        </div>
+                                        <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">{hub.title}</h3>
+                                        <p className="text-sm text-slate-600 mb-4 flex-1">{hub.desc}</p>
+                                        <div className="text-blue-600 font-semibold text-sm inline-flex items-center gap-1">
+                                            Explorer <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
                         </div>
                     </div>
                 </section>
