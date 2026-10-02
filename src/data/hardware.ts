@@ -3,6 +3,7 @@ export interface HardwareProduct {
   brand: string;
   modelName: string;
   tagline: string;
+  image: string;
   category: "Borne de recharge" | "Prise renforcée";
   maxPowerKw: number;
   voltage: string;
@@ -33,6 +34,7 @@ export interface HardwareProduct {
 export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   {
     slug: "tesla-wall-connector-gen-3",
+    image: "/images/chargers/tesla-wall-connector.png",
     brand: "Tesla",
     modelName: "Wall Connector (Génération 3)",
     tagline: "La borne au meilleur rapport puissance/prix, compatible avec tous les VE",
@@ -81,6 +83,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "schneider-charge",
+    image: "/images/chargers/schneider-charge.png",
     brand: "Schneider Electric",
     modelName: "Schneider Charge",
     tagline: "La nouvelle référence française de la borne connectée pour l'habitat",
@@ -124,6 +127,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "wallbox-pulsar-plus",
+    image: "/images/chargers/wallbox-pulsar-plus.png",
     brand: "Wallbox",
     modelName: "Pulsar Plus",
     tagline: "La borne intelligente la plus compacte du marché mondial",
@@ -168,6 +172,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "wallbox-pulsar-max",
+    image: "/images/chargers/wallbox-pulsar-max.png",
     brand: "Wallbox",
     modelName: "Pulsar Max",
     tagline: "L'évolution blindée de la Pulsar avec résistance IK10 et commande vocale",
@@ -211,6 +216,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "hager-witty-start",
+    image: "/images/chargers/hager-witty-start.png",
     brand: "Hager",
     modelName: "Witty Start (XEV1K)",
     tagline: "La robustesse industrielle française, la borne préférée des électriciens IRVE",
@@ -254,6 +260,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "hager-witty-solar",
+    image: "/images/chargers/hager-witty-solar.png",
     brand: "Hager",
     modelName: "Witty Solaire (XEV1K-Solar)",
     tagline: "La recharge optimisée pour les maisons avec panneaux photovoltaïques",
@@ -296,6 +303,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "legrand-green-up-one",
+    image: "/images/chargers/legrand-green-up-one.png",
     brand: "Legrand",
     modelName: "Green'up One",
     tagline: "La simplicité Legrand au service de la recharge sécurisée",
@@ -338,6 +346,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "legrand-prise-green-up",
+    image: "/images/chargers/legrand-prise-green-up.png",
     brand: "Legrand",
     modelName: "Prise Renforcée Green'up Access (Pack complet)",
     tagline: "La solution la plus économique et sécurisée pour les petits rouleurs",
@@ -381,6 +390,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "myenergi-zappi-v2",
+    image: "/images/chargers/myenergi-zappi.png",
     brand: "MyEnergi",
     modelName: "Zappi V2.1",
     tagline: "La reine incontestée de la recharge solaire avec 3 modes intelligents",
@@ -425,6 +435,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "abb-terra-ac",
+    image: "/images/chargers/abb-terra-ac.png",
     brand: "ABB",
     modelName: "Terra AC Wallbox",
     tagline: "Le savoir-faire de l'électronique industrielle au service de votre domicile",
@@ -467,6 +478,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "autel-maxicharger",
+    image: "/images/chargers/autel-maxicharger.png",
     brand: "Autel",
     modelName: "MaxiCharger AC Wallbox",
     tagline: "La technologie de pointe avec triple connectivité 4G/Wi-Fi et design moderne",
@@ -509,6 +521,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "evbox-elvi",
+    image: "/images/chargers/evbox-elvi.png",
     brand: "EVBox",
     modelName: "Elvi V2",
     tagline: "La borne modulaire et évolutive fabriquée aux Pays-Bas",
@@ -551,6 +564,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "alfen-eve-single-pro",
+    image: "/images/chargers/alfen-eve-single.png",
     brand: "Alfen",
     modelName: "Eve Single Pro-line",
     tagline: "L'écran couleur et l'intelligence de réseau des pays nordiques",
@@ -593,6 +607,7 @@ export const HARDWARE_PRODUCTS: HardwareProduct[] = [
   },
   {
     slug: "sma-ev-charger",
+    image: "/images/chargers/sma-ev-charger.png",
     brand: "SMA",
     modelName: "SMA EV Charger 7.4 / 22",
     tagline: "La borne native pour les propriétaires d'onduleurs solaires SMA",

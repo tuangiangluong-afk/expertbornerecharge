@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { HARDWARE_PRODUCTS } from "@/data/hardware";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -76,6 +77,16 @@ export default function MarquesHubPage() {
               className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
             >
               <div>
+                <Link href={`/marques/${prod.slug}`} className="block relative w-full h-44 mb-4 rounded-xl overflow-hidden bg-slate-100/70 p-3 group border border-slate-100 hover:border-blue-200 transition-colors">
+                  <Image
+                    src={prod.image}
+                    alt={`${prod.brand} ${prod.modelName}`}
+                    fill
+                    className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </Link>
+
                 <div className="flex items-start justify-between gap-2 mb-3">
                   <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">
                     {prod.brand}

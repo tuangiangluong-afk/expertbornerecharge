@@ -9,6 +9,9 @@ import { DEPARTMENTS } from '@/config/departments';
 import { createClient } from '@supabase/supabase-js';
 import fs from 'fs';
 import path from 'path';
+import { OPERATORS } from '@/data/operators';
+import { HARDWARE_PRODUCTS } from '@/data/hardware';
+import { DUELS } from '@/data/comparatives';
 
 // Base URL (Hub)
 const BASE_URL = 'https://expertbornerecharge.com';
@@ -39,6 +42,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
         {
             url: `${BASE_URL}/solutions/entreprise`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9,
+        },
+        {
+            url: `${BASE_URL}/operateurs`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9,
+        },
+        {
+            url: `${BASE_URL}/marques`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9,
+        },
+        {
+            url: `${BASE_URL}/comparatifs`,
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 0.9,
@@ -236,7 +257,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }));
     });
 
-    return [...routes, ...serviceRoutes, ...guideRoutes, ...blogRoutes, ...vehicleBrandRoutes, ...vehicleRoutes, ...installationRoutes, ...cityRoutes, ...b2bRoutes, ...cityBrandRoutes, ...departementRoutes, ...quartierRoutes, ...marquesRoutes, ...comparatifRoutes, ...puissanceRoutes, ...prisesRoutes].map(item => ({
+    // 10. Opérateurs nationaux
+    const operateurRoutes: MetadataRoute.Sitemap = OPERATORS.map((op) => ({
+        url: `${BASE_URL}/operateurs/${op.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.85,
+    }));
+
+    // 11. Bornes & Matériels (Hardware)
+    const hardwareRoutes: MetadataRoute.Sitemap = HARDWARE_PRODUCTS.map((prod) => ({
+        url: `${BASE_URL}/marques/${prod.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.85,
+    }));
+
+    // 12. Duels & Comparatifs directs
+    const duelRoutes: MetadataRoute.Sitemap = DUELS.map((duel) => ({
+        url: `${BASE_URL}/comparatif/${duel.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.85,
+    }));
+
+    return [...routes, ...serviceRoutes, ...guideRoutes, ...blogRoutes, ...vehicleBrandRoutes, ...vehicleRoutes, ...installationRoutes, ...cityRoutes, ...b2bRoutes, ...cityBrandRoutes, ...departementRoutes, ...quartierRoutes, ...marquesRoutes, ...comparatifRoutes, ...puissanceRoutes, ...prisesRoutes, ...operateurRoutes, ...hardwareRoutes, ...duelRoutes].map(item => ({
         ...item,
         url: item.url.toLowerCase()
     }));
