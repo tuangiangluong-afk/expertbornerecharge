@@ -258,17 +258,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.8,
     }));
 
-    // Quartier Routes
-    const quartierRoutes: MetadataRoute.Sitemap = Array.from(uniqueSites.values()).flatMap((site) => {
-        const neighborhoods = (site.neighborhoods || (site as any).quartiers || []) as string[];
-        return neighborhoods.map(q => ({
-            url: `${BASE_URL}/quartier/${slugify(q)}`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly' as const,
-            priority: 0.8,
-        }));
-    });
-
     // 10. Opérateurs nationaux
     const operateurRoutes: MetadataRoute.Sitemap = OPERATORS.map((op) => ({
         url: `${BASE_URL}/operateurs/${op.slug}`,
@@ -293,8 +282,41 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.85,
     }));
 
-    return [...routes, ...serviceRoutes, ...guideRoutes, ...blogRoutes, ...vehicleBrandRoutes, ...vehicleRoutes, ...installationRoutes, ...cityRoutes, ...b2bRoutes, ...cityBrandRoutes, ...departementRoutes, ...quartierRoutes, ...marquesRoutes, ...comparatifRoutes, ...puissanceRoutes, ...prisesRoutes, ...operateurRoutes, ...hardwareRoutes, ...duelRoutes].map(item => ({
-        ...item,
-        url: item.url.toLowerCase()
-    }));
+    // Note: quartierRoutes removed from sitemap to prevent crawling of thin programmatic pages (they carry robots noindex, follow)
+    const allRoutes: MetadataRoute.Sitemap = [
+        ...routes,
+        ...serviceRoutes,
+        ...guideRoutes,
+        ...blogRoutes,
+        ...vehicleBrandRoutes,
+        ...vehicleRoutes,
+        ...installationRoutes,
+        ...cityRoutes,
+        ...b2bRoutes,
+        ...cityBrandRoutes,
+        ...departementRoutes,
+        ...marquesRoutes,
+        ...comparatifRoutes,
+        ...puissanceRoutes,
+        ...prisesRoutes,
+        ...operateurRoutes,
+        ...hardwareRoutes,
+        ...duelRoutes,
+    ];
+
+    // Deduplicate by normalized lowercase URL to avoid GSC duplicate-in-sitemap warnings
+    const seenUrls = new Set<string>();
+    const uniqueRoutes: MetadataRoute.Sitemap = [];
+    for (const item of allRoutes) {
+        const lowerUrl = item.url.toLowerCase();
+        if (!seenUrls.has(lowerUrl)) {
+            seenUrls.add(lowerUrl);
+            uniqueRoutes.push({
+                ...item,
+                url: lowerUrl,
+            });
+        }
+    }
+
+    return uniqueRoutes;
 }

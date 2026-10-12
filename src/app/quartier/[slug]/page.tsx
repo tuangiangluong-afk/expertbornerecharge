@@ -90,7 +90,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             url: canonicalUrl,
         },
         robots: {
-            index: true,
+            index: false,
             follow: true,
         },
     };

@@ -1,1 +1,1 @@
-export { default, generateMetadata, generateStaticParams } from "../../comparatif/[slug]/page";
+export { default, generateMetadata, generateStaticParams, revalidate } from "../../comparatif/[slug]/page";
