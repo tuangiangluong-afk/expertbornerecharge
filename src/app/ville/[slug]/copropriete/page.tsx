@@ -33,11 +33,9 @@ export async function generateStaticParams() {
             uniqueCities.set(slug, true);
             return city.slug !== 'home';
         })
-        .slice(0, 5)
         .map(city => ({ slug: slugify(city.city) }));
 }
 
-import { headers } from "next/headers";
 import LocalSources from "@/components/LocalSources";
 
 export async function generateMetadata({
@@ -51,9 +49,7 @@ export async function generateMetadata({
     if (!site) return {};
 
     const b2bContent = await getPseoB2bContent(site, 'COPRO');
-    const headersList = await headers();
-    const canonicalDomain = headersList.get("x-irve-canonical-domain") || "expertbornerecharge.com";
-    const canonicalUrl = `https://${canonicalDomain}/ville/${resolvedParams.slug}/copropriete`;
+    const canonicalUrl = `https://expertbornerecharge.com/ville/${resolvedParams.slug}/copropriete`;
 
     return {
         title: b2bContent.meta_title,

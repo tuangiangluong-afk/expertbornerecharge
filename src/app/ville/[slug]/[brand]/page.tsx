@@ -36,7 +36,6 @@ export async function generateStaticParams() {
     return params;
 }
 
-import { headers } from "next/headers";
 import { getPseoBrandContent } from "@/lib/pseo-brand";
 import { HelpCircle, Sparkles, Clock } from "lucide-react";
 import LocalSources from "@/components/LocalSources";
@@ -49,9 +48,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     if (!site || !brandData) return {};
 
     const pseo = getPseoBrandContent(site.city, brandData, site);
-    const headersList = await headers();
-    const canonicalDomain = headersList.get("x-irve-canonical-domain") || "expertbornerecharge.com";
-    const canonicalUrl = `https://${canonicalDomain}/ville/${slug}/${brandSlug}`;
+    const canonicalUrl = `https://expertbornerecharge.com/ville/${slug}/${brandSlug}`;
 
     return {
         title: pseo.meta_title,

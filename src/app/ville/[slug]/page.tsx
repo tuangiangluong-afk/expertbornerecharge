@@ -20,16 +20,22 @@ import { LocalFAQ } from "@/components/LocalFAQ";
 
 export const dynamicParams = true;
 
-// Pre-render top 5 cities at build time; others are generated on-demand (ISR 24h)
+// Pre-render all valid cities at build time
 export async function generateStaticParams() {
-    return Object.values(CITIES).slice(0, 5).map(city => ({ slug: slugify(city.city) }));
+    const uniqueCities = new Map<string, boolean>();
+    return Object.values(CITIES)
+        .filter(city => {
+            const slug = slugify(city.city);
+            if (uniqueCities.has(slug)) return false;
+            uniqueCities.set(slug, true);
+            return city.slug !== 'home';
+        })
+        .map(city => ({ slug: slugify(city.city) }));
 }
 
 // ============================================
 // METADATA
 // ============================================
-
-import { headers } from "next/headers";
 
 export async function generateMetadata({
     params,
@@ -45,10 +51,7 @@ export async function generateMetadata({
 
     // Dynamic Meta via pSEO
     const pseo = await getPseoContent(site);
-
-    const headersList = await headers();
-    const canonicalDomain = headersList.get("x-irve-canonical-domain") || "expertbornerecharge.com";
-    const canonicalUrl = `https://${canonicalDomain}/ville/${resolvedParams.slug}`;
+    const canonicalUrl = `https://expertbornerecharge.com/ville/${resolvedParams.slug}`;
 
     return {
         title: pseo.meta_title,

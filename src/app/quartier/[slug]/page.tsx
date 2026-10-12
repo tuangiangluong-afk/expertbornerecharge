@@ -60,7 +60,6 @@ export async function generateStaticParams() {
     }));
 }
 
-import { headers } from "next/headers";
 import { getPseoQuartierContent } from "@/lib/pseo-quartier";
 import { Shield, Zap, Wrench, HelpCircle, Star, Sparkles } from "lucide-react";
 
@@ -71,9 +70,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     if (!quartier) return {};
 
     const pseo = getPseoQuartierContent(quartier.name, quartier.city, quartier.config);
-    const headersList = await headers();
-    const canonicalDomain = headersList.get("x-irve-canonical-domain") || "expertbornerecharge.com";
-    const canonicalUrl = `https://${canonicalDomain}/quartier/${resolvedParams.slug}`;
+    const canonicalUrl = `https://expertbornerecharge.com/quartier/${resolvedParams.slug}`;
 
     return {
         title: pseo.meta_title,
