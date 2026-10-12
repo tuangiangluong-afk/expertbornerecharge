@@ -1,4 +1,4 @@
-export const revalidate = 86400; // 24h ISR cache
+export const dynamic = 'force-dynamic';
 import { notFound } from "next/navigation";
 import { Phone, CheckCircle, Home } from "lucide-react";
 import CallButton from "@/components/CallButton";
