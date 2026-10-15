@@ -49,6 +49,7 @@ async function getPost(slug: string): Promise<BlogPost | null> {
         `)
         .eq('slug', slug)
         .eq('status', 'published')
+        .contains('tags', ['borne'])
         .single();
 
     if (error || !data) {

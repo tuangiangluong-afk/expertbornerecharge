@@ -50,6 +50,7 @@ async function getPosts() {
         .from('blog_posts')
         .select('*, category:blog_categories(*)')
         .eq('status', 'published')
+        .contains('tags', ['borne'])
         .order('published_at', { ascending: false });
     return data || [];
 }
