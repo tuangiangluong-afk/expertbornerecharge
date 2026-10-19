@@ -1,4 +1,4 @@
-export const revalidate = 86400; // 24h ISR cache
+export const revalidate = 604800; // 7 days ISR cache
 import { Building2, CheckCircle, HelpCircle, Users, FileText, Euro, Calculator, AlertCircle, Award } from "lucide-react";
 import LeadFormPro from "@/components/LeadFormPro";
 import Header from "@/components/Header";

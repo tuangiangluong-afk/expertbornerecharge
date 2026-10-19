@@ -1,4 +1,4 @@
-export const revalidate = 86400; // 24h ISR cache
+export const revalidate = 604800; // 7 days ISR cache
 import { getAllVehicles, getVehicleById, getVehiclesByBrand } from "@/data/vehicles";
 import { clampDescription, clampTitle } from "@/lib/seo-meta";
 import { slugify } from "@/lib/slugify";

@@ -1,4 +1,4 @@
-export const revalidate = 86400; // 24h ISR cache
+export const revalidate = 604800; // 7 days ISR cache
 // Tous les POI valides sont prérendus (la racine du layout lit headers(), donc le
 // rendu « à la demande » d'un paramètre inconnu plantait en 500).
 export const dynamicParams = false;

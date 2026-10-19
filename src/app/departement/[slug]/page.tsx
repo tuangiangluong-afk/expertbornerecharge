@@ -1,4 +1,4 @@
-export const revalidate = 86400; // 24h ISR cache
+export const revalidate = 604800; // 7 days ISR cache
 
 import { CITIES } from "@/lib/db";
 import Link from "next/link";

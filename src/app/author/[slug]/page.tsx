@@ -7,7 +7,7 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 const supabase = (supabaseUrl && supabaseKey) ? createClient(supabaseUrl, supabaseKey) : null;
 
-export const revalidate = 3600; // ISR cache for 1 hour
+export const revalidate = 604800; // 7 days ISR cache
 
 function formatDate(dateStr: string) {
     try {

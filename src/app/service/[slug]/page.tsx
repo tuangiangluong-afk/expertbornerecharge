@@ -1,4 +1,4 @@
-export const revalidate = 86400; // 24h ISR cache
+export const revalidate = 604800; // 7 days ISR cache
 import { SEO_SERVICES } from "@/lib/seo-data";
 import { notFound } from "next/navigation";
 import { Phone, CheckCircle, ArrowRight, ShieldCheck, Clock, Zap } from "lucide-react";

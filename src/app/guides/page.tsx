@@ -13,7 +13,7 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-key";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export const revalidate = 60; // ISR 60 seconds
+export const revalidate = 604800; // 7 days ISR cache
 
 const guidesOgImage = ogImageUrl({
     q: "Guides IRVE",
