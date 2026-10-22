@@ -52,17 +52,9 @@ export default async function sitemap(props?: Props): Promise<MetadataRoute.Site
         }
     ];
 
-    // 2. Local Quarters / Neighborhoods (SEO Long Tail)
-    if (config.quartiers && config.quartiers.length > 0) {
-        config.quartiers.forEach(q => {
-            routes.push({
-                url: `${baseUrl}/quartier/${slugify(q)}`,
-                lastModified: new Date(),
-                changeFrequency: 'weekly',
-                priority: 0.7,
-            });
-        });
-    }
+    // 2. Local Quarters / Neighborhoods intentionally omitted:
+    // /quartier/* has 'X-Robots-Tag: noindex, follow' in vercel.json.
+    // Submitting noindexed URLs to sitemap triggers GSC "Crawled - currently not indexed" validation failure.
 
     return routes.map(item => ({
         ...item,
