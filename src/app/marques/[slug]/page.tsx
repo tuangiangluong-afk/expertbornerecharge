@@ -217,6 +217,7 @@ export default async function ProductOrBrandDetailPage({ params }: PageProps) {
         "price": product.estimatedHardwarePrice.replace(/[^0-9]/g, "").slice(0, 3) || "650",
         "priceCurrency": "EUR",
         "priceValidUntil": "2026-12-31",
+        "validFrom": "2026-01-01",
         "availability": "https://schema.org/InStock",
         "itemCondition": "https://schema.org/NewCondition",
         "seller": {
