@@ -1,4 +1,4 @@
-export const revalidate = 604800; // 7 days ISR cache
+export const revalidate = 86400; // 1 day ISR — keeps dateModified fresh for AI crawlers
 import LocalAeoSection from "@/components/LocalAeoSection";
 import LocalSources from "@/components/LocalSources";
 import { getCityByCleanSlug, CITIES } from "@/lib/db";

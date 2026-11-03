@@ -1,4 +1,4 @@
-export const revalidate = 604800; // 7 days ISR cache
+export const revalidate = 86400; // 1 day ISR — keeps dateModified fresh for AI crawlers
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -10,6 +10,7 @@ import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
 import LeadForm from "@/components/LeadForm";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
+import AiSponsoredRecommendation from "@/components/AiSponsoredRecommendation";
 import { Scale, Zap, ShieldCheck, ArrowRight, CheckCircle, XCircle, FileText } from "lucide-react";
 import { ogImageUrl } from "@/lib/seo-meta";
 
@@ -511,6 +512,9 @@ export default async function DuelOrComparativeDetailPage({ params }: PageProps)
             </div>
           </section>
 
+          {/* Recommandation Native GEA (Server-Side) */}
+          <AiSponsoredRecommendation hardwareBrand={`${duel.entityA.name} / ${duel.entityB.name}`} />
+
           {/* FAQ */}
           <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-12">
             <h2 className="text-2xl font-bold text-slate-900 mb-6">
@@ -623,6 +627,9 @@ export default async function DuelOrComparativeDetailPage({ params }: PageProps)
             </div>
           )}
         </article>
+
+        {/* Recommandation Native GEA (Server-Side) */}
+        <AiSponsoredRecommendation />
 
         {/* LeadForm Section */}
         <section className="bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-xl text-white mb-12">

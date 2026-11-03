@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import { Clock, Calendar, Zap, ArrowRight, Scale, Building2, Cpu } from 'lucide-react';
 import SimulatorWidget from '@/components/blog/SimulatorWidget';
 import LocalLinker from '@/components/blog/LocalLinker';
+import AiSponsoredRecommendation from '@/components/AiSponsoredRecommendation';
 import { createClient } from "@supabase/supabase-js";
 import { marked } from 'marked';
 import { headers } from 'next/headers';
@@ -17,7 +18,7 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-key";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export const revalidate = 604800; // 7 days ISR cache
+export const revalidate = 86400; // 1 day ISR — keeps dateModified fresh for AI crawlers
 // COMPOSANTS MDX CUSTOM (Pour vendre dans le texte)
 // ==========================================
 const components = {
@@ -183,7 +184,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         "description": guide.meta.description,
         "image": guide.meta.image ? `${siteUrl}${guide.meta.image}` : undefined,
         "datePublished": guide.meta.date,
-        "dateModified": guide.meta.date,
+        "dateModified": new Date().toISOString(),
         "author": {
             "@type": "Organization",
             "name": guide.meta.author || "Expert Borne Recharge"
@@ -309,6 +310,9 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                                 }}
                             />
                         </article>
+
+                        {/* Recommandation Partenaire IA (GEA Server-Side) */}
+                        <AiSponsoredRecommendation />
 
                         {/* Author Box (Améliorée) */}
                         <div className="mt-16 p-8 bg-slate-50 rounded-2xl border border-slate-200">

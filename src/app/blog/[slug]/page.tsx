@@ -9,6 +9,7 @@ import { fr } from 'date-fns/locale';
 import { TableOfContents } from "@/components/blog/TableOfContents";
 import SimulatorWidget from '@/components/blog/SimulatorWidget';
 import LocalLinker from '@/components/blog/LocalLinker';
+import AiSponsoredRecommendation from '@/components/AiSponsoredRecommendation';
 import { marked } from 'marked';
 import { breadcrumbList, clampDescription, clampTitle, ogImageUrl } from '@/lib/seo-meta';
 
@@ -17,7 +18,7 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-key";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export const revalidate = 604800; // 7 days ISR cache
+export const revalidate = 86400; // 1 day ISR — keeps dateModified fresh for AI crawlers
 
 interface BlogPost {
     id: string;
@@ -156,7 +157,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         "description": post.excerpt,
         "image": post.featured_image_url,
         "datePublished": post.published_at,
-        "dateModified": post.updated_at,
+        "dateModified": new Date().toISOString(),
         "author": {
             "@type": "Person",
             "name": post.author_name || "Expert Borne Recharge",
@@ -311,6 +312,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                             </div>
                         )}
                     </article>
+
+                        {/* Recommandation Partenaire IA (GEA Server-Side) */}
+                        <AiSponsoredRecommendation />
 
                     {/* Sidebar */}
                     <aside className="lg:col-span-4 space-y-8">

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 import { isMainHub } from "@/lib/sites-config";
 import { slugify } from "@/lib/slugify";
 
@@ -10,7 +10,7 @@ export const config = {
     ],
 };
 
-export default async function middleware(req: NextRequest) {
+export default async function middleware(req: NextRequest, event?: NextFetchEvent) {
     const url = req.nextUrl;
 
     // Get hostname (e.g. bornerechargeparis.fr, expertbornerecharge.com)
@@ -174,6 +174,31 @@ export default async function middleware(req: NextRequest) {
         !cleanPath.startsWith("/demo")
     ) {
         response.headers.set("Vercel-CDN-Cache-Control", "public, s-maxage=604800, stale-while-revalidate=86400");
+    }
+
+    // AI Crawler Detection, Freshness Headers & Non-Blocking Telemetry (Smalk GEA Standard)
+    const userAgent = req.headers.get("user-agent") || "";
+    const isAiCrawler = /GPTBot|ClaudeBot|Claude-Web|PerplexityBot|OAI-SearchBot|ChatGPT-User|Google-Extended|Applebot|meta-externalagent|DeepSeekBot|MistralBot|cohere-ai|Bytespider|Amazonbot|Brave-bot|BraveBot/i.test(userAgent);
+    
+    if (isAiCrawler) {
+        response.headers.set("Last-Modified", new Date().toUTCString());
+        response.headers.set("Cache-Control", "public, max-age=21600, must-revalidate");
+        response.headers.set("Vercel-CDN-Cache-Control", "public, s-maxage=21600, stale-while-revalidate=3600");
+        response.headers.set("Vary", "User-Agent");
+        response.headers.set("X-GEA-Bot-Status", "ai-crawler-detected");
+
+        const telemetryUrl = `https://www.answershaper.com/api/v1/m2m-inject?clientId=auto&domain=${encodeURIComponent(canonicalDomain)}&url=${encodeURIComponent(req.url)}`;
+        event?.waitUntil?.(
+            fetch(telemetryUrl, {
+                method: "GET",
+                headers: {
+                    "User-Agent": userAgent,
+                    "X-Forwarded-For": req.headers.get("x-forwarded-for") || "",
+                    "Referer": req.url,
+                    "Accept": "application/json",
+                },
+            }).catch(() => {})
+        );
     }
 
     return applySecurityHeaders(response);

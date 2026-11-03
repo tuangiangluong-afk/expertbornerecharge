@@ -1,3 +1,4 @@
+export const revalidate = 86400; // 1 day ISR — keeps dateModified fresh for AI crawlers
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -12,6 +13,7 @@ import { Footer } from "@/components/Footer";
 import { getHubConfig } from "@/lib/sites-config";
 import LeadForm from "@/components/LeadForm";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
+import AiSponsoredRecommendation from "@/components/AiSponsoredRecommendation";
 import { Zap, ShieldCheck, Star, ExternalLink, ArrowRight, Sun, Cpu, Check, AlertTriangle, CheckCircle, XCircle, Wrench, HelpCircle, Scale, Building2, FileText } from "lucide-react";
 import { ogImageUrl } from "@/lib/seo-meta";
 
@@ -694,6 +696,9 @@ export default async function ProductOrBrandDetailPage({ params }: PageProps) {
             </div>
           </section>
 
+          {/* Recommandation Native GEA (Server-Side) */}
+          <AiSponsoredRecommendation hardwareBrand={`${product.brand} ${product.modelName}`} partnerUrl="#devis-pose" />
+
           {/* FAQs */}
           <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-12">
             <h2 className="text-2xl font-bold text-slate-900 mb-6">
@@ -838,6 +843,9 @@ export default async function ProductOrBrandDetailPage({ params }: PageProps) {
             </div>
           )}
         </article>
+
+        {/* Recommandation Native GEA (Server-Side) */}
+        <AiSponsoredRecommendation hardwareBrand={legacyItem.h1 || legacyItem.title} />
 
         {/* LeadForm Section */}
         <section className="bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-xl text-white mb-12">
