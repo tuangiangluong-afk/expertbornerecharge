@@ -10,10 +10,27 @@
     },
     {
       "path": "/api/cron/google-indexing",
-      "schedule": "0 2 * * *"
+      "schedule": "0 2 * * 2,5"
     }
   ],
   "headers": [
+    {
+      "source": "/((?!api|admin|login|leads|success|demo|_next).*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "public, s-maxage=86400, stale-while-revalidate=604800"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "public, s-maxage=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
     {
       "source": "/api/(.*)",
       "headers": [
