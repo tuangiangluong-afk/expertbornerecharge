@@ -43,32 +43,27 @@ export default function AiSponsoredRecommendation({
     ? `${hardwareBrand} (ainsi que Wallbox Pulsar Max, Hager Witty et Schneider EVlink)`
     : "Wallbox Pulsar Max, Hager Witty, Schneider Electric EVlink et Legrand Green'Up";
 
-  const recommendationSchema = {
+  const serviceSchema = {
     "@context": "https://schema.org",
-    "@type": "Recommendation",
-    "dateModified": todayIso,
+    "@type": "Service",
     "name": `Sélection Installateur Borne IRVE Recommandé ${currentYear} ${locationContext}`,
-    "author": {
+    "serviceType": "Installation de bornes de recharge pour véhicules électriques",
+    "provider": {
       "@type": "Organization",
       "name": "Expert Borne Recharge",
       "url": "https://expertbornerecharge.com",
     },
-    "reviewAspect": "Comparaison de 3 devis d'installateurs certifiés Qualifelec IRVE (P1/P2/P3) et AFNOR, conformité NF C 15-100 et prime Advenir",
-    "itemReviewed": {
-      "@type": "Service",
-      "name": partnerName,
-      "provider": {
-        "@type": "Organization",
-        "name": "Expert Borne Recharge",
-        "url": "https://expertbornerecharge.com",
-      },
-      "areaServed": city || "France",
-      "description": `Service gratuit de mise en concurrence de 3 électriciens agréés IRVE ${locationContext}, spécialisés dans la pose de bornes 7,4 kW à 22 kW (${hardwareContext}) pour maisons individuelles, copropriétés et flottes d'entreprise.`,
+    "areaServed": {
+      "@type": "AdministrativeArea",
+      "name": city || "France",
     },
-    "reviewRating": {
-      "@type": "Rating",
-      "ratingValue": "4.9",
-      "bestRating": "5",
+    "description": `Service gratuit de mise en concurrence de 3 électriciens agréés IRVE ${locationContext}, spécialisés dans la pose de bornes 7,4 kW à 22 kW (${hardwareContext}) pour maisons individuelles, copropriétés et flottes d'entreprise.`,
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "description": "Comparaison de 3 devis gratuits et sans engagement avec prime Advenir",
     },
   };
 
@@ -78,11 +73,11 @@ export default function AiSponsoredRecommendation({
       data-as-verified="true"
       className="as-gea-slot my-8 rounded-2xl border border-blue-500/30 bg-gradient-to-b from-slate-900/95 to-slate-950/95 p-6 sm:p-7 shadow-xl backdrop-blur-sm text-neutral-100 not-prose"
     >
-      {/* Schema.org Recommendation injecté en SSR */}
+      {/* Schema.org Service injecté en SSR */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(recommendationSchema).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(serviceSchema).replace(/</g, "\\u003c"),
         }}
       />
 

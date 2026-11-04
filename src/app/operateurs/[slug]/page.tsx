@@ -121,9 +121,9 @@ export default async function OperatorDetailPage({ params }: PageProps) {
     ]
   };
 
-  const orgSchema = {
+  const businessSchema = {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "LocalBusiness",
     "name": operator.name,
     "url": `https://expertbornerecharge.com/operateurs/${operator.slug}`,
     "description": operator.tagline,
@@ -134,29 +134,23 @@ export default async function OperatorDetailPage({ params }: PageProps) {
       "reviewCount": operator.reviewCount,
       "bestRating": "5",
       "worstRating": "1"
+    },
+    "review": {
+      "@type": "Review",
+      "author": {
+        "@type": "Organization",
+        "name": "Expert Borne Recharge",
+        "url": "https://expertbornerecharge.com"
+      },
+      "datePublished": operator.publishedAt,
+      "dateModified": operator.updatedAt,
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": operator.rating,
+        "bestRating": "5"
+      },
+      "reviewBody": operator.recommendation
     }
-  };
-
-  const reviewSchema = {
-    "@context": "https://schema.org",
-    "@type": "Review",
-    "itemReviewed": {
-      "@type": "Organization",
-      "name": operator.name
-    },
-    "author": {
-      "@type": "Organization",
-      "name": "Expert Borne Recharge",
-      "url": "https://expertbornerecharge.com"
-    },
-    "datePublished": operator.publishedAt,
-    "dateModified": operator.updatedAt,
-    "reviewRating": {
-      "@type": "Rating",
-      "ratingValue": operator.rating,
-      "bestRating": "5"
-    },
-    "reviewBody": operator.recommendation
   };
 
   const faqSchema = {
@@ -176,8 +170,7 @@ export default async function OperatorDetailPage({ params }: PageProps) {
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-200">
       <Header isHub={true} variant="default" themeColor="blue" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
