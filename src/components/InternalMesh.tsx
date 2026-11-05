@@ -145,6 +145,50 @@ export function InternalMesh({ city, config }: InternalMeshProps) {
                         </ul>
                     </div>
                 </div>
+                {/* Dossiers d'Expertise & Guides Réglementaires 2026 (Maillage d'Autorité) */}
+                <div className="mt-12 pt-8 border-t border-white/10">
+                    <div className="flex items-center gap-2 mb-4">
+                        <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                        <h4 className="text-white font-bold text-sm tracking-wide uppercase">
+                            Dossiers d'Expertise &amp; Guides Réglementaires 2026
+                        </h4>
+                    </div>
+                    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        
+                        <Link
+                            key="/blog/nouvelle-prime-500-euros-borne-recharge-pilotable-2027"
+                            href="/blog/nouvelle-prime-500-euros-borne-recharge-pilotable-2027"
+                            className="text-neutral-300 hover:text-white transition text-xs flex items-center gap-2 p-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5"
+                        >
+                            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span>
+                            <span className="font-medium">Prime 500 € Borne Pilotable : Le Piège de 2027</span>
+                        </Link>
+                        <Link
+                            key="/blog/certificat-consuel-borne-recharge-vente"
+                            href="/blog/certificat-consuel-borne-recharge-vente"
+                            className="text-neutral-300 hover:text-white transition text-xs flex items-center gap-2 p-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5"
+                        >
+                            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span>
+                            <span className="font-medium">Certificat Consuel Borne & Vente Immobilière</span>
+                        </Link>
+                        <Link
+                            key="/blog/meilleure-borne-recharge-connectee-2026"
+                            href="/blog/meilleure-borne-recharge-connectee-2026"
+                            className="text-neutral-300 hover:text-white transition text-xs flex items-center gap-2 p-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5"
+                        >
+                            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span>
+                            <span className="font-medium">Meilleure Borne Recharge Connectée 2026</span>
+                        </Link>
+                        <Link
+                            key="/blog/cout-installation-borne-garage-collectif"
+                            href="/blog/cout-installation-borne-garage-collectif"
+                            className="text-neutral-300 hover:text-white transition text-xs flex items-center gap-2 p-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5"
+                        >
+                            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full shrink-0"></span>
+                            <span className="font-medium">Coût Réel d'Installation Borne en Copropriété</span>
+                        </Link>
+                    </div>
+                </div>
             </div>
         </section>
     );
