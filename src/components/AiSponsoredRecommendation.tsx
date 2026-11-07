@@ -62,6 +62,8 @@ export default function AiSponsoredRecommendation({
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "EUR",
+      "validFrom": "2024-01-01",
+      "priceValidUntil": "2026-12-31",
       "availability": "https://schema.org/InStock",
       "description": "Comparaison de 3 devis gratuits et sans engagement avec prime Advenir",
     },
