@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { isSpamContactSubmission } from '@/lib/antispam';
 
 const resend = new Resend(process.env.RESEND_API_KEY || 're_123'); // Safe fallback to avoid crash if env missing
 
@@ -11,6 +12,14 @@ export async function POST(req: Request) {
         // Validation simple
         if (!name || !email || !message) {
             return NextResponse.json({ error: 'Champs manquants' }, { status: 400 });
+        }
+
+        // Anti-Spam & Anti-Phishing Guard (Zero risk on real quotes)
+        const spamCheck = isSpamContactSubmission(body);
+        if (spamCheck.isSpam) {
+            console.warn(`🛡️ [AntiSpam] Blocked spam contact form submission (${spamCheck.reason}) from ${email} [${domain || 'unknown'}]`);
+            // Return 200 OK tarpit so bot assumes success and does not retry
+            return NextResponse.json({ success: true, filtered: true });
         }
 
         // Send Email via Resend
