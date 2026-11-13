@@ -51,7 +51,7 @@ Les durées de charge ci-dessous intègrent les puissances nominales délivrées
 
 L'écart tarifaire entre une installation monophasée 7,4 kW et une installation triphasée 11 kW ou 22 kW provient essentiellement du prix des protections différentielles tétrapolaires dans le tableau électrique et de la masse de cuivre du câble d'alimentation :
 
-| Poste de dépense (Maison > 2 ans, TVA 5,5 %) | Configuration 7,4 kW (Mono) | Configuration 11 kW (Tri) | Configuration 22 kW (Tri) |
+| Poste de dépense (Maison &gt; 2 ans, TVA 5,5 %) | Configuration 7,4 kW (Mono) | Configuration 11 kW (Tri) | Configuration 22 kW (Tri) |
 | :--- | :--- | :--- | :--- |
 | Borne pilotable certifiée T2S (Hager, Wallbox, Schneider, Autel) | 690 € – 950 € HT | 750 € – 1 020 € HT | 820 € – 1 150 € HT |
 | Appareillage modulaire (Disjoncteur + Différentiel Type F ou B) | 140 € – 220 € HT | 260 € – 420 € HT | 320 € – 490 € HT |
@@ -75,7 +75,7 @@ Contrairement à un appareil électroménager intermittent, le chargeur du Peuge
 1. **Circuit spécialisé exclusif** : Départ direct depuis le Tableau Général Basse Tension (TGBT) ou un tableau divisionnaire dédié, sans aucun repiquage intermédiaire.
 2. **Sections minimales de conducteurs cuivre (U-1000 R2V)** :
    * **Borne 7,4 kW monophasée (32 A)** : Câble **3G10 mm²** obligatoire. L'usage de 6 mm², toléré pour une plaque à induction à charge intermittente, est proscrit en IRVE 32 A en raison de l'échauffement continu des borniers et de la chute de tension.
-   * **Borne 11 kW triphasée (3 × 16 A)** : Câble **5G2,5 mm²** (admissible sur très courte distance ≤ 15 m sans contrainte thermique) ou **5G4 mm²** (standard d'ingénierie recommandé par Expert Borne Recharge pour garantir une chute de tension $\Delta U &lt; 2\%$ et une évolutivité mécanique).
+   * **Borne 11 kW triphasée (3 × 16 A)** : Câble **5G2,5 mm²** (admissible sur très courte distance ≤ 15 m sans contrainte thermique) ou **5G4 mm²** (standard d'ingénierie recommandé par Expert Borne Recharge pour garantir une chute de tension $delta U &lt; 2\%$ et une évolutivité mécanique).
    * **Borne 22 kW triphasée (3 × 32 A)** : Câble **5G10 mm²** rigide cuivre impératif.
 3. **Protections magnéto-thermiques et différentielles dédiées** :
    * En **7,4 kW monophasé** : Disjoncteur divisionnaire **40 A Courbe C** associé à un interrupteur différentiel **40 A – 30 mA de Type F (ou Hpi/Si)** à immunité renforcée, sous réserve que la borne embarque un détecteur de courant de défaut continu **6 mA DC** conforme à la norme IEC 62955. À défaut de capteur 6 mA DC intégré, un différentiel **Type B** est requis.
@@ -117,9 +117,9 @@ Si le programme Advenir ne finance plus les maisons individuelles, il demeure pl
 
 | Profil du logement de l'acquéreur e-3008 / e-5008 | Montant HT | Taux TVA | Total Facturé TTC | Prime Advenir | Crédit d'Impôt 2026 | Coût Net Final |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Maison individuelle (> 2 ans)** | 1 550,00 € | 5,5 % | 1 635,25 € | 0,00 € | - 500,00 € | **1 135,25 €** |
+| **Maison individuelle (&gt; 2 ans)** | 1 550,00 € | 5,5 % | 1 635,25 € | 0,00 € | - 500,00 € | **1 135,25 €** |
 | **Maison neuve (&lt; 2 ans / VEFA)** | 1 550,00 € | 20,0 % | 1 860,00 € | 0,00 € | - 500,00 € | **1 360,00 €** |
-| **Parking en copropriété (> 2 ans)** | 1 550,00 € | 5,5 % | 1 635,25 € | - 600,00 € | - 500,00 € | **535,25 €** |
+| **Parking en copropriété (&gt; 2 ans)** | 1 550,00 € | 5,5 % | 1 635,25 € | - 600,00 € | - 500,00 € | **535,25 €** |
 
 *Note fiscale : En copropriété, l'assiette de calcul des 75 % du crédit d'impôt s'applique sur le montant TTC déduction faite de la prime Advenir (1 635,25 € - 600 € = 1 035,25 € ; 75 % × 1 035,25 € = 776,44 €, toujours plafonné au maximum légal de 500 €).*
 
@@ -136,7 +136,7 @@ Face au pack Grande Autonomie de 98 kWh, de nombreux propriétaires s'interrogen
 * **Contrainte d'intensité par phase** : Un abonnement 12 kVA triphasé ne délivre que **20 A par phase** (4,6 kW par phase). Lorsque la borne 11 kW tire 16 A sur chacune des trois phases, il ne reste que **4 A disponibles par phase** (920 W) avant intervention du délesteur ! Il faut alors souscrire un abonnement 15 kVA ou 18 kVA triphasé (surcoût d'abonnement fixe annuel de 65 € à 130 €/an).
 * **Réalité d'usage quotidien** : Même avec la batterie de 98 kWh, un usager parcourant 120 km par jour consomme environ 22 kWh (à 18,5 kWh/100 km sur autoroute/mixte). Une borne **7,4 kW monophasée** restitue ces 22 kWh en **3 heures et 15 minutes**, et assure le cycle de référence 20-80 % (58,8 kWh nets) en **8h00 à 8h35**, soit l'exacte amplitude d'une plage d'Heures Creuses nocturne. En revanche, si l'habitation est **déjà alimentée en triphasé** (présence d'une pompe à chaleur haute puissance ou d'un atelier), l'installation d'une borne **11 kW** s'impose naturellement pour équilibrer la charge à raison de 16 A par phase au lieu de saturer une phase unique à 32 A.
 
-### Arbitrage 2 : Implantation physique et maîtrise des surcoûts de tirage (> 10 m et > 20 m)
+### Arbitrage 2 : Implantation physique et maîtrise des surcoûts de tirage (&gt; 10 m et &gt; 20 m)
 
 Sur les Peugeot e-3008 et e-5008, la **trappe de recharge est implantée sur l'aile arrière gauche** (côté conducteur). Cette donnée géométrique conditionne directement l'emplacement mural ou sur pied de la borne : un véhicule stationné systématiquement en marche avant dans une allée obligera le câble T2 (longueur standard de 5 mètres, ou 7 mètres en option) à contourner le SUV de 4,54 m (e-3008) ou 4,79 m (e-5008). En positionnant la borne de façon à stationner en marche arrière côté gauche au plus près du TGBT, on économise fréquemment 6 à 8 mètres de ligne électrique fixe.
 
@@ -146,8 +146,8 @@ Les forfaits nationaux et artisanaux intègrent généralement **5 à 10 mètres
   * En monophasé 7,4 kW (câble R2V **3G10 mm²** + câble blindé TIC) : majoration de **28 € à 42 € TTC par mètre supplémentaire**. Un éloignement à 20 mètres alourdit ainsi le devis de **280 € à 420 € TTC**.
   * En triphasé 11 kW (câble R2V **5G4 mm²** + TIC) : majoration de **26 € à 38 € TTC/m**.
   * En triphasé 22 kW (câble R2V **5G10 mm²** + TIC) : majoration de **38 € à 55 € TTC/m** en raison du poids linéique et du rayon de courbure exigeant du cuivre 5×10 mm².
-* **Tirage supérieur à 25 – 45 mètres (Contrainte de chute de tension $\Delta U$)** :
-  La norme NF C 15-100 recommande de maintenir la chute de tension sous **3 %** sur un circuit terminal (et impose un maximum absolu de 5 %). En monophasé 32 A (230 V), la formule $\Delta U = \frac{2 \times \rho \times L \times I}{S}$ (avec $\rho = 0,0225\ \Omega\cdot\text{mm}^2/\text{m}$ pour le cuivre en régime thermique) donne une perte de **6,48 V (2,82 %)** à **45 mètres** en 10 mm². Au-delà de 45 mètres entre le tableau et un carport détaché, l'ingénieur IRVE doit basculer sur un câble cuivre **3G16 mm²**, portant le coût du mètre linéaire entre **48 € et 65 € TTC/m**, et nécessitant parfois des borniers d'adaptation (fouets de raccordement) à l'entrée de la borne dont les connecteurs internes plafonnent souvent à 10 mm².
+* **Tirage supérieur à 25 – 45 mètres (Contrainte de chute de tension $delta U$)** :
+  La norme NF C 15-100 recommande de maintenir la chute de tension sous **3 %** sur un circuit terminal (et impose un maximum absolu de 5 %). En monophasé 32 A (230 V), la formule chute de tension delta U = (2 x rho x L x I) / S (avec $\rho = 0,0225\ Ohms\cdot\text{mm}^2/\text{m}$ pour le cuivre en régime thermique) donne une perte de **6,48 V (2,82 %)** à **45 mètres** en 10 mm². Au-delà de 45 mètres entre le tableau et un carport détaché, l'ingénieur IRVE doit basculer sur un câble cuivre **3G16 mm²**, portant le coût du mètre linéaire entre **48 € et 65 € TTC/m**, et nécessitant parfois des borniers d'adaptation (fouets de raccordement) à l'entrée de la borne dont les connecteurs internes plafonnent souvent à 10 mm².
 * **Génie civil et tranchée extérieure (Carport ou parking extérieur non attenant)** :
   Si aucune gaine souterraine TPC aiguillée de diamètre suffisant (Ø50 mm ou Ø63 mm minimum pour passer conjointement le 3G10 mm² et le câble TIC dans des conduits ou compartiments compatibles) n'est disponible, l'ouverture d'une tranchée réglementaire (profondeur de **50 cm** sous espace piéton, **85 cm** sous voie carrossable, lit de sable, fourreau TPC rouge et grillage avertisseur rouge posé 20 cm au-dessus) est facturée entre **70 € et 130 € TTC du mètre linéaire**, auxquels s'ajoute le pied de fixation acier galvanisé (190 € à 350 € TTC). Préparer soi-même la tranchée et la pose du fourreau TPC Ø63 mm aiguillé avant le passage de l'électricien IRVE permet d'économiser 800 € à 1 500 € sur une configuration extérieure à 15 mètres tout en préservant l'intégralité de la certification IRVE et du crédit d'impôt sur le raccordement électrique.
 
