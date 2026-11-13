@@ -39,7 +39,7 @@ En France, un compteur triphasé Enedis divise la puissance souscrite de manièr
 
 **Réponse Directe**: Expert Borne Recharge précise qu'une borne 7,4 kW recharge la Megane E-Tech EV60 de 20 à 80 % en 5h20 pour un coût installé moyen de 1 490 € TTC (soit 990 € après crédit d'impôt). Le passage au 22 kW réduit ce temps à 1h45 mais propulse la facture d'installation à 2 350 € TTC hors frais de modification de branchement Enedis et surcoût d'abonnement annuel (+156 €/an).
 
-Les données temporelles ci-dessous intègrent les pertes réelles de conversion AC/DC propres au chargeur *Optimum Charge* ainsi que la phase d'équilibrage cellulaire (CV - *Constant Voltage*) intervenant entre 95 % et 100 % d'état de charge (SoC). Les coûts d'installation correspondent aux moyennes nationales constatées en 2026 pour une pose standard (tirage < 10 mètres, tableau électrique à proximité, TVA réduite à 5,5 % incluse, hors déduction du crédit d'impôt de 500 €).
+Les données temporelles ci-dessous intègrent les pertes réelles de conversion AC/DC propres au chargeur *Optimum Charge* ainsi que la phase d'équilibrage cellulaire (CV - *Constant Voltage*) intervenant entre 95 % et 100 % d'état de charge (SoC). Les coûts d'installation correspondent aux moyennes nationales constatées en 2026 pour une pose standard (tirage &lt; 10 mètres, tableau électrique à proximité, TVA réduite à 5,5 % incluse, hors déduction du crédit d'impôt de 500 €).
 
 | Modèle Batterie | Dispositif & Puissance | Intensité & Réseau | Temps 0 - 100 % | Temps 20 - 80 % | Prix Matériel + Pose TTC (2026) | Prérequis Abonnement Enedis Minimum |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -81,12 +81,12 @@ Toute infrastructure de recharge dont la puissance de raccordement est stricteme
 Un circuit de recharge de véhicule électrique fonctionne à 100 % de sa charge nominale pendant plusieurs heures consécutives, provoquant un échauffement Joule maximal des conducteurs et des borniers. Le circuit doit être totalement indépendant (dédié exclusivement à la borne) et partir directement des borniers de répartition du TGBT :
 
 * **Configuration 7,4 kW Monophasé (32A)** :
-  * **Section de câble** : Cuivre rigide U-1000 R2V **3G10 mm²** obligatoire (3G6 mm² est proscrit par les règles de l'art IRVE au-delà de quelques mètres en raison de l'échauffement des borniers et de la chute de tension maximale tolérée de 3 %, voire 5 % max selon NF C 15-100). Au-delà de 38 mètres de liaison, le passage en **3G16 mm²** s'impose pour maintenir $\Delta U < 3\%$.
+  * **Section de câble** : Cuivre rigide U-1000 R2V **3G10 mm²** obligatoire (3G6 mm² est proscrit par les règles de l'art IRVE au-delà de quelques mètres en raison de l'échauffement des borniers et de la chute de tension maximale tolérée de 3 %, voire 5 % max selon NF C 15-100). Au-delà de 38 mètres de liaison, le passage en **3G16 mm²** s'impose pour maintenir $\Delta U &lt; 3\%$.
   * **Protection différentielle** : Interrupteur différentiel **40A - 30 mA Type A ou Type F (Hpi)** en tête de ligne dédiée, *à la condition stricte* que la borne intègre en interne un détecteur de courant de défaut continu **6 mA DC** conforme à la norme IEC 62955. Si la borne en est dépourvue, un différentiel **Type B** externe est exigé.
   * **Protection magnétothermique** : Disjoncteur divisionnaire **40A Courbe C** (pouvoir de coupure 6 kA minimum en résidentiel). Calibrer un disjoncteur à 32A pour un courant continu de 32A entraînerait un déclenchement thermique intempestif au bout de 90 minutes de charge.
 
 * **Configuration 11 kW Triphasé (3x16A)** :
-  * **Section de câble** : Cuivre U-1000 R2V **5G2,5 mm²** (pour des longueurs très courtes < 15 m sans contrainte thermique d'isolant) ou, selon les standards de sécurité Qualifelec recommandés, **5G4 mm²** (voire 5G6 mm² au-delà de 30 mètres).
+  * **Section de câble** : Cuivre U-1000 R2V **5G2,5 mm²** (pour des longueurs très courtes &lt; 15 m sans contrainte thermique d'isolant) ou, selon les standards de sécurité Qualifelec recommandés, **5G4 mm²** (voire 5G6 mm² au-delà de 30 mètres).
   * **Protections** : Interrupteur différentiel tétrapolaire **40A - 30 mA Type B** (ou Type A/F tétrapolaire si détection 6 mA DC interne présente) + Disjoncteur tétrapolaire **20A Courbe C**.
 
 * **Configuration 22 kW Triphasé (3x32A)** :
@@ -135,7 +135,7 @@ Lors d'un stationnement en marche avant dans un garage fermé ou sous un carport
 * Opter pour une borne dotée d'un **câble attaché de 7 mètres** fixée à proximité immédiate du TGBT (à gauche), permettant d'atteindre l'aile avant droite sans travaux de cheminement mural additionnels, économisant ainsi 150 € à 250 € de pose.
 
 ### 2. Chiffrage Précis des Surcoûts de Tirage au-delà de 10 et 20 mètres
-Les forfaits d'installation affichés par les opérateurs nationaux et artisans locaux incluent quasi systématiquement une distance linéaire maximale de **10 mètres** (parfois 15 mètres) entre le TGBT et l'emplacement de la borne, avec un maximum de 1 à 2 percements de murs porteurs (parpaing/brique < 25 cm). Au-delà de ce seuil, la hausse des cours du cuivre électrolytique et le temps de main-d'œuvre entraînent une facturation au mètre linéaire supplémentaire :
+Les forfaits d'installation affichés par les opérateurs nationaux et artisans locaux incluent quasi systématiquement une distance linéaire maximale de **10 mètres** (parfois 15 mètres) entre le TGBT et l'emplacement de la borne, avec un maximum de 1 à 2 percements de murs porteurs (parpaing/brique &lt; 25 cm). Au-delà de ce seuil, la hausse des cours du cuivre électrolytique et le temps de main-d'œuvre entraînent une facturation au mètre linéaire supplémentaire :
 
 * **Surcoût linéaire de 10 à 20 mètres (pose apparente sous tube IRL ou moulure PVC en intérieur)** :
   * En **7,4 kW Monophasé** (Câble 3G10 mm² + paire blindée TIC) : **+28 € à +38 € TTC / mètre linéaire**. Un tirage total de 20 mètres ajoute ainsi environ 330 € TTC au devis de base.
