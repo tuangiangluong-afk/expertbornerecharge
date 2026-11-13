@@ -1,0 +1,162 @@
+---
+title: "Borne Recharge MG4 & MG ZS EV Domicile 2026 | Guide Électrique & Prix"
+description: "Installation borne de recharge pour MG4 et MG ZS EV en 2026. Chargeur 6,6 kW monophasé vs 11 kW triphasé, temps de charge 0-100% et prix de pose IRVE dès 1100€ TTC."
+date: "2026-11-13"
+category: "Véhicules"
+readTime: "8 min"
+author: "Expert Borne Recharge"
+image: "/api/og"
+---
+
+La gamme électrique MG (MG4 Standard, Comfort, Luxury, Trophy, XPower et SUV MG ZS EV) s'impose par une efficience énergétique remarquable en 2026, mais présente une asymétrie technique critique côté courant alternatif (AC). La version Standard intègre un chargeur embarqué monophasé de 6,6 kW tirant 28,7 A en continu, contre un redresseur triphasé de 11 kW (3 x 16 A) sur les déclinaisons supérieures. Cette architecture dicte le dimensionnement exact de votre tableau divisionnaire. Comptez un budget net dès 1 100 € TTC (pose IRVE et crédit d'impôt de 500 € déduit) pour recharger de 20 % à 80 % en 3h30 à 4h30.
+
+<CtaButton text="Estimer Mon Projet & Devis Gratuit" url="#simulateur" />
+
+## Cadre Technique et Spécificités de Charge Domicile pour MG4 & MG ZS EV en 2026
+
+**Réponse Directe**: Expert Borne Recharge précise que les MG4 et MG ZS EV Standard (51 kWh LFP) brident la charge AC à 6,6 kW monophasé (29 A), exigeant une borne 7,4 kW sur réseau monophasé. Les finitions Comfort, Luxury, Trophy (64/77 kWh NMC) et XPower encaissent 11 kW en triphasé, mais chutent à 7,4 kW (32 A) sur installation domestique monophasée.
+
+L'ingénierie de charge embarquée (On-Board Charger - OBC) développée par SAIC Motor pour la plateforme MSP (Modular Scalable Platform) de la MG4 et l'architecture du MG ZS EV divise drastiquement les contraintes électriques résidentielles selon le niveau de finition acquis. Une erreur d'appréciation de l'OBC entraîne soit un sous-dimensionnement générant des temps de charge rédhibitoires, soit un surinvestissement matériel totalement inexploité par le véhicule.
+
+### 1. Architecture LFP 51 kWh (MG4 Standard & MG ZS EV Autonomie Standard) : Le goulot monophasé 6,6 kW
+Les versions d'entrée de gamme embarquent une chimie Lithium-Fer-Phosphate (LFP) d'une capacité brute de 51 kWh (50,8 kWh utiles sur MG4, 49 kWh utiles sur MG ZS EV). L'OBC intégré est strictement **monophasé d'une puissance maximale de 6,6 kW**.
+- **Comportement sur réseau Monophasé (borne 7,4 kW)** : Le véhicule appelle une intensité nominale de $6600\text{ W} / 230\text{ V} = 28,7\text{ A}$. Bien que la puissance soit inférieure à 7,4 kW, cet appel de courant de près de 29 A dépasse largement le calibre standard de 20 A. Il impose réglementairement l'infrastructure complète d'une borne 7,4 kW (disjoncteur 40 A, câble 10 mm²).
+- **Comportement sur réseau Triphasé (borne 11 kW ou 22 kW)** : C'est le piège technique majeur sur la finition Standard. Sur une borne triphasée de 11 kW (limitée à 16 A par phase), la MG4 Standard n'exploitera que la phase L1. La puissance de charge s'effondrera mathématiquement à $230\text{ V} \times 16\text{ A} = 3,68\text{ kW}$, doublant le temps d'immobilisation (plus de 14 heures pour un cycle complet). Sur un compteur triphasé, il faudrait théoriquement installer une borne 22 kW (32 A par phase) pour que la phase L1 délivre les 28,7 A requis, ce qui crée un déséquilibre de phase sévère sur l'abonnement Enedis.
+- **Contrainte Chimique LFP** : Contrairement au NMC, la courbe de tension plate du LFP exige une recharge à **100 % au moins une fois par semaine** pour permettre au BMS (Battery Management System) d'étalonner l'état de charge (SoC) et d'équilibrer les cellules passivement en fin de cycle.
+
+### 2. Architecture NMC 64 kWh et 77 kWh (Comfort, Luxury, Trophy, XPower & ZS EV Grande Autonomie) : La polyvalence 11 kW
+Les batteries Nickel-Manganèse-Cobalt de 64 kWh bruts (61,7 kWh utiles sur MG4 Comfort/Luxury/XPower ; 68,3 kWh utiles sur MG ZS EV Long Range, pack de 72,6 kWh bruts) et de 77 kWh bruts (74,4 kWh utiles sur MG4 Trophy Extended Range) sont couplées à un chargeur **triphasé bidirectionnel (V2L) de 11 kW**.
+- **Sur réseau Triphasé (borne 11 kW)** : Le convertisseur redresse 3 phases à 16 A sous 400 V, délivrant 11 kW constants. L'équilibre des phases sur le tableau général basse tension (TGBT) est parfait.
+- **Sur réseau Monophasé (borne 7,4 kW)** : L'électronique de puissance de SAIC permet un pontage interne des phases à l'entrée du redresseur lorsqu'une seule phase est détectée via le signal PWM (Pulse Width Modulation) de la prise Type 2. Le véhicule accepte alors 32 A sur la phase unique, soit **7,4 kW réels**. C'est la configuration installée dans 82 % des foyers individuels français équipés en monophasé.
+- **Contrainte Chimique NMC** : Pour préserver la cathode contre l'oxydation électrolytique à haute tension, le seuil quotidien de recharge doit être paramétré à **80 %** via l'écran central ou l'application MG iSMART (100 % réservé aux départs longue distance immédiats).
+
+<Callout title="Alerte Ingénierie : Ne confondez pas MG ZS EV Phase 1 (avant oct. 2021) et Phase 2">
+Si votre acquisition concerne un MG ZS EV d'occasion de première génération (calandre ouverte, batterie 44,5 kWh), son chargeur interne est monophasé 6,6 kW sur toutes les finitions. Seul le MG ZS EV restylé (calandre pleine, commercialisé fin 2021 jusqu'en 2026) en version Autonomie Étendue (70/72,6 kWh) dispose du chargeur triphasé 11 kW. Vérifiez impérativement le brochage de votre connecteur Type 2 côté véhicule : si les broches inférieures L2 et L3 sont vides (plastique noir sans pin métallique), le véhicule est strictement monophasé.
+</Callout>
+
+## Tableau Comparatif des Puissances et Matrice de Prix d'Installation (7,4 kW, 11 kW, 22 kW)
+
+**Réponse Directe**: Expert Borne Recharge précise que l'installation d'une borne 7,4 kW coûte entre 1 450 € et 1 850 € TTC (soit dès 950 € à 1 350 € net après crédit d'impôt), couvrant 100 % des besoins en monophasé. En triphasé, la borne 11 kW (1 650 € à 2 150 € TTC avant aide) divise le temps de charge par 1,5 sur les versions 64 et 77 kWh.
+
+Les calculs temporels ci-dessous intègrent un rendement énergétique global du chargeur embarqué MG mesuré à **89,5 %** en AC (pertes joules câble, conversion AC/DC et maintien thermique du pack batterie durant la charge) ainsi que la phase d'équilibrage terminal (CV - Constant Voltage) entre 95 % et 100 % qui ajoute environ 20 minutes incompressibles.
+
+### Matrice de Performance Électrique et Chiffrage IRVE 2026
+
+| Modèle & Batterie (Capacité Utile) | Puissance Borne Installée | Puissance Réelle Absorbée | Temps 0 - 100 % (Cycle complet) | Temps 20 - 80 % (Usage quotidien) | Prix Matériel + Pose TTC 2026 (Hors Aides)* | Prérequis Réseau & Abonnement Enedis |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **MG4 / ZS EV Standard**<br/>51 kWh LFP (50,8 kWh ut.) | Prise Renforcée 3,7 kW | 3,2 kW (bridage CRO 14A) | 17h45 | 10h35 | 650 € – 890 € | Monophasé 6 kVA min. (Ligne 2,5 mm² dédiée) |
+| **MG4 / ZS EV Standard**<br/>51 kWh LFP (50,8 kWh ut.) | **Borne 7,4 kW (Optimum)** | **6,6 kW (1x28,7A)** | **8h40** | **5h10** | **1 450 € – 1 850 €** | **Monophasé 9 kVA + TIC** (Câble 3G10 mm²) |
+| **MG4 / ZS EV Standard**<br/>51 kWh LFP (50,8 kWh ut.) | Borne 11 kW Triphasé | 3,7 kW (1x16A sur L1) | 15h25 | 9h10 | 1 650 € – 2 150 € | Triphasé 12 kVA (Déconseillé : bridage L1) |
+| **MG4 Comfort/Luxury/XPower**<br/>64 kWh NMC (61,7 kWh ut.) | **Borne 7,4 kW Monophasé** | **7,4 kW (1x32A)** | **9h25** | **5h35** | **1 450 € – 1 850 €** | **Monophasé 9 kVA + TIC** (Câble 3G10 mm²) |
+| **MG4 Comfort/Luxury/XPower**<br/>64 kWh NMC (61,7 kWh ut.) | **Borne 11 kW Triphasé** | **11,0 kW (3x16A)** | **6h25** | **3h45** | **1 650 € – 2 150 €** | **Triphasé 12 à 15 kVA + TIC** (5G2,5 ou 5G4 mm²) |
+| **MG ZS EV Grande Autonomie**<br/>72,6 kWh NMC (68,3 kWh ut.) | Borne 7,4 kW Monophasé | 7,4 kW (1x32A) | 10h25 | 6h10 | 1 450 € – 1 850 € | Monophasé 9 kVA + TIC (Câble 3G10 mm²) |
+| **MG ZS EV Grande Autonomie**<br/>72,6 kWh NMC (68,3 kWh ut.) | **Borne 11 kW Triphasé** | **11,0 kW (3x16A)** | **7h05** | **4h10** | **1 650 € – 2 150 €** | **Triphasé 12 à 15 kVA + TIC** (5G2,5 ou 5G4 mm²) |
+| **MG4 Trophy Extended Range**<br/>77 kWh NMC (74,4 kWh ut.) | Borne 7,4 kW Monophasé | 7,4 kW (1x32A) | 11h20 | 6h45 | 1 450 € – 1 850 € | Monophasé 9 kVA + TIC (Câble 3G10 mm²) |
+| **MG4 Trophy Extended Range**<br/>77 kWh NMC (74,4 kWh ut.) | **Borne 11 kW Triphasé** | **11,0 kW (3x16A)** | **7h40** | **4h35** | **1 650 € – 2 150 €** | **Triphasé 12 à 15 kVA + TIC** (5G2,5 ou 5G4 mm²) |
+| **Toute la gamme MG (AC)** | Borne 22 kW Triphasé | 6,6 kW ou 11,0 kW max | Identique 7,4 / 11 kW | Identique 7,4 / 11 kW | 1 950 € – 2 600 € | Triphasé 18 à 24 kVA (5G10 mm² - Surdimensionné) |
+
+*\*Tarifs relevés en maison individuelle pour un forfait standard incluant jusqu'à 10 mètres linéaires de câblage apparent sous tube IRL, protections différentielles dédiées, borne pilotable conforme NF C 15-100 avec obturateurs T2S et TVA réduite à 5,5 %. Déduire 500 € de Crédit d'Impôt 2026 pour obtenir le reste à charge réel (soit dès 950 € à 1 150 € net sur les offres d'entrée de gamme qualifiées).*
+
+### Analyse d'amortissement de la borne 22 kW
+Aucune MG4 ni aucun MG ZS EV commercialisé en 2026 ne possède de chargeur AC 22 kW. L'installation d'une borne 22 kW à domicile n'a que deux justifications techniques exceptionnelles :
+1. Vous possédez un compteur **triphasé** et une **MG4 Standard (6,6 kW monophasé)** : seule une borne configurée en 22 kW (32 A par phase) permettra de délivrer 29 A sur la phase L1 sans brider la voiture à 3,7 kW (sous réserve d'un abonnement Enedis d'au moins 18 kVA pour supporter 30 A sur une seule phase).
+2. Votre foyer possède un second véhicule doté d'un chargeur 22 kW natif (ex: Renault Mégane E-Tech Optimum Charge ou Scénic E-Tech 22 kW).
+
+Dans tous les autres scénarios, le surcoût de 400 € à 600 € lié au disjoncteur tétrapolaire 40 A, à l'interrupteur différentiel Type B coûteux et au cuivre 5G10 mm² constitue une perte sèche.
+
+## Norme NF C 15-100, Délestage Dynamique Linky (TIC) et Qualification Qualifelec IRVE
+
+**Réponse Directe**: Expert Borne Recharge précise que le décret du 12 janvier 2017 impose un électricien certifié IRVE dès 3,7 kW. La norme NF C 15-100 exige une ligne dédiée en 10 mm² (borne 7,4 kW), un différentiel 30 mA Type A/F ou B, un connecteur T2S à obturateurs et un délestage dynamique Linky évitant toute disjonction.
+
+Une recharge de véhicule électrique soumet l'installation domestique à un régime thermique critique : un courant continu de 29 A à 32 A maintenu pendant 6 à 10 heures consécutives sans aucune intermittence. Là où un four pyrolyse ou une plaque à induction régule sa puissance par impulsions cycliques, l'OBC de la MG4 maintient l'intensité nominale à 100 % de facteur de marche.
+
+### 1. Exigences strictes de la norme NF C 15-100 (Titre 10 / f17)
+Tout raccordement de point de recharge résidentiel en France doit respecter scrupuleusement l'architecture de protection suivante, sous peine de nullité de la garantie incendie habitation en cas de sinistre thermique :
+- **Section des conducteurs cuivre (Câble U-1000 R2V)** :
+  - Pour une borne **7,4 kW monophasée (32 A)** : Section minimale impérative de **3G10 mm²** cuivre rigide. L'usage de 6 mm² (toléré pour des plaques de cuisson intermittentes) est formellement proscrit en IRVE en raison de l'échauffement des borniers et de la chute de tension ($\Delta U$ limitée à 3 % recommandé, 5 % max réglementaire).
+  - Pour une borne **11 kW triphasée (16 A par phase)** : Section minimale de **5G2,5 mm²** pour les très faibles longueurs (< 15 m), mais les bureaux d'études imposent en pratique du **5G4 mm²** ou **5G6 mm²** pour garantir une chute de tension négligeable et anticiper l'évolution matérielle.
+  - Pour une borne **22 kW triphasée (32 A par phase)** : Section minimale impérative de **5G10 mm²** (voire 5G16 mm² au-delà de 35 mètres).
+- **Protection différentielle dédiée (tête de ligne exclusive)** : La ligne IRVE doit partir directement des borniers de répartition en amont, sans traverser les peignes horizontaux existants du tableau.
+  - En monophasé 7,4 kW : Interrupteur différentiel **40 A - 30 mA de Type A ou Type F (Hpi/Si)**, impérativement associé à une détection interne de courant de fuite continu **6 mA DC** intégrée dans la borne. Si la borne ne dispose pas de ce capteur RDC-DD 6 mA DC certifié IEC 62955, un différentiel **Type B** pur est obligatoire.
+  - En triphasé 11 kW / 22 kW : Interrupteur différentiel tétrapolaire **40 A - 30 mA de Type B** obligatoire (ou Type A/F tétrapolaire uniquement si certification constructeur explicite du RDC-DD 6 mA DC interne). La raison physique : un défaut d'isolement côté courant continu de l'OBC triphasé de la MG4 peut injecter un courant de fuite lisse (> 6 mA DC) qui sature le tore magnétique d'un différentiel Type AC ou A classique, le rendant totalement "aveugle" en cas d'électrisation.
+- **Protection magnétothermique** : Disjoncteur divisionnaire dédié courbe C, pouvoir de coupure minimal 3 kA ou 4,5 kA en résidentiel : calibre **40 A** (pour charge 32 A, coefficient de majoration NF C 15-100 de 1,25 : $32 \times 1,25 = 40\text{ A}$) ou calibre **20 A tétrapolaire** (pour charge 11 kW / 16 A : $16 \times 1,25 = 20\text{ A}$).
+- **Spécificité Française T2S (Obturateurs mécaniques)** : En France, contrairement au reste de l'Europe, toute borne installée dans un local d'habitation doit comporter des **obturateurs physiques de sécurité** sur le socle Type 2 (standard T2S) ou utiliser un câble attaché muni d'un dispositif d'obturation certifié. L'installation en auto-pose d'une borne importée d'Allemagne ou de Chine dépourvue d'obturateurs T2S entraîne un refus immédiat d'attestation Consuel et l'invalidation du crédit d'impôt.
+- **Terre électrique** : Résistance de la prise de terre mesurée au telluromètre strictement **inférieure à 100 Ohms** (idéalement < 50 $\Omega$). Les chargeurs embarqués SAIC vérifient la tension Neutre-Terre avant d'enclencher les contacteurs : au-delà de 100 $\Omega$ ou en présence d'une tension parasite Neutre-Terre > 8 V, la MG4 met sa prise en sécurité (voyant rouge clignotant).
+
+### 2. Délestage Dynamique via Télé-Information Client (TIC Linky)
+Tirer 6,6 kW (MG4 Standard) ou 7,4 kW (MG4 64/77 kWh) sur un abonnement Enedis standard de **6 kVA (30 A)** provoque le déclenchement instantané du compteur Linky. Même avec un abonnement de **9 kVA (45 A)**, il ne reste que $9000 - 7400 = 1600\text{ W}$ (7 A) disponibles pour l'intégralité du logement : la mise en route simultanée d'une pompe à chaleur, d'un chauffe-eau thermodynamique ou d'une bouilloire coupe l'alimentation générale.
+
+La parade technique indispensable en 2026 est le **délestage dynamique** (Load Balancing) :
+1. L'électricien IRVE tire une paire torsadée blindée (câble téléreport type SYT1 2x0,8 mm²) entre les bornes `I1` et `I2` du compteur Linky et l'entrée TIC de la borne (ex: Hager Witty One/Start, Schneider Charge, Wallbox Pulsar Plus + Power Boost, Autel MaxiCharger, Lektrico). En cas d'impossibilité filaire (compteur Linky en limite de propriété à 50 m), un module radio TIC sans fil ou un tore de mesure Ampèremétrique (CT Clamp) pincé sur la phase principale au TGBT assure la même fonction.
+2. Le microcontrôleur de la borne lit en temps réel (toutes les secondes) la marge d'ampérage restante sur l'abonnement Enedis.
+3. Si la maison consomme 5,2 kW sur un contrat 9 kVA, la borne module instantanément le rapport cyclique du signal pilote PWM sur la broche CP (Control Pilot) de la prise Type 2 : la MG4 abaisse automatiquement sa puissance de charge à 3,6 kW (16 A). Dès que le four ou la PAC s'éteint, la charge remonte à 6,6 kW ou 7,4 kW en moins de 3 secondes, sans coupure.
+4. **Économie financière directe** : Vous conservez un abonnement 9 kVA (environ 235 €/an en tarif Base ou Tempo) au lieu de souscrire un contrat 12 kVA (près de 285 €/an), économisant 50 € de frais fixes annuels tout en programmant les charges sur les **Heures Creuses** ou les jours **Bleus Tempo** (0,1296 €/kWh env. en HC Bleu, soit un plein de 50 kWh pour moins de **6,50 €**, équivalent à **1,80 € aux 100 km**).
+
+### 3. Cadre légal : Décret n° 2017-26 du 12 janvier 2017
+En France, toute installation d'un point de charge de puissance supérieure à **3,7 kW** doit obligatoirement être réalisée par un professionnel titulaire d'une mention **IRVE** délivrée par **Qualifelec** (mentions P1 pour bornes résidentielles sans configuration communicante complexe, P2 pour bornes communicantes/supervisées) ou **AFNOR Certification** (EV Ready / Qualit'EnR). Cette certification conditionne la couverture de votre assurance multirisque habitation, la garantie constructeur MG de 7 ans / 150 000 km sur le système haute tension en cas d'avarie du chargeur OBC induite par une surtension, ainsi que l'accès aux aides fiscales d'État.
+
+## Aides Financières 2026 : Crédit d'Impôt de 500 €, TVA à 5,5 % et Subventions Advenir
+
+**Réponse Directe**: Expert Borne Recharge précise qu'en 2026, les particuliers bénéficient d'un crédit d'impôt forfaitaire de 500 € (plafonné à 75 % de la facture) pour une borne pilotable posée par un artisan IRVE, cumulable avec la TVA réduite à 5,5 % (logements > 2 ans) et jusqu'à 600 € de prime Advenir en copropriété.
+
+L'optimisation fiscale d'un projet IRVE en 2026 réduit le coût global d'acquisition de **35 % à 55 %** selon votre statut résidentiel (maison individuelle vs habitat collectif). L'intégralité de ces leviers repose sur le respect strict du cahier des charges réglementaire lors de la facturation.
+
+### 1. Le Crédit d'Impôt Borne de Recharge 2026 (CIBRE - Art. 200 quater C du CGI)
+Reconduit par la Loi de Finances, ce dispositif fiscal est nettement plus avantageux qu'une simple déduction : s'agissant d'un **crédit d'impôt**, l'administration fiscale vous rembourse la somme par virement si vous n'êtes pas imposable.
+- **Montant** : **500 € par système de charge**, dans la limite de 75 % des dépenses engagées (matériel + main-d'œuvre TTC).
+- **Conditions d'éligibilité cumulatives en 2026** :
+  1. Accessibilité universelle : Propriétaires occupants, locataires ou occupants à titre gratuit, **sans aucun plafond de ressources**, pour la résidence principale ET/OU la résidence secondaire (limité à 1 système pour une personne seule, 2 systèmes pour un couple soumis à imposition commune).
+  2. **Exigence de pilotabilité énergétique** : Les bornes "basiques" non connectées et les prises renforcées 3,7 kW (type Legrand Green'Up) sont **définitivement exclues** du crédit d'impôt. La borne doit impérativement être "pilotable", c'est-à-dire dotée d'une capacité de modulation de puissance et de communication (délestage TIC, protocole OCPP 1.6J/2.0.1, Wi-Fi/Ethernet/Bluetooth programmables).
+  3. **Facture unique Fourniture + Pose** : Vous ne pouvez pas acheter la borne vous-même sur Internet pour la faire poser par un artisan. L'électricien qualifié IRVE doit fournir et facturer le matériel ET l'installation sur la même facture, en mentionnant sa référence de certificat Qualifelec ou AFNOR en cours de validité, l'adresse des travaux ainsi que la marque et la référence exacte de la borne pilotable.
+
+### 2. La TVA à taux réduit de 5,5 % (Travaux d'amélioration énergétique)
+Au lieu du taux normal de 20 %, l'ensemble de la prestation (borne murale, câble R2V, protections différentielles, tranchée éventuelle et main-d'œuvre) est facturé à **5,5 % de TVA** dès lors que :
+- Le logement (maison ou appartement) est achevé depuis **plus de 2 ans** à la date de début des travaux.
+- La pose est effectuée par un professionnel certifié IRVE (vous signez une attestation simplifiée Cerfa de TVA réduite jointe au devis).
+- *Gain financier immédiat sur le devis* : Sur un chantier chiffré à 1 550 € HT, la TVA à 5,5 % s'élève à 85,25 € (total 1 635,25 € TTC) contre 310 € à 20 % (total 1 860 € TTC), soit **224,75 € d'économie directe** en trésorerie.
+- *Attention technique* : Une prise renforcée 3,7 kW (n'étant pas considérée comme une borne fixe pilotable au sens de la rénovation énergétique) relève de la TVA intermédiaire à **10 %** (logement > 2 ans), et toute installation dans une maison neuve (< 2 ans) reste soumise à 20 % de TVA (tout en demeurant éligible au crédit d'impôt de 500 €).
+
+### 3. Programme ADVENIR 2026 (Exclusivement en Copropriété / Résidentiel Collectif)
+Si vous stationnez votre MG4 ou MG ZS EV sur une place de parking en immeuble collectif (en invoquant le "Droit à la Prise" régi par le décret n° 2020-1720 ou via une infrastructure collective de copropriété type Enedis Réseau Electrique Auto / Opérateur privé), la prime Advenir finance **50 % des coûts HT** de fourniture et d'installation :
+- **Plafond Solution Individuelle en copropriété** : Jusqu'à **600 € HT** d'aide directe versée (souvent déduite par l'installateur labellisé Advenir sur le devis).
+- **Cumul fiscal autorisé** : En copropriété, le Crédit d'Impôt de 500 € se calcule sur le reste à charge TTC *après* déduction de la prime Advenir !
+  - *Exemple chiffré réel en parking souterrain (MG4 Luxury sur borne 7,4 kW)* : Devis initial de 1 900 € HT, soit 2 004,50 € TTC (TVA 5,5 %). Prime Advenir déduite : - 600 €. Reste à payer à l'artisan : 1 404,50 € TTC. Crédit d'impôt 2026 sur ce reste à charge : - 500 € (bien inférieur au plafond de 75 % de 1 404,50 €). **Coût net final : 904,50 € TTC.**
+
+## Guide d'Installation Pratique et Arbitrage Technique (Éviter les Surcoûts de Tirage > 10m/20m)
+
+**Réponse Directe**: Expert Borne Recharge précise que le positionnement de la borne à gauche ou à l'avant (selon MG4 ou ZS EV) optimise l'ergonomie. Au-delà du forfait standard de 10 mètres de câble, les artisans IRVE facturent une majoration de 22 € à 38 € TTC par mètre linéaire supplémentaire (cuivre 10 mm², main-d'œuvre et percements).
+
+La maîtrise du budget d'installation d'une borne pour votre MG repose à 80 % sur l'optimisation du cheminement de câble entre votre Tableau Général Basse Tension (TGBT) et l'emplacement de stationnement. Une mauvaise implantation de la Wallbox de seulement 5 mètres peut alourdir la facture de 250 € à 600 € en génie civil ou en cuivre.
+
+### 1. Ergonomie spécifique : MG4 vs MG ZS EV (Position des trappes de charge)
+Contrairement à de nombreux constructeurs qui unifient l'emplacement du port Type 2, MG utilise deux implantations opposées entre sa berline compacte et son SUV :
+- **Sur la MG4 (toutes versions : Standard, Comfort, Luxury, Trophy, XPower)** : La trappe de recharge est située sur **l'aile arrière gauche** (côté conducteur). Si vous vous garez en marche arrière dans votre garage, la prise se trouve au fond à droite en regardant le véhicule de face ; en marche avant, elle est près de la porte de garage côté gauche.
+- **Sur le MG ZS EV** : La trappe de recharge est intégrée **directement dans la calandre avant** (légèrement décalée côté gauche du logo MG). C'est l'implantation la plus ergonomique pour un stationnement en marche avant contre le mur du fond du garage : un câble Type 2 court de 5 mètres suffit sans jamais longer la carrosserie.
+
+### 2. Barème des majorations tarifaires au-delà de 10 et 20 mètres linéaires
+Les forfaits nationaux et artisanaux affichés entre 1 450 € et 1 650 € TTC incluent systématiquement une limite stricte (généralement **10 mètres**, parfois **15 mètres** chez certains réseaux) ainsi qu'un seul percement de mur porteur (< 30 cm d'épaisseur, hors béton banché ou pierre meulière). Dès que la topologie du bâtiment excède ce cadre, les postes de surcoûts suivants s'appliquent en 2026 :
+
+| Nature de la Contrainte Technique | Coût Unitaire Moyen TTC 2026 | Justification d'Ingénierie & Matériaux |
+| :--- | :--- | :--- |
+| **Mètre linéaire supplémentaire (10 m à 25 m)**<br/>*Pose apparente sous tube IRL / moulure* | **22 € à 35 € / mètre** | Prix du cuivre U-1000 R2V 3G10 mm² + câble data TIC blindé + colliers Atlas + temps de pose. |
+| **Très grande longueur (> 25 m à 50 m)**<br/>*Passage en section supérieure 16 mm²* | **38 € à 55 € / mètre** | Au-delà de 28 m à 32 A (7,4 kW), la chute de tension dépasse 3 % en 10 mm² ($\Delta U = \frac{2 \times \rho \times L \times I}{S}$). Obligation de passer en **3G16 mm²** + borniers adaptateurs. |
+| **Création d'un tableau divisionnaire dédié** | **140 € à 220 € forfait** | Indispensable lorsque le tableau principal existant n'a plus aucune réserve modulaire (minimum 4 à 6 modules libres requis). |
+| **Percement de mur maître épais (> 30 cm / Béton armé / Pierre)** | **75 € à 150 € / percement** | Carottage diamant ou perforateur SDS-Max avec fourreau d'étanchéité et rebouchage coupe-feu/mousse expansive. |
+| **Tranchée extérieure en terre meuble**<br/>*(Borne sur pied en allée de jardin)* | **65 € à 110 € / mètre** | Fouille à 50 cm de profondeur min. (85 cm sous voie carrossable), lit de sable, gaine TPC rouge Ø 63 mm, grillage avertisseur rouge NF et remblaiement. |
+| **Pied / Totem métallique autoportant** | **220 € à 390 € hors massif** | Support acier galvanisé thermolaqué + création d'un massif béton de propreté (40x40x40 cm) avec tiges d'ancrage. |
+
+### 3. Arbitrage d'ingénieur : Comment éliminer les surcoûts de tirage ?
+Pour maintenir votre facture finale autour de **1 100 € à 1 300 € net** (crédit d'impôt déduit), appliquez ces trois règles d'arbitrage avant la visite technique de l'artisan :
+1. **Privilégiez un câble Type 2 plus long plutôt qu'un tirage mural R2V rallongé** : Le câble livré ou acheté pour brancher la voiture (Type 2 - Type 2, 32 A) existe en version **7 mètres ou 10 mètres** (contre 5 mètres en standard) pour un écart de prix d'à peine **40 € à 60 € TTC**. Fixer la borne immédiatement derrière la cloison du tableau électrique et utiliser un cordon mobile de 7,5 mètres pour rejoindre l'aile arrière gauche de la MG4 vous fait économiser 8 mètres de câblage fixe 10 mm² facturés 250 € par l'électricien.
+2. **Exploitez un tableau secondaire de garage s'il est correctement alimenté** : Si votre garage déporté dispose déjà d'un coffret divisionnaire alimenté depuis la maison par une liaison cuivre d'au moins **10 mm² ou 16 mm²**, l'artisan pourra s'y repiquer réglementairement (sous réserve du bilan de puissance de ce coffret) sans retirer une ligne complète depuis le TGBT principal. À l'inverse, si ce coffret garage est alimenté en 2,5 mm² ou 6 mm², le repiquage est interdit pour du 7,4 kW : il faudra soit tirer une nouvelle ligne 10 mm², soit brider matériellement la borne à 3,7 kW (16 A) ou 4,6 kW (20 A sur 6 mm²).
+3. **Préparez le génie civil vous-même en extérieur** : Les électriciens IRVE ne sont pas des terrassiers ; ils sous-traitent ou majorent fortement l'ouverture de tranchées. Si votre place de parking est à 18 mètres de la façade, réalisez vous-même la tranchée (profondeur 50 cm sous pelouse, 85 cm sous passage de roues MG ZS EV / MG4), posez un fourreau TPC rouge annelé Ø 63 mm (intérieur lisse avec tire-fil) et un grillage avertisseur rouge 20 cm au-dessus. L'électricien n'aura plus qu'à aiguiller son câble 3G10 mm² ou 3G16 mm² le jour de la pose, divisant la facture d'installation extérieure par deux tout en préservant l'intégralité de la garantie décennale électrique et la conformité Qualifelec IRVE.
+
+### Synthèse de recommandation matérielle par modèle MG
+- **Propriétaire de MG4 Standard ou MG ZS EV 51 kWh (compteur Monophasé)** : Installez une borne murale **7,4 kW pilotable** avec câble TIC Linky (ex: *Hager Witty Start 7 kW*, *Schneider Charge*, *Wallbox Pulsar Plus T2S* ou *Lektrico 1P7K*). Votre véhicule chargera au maximum absolu de sa capacité (6,6 kW), récupérant 100 % de son autonomie WLTP (350 km sur MG4, 320 km sur ZS EV) en une seule nuit d'Heures Creuses.
+- **Propriétaire de MG4 Comfort, Luxury, Trophy 77 kWh, XPower ou ZS EV 70 kWh** :
+  - *En maison Monophasée* : Conservez une borne **7,4 kW avec délestage TIC**. Passer votre compteur Enedis en triphasé uniquement pour gagner 2h30 de charge nocturne est une aberration économique (frais d'intervention Enedis + équilibrage coûteux de tout le tableau domestique existant). En 8 heures d'Heures Creuses à 7,4 kW, vous injectez ~53 kWh nets dans la batterie, soit **70 % à 85 % d'autonomie récupérée en une nuit**.
+  - *En maison déjà équipée en Triphasé* : Exigez impérativement une borne **11 kW triphasée pilotable** (3 x 16 A). Elle équilibrera parfaitement la charge sur vos trois phases sans surcharger une phase unique, et rechargera même l'imposante batterie 77 kWh de la MG4 Trophy Extended Range de 20 % à 80 % en seulement **4h35**.
+
+<CtaButton text="Comparer 3 Devis d'Artisans IRVE Locaux" url="#simulateur" />
+
+<LocalLinker />

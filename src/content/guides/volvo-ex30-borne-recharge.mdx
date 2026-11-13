@@ -1,0 +1,167 @@
+---
+title: "Borne Recharge Volvo EX30 Domicile 2026 : 7,4 kW, 11 kW ou 22 kW ?"
+description: "Quelle borne domicile pour le Volvo EX30 (51 kWh LFP / 69 kWh NMC) ? Analyse du chargeur 22 kW de la finition Ultra, contraintes d'abonnement Enedis et devis IRVE 2026."
+date: "2026-11-13"
+category: "Véhicules"
+readTime: "8 min"
+author: "Expert Borne Recharge"
+image: "/api/og"
+---
+
+Le Volvo EX30 s'impose sur le segment des SUV compacts électriques avec deux architectures batteries : 51 kWh bruts (LFP) et 69 kWh bruts (NMC). Selon la finition retenue, le convertisseur embarqué accepte 11 kW (Core et Plus) ou 22 kW en courant alternatif triphasé (Ultra). Pourtant, 85 % des installations résidentielles françaises en 2026 s'arrêtent à 7,4 kW monophasé ou 11 kW triphasé pour éviter l'explosion des coûts d'abonnement Enedis (jusqu'à 460 €/an en 24 kVA). Ce référentiel d'ingénierie détaille le dimensionnement optimal, les contraintes normatives NF C 15-100 et le chiffrage réel d'une borne pilotable après déduction du crédit d'impôt de 500 €.
+
+<CtaButton text="Estimer Mon Projet & Devis Gratuit" url="#simulateur" />
+
+## Cadre Technique et Spécificités de Charge Domicile pour Volvo EX30 en 2026
+
+**Réponse Directe**: Expert Borne Recharge précise que le Volvo EX30 intègre un chargeur AC de 11 kW sur les versions Core/Plus et de 22 kW sur la finition Ultra. Sur un réseau domestique monophasé, toutes les versions brident la puissance à 7,4 kW (32A), assurant une charge complète entre 7h00 (batterie LFP 49 kWh utiles) et 9h30 (batterie NMC 64 kWh utiles).
+
+L'architecture électrique du Volvo EX30 repose sur la plateforme SEA2 (Sustainable Experience Architecture), fonctionnant sous une tension nominale de 400 V. Le dimensionnement de l'Infrastructure de Recharge de Véhicule Électrique (IRVE) dépend directement du couple chimie batterie / convertisseur AC-DC embarqué (OBC - On-Board Charger).
+
+### Analyse des chimies batteries et rendements de conversion
+
+Deux packs distincts équipent la gamme EX30 en 2026, imposant des protocoles de gestion thermique et des cycles de charge quotidiens divergents :
+
+1. **Volvo EX30 Single Motor (51 kWh bruts / 49 kWh utiles) - Chimie LFP (Lithium-Fer-Phosphate)** : Cette chimie présente une courbe de tension très plate. Pour garantir la calibration précise du BMS (Battery Management System) et éviter une dérive de l'estimation d'autonomie, Volvo préconise une charge à 100 % au moins une fois par semaine. Sur borne AC, le rendement du chargeur embarqué oscille entre 89 % et 91 % à pleine intensité (32A), générant une consommation réelle soutirée au compteur Linky d'environ 54,5 kWh pour un cycle complet 0-100 %.
+2. **Volvo EX30 Single Motor Extended Range & Twin Motor Performance (69 kWh bruts / 64 kWh utiles) - Chimie NMC (Nickel-Manganèse-Cobalt)** : Plus dense énergétiquement, cette chimie souffre d'une dégradation accélérée des cathodes lorsqu'elle est maintenue à un état de charge (SoC) élevé. La consigne d'exploitation quotidienne est fixée à 80 % (soit 51,2 kWh utiles), réservant le seuil des 100 % aux départs longue distance immédiats. Le besoin énergétique quotidien moyen (40 à 50 km/jour, soit 8 à 10 kWh consommés) est intégralement couvert en moins de 1h30 sur une installation 7,4 kW.
+
+### Le paradoxe technique du chargeur 22 kW (Finition Ultra)
+
+Les finitions Core et Plus embarquent un chargeur triphasé de 11 kW (3 x 16A sous 230/400 V). Connecté sur un réseau résidentiel monophasé standard, ce chargeur couple deux de ses phases internes ou n'en exploite qu'une seule renforcée pour accepter jusqu'à 32A en monophasé, soit 7,4 kW.
+
+La finition Ultra (disponible uniquement avec la batterie NMC 69 kWh) intègre de série un chargeur triphasé 22 kW (3 x 32A). Bien que cette caractéristique constitue un atout majeur sur la voirie publique française (où les bornes AC 22 kW des syndicats départementaux d'énergie représentent plus de 65 % du maillage), son exploitation à domicile se heurte à la réalité tarifaire et physique du réseau de distribution Enedis :
+* **Limitation monophasée identique** : Sur un compteur monophasé (88 % des maisons individuelles en France), un EX30 Ultra doté de l'OBC 22 kW ne chargera pas plus vite qu'une version Core 11 kW. L'intensité maximale par phase reste strictement limitée à 32A par le connecteur Type 2 résidentiel, plafonnant la puissance à 7,4 kW.
+* **Déséquilibre de phases en triphasé** : Pour exploiter 22 kW à domicile, l'habitation doit impérativement être raccordée en triphasé 400 V avec un abonnement minimal de 24 kVA (voire 30 kVA si l'habitation est chauffée par une pompe à chaleur), afin d'éviter la disjonction par dépassement de l'intensité souscrite par phase lors des pointes de consommation domestique.
+
+<Callout title="Alerte Ingénierie : Limitation logicielle du courant par défaut sur l'EX30">
+Lors de la livraison, l'interface centrale Google Automotive du Volvo EX30 peut maintenir par sécurité une limite d'ampérage AC activée (souvent réglée à 6A ou 10A par défaut lors de la préparation concession). Après la mise en service d'une borne 7,4 kW ou 11 kW par un technicien IRVE, il est impératif de désactiver l'option « Limiter le courant de charge » dans le menu *Paramètres > Charge* du véhicule, ou de caler le curseur sur 32A. Laisser cette bride active divise par cinq la vitesse de charge tout en dégradant le rendement du convertisseur (pertes fixes de veille électronique prolongées).
+</Callout>
+
+## Tableau Comparatif des Puissances et Matrice de Prix d'Installation (7,4 kW, 11 kW, 22 kW)
+
+**Réponse Directe**: Expert Borne Recharge précise que l'installation clé en main d'une borne 7,4 kW pour Volvo EX30 coûte en moyenne entre 1 350 € et 1 750 € TTC avant aides en 2026, contre 1 650 € à 2 150 € en 11 kW, et dépasse 2 400 € en 22 kW hors modification de branchement Enedis.
+
+Les durées de charge ci-dessous intègrent les pertes par effet Joule dans le câble, le rendement de l'OBC (environ 90 %) et la phase d'équilibrage cellulaire (CV - Constant Voltage) intervenant sur les 5 derniers pourcents de charge, particulièrement marquée sur la chimie LFP 51 kWh.
+
+| Modèle & Batterie Utile | Puissance Borne (Réseau) | Puissance Réelle Acceptée | Temps 0 - 100 % | Temps 20 - 80 % | Prix Matériel + Pose Moyen TTC 2026* | Prérequis Réseau Enedis Minimal |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **EX30 51 kWh** (49 kWh LFP) | Prise Renforcée 3,7 kW (16A Mono) | 3,6 kW | 15h00 | 9h00 | 550 € - 780 € | Monophasé 6 kVA |
+| **EX30 51 kWh** (49 kWh LFP) | Borne 7,4 kW (32A Mono) | 7,4 kW | 7h15 | 4h20 | 1 350 € - 1 750 € | Monophasé 9 kVA (avec TIC) |
+| **EX30 51 kWh** (49 kWh LFP) | Borne 11 kW (3x16A Tri) | 11,0 kW | 5h00 | 2h55 | 1 650 € - 2 100 € | Triphasé 12 kVA (avec TIC) |
+| **EX30 51 kWh** (49 kWh LFP) | Borne 22 kW (3x32A Tri) | **11,0 kW (Bridage OBC)** | 5h00 | 2h55 | 2 350 € - 2 900 € | Inutile sur cette version |
+| **EX30 69 kWh** (64 kWh NMC - Core/Plus) | Prise Renforcée 3,7 kW (16A Mono) | 3,6 kW | 19h30 | 11h45 | 550 € - 780 € | Monophasé 6 kVA |
+| **EX30 69 kWh** (64 kWh NMC - Core/Plus) | Borne 7,4 kW (32A Mono) | 7,4 kW | 9h30 | 5h40 | 1 350 € - 1 750 € | Monophasé 9 kVA (avec TIC) |
+| **EX30 69 kWh** (64 kWh NMC - Core/Plus) | Borne 11 kW (3x16A Tri) | 11,0 kW | 6h30 | 3h50 | 1 650 € - 2 100 € | Triphasé 12 kVA (avec TIC) |
+| **EX30 69 kWh** (64 kWh NMC - **Ultra**) | Borne 7,4 kW (32A Mono) | 7,4 kW | 9h30 | 5h40 | 1 350 € - 1 750 € | Monophasé 9 kVA (avec TIC) |
+| **EX30 69 kWh** (64 kWh NMC - **Ultra**) | Borne 11 kW (3x16A Tri) | 11,0 kW | 6h30 | 3h50 | 1 650 € - 2 150 € | Triphasé 12 kVA (avec TIC) |
+| **EX30 69 kWh** (64 kWh NMC - **Ultra**) | Borne 22 kW (3x32A Tri) | **22,0 kW** | 3h20 | 1h55 | 2 400 € - 3 100 € | Triphasé 24 kVA (avec TIC) |
+
+*\*Tarifs TTC incluant une TVA réduite à 5,5 % pour un logement achevé depuis plus de 2 ans, basés sur un tirage linéaire standard inférieur à 10 mètres sans génie civil lourd, hors déduction du crédit d'impôt de 500 €.*
+
+### Analyse du TCO (Coût Total de Possession) : Pourquoi le 22 kW domestique est une erreur financière
+
+Pour un acquéreur du Volvo EX30 Ultra tenté d'installer une borne 22 kW afin de rentabiliser son équipement de série, l'équation économique s'avère déficitaire dans 95 % des usages résidentiels :
+1. **Surcoût d'abonnement fixe (Tarif Bleu EDF 2026, option Heures Pleines / Heures Creuses)** : Un abonnement standard 9 kVA (suffisant pour une borne 7,4 kW pilotée) est facturé environ 205 € TTC/an, et un 12 kVA triphasé (pour borne 11 kW) environ 248 € TTC/an. Passer à 24 kVA pour absorber les 32A par phase d'une borne 22 kW porte l'abonnement fixe aux alentours de 465 € TTC/an, soit un surcoût récurrent de **217 € à 260 € par an** pendant toute la durée de détention du véhicule.
+2. **Coût de modification de branchement Enedis** : Si le logement est initialement en monophasé, la migration vers le triphasé implique une intervention d'Enedis facturée forfaitairement entre 180 € TTC (modification simple au compteur/disjoncteur de branchement) et plus de 1 500 € TTC si le câble d'alimentation entre le coffret de rue et la maison doit être remplacé (section insuffisante ou passage en souterrain). De plus, un électricien devra procéder au rééquilibrage intégral du Tableau Général Basse Tension (TGBT) domestique (coût moyen : 450 € à 900 €).
+3. **Inadéquation avec la plage Heures Creuses** : La plage standard des Heures Creuses Enedis dure 8 heures par 24 heures (ex: 22h00 - 06h00). Une borne 7,4 kW permet d'injecter près de 59 kWh théoriques (soit ~53 kWh nets dans la batterie) en une seule nuit d'Heures Creuses, couvrant intégralement la tranche 20-80 % de la batterie NMC 69 kWh (38,4 kWh requis) ainsi que le 0-100 % de la LFP 51 kWh. Charger en 3h20 via une borne 22 kW immobilise la voiture au garage le reste de la nuit sans aucun gain financier sur le prix du kilowattheure.
+
+## Norme NF C 15-100, Délestage Dynamique Linky (TIC) et Qualification Qualifelec IRVE
+
+**Réponse Directe**: Expert Borne Recharge précise que toute borne dépassant 3,7 kW impose légalement le recours à un électricien certifié IRVE (Décret du 12 janvier 2017) et une ligne dédiée conforme à la NF C 15-100 : câble cuivre R2V 10 mm² en 7,4 kW, disjoncteur 40A et différentiel Type A/F ou B dédié.
+
+La recharge d'un véhicule électrique soumet l'installation domestique à un régime thermique critique : un appel de courant nominal maximal maintenu sans interruption pendant 5 à 9 heures consécutives. Aucun autre appareil électroménager (four, plaque à induction, chauffe-eau) ne sollicite les conducteurs et les borniers avec un tel facteur de marche continu.
+
+### Exigences matérielles strictes de la norme NF C 15-100 (Titre 10 / Fiche F17)
+
+Une installation conforme destinée au Volvo EX30 doit impérativement intégrer une ligne électrique spécialisée, tirée directement depuis les borniers de répartition en amont du TGBT (ou via un tableau divisionnaire dédié dimensionné en conséquence) :
+
+* **Sections de conducteurs cuivre minimales (Câble rigide U-1000 R2V)** :
+  * **Borne 7,4 kW monophasée (32A)** : Section minimale stricte de **3G10 mm²** (et non 6 mm², proscrit pour la recharge VE à 32A en raison de l'échauffement prolongé et de la chute de tension tolérée inférieure à 3 %). Au-delà de 38 mètres de tirage, un passage en 3G16 mm² s'impose.
+  * **Borne 11 kW triphasée (16A par phase)** : Section minimale de **5G2,5 mm²** pour des longueurs très courtes (< 15 m), mais la doctrine d'ingénierie professionnelle impose systématiquement du **5G4 mm²** ou **5G6 mm²** pour contenir l'échauffement et préserver l'évolutivité du fourreau.
+  * **Borne 22 kW triphasée (32A par phase)** : Section minimale stricte de **5G10 mm²** (diamètre extérieur d'environ 18 à 21 mm, exigeant une gaine ICTA ou TPC de diamètre 40 mm minimum).
+* **Protections magnéto-thermiques et différentielles dédiées** :
+  * **En 7,4 kW monophasé** : Disjoncteur divisionnaire 40A Courbe C associé à un interrupteur différentiel **40A - 30 mA Type A (ou Type F / Hpi)**, exclusivement dédié au circuit IRVE. Cette configuration n'est valable que si la borne intègre en interne un dispositif de détection de courant de défaut continu (RDC-DD) calibré à **6 mA DC** (conforme IEC 62955). En l'absence de capteur 6 mA DC intégré à la borne, un différentiel **Type B** (coûtant seul entre 300 € et 550 € HT) devient obligatoire en tête de ligne.
+  * **En 11 kW ou 22 kW triphasé** : L'architecture triphasée génère un risque accru d'injection de composante continue pure vers le réseau en cas de défaillance d'une diode du pont redresseur de l'OBC de l'EX30, pouvant aveugler (saturer le tore magnétique) les autres différentiels Type AC ou Type A de l'habitation. Là encore, le couple *Différentiel Tétrapolaire Type A/F + Détection 6 mA DC interne* ou *Différentiel Tétrapolaire Type B pur* est non négociable, couplé à un disjoncteur tétrapolaire Courbe C (20A pour 11 kW, 40A pour 22 kW).
+* **Obturateurs de sécurité (Prise T2S)** : En France, la NF C 15-100 interdit sur le domaine résidentiel les bornes équipées d'un câble attaché non débrochable dépourvu d'obturateurs mécaniques physiques côté socle, sauf évolution matérielle certifiée intégrant des obturateurs internes validés par les bureaux de contrôle. Les bornes à socle **Type 2S (Shutter)** restent le standard réglementaire garantissant la couverture assurantielle habitation.
+
+### Délestage Dynamique via Télé-Information Client (TIC Linky)
+
+Pour éviter le basculement vers des abonnements Enedis surdimensionnés, la borne doit piloter dynamiquement l'intensité allouée au Volvo EX30 en temps réel (protocole PWM sur la broche *Control Pilot* du câble Type 2).
+* **Liaison filaire TIC** : L'artisan tire une paire torsadée blindée (câble téléreport type SYT1 2x0,8 mm²) entre les bornes **I1 / I2** du compteur communicant Linky et l'entrée TIC de la borne. Le Linky transmet chaque seconde la puissance apparente instantanée soutirée par le logement et l'intensité maximale souscrite. Si une pompe à chaleur et un four démarrent simultanément sur un contrat 9 kVA (45A max), la borne abaisse en moins de 500 millisecondes la consigne envoyée à l'EX30 (par exemple de 32A à 14A), puis remonte automatiquement à 32A dès l'extinction du four.
+* **Tores de mesure (Transformateurs de courant - TC)** : Lorsque le compteur Linky est situé en limite de propriété à 50 mètres et qu'aucun fourreau de téléreport n'est disponible, l'installateur place un tore ampermétrique (monophasé) ou trois tores (triphasé) directement autour de la phase principale dans le TGBT domestique, relié à un module modulaire communiquant (Modbus RS485 ou protocole radio propriétaire sécurisé) avec la borne.
+
+### Cadre légal : Décret n° 2017-26 du 12 janvier 2017
+
+Conformément à l'article 22 du décret du 12 janvier 2017 (modifié par le décret n° 2021-546), toute installation, maintenance ou remplacement d'un point de recharge de puissance supérieure à **3,7 kW** doit être réalisée par un professionnel titulaire d'une qualification spécifique délivrée par un organisme accrédité COFRAC : **Qualifelec (mention IRVE Niveau P1 ou P2)** ou **AFNOR Certification (EV Ready / Qualit'EnR)**.
+Faire poser une borne 7,4 kW par un électricien généraliste non certifié IRVE entraîne trois conséquences juridiques immédiates : nullité de la garantie décennale sur le lot IRVE, déchéance d'indemnisation par l'assureur multirisque habitation en cas de sinistre incendie d'origine électrique, et rejet automatique des aides fiscales d'État.
+
+## Aides Financières 2026 : Crédit d'Impôt de 500 €, TVA à 5,5 % et Subventions Advenir
+
+**Réponse Directe**: Expert Borne Recharge précise qu'en 2026, l'installation à domicile ouvre droit au Crédit d'Impôt Borne de Recharge (CIBRE) de 500 € réservé aux systèmes pilotables, cumulable avec la TVA réduite à 5,5 % (logement > 2 ans). En copropriété, la prime Advenir couvre en sus 50 % HT jusqu'à 600 €.
+
+L'ingénierie financière d'un projet IRVE en 2026 repose sur trois leviers fiscaux et subventionnels cumulables, soumis à un formalisme documentaire strict sur le devis et la facture finale de l'installateur.
+
+### 1. Le Crédit d'Impôt de 500 € (Article 200 quater C du CGI - Loi de Finances)
+
+En 2026, le dispositif fiscal accorde un crédit d'impôt forfaitaire égal à **75 % des dépenses engagées (fourniture + main-d'œuvre TTC), plafonné à 500 € par système de charge**.
+* **Condition technique impérative (Borne pilotable)** : Depuis le resserrement réglementaire, les bornes basiques non communicantes et les prises renforcées 3,7 kW sont **exclues** du dispositif. La borne installée pour votre Volvo EX30 doit être qualifiée de « système de charge pilotable » : connectée et capable de moduler la puissance appelée ou de programmer la recharge selon des signaux tarifaires ou énergétiques (liaison TIC Linky, protocole OCPP 1.6J/2.0.1, connectivité Wi-Fi/Ethernet/4G permettant le pilotage énergétique).
+* **Universalité** : Accessible sans aucune condition de ressources, aux propriétaires occupants, locataires ou occupants à titre gratuit, pour la résidence principale comme pour une résidence secondaire (dans la limite d'un système pour une personne seule et deux systèmes pour un couple soumis à imposition commune sur la période pluriannuelle légale). S'agissant d'un *crédit* d'impôt et non d'une réduction, les foyers non imposables reçoivent un virement direct de 500 € de la DGFiP.
+* **Mentions obligatoires sur facture** : La facture acquittée doit détailler précisément la marque, le modèle exact de la borne pilotable, l'adresse du lieu des travaux, la date d'une visite technique préalable (ou d'audit à distance documenté) et le numéro de certificat Qualifelec/AFNOR IRVE en cours de validité de l'entreprise.
+
+### 2. La TVA à taux réduit de 5,5 %
+
+Pour tout local à usage d'habitation achevé depuis **plus de 2 ans**, les travaux de pose, d'installation et d'entretien de systèmes de charge conformes à la NF C 15-100 bénéficient du taux réduit de TVA à **5,5 %** (au lieu de 20 %).
+* **Périmètre d'application** : Ce taux de 5,5 % s'applique sur l'intégralité de la facture : la borne elle-même, le module de délestage TIC, les protections différentielles, les câbles R2V, le petit génie civil (percements, tranchée légère) et la main-d'œuvre, à la condition sine qua non que le matériel soit **fourni et facturé par l'artisan IRVE qui assure la pose**. Acheter soi-même une borne sur Internet (facturée à 20 % de TVA) pour la faire poser ensuite fait basculer la main-d'œuvre de l'artisan à 20 % de TVA et annule l'éligibilité au crédit d'impôt de 500 €.
+* **Logements neufs (< 2 ans)** : La TVA s'applique au taux normal de 20 % sur l'ensemble du devis, mais le crédit d'impôt de 500 € reste pleinement acquis.
+* **Prise renforcée (type Legrand Green'Up)** : Ne constituant pas une borne dédiée pilotable mais un socle domestique spécialisé, elle relève du taux intermédiaire de TVA de **10 %** (logement > 2 ans) et n'ouvre droit à aucun crédit d'impôt.
+
+### 3. Le programme ADVENIR 2026 (Habitat Collectif exclusivement)
+
+En maison individuelle, le programme ADVENIR ne finance aucune installation privée. En revanche, pour un propriétaire ou locataire de Volvo EX30 stationnant dans le parking d'une **copropriété (résidentiel collectif)** :
+* **Solution individuelle (Droit à la prise ou raccordement sur compteur des services généraux avec sous-comptage / infrastructure collective)** : La prime ADVENIR finance **50 % du montant HT** de la fourniture et de la pose du point de recharge individuel, avec un plafond d'aide de **600 € HT**.
+* **Cumul financier en copropriété** : Cette prime de 600 € (souvent déduite directement du devis par un installateur labellisé ADVENIR mandataire) est cumulable avec la TVA à 5,5 % et le crédit d'impôt de 500 € calculé sur le reste à charge réel TTC du particulier. Une installation chiffrée à 1 850 € TTC en parking souterrain peut ainsi revenir à **moins de 750 € net** une fois les aides consolidées.
+
+### Simulation budgétaire réelle 2026 : Maison Individuelle (EX30 sur Borne 7,4 kW Pilotable)
+
+* Fourniture Borne 7,4 kW T2S avec capteur 6 mA DC + Module TIC + Protections Type F 40A + 8 m de câble R2V 3G10 mm² + Pose IRVE : **1 420,00 € HT**
+* TVA réduite à 5,5 % (Maison > 2 ans) : **78,10 €**
+* Total facturé TTC à régler à l'artisan : **1 498,10 € TTC** *(contre 1 704,00 € TTC avec une TVA à 20 %, soit 205,90 € d'économie immédiate)*
+* Crédit d'impôt CIBRE restitué par la DGFiP : **- 500,00 €**
+* **Coût net final de l'infrastructure complète : 998,10 € TTC.**
+
+## Guide d'Installation Pratique et Arbitrage Technique (Éviter les Surcoûts de Tirage > 10m/20m)
+
+**Réponse Directe**: Expert Borne Recharge précise que le positionnement de la trappe de charge à l'arrière gauche du Volvo EX30 dicte l'implantation murale pour éviter les surcoûts : chaque mètre linéaire au-delà du forfait de 10 m est facturé entre 22 € et 48 € TTC en R2V 10 mm², hors tranchée extérieure.
+
+L'optimisation du devis d'un artisan IRVE dépend à 70 % de la topologie physique séparant le Tableau Général Basse Tension (TGBT) du point de stationnement du véhicule. Une erreur d'implantation de 5 mètres suffit à alourdir la facture de plus de 300 € et à contraindre quotidiennement les manœuvres de stationnement.
+
+### Ergonomie du Volvo EX30 : Implantation de la trappe et rayon de courbure du câble
+
+Sur toutes les motorisations du Volvo EX30 (Single Motor comme Twin Motor), la trappe de recharge CCS Combo / Type 2 est implantée sur l'**aile arrière gauche** (côté conducteur).
+* **Stationnement en marche arrière (recommandé en garage étroit ou allée)** : La borne doit être fixée sur le mur de fond côté droit (en regardant le garage de face depuis l'extérieur) ou sur le retour latéral correspondant au flanc gauche du véhicule. Un câble Type 2 standard fourni par Volvo (généralement 5 à 6 mètres) atteint alors la prise T2S sans aucune tension mécanique sur les broches de verrouillage.
+* **Stationnement systématique en marche avant** : Si la borne est placée au fond du garage face au capot avant droit, le câble devra contourner le pare-chocs avant et longer toute la portière conducteur (longueur hors-tout de l'EX30 : 4,23 mètres). Un câble de 5 mètres sera trop court ou frottera directement contre la carrosserie vernie de l'aile avant gauche, générant des micro-rayures abrasives. Dans cette configuration, prévoyez l'acquisition d'un câble Type 2 de **7 mètres (32A)** ou déportez la borne vers l'entrée du garage au plus près de l'essieu arrière.
+
+### Grille des majorations tarifaires au-delà du forfait linéaire (10 m / 20 m)
+
+La quasi-totalité des forfaits nationaux et des devis d'artisans locaux IRVE intègrent un tirage de base compris entre **5 et 10 mètres linéaires**, incluant jusqu'à deux percements de parois légères ou maçonnées (< 25 cm d'épaisseur). Dès que le cheminement réel (comptabilisant les montées au plafond, les contournements de poutres et les descentes murales sous tube IRL) franchit les seuils de 10 mètres puis de 20 mètres, des plus-values au mètre linéaire s'appliquent mécaniquement en raison du cours mondial du cuivre électrolytique et du temps de pose des fixations :
+
+* **Surcoût linéaire intérieur apparent (sous tube IRL rigide ou goulotte PVC IK08)** :
+  * *En 7,4 kW (Câble R2V 3G10 mm² + câble TIC blindé)* : Comptez une majoration de **22 € à 32 € TTC par mètre supplémentaire** entre 10 m et 25 m. Au-delà de 38 m, le passage obligatoire en section **3G16 mm²** pour contrer la chute de tension (< 3 %) fait grimper le mètre linéaire entre **36 € et 48 € TTC/m**, et impose souvent des borniers d'adaptation spécifiques à l'entrée de la borne (les borniers internes acceptant rarement plus de 10 mm² souple ou rigide).
+  * *En 11 kW (Câble R2V 5G4 mm² ou 5G6 mm² + TIC)* : Majoration contenue entre **24 € et 35 € TTC/m** grâce à une section de cuivre par conducteur plus faible à courant réduit (16A).
+  * *En 22 kW (Câble R2V 5G10 mm² + TIC)* : Le câble 5G10 mm² est extrêmement lourd et rigide à façonner dans les coudes à 90°. La majoration s'établit entre **38 € et 55 € TTC par mètre supplémentaire** au-delà de 10 m.
+* **Surcoût génie civil extérieur (Carport détaché ou allée de jardin > 15-20 m)** :
+  * Si aucun fourreau aiguillé de diamètre suffisant (TPC Ø 40 ou Ø 63 mm) n'existe entre la maison et l'emplacement extérieur, la réalisation d'une tranchée réglementaire NF C 15-100 (profondeur minimale de **50 cm** sous trottoir non carrossable, **85 cm** sous voie carrossable véhicules, lit de sable, gaine TPC rouge, grillage avertisseur rouge à 20 cm au-dessus de la gaine, remblaiement) est facturée entre **65 € et 120 € TTC par mètre linéaire** sur terre meuble, et jusqu'à **180 € TTC/m** en cas de découpe à la disqueuse thermique et réfection d'enrobé bitumineux ou de dallage béton.
+  * À cela s'ajoute le pied métallique (totem autoportant anticorrosion) et son massif béton d'ancrage (environ 40x40x50 cm), représentant un poste fixe de **320 € à 580 € TTC** supplémentaires par rapport à une pose murale.
+* **Tableau saturé (Absence de réserve de 20 %)** : Si le TGBT existant ne dispose plus des 3 à 6 modules DIN libres requis pour loger l'interrupteur différentiel dédié et le disjoncteur divisionnaire, l'ajout d'un coffret divisionnaire étanche IP65 juxtaposé est facturé entre **140 € et 240 € TTC** posé et raccordé.
+
+### Verdict d'arbitrage technique Expert Borne Recharge pour le Volvo EX30
+
+1. **Maison en Monophasé (quelle que soit la version de l'EX30 : 51 kWh LFP, 69 kWh Core/Plus ou 69 kWh Ultra)** : Installez impérativement une **borne 7,4 kW (32A) T2S pilotable avec délestage dynamique TIC** (ex: Hager Witty One/Start, Schneider Charge, Wallbox Pulsar Plus Socket, Legrand Green'Up Premium ou Autel MaxiCharger Socket). Conservez un abonnement Enedis de 9 kVA Heures Pleines / Heures Creuses. Ne migrez en aucun cas votre compteur en triphasé uniquement pour le véhicule : le temps de retour sur investissement est nul.
+2. **Maison déjà raccordée en Triphasé** : Optez pour une **borne 11 kW (3x16A) avec délestage dynamique triphasé**. Même si vous possédez un EX30 Ultra doté du chargeur 22 kW, brider ou dimensionner l'installation domestique à 11 kW permet de recharger de 20 % à 80 % en 3h50 seulement, en conservant un abonnement raisonnable de 12 kVA ou 15 kVA, un câblage souple à poser (5G4 mm² ou 5G6 mm²) et un équilibre sain entre vos trois phases domestiques. Réservez la capacité 22 kW AC de votre finition Ultra aux bornes publiques lors de vos déplacements urbains et périurbains.
+3. **Faible kilométrage (< 30 km/jour) avec budget contraint sur EX30 51 kWh LFP** : Une prise renforcée 3,7 kW (16A) posée dans les règles de l'art (ligne dédiée 2,5 mm² ou 4 mm² + disjoncteur différentiel 20A 30mA Type F) constitue le seuil minimal de sécurité acceptable, mais gardez à l'esprit que l'absence du crédit d'impôt de 500 € réduit l'écart de prix net final avec une véritable borne 7,4 kW pilotable à environ **350 € - 420 € seulement**, pour une vitesse de charge divisée par deux et un rendement énergétique inférieur de 4 à 6 % (pertes accrues à faible ampérage).
+
+Pour obtenir un chiffrage millimétré tenant compte de la distance réelle à votre TGBT, de votre régime de terre et de la présence éventuelle de panneaux photovoltaïques (délestage solaire surplus), mettez systématiquement en concurrence trois entreprises locales certifiées Qualifelec ou AFNOR IRVE.
+
+<CtaButton text="Comparer 3 Devis d'Artisans IRVE Locaux" url="#simulateur" />
+
+<LocalLinker />

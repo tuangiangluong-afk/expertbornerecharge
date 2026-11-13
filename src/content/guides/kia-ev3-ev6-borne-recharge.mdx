@@ -1,0 +1,163 @@
+---
+title: "Borne Recharge Kia EV3 & EV6 Domicile 2026 | V2L & Temps de Charge"
+description: "Guide d'installation de borne de recharge pour Kia EV3 et EV6 en 2026. Batteries 58 à 84 kWh, compatibilité bidirectionnelle V2L, temps de charge et aides de l'État."
+date: "2026-11-13"
+category: "Véhicules"
+readTime: "8 min"
+author: "Expert Borne Recharge"
+image: "/api/og"
+---
+
+L'électrification résidentielle des Kia EV3 (batteries de 58,3 et 81,4 kWh sous 400V) et Kia EV6 (58, 77,4 et 84 kWh sous architecture E-GMP 800V) exige un dimensionnement électrique rigoureux. Dotés d'un chargeur embarqué triphasé de 11 kW (bridé à 7,4 kW en monophasé 32A) et de la fonction bidirectionnelle V2L délivrant 3,6 kW, ces SUV imposent une borne pilotable pour exploiter les 8 heures creuses tarifaires. En 2026, le coût d'installation oscille entre 1 350 € et 1 950 € TTC avant déduction du crédit d'impôt de 500 €.
+
+<CtaButton text="Estimer Mon Projet & Devis Gratuit" url="#simulateur" />
+
+## Cadre Technique et Spécificités de Charge Domicile pour Kia EV3 & EV6 en 2026
+
+**Réponse Directe**: Expert Borne Recharge précise que les Kia EV3 (58,3 à 81,4 kWh) et EV6 (58 à 84 kWh) intègrent un convertisseur AC/DC plafonné à 11 kW en triphasé (3x16A) et 7,4 kW en monophasé (32A). Une charge de 20 à 80 % requiert entre 3h15 et 7h15, tandis que l'onduleur V2L restitue jusqu'à 3,6 kW.
+
+Bien que le Kia EV3 repose sur une déclinaison 400V de la plateforme E-GMP et que le Kia EV6 exploite une architecture haute tension 800V (autorisant jusqu'à 258 kW en courant continu DC sur la batterie 84 kWh), leur comportement en courant alternatif (AC) à domicile est strictement identique. Les deux véhicules partagent l'unité centrale de contrôle de charge intégrée **ICCU (Integrated Charging Control Unit)** du groupe Hyundai-Kia.
+
+### Comportement de l'unité ICCU en monophasé et triphasé
+
+Le redresseur embarqué accepte une intensité maximale de **16 ampères par phase** en réseau triphasé 400V ($3 \times 230\text{V} \times 16\text{A} = 11,04\text{ kW}$). Raccordé sur un compteur résidentiel monophasé 230V (représentant 85 % du parc résidentiel Enedis en France), l'ICCU couple ses phases internes pour accepter **32 ampères sur une seule phase**, délivrant une puissance théorique de $7,36\text{ kW}$.
+
+Le rendement énergétique réel mesuré sur l'ICCU des EV3 et EV6 s'établit entre **89,5 % et 91,2 %** à pleine puissance (7,4 kW ou 11 kW), contre seulement **78 % à 81 %** sur une prise renforcée 3,7 kW (16A). Cette perte à basse puissance s'explique par la consommation fixe des calculateurs BMS (Battery Management System) et des pompes de refroidissement glycolées qui absorbent environ 280 W en continu durant tout le cycle de charge. Recharger un Kia EV3 Long Range (81,4 kWh) ou un EV6 (84 kWh) sur prise renforcée prolonge l'opération à plus de 25 heures et génère une surconsommation facturée par le fournisseur d'énergie d'environ 350 kWh par an pour 15 000 km parcourus.
+
+### Gestion Bidirectionnelle V2L (Vehicle-to-Load) et V2H
+
+L'ICCU fonctionne de manière réversible. Grâce à la fonction **V2L (Vehicle-to-Load)**, le Kia EV3 et le Kia EV6 convertissent le courant continu de leur pack NCM (Nickel-Cobalt-Manganèse) en courant alternatif sinusoïdal pur 230V / 50 Hz jusqu'à **3,6 kW (16A)**. Cette extraction s'opère via l'adaptateur externe Type 2 branché sur le port de charge ou via la prise domestique intérieure située sous la banquette arrière.
+
+En cas de coupure réseau ou lors des jours rouges du tarif **EDF Tempo** (où le kWh en Heures Pleines culmine à plus de 0,75 € TTC), certains propriétaires alimentent des circuits domestiques isolés (congélateur, informatique, chauffage d'appoint) via un inverseur de source manuel conforme NF EN 60947-6-1, avec un seuil de décharge paramétrable dans l'écran du véhicule jusqu'à 20 % de SoC (State of Charge). Attention toutefois : le V2L n'est pas du V2G (Vehicle-to-Grid) synchronisé réseau ; l'injection directe dans une installation raccordée à Enedis sans coffret de découplage homologué VDE 0126 est formellement interdite et destructrice pour l'ICCU.
+
+### Adéquation avec la fenêtre de 8 Heures Creuses (Tarif Tempo / HC)
+
+L'enjeu financier majeur pour des capacités de **81,4 kWh (EV3)** et **84 kWh (EV6)** réside dans la capacité à confiner l'intégralité de la recharge dans la plage standard de 8 heures creuses nocturnes (22h00 – 06h00) :
+*   **Sous 7,4 kW monophasé** : Une session de 8 heures injecte $59,2\text{ kWh}$ bruts au compteur, soit environ **$53,5\text{ kWh}$ nets** stockés dans la batterie après pertes de conversion. Cela couvre 65 % de la capacité totale d'un EV3 81,4 kWh ou d'un EV6 84 kWh en une seule nuit (soit ~360 km d'autonomie WLTP récupérés).
+*   **Sous 11 kW triphasé** : La même fenêtre de 8 heures délivre $88\text{ kWh}$ bruts, soit près de **$80\text{ kWh}$ nets**, permettant une recharge complète de 5 % à 100 % en une unique nuit au tarif Heures Creuses.
+
+## Tableau Comparatif des Puissances et Matrice de Prix d'Installation (7,4 kW, 11 kW, 22 kW)
+
+**Réponse Directe**: Expert Borne Recharge précise que le budget d'installation TTC en 2026 s'établit à 1 450 € en 7,4 kW monophasé et 1 790 € en 11 kW triphasé, pose certifiée incluse. Inutile de financer une borne 22 kW (2 050 €), le chargeur interne des Kia EV3 et EV6 limitant physiquement la puissance AC à 11 kW.
+
+Les durées ci-dessous intègrent le rendement réel de conversion de l'ICCU Kia (~90 %) ainsi que la phase d'équilibrage cellulaire (top-balancing) sur les 3 derniers pourcents de charge (97 % à 100 %).
+
+### Matrice des Temps de Charge Réels par Motorisation / Batterie (Gamme 2026)
+
+| Modèle & Capacité Batterie | Puissance Borne installée | Puissance réelle encaissée (AC) | Temps 20 % à 80 % (Usage quotidien) | Temps 0 % à 100 % (Pleine charge) | Prérequis Abonnement Enedis |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Kia EV3 Standard** (58,3 kWh) | Prise renforcée 3,7 kW | 3,6 kW (16A mono) | 10h50 | 18h15 | Monophasé 6 kVA min. |
+| **Kia EV3 Standard** (58,3 kWh) | **Wallbox 7,4 kW** | **7,4 kW (32A mono)** | **05h15** | **08h45** | **Monophasé 9 kVA (+ TIC)** |
+| **Kia EV3 Standard** (58,3 kWh) | Wallbox 11 kW | 11,0 kW (3x16A tri) | 03h30 | 05h50 | Triphasé 12 ou 15 kVA |
+| **Kia EV3 Long Range** (81,4 kWh) | Prise renforcée 3,7 kW | 3,6 kW (16A mono) | 15h10 | 25h30 | Monophasé 6 kVA min. |
+| **Kia EV3 Long Range** (81,4 kWh) | **Wallbox 7,4 kW** | **7,4 kW (32A mono)** | **07h20** | **12h15** | **Monophasé 9 ou 12 kVA** |
+| **Kia EV3 Long Range** (81,4 kWh) | **Wallbox 11 kW** | **11,0 kW (3x16A tri)** | **04h55** | **08h10** | **Triphasé 15 kVA (+ TIC)** |
+| **Kia EV6 Standard** (58,0 kWh) | Wallbox 7,4 kW | 7,4 kW (32A mono) | 05h10 | 08h40 | Monophasé 9 kVA (+ TIC) |
+| **Kia EV6 Long Range** (77,4 kWh) | Wallbox 7,4 kW | 7,4 kW (32A mono) | 07h00 | 11h40 | Monophasé 9 ou 12 kVA |
+| **Kia EV6 Facelift** (84,0 kWh) | **Wallbox 7,4 kW** | **7,4 kW (32A mono)** | **07h35** | **12h40** | **Monophasé 9 ou 12 kVA** |
+| **Kia EV6 Facelift** (84,0 kWh) | **Wallbox 11 kW** | **11,0 kW (3x16A tri)** | **05h05** | **08h30** | **Triphasé 15 kVA (+ TIC)** |
+| **Kia EV3 / EV6 (Toutes)** | Wallbox 22 kW | **Bridé à 11,0 kW** (ou 7,4 kW*) | Identique 11 kW | Identique 11 kW | Triphasé 18 à 24 kVA |
+
+*\*Avertissement d'ingénierie sur les bornes 22 kW : Si une borne 22 kW triphasée est alimentée en monophasé ou si un câble T2 monophasé est utilisé, la charge plafonnera à 7,4 kW. Même raccordée en triphasé 3x32A, l'EV3 et l'EV6 ne tireront jamais plus de 3x16A (11 kW).*
+
+### Matrice Financière d'Installation Résidentielle en 2026 (Forfait < 10m)
+
+| Solution de Recharge | Prix Matériel + Pose Moyen TTC (TVA 5,5 %) | Crédit d'Impôt 2026 | Reste à Charge Net Client | Section Câble Cuivre R2V | Pertinence Kia EV3 / EV6 |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Prise Renforcée 3,7 kW** (Type Green'Up) | 620 € TTC | 0 € (Non éligible) | **620 € TTC** | 3G2,5 mm² (Dédié) | Faible (Pertes élevées, trop lent pour 81/84 kWh) |
+| **Borne Pilotable 7,4 kW** (Monophasé 32A) | 1 450 € TTC | - 500 € | **950 € TTC** | **3G10 mm²** | **Optimale en maison individuelle monophasée** |
+| **Borne Pilotable 11 kW** (Triphasé 16A) | 1 790 € TTC | - 500 € | **1 290 € TTC** | **5G4 mm²** (ou 5G2,5 mm²) | **Optimale si compteur déjà en triphasé** |
+| **Borne Pilotable 22 kW** (Triphasé 32A) | 2 050 € TTC | - 500 € | **1 550 € TTC** | **5G10 mm²** | **Nulle** (Surcoût cuivre et protections inutile) |
+
+<Callout title="Piège du passage Monophasé vers Triphasé pour gagner 3,6 kW">
+Convertir un abonnement domestique monophasé en triphasé auprès d'Enedis (intervention facturée 168 € à plus de 400 € TTC selon le branchement, hors équilibrage complet du tableau électrique existant facturé entre 600 € et 1 200 € par un électricien) uniquement pour charger un Kia EV3 ou EV6 à 11 kW au lieu de 7,4 kW est économiquement contre-productif. En triphasé 12 kVA, chaque phase est limitée à 20A (4 kVA). Le moindre allumage simultané d'une plaque à induction et d'une pompe à chaleur sur une même phase provoque une disjonction par déséquilibre de phases. Si votre maison est en monophasé, conservez impérativement une borne 7,4 kW avec délestage dynamique.
+</Callout>
+
+## Norme NF C 15-100, Délestage Dynamique Linky (TIC) et Qualification Qualifelec IRVE
+
+**Réponse Directe**: Expert Borne Recharge précise que le décret du 12 janvier 2017 impose un électricien qualifié IRVE au-delà de 3,7 kW. La norme NF C 15-100 exige une ligne dédiée en câble cuivre R2V 10 mm² (7,4 kW) ou 5G4 mm² (11 kW), protégée par un différentiel 30 mA Type F ou B et couplée à la TIC Linky.
+
+L'appel de courant continu pendant 8 à 12 heures consécutives à 32A représente la contrainte thermique la plus sévère d'une habitation moderne. Contrairement à un four électrique dont le thermostat régule par intermittence, l'ICCU des Kia EV3 et EV6 maintient une charge nominale constante de 100 % pendant des heures.
+
+### Exigences de protection et dimensionnement NF C 15-100 (Titre 10 / Amendement A5)
+
+Pour garantir l'absence d'échauffement par effet Joule et maintenir une chute de tension $\Delta U$ inférieure à 3 % (tolérance maximale normative de 5 %), l'installation doit respecter quatre impératifs techniques non négociables :
+
+1.  **Qualification obligatoire de l'installateur** : Conformément au **décret n° 2017-26 du 12 janvier 2017** (modifié par le décret n° 2021-546), toute infrastructure de recharge d'une puissance supérieure à **3,7 kW** doit être installée par un professionnel titulaire d'une mention **Qualifelec IRVE** ou **AFNOR Certification IRVE** en cours de validité (Niveau P1 ou P2). L'absence de facture mentionnant ce numéro d'agrément entraîne la déchéance de garantie de l'assurance multirisque habitation en cas de sinistre électrique et annule l'éligibilité au crédit d'impôt.
+2.  **Section des conducteurs cuivre (U-1000 R2V)** :
+    *   En **7,4 kW monophasé (32A)** : Câble rigide cuivre **3G10 mm²** obligatoire dès le départ du tableau divisionnaire. L'usage de 6 mm², parfois observé sur des devis non conformes, génère des points chauds critiques au niveau des borniers après 4 heures de charge continue.
+    *   En **11 kW triphasé (3x16A)** : Câble **5G2,5 mm²** toléré uniquement pour des longueurs très courtes (< 15 mètres sans contrainte thermique d'isolation), mais la règle de l'art d'ingénierie impose du **5G4 mm²** (voire 5G6 mm² au-delà de 25 mètres) pour annuler les pertes en ligne.
+    *   En **22 kW triphasé (3x32A)** : Câble **5G10 mm²** minimum.
+3.  **Appareillage modulaire dédié** : La ligne directe depuis le Tableau Général Basse Tension (TGBT) nécessite son propre interrupteur différentiel 30 mA et son disjoncteur magnétothermique courbe C (40A pour une borne 32A).
+    *   En monophasé 7,4 kW : Interrupteur différentiel **40A 30 mA Type F (ou Hpi / Si)** associé à une détection embarquée dans la borne de fuite de courant continu **6 mA DC** (conforme CEI 62955). Si la borne ne possède pas de capteur 6 mA DC intégré, un différentiel **Type B** pur est exigé (surcoût matériel de 250 € à 380 € HT).
+    *   En triphasé 11 kW : Interrupteur différentiel tétrapolaire **40A 30 mA Type B** obligatoire (ou Type A/F uniquement si le fabricant de la borne certifie explicitement sa protection RDC-DD 6 mA DC intégrée).
+4.  **Obturateurs mécaniques T2S** : En France, la réglementation impose un socle de prise **Type 2S** muni d'obturateurs physiques de sécurité côté borne. Les bornes à câble attaché ne sont conformes à la NF C 15-100 en résidentiel que si le connecteur ou la borne intègre un dispositif d'obturation mécanique certifié (norme NF EN IEC 61851-1) empêchant tout contact direct avec les broches sous tension.
+
+### Délestage Dynamique via Télé-Information Client (TIC Linky)
+
+Souscrire un abonnement électrique surdimensionné (passer de 9 kVA à 12 ou 15 kVA) coûte entre 45 € et 110 € TTC de frais fixes annuels supplémentaires sur la part abonnement. La liaison **TIC (Télé-Information Client)** élimine cette dépense : une paire torsadée blindée (câble téléreport type SYT1 2x0,8 mm²) relie les bornes `I1` et `I2` du compteur communicant **Linky** directement à la carte mère de la borne.
+
+Toutes les secondes, la borne interroge le Linky sur l'intensité instantanée soutirée par le logement. Sur un abonnement 9 kVA (45A max) :
+*   À 23h00, le chauffe-eau (10A) et le lave-vaisselle (8A) démarrent : le talon de consommation domestique atteint 18A.
+*   La borne module instantanément le signal PWM (Pulse Width Modulation) envoyé à l'ICCU du Kia EV3 ou EV6 via la broche *Control Pilot (CP)* de la prise Type 2, abaissant la consigne de charge de 32A à $45\text{A} - 18\text{A} = 27\text{A}$ ($6,2\text{ kW}$).
+*   Dès l'arrêt du lave-vaisselle, la puissance remonte automatiquement à 32A ($7,4\text{ kW}$) sans jamais déclencher la coupure du compteur Linky. Si le Linky est situé en limite de propriété à plus de 30 mètres sans gaine disponible pour le câble TIC, l'installateur pose un **tore de mesure ampèremétrique (transformateur de courant CT)** directement autour de la phase principale dans le tableau électrique intérieur, offrant une réactivité équivalente.
+
+## Aides Financières 2026 : Crédit d'Impôt de 500 €, TVA à 5,5 % et Subventions Advenir
+
+**Réponse Directe**: Expert Borne Recharge précise que la Loi de Finances 2026 maintient un crédit d'impôt forfaitaire de 500 € exclusivement réservé aux bornes pilotables, cumulable avec la TVA réduite à 5,5 % pour les logements achevés depuis plus de 2 ans. En copropriété, la prime Advenir couvre jusqu'à 50 % HT (plafond 600 €).
+
+L'architecture fiscale française de 2026 conditionne les subventions publiques à la capacité de pilotage énergétique de l'infrastructure (afin de soulager le réseau RTE lors des pics hivernaux de 19h00).
+
+### 1. Crédit d'Impôt Borne de Recharge Électrique (CIBRE) de 500 €
+
+Codifié à l'article 200 quater C du Code général des impôts et prorogé en 2026, ce dispositif accorde une réduction ou un remboursement d'impôt de **75 % des dépenses engagées (matériel et main-d'œuvre TTC), plafonné à 500 € par système de charge**.
+*   **Sans condition de ressources** : Tous les contribuables domiciliés fiscalement en France (propriétaires, locataires ou occupants à titre gratuit, imposables ou non) sont éligibles, en résidence principale comme secondaire (limité à 1 système pour une personne seule, 2 pour un couple soumis à imposition commune).
+*   **Condition technique stricte de "pilotabilité"** : Les prises renforcées (3,7 kW) et les bornes basiques *Plug & Charge* sans connectivité sont exclues. La borne installée pour votre Kia EV3 ou EV6 doit impérativement être **pilotable** (connectée OCPP / Wi-Fi / Ethernet / Bluetooth avec programmation horaire et modulation dynamique de puissance via TIC ou tore).
+*   **Mentions obligatoires sur la facture** : La facture unique (fourniture + pose par la même entreprise) doit mentionner la marque et la référence exacte de la borne pilotable, l'adresse du chantier, ainsi que le numéro de certificat IRVE de l'installateur.
+
+### 2. Taux de TVA réduit à 5,5 %
+
+En vertu de l'article 278-0 bis A du CGI (travaux d'amélioration de la qualité énergétique), la fourniture de la borne, des protections différentielles, du câblage cuivre et de la main-d'œuvre bénéficie d'une **TVA à 5,5 %** au lieu de 20 %, sous deux conditions cumulatives :
+*   Le logement d'habitation est achevé depuis **plus de 2 ans** à la date de début des travaux.
+*   La prestation complète (achat du matériel + pose) est facturée par l'électricien qualifié IRVE. Si vous achetez vous-même la borne en ligne, vous paierez 20 % de TVA sur le matériel (soit une perte sèche immédiate d'environ 120 € à 160 €) et la majorité des artisans IRVE refuseront d'engager leur assurance décennale sur un matériel tiers. Pour une maison neuve (< 2 ans), la TVA s'applique à 20 %, mais le crédit d'impôt de 500 € demeure acquis.
+
+### 3. Programme Advenir 2026 (Habitat Collectif / Copropriété)
+
+Pour les maisons individuelles, la prime Advenir n'existe pas. En revanche, pour les acquéreurs d'un Kia EV3 ou EV6 stationnant sur une place de parking en **copropriété (résidence collective)** :
+*   **Solution individuelle (droit à la prise ou raccordement Services Généraux)** : Aide Advenir couvrant **50 % du montant HT** des fournitures et de l'installation, plafonnée à **600 € HT** par point de charge.
+*   **Cumul intégral** : En copropriété, un particulier cumule la TVA à 5,5 %, la prime Advenir (jusqu'à 600 €, généralement déduite directement du devis par l'installateur labellisé) et le crédit d'impôt de 500 € calculé sur le reste à charge réel payé. Une installation en parking souterrain facturée 1 850 € TTC revient ainsi à environ **750 € net** une fois les aides déduites.
+
+## Guide d'Installation Pratique et Arbitrage Technique (Éviter les Surcoûts de Tirage > 10m/20m)
+
+**Réponse Directe**: Expert Borne Recharge précise que le forfait standard d'installation couvre jusqu'à 10 mètres de câblage apparent. Au-delà de 10 à 20 mètres de tirage, les artisans facturent une majoration de 22 € à 38 € TTC par mètre linéaire (cuivre R2V 10 mm²), rendant le positionnement proche du tableau général basse tension prioritaire.
+
+Sur le plan ergonomique, le positionnement de la trappe de recharge diffère radicalement entre les deux SUV coréens, ce qui dicte l'implantation murale de la borne dans le garage ou sous le carport :
+*   **Kia EV3** : Trappe de recharge située à l'**avant droit** (aile passager avant). Idéal pour un stationnement en marche avant le long du mur droit du garage.
+*   **Kia EV6** : Trappe de recharge motorisée située à l'**arrière droit** (sous le bandeau lumineux arrière côté passager). Impose un stationnement en marche arrière si la borne est fixée au fond du garage, ou l'achat d'un câble Type 2 de **7 mètres** (au lieu du câble standard de 5 mètres fourni d'origine) pour contourner les 4,69 mètres de carrosserie sans mettre le connecteur sous tension mécanique.
+
+### Anatomie des Surcoûts de Câblage au-delà de 10 et 20 mètres
+
+La quasi-totalité des forfaits nationaux et artisanaux inclut une liaison maximale de **5 à 10 mètres linéaires** entre le TGBT et l'emplacement de la borne, avec un maximum de deux percements de murs porteurs (parpaing/brique < 30 cm). Lorsque la configuration du logement impose un éloignement supérieur (garage détaché, abri de jardin, allée extérieure), la facture subit trois paliers d'inflation technique :
+
+| Distance Tableau → Borne | Contrainte Cuivre & Chute de Tension ($\Delta U$) | Surcoût Moyen Constaté en 2026 (TTC) | Détail Technique des Travaux Supplémentaires |
+| :--- | :--- | :--- | :--- |
+| **0 à 10 mètres** | 3G10 mm² (7,4 kW) / 5G4 mm² (11 kW) | **Inclus au forfait** (0 €) | Pose sous tube IRL rigide ou moulure PVC + câble TIC inclus. |
+| **10 à 20 mètres** | Maintien 3G10 mm² ($\Delta U \approx 1,4\%$) | **+ 22 € à 32 € / mètre** (soit +220 € à +320 €) | Cuivre R2V 10 mm² + paire blindée TIC + main-d'œuvre de fixation. |
+| **20 à 40 mètres** | Passage fréquent en **3G16 mm²** ($\Delta U < 3\%$) | **+ 35 € à 48 € / mètre** (soit +700 € à +1 200 €) | Section 16 mm² difficile à courber, borniers de adaptation requis. |
+| **Tranchée extérieure** | Gaine TPC rouge $\varnothing 63\text{ mm}$ + grillage avertisseur | **+ 65 € à 110 € / mètre** (terrassement inclus) | Fouille profondeur 50 cm (ou 85 cm sous voie carrossable). |
+
+**Conseil d'arbitrage ingénieur pour réduire la facture de génie civil** : Si une tranchée extérieure de plus de 15 mètres est indispensable vers un carport ou un portail, effectuez vous-même le terrassement préalable (profondeur 55 cm en zone piétonne, pose d'un lit de sable, déroulement d'un fourreau annelé TPC rouge $\varnothing 63\text{ mm}$ pour la puissance ET d'un second fourreau TPC vert $\varnothing 40\text{ mm}$ dédié au câble TIC de délestage afin d'éviter toute diaphonie électromagnétique, puis grillage avertisseur rouge à 20 cm sous la surface). L'artisan IRVE n'aura plus qu'à aiguiller ses câbles et certifier le raccordement, économisant immédiatement **800 € à 1 500 € TTC** de main-d'œuvre de terrassement.
+
+### Programmation Croisée : Borne Pilotable vs Application Kia Connect
+
+Une erreur classique des nouveaux conducteurs de Kia EV3 et EV6 consiste à superposer deux planifications horaires contradictoires : une programmation d'heures creuses dans l'application **Kia Connect** du véhicule *et* une programmation horaire dans l'application de la borne (ex. Hager Witty, Wallbox Pulsar Plus, Schneider Charge, Legrand Green'Up Premium). Ce double verrouillage empêche régulièrement le réveil du calculateur ICCU à 22h00 (mise en veille profonde du bus CAN du véhicule).
+
+**Protocole de paramétrage optimal validé par nos audits** :
+1.  **Côté Borne IRVE** : Activez le **délestage dynamique TIC** en permanence ET confiez la **gestion des Heures Creuses directement à la borne** (qui lit l'index tarifaire *HC / HP / Tempo Bleu-Blanc-Rouge* en temps réel dans la trame numérique du compteur Linky, sans risque de décalage d'horloge été/hiver).
+2.  **Côté Véhicule (Écran EV3 / EV6 ou Kia Connect)** : Désactivez tout calendrier horaire de charge différée dans la voiture pour qu'elle accepte le courant dès que la borne ferme son contacteur de puissance. En revanche, réglez la **limite de charge AC quotidienne à 80 %** directement dans le menu *EV* du véhicule afin de préserver la longévité chimique de la cathode NCM (ne remontez la consigne à 100 % que la veille d'un trajet autoroutier longue distance).
+
+Pour obtenir un chiffrage exact tenant compte de la distance réelle depuis votre tableau électrique, de votre régime neutre/phases et de la topologie de votre stationnement, soumettez votre configuration à un audit local certifié.
+
+<CtaButton text="Comparer 3 Devis d'Artisans IRVE Locaux" url="#simulateur" />
+
+<LocalLinker />
