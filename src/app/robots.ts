@@ -26,9 +26,26 @@ const BOT_USER_AGENTS = [
 
 export default function robots(): MetadataRoute.Robots {
     return {
-        rules: [
+                rules: [
             {
-                userAgent: '*',
+                userAgent: [
+                    'AhrefsBot',
+                    'SemrushBot',
+                    'MJ12bot',
+                    'DotBot',
+                    'PetalBot',
+                    'DataForSeoBot',
+                    'BLEXBot',
+                    'SEOkicks',
+                    'ZoominfoBot',
+                    'SeekportBot',
+                    'SeznamBot',
+                    'CriteoBot',
+                ],
+                disallow: ['/'],
+            },
+            {
+                userAgent: '*' ,
                 allow: '/',
                 // /llms.txt et /openapi.json ne sont pas des pages : on les
                 // retire de l'index général sans les priver des agents d'IA.

@@ -173,7 +173,9 @@ export default async function middleware(req: NextRequest, event?: NextFetchEven
         !cleanPath.startsWith("/success") &&
         !cleanPath.startsWith("/demo")
     ) {
-        response.headers.set("Vercel-CDN-Cache-Control", "public, s-maxage=604800, stale-while-revalidate=86400");
+        response.headers.set("Cache-Control", "public, max-age=86400, s-maxage=31536000, stale-while-revalidate=86400");
+        response.headers.set("CDN-Cache-Control", "public, s-maxage=31536000, stale-while-revalidate=86400");
+        response.headers.set("Vercel-CDN-Cache-Control", "public, s-maxage=31536000, stale-while-revalidate=86400");
     }
 
     // AI Crawler Detection, Freshness Headers & Non-Blocking Telemetry (Smalk GEA Standard)
@@ -182,11 +184,11 @@ export default async function middleware(req: NextRequest, event?: NextFetchEven
     
     if (isAiCrawler) {
         response.headers.set("Last-Modified", new Date().toUTCString());
-        response.headers.set("Cache-Control", "public, max-age=21600, must-revalidate");
-        response.headers.set("Vercel-CDN-Cache-Control", "public, s-maxage=21600, stale-while-revalidate=3600");
-        response.headers.set("Vary", "User-Agent");
-        response.headers.set("X-GEA-Bot-Status", "ai-crawler-detected");
+        response.headers.set("Cache-Control", "public, max-age=86400, s-maxage=31536000, stale-while-revalidate=86400");
+        response.headers.set("Vercel-CDN-Cache-Control", "public, s-maxage=31536000, stale-while-revalidate=86400");
+                response.headers.set("X-GEA-Bot-Status", "ai-crawler-detected");
 
+        if (Math.random() < 0.02) {
         const telemetryUrl = `https://www.answershaper.com/api/v1/m2m-inject?clientId=auto&domain=${encodeURIComponent(canonicalDomain)}&url=${encodeURIComponent(req.url)}`;
         event?.waitUntil?.(
             fetch(telemetryUrl, {
@@ -199,6 +201,7 @@ export default async function middleware(req: NextRequest, event?: NextFetchEven
                 },
             }).catch(() => {})
         );
+        }
     }
 
     return applySecurityHeaders(response);

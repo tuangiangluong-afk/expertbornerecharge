@@ -1,5 +1,4 @@
 import Script from "next/script";
-import { headers } from "next/headers";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -34,13 +33,9 @@ import StructuredData from "@/components/seo/StructuredData";
 import AttributionTracker from "@/components/AttributionTracker";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const headersList = await headers();
-  const canonicalDomain = headersList.get("x-irve-canonical-domain") || "expertbornerecharge.com";
-  const path = headersList.get("x-irve-path") || "";
-  const baseUrl = `https://${canonicalDomain}`;
+const baseUrl = "https://www.expertbornerecharge.com";
 
-  return {
+export const metadata: Metadata = {
   title: {
     template: "%s",
     default: `Expert Borne Recharge - Prix & Installation ${getCurrentYearSEO()}`,
@@ -48,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
   description: "Installation de bornes de recharge électriques. Réseau d'installateurs certifiés IRVE. Devis gratuit sous 24h.",
   metadataBase: new URL(baseUrl),
   alternates: {
-    canonical: `${baseUrl}${path}`,
+    canonical: baseUrl,
   },
   robots: {
     index: true,
@@ -67,7 +62,7 @@ export async function generateMetadata(): Promise<Metadata> {
     siteName: "Expert Borne Recharge",
     locale: "fr_FR",
     type: "website",
-    url: `${baseUrl}${path}`,
+    url: baseUrl,
     images: [
       {
         url: `${baseUrl}/api/og`,
@@ -95,7 +90,7 @@ export async function generateMetadata(): Promise<Metadata> {
     ]
   },
   };
-}export const viewport: Viewport = {
+export const viewport: Viewport = {
   themeColor: "#1d4ed8",
 };
 
