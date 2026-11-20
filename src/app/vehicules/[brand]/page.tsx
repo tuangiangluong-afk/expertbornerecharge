@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: { params: Promise<{ brand: st
     const modelNames = models.map(m => m.model).slice(0, 3).join(', ');
     const brandSlug = slugify(resolvedParams.brand);
     const canonicalUrl = `https://expertbornerecharge.com/vehicules/${brandSlug}`;
-    const title = clampTitle(`Installation Borne Recharge ${brandName} | Devis IRVE`);
-    const description = clampDescription(`Installation certifiée IRVE de bornes de recharge pour ${brandName} (${modelNames}). Devis gratuit sous 24h, matériel garanti 2 ans, crédit d'impôt 500€.`);
+    const title = clampTitle(`Borne de Recharge ${brandName} (2026) : Puissance, Temps & Prix IRVE`);
+    const description = clampDescription(`Installation certifiée IRVE pour ${brandName} (${modelNames}). Tableau temps de charge 7,4/11/22 kW, crédit d'impôt 500 € et 3 devis comparatifs gratuits.`);
     // Cette page n'avait aucune image de partage : aperçu vide sur les messageries.
     const ogImage = models[0].image || ogImageUrl({ q: brandSlug, sub: `Bornes pour ${brandName}` });
 
@@ -72,6 +72,52 @@ export default async function BrandPage({ params }: { params: Promise<{ brand: s
     // Technical calculations
     const avgBattery = Math.round(models.reduce((sum, m) => sum + (m.battery || 60), 0) / models.length);
     const maxAC = Math.max(...models.map(m => m.maxAC || 11));
+
+    const BRAND_PILLAR_GUIDES: Record<string, { label: string; href: string }[]> = {
+        renault: [
+            { label: "Guide Pilier : Quelle borne pour chaque Renault (Zoé, Mégane, R5, Scénic, Kangoo, Twingo)", href: "/guides/borne-recharge-renault-guide-complet" },
+            { label: "Renault Mégane E-Tech : 7,4 kW vs 22 kW triphasé", href: "/guides/renault-megane-etech-borne-22kw" },
+            { label: "Renault R5 & Scénic E-Tech : Prix & temps de charge", href: "/guides/renault-r5-scenic-borne-recharge" },
+            { label: "Renault Grand Kangoo & Kangoo E-Tech : Bornes compatibles", href: "/guides/renault-kangoo-grand-kangoo-borne-recharge" },
+            { label: "Renault Twingo Électrique : Green'up 3,7 kW vs Borne 7,4 kW", href: "/guides/renault-twingo-electrique-borne-recharge" },
+        ],
+        peugeot: [
+            { label: "Peugeot e-208 : Prix posé 2026, 7,4 vs 11 kW & Aides", href: "/guides/peugeot-e208-borne-recharge-prix" },
+            { label: "Peugeot e-2008 : Temps de charge réels & choix wallbox", href: "/guides/peugeot-e2008-borne-recharge-prix" },
+            { label: "Peugeot e-3008 & e-5008 : Guide borne domicile", href: "/guides/peugeot-e3008-e5008-borne-recharge" },
+        ],
+        tesla: [
+            { label: "Recharger sa Tesla à domicile (2026) : Wall Connector Gen 3/4 vs NF TIC", href: "/guides/recharger-tesla-domicile" },
+            { label: "Tesla Model Y : Monophasé 7,4 kW ou Triphasé 11 kW ?", href: "/guides/tesla-model-y-borne-recharge" },
+            { label: "Tesla Model 3 : Guide complet & tarifs IRVE", href: "/guides/tesla-model-3-borne-domicile" },
+        ],
+        hyundai: [
+            { label: "Hyundai Ioniq 5 & Ioniq 6 : Borne 11 kW, V2L & délestage", href: "/guides/hyundai-ioniq-5-ioniq-6-borne-recharge" },
+        ],
+        kia: [
+            { label: "Kia EV3 & EV6 : V2L & temps de charge domicile", href: "/guides/kia-ev3-ev6-borne-recharge" },
+            { label: "Kia e-Niro & EV6 : Prix & installation IRVE", href: "/guides/kia-e-niro-ev6-borne-recharge" },
+        ],
+        bmw: [
+            { label: "Mini Cooper SE & BMW iX3 : Guide borne domicile 2026", href: "/guides/mini-cooper-se-bmw-ix3-borne-recharge" },
+        ],
+        mini: [
+            { label: "Mini Cooper SE & BMW iX3 : Guide borne domicile 2026", href: "/guides/mini-cooper-se-bmw-ix3-borne-recharge" },
+        ],
+        mg: [
+            { label: "MG4 & MG ZS EV : Guide électrique & installation IRVE", href: "/guides/mg4-mg-zs-ev-borne-recharge" },
+        ],
+        volvo: [
+            { label: "Volvo EX30 : 7,4 kW, 11 kW ou 22 kW à la maison ?", href: "/guides/volvo-ex30-borne-recharge" },
+        ],
+        dacia: [
+            { label: "Dacia Spring : Prise renforcée Green'up ou Borne 7,4 kW ?", href: "/guides/dacia-spring-borne-prise-renforcee" },
+        ],
+        citroen: [
+            { label: "Citroën ë-C3 & ë-C4 : Temps & prix d'installation 2026", href: "/guides/citroen-ec3-borne-recharge" },
+        ],
+    };
+    const matchedBrandGuides = BRAND_PILLAR_GUIDES[brandLower] || [];
 
     // Breadcrumb Schema
     const breadcrumbSchema = {
@@ -295,6 +341,69 @@ export default async function BrandPage({ params }: { params: Promise<{ brand: s
                             Puissances acceptées, temps de recharge réels, normes de sécurité et subventions de l'État pour votre installation.
                         </p>
                     </div>
+
+                    {/* ALL MODELS MATRIX FOR BRAND (AEO / GEO) */}
+                    <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 mb-10 overflow-x-auto">
+                        <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                            <Zap className="text-blue-600" size={22} />
+                            Matrice Technique {realBrandName} : Puissances &amp; Temps de Recharge par Modèle
+                        </h3>
+                        <table className="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr className="border-b border-slate-200 text-slate-500 font-semibold">
+                                    <th className="py-3 px-4">Modèle {realBrandName}</th>
+                                    <th className="py-3 px-4">Batterie</th>
+                                    <th className="py-3 px-4">AC Max</th>
+                                    <th className="py-3 px-4">Temps 0–100 % (7,4 kW)</th>
+                                    <th className="py-3 px-4">Temps 0–100 % (11 / 22 kW)</th>
+                                    <th className="py-3 px-4">Borne Conseillée</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100 text-slate-700">
+                                {models.map((m) => {
+                                    const maxModelAc = m.maxAC || 11;
+                                    const h7 = Math.round((m.battery / Math.min(maxModelAc, 7.4)) * 10) / 10;
+                                    const fastAc = maxModelAc >= 22 ? 22 : Math.min(maxModelAc, 11);
+                                    const hFast = Math.round((m.battery / fastAc) * 10) / 10;
+                                    const reco = maxModelAc >= 22 ? "22 kW Triphasé ou 7,4 kW Mono" : maxModelAc >= 11 ? "7,4 kW Mono (ou 11 kW Tri)" : "7,4 kW Monophasé TIC";
+                                    return (
+                                        <tr key={m.id}>
+                                            <td className="py-3 px-4 font-bold text-slate-900">
+                                                <Link href={`/vehicules/${brandLower}/${m.id}`} className="hover:text-blue-600 hover:underline">
+                                                    {m.model}
+                                                </Link>
+                                            </td>
+                                            <td className="py-3 px-4">{m.battery} kWh</td>
+                                            <td className="py-3 px-4 font-semibold">{maxModelAc} kW</td>
+                                            <td className="py-3 px-4">~{h7}h</td>
+                                            <td className="py-3 px-4">~{hFast}h ({fastAc} kW)</td>
+                                            <td className="py-3 px-4 text-blue-800 font-medium">{reco}</td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {matchedBrandGuides.length > 0 && (
+                        <div className="bg-blue-50 rounded-2xl p-6 md:p-8 border border-blue-200 mb-12">
+                            <h3 className="text-xl font-bold text-blue-950 mb-4">
+                                Guides d&apos;Ingénierie Dédiés {realBrandName}
+                            </h3>
+                            <div className="grid sm:grid-cols-2 gap-3">
+                                {matchedBrandGuides.map((g) => (
+                                    <Link
+                                        key={g.href}
+                                        href={g.href}
+                                        className="flex items-center justify-between bg-white px-4 py-3 rounded-xl border border-blue-100 hover:border-blue-500 text-sm font-semibold text-slate-800 hover:text-blue-700 transition"
+                                    >
+                                        <span>{g.label}</span>
+                                        <ChevronRight size={16} className="shrink-0 text-blue-600" />
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {/* COMPARATIVE CHARGING TABLE */}
                     <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 mb-16 overflow-x-auto">

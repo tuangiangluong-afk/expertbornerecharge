@@ -1985,5 +1985,417 @@ export const DUELS: DuelComparison[] = [
         "answer": "Hager propose des cartes électroniques et modules d'extension, mais pour un usage solaire complet, il est plus avantageux d'opter dès le départ pour la Witty Solaire."
       }
     ]
+  },
+  {
+    "slug": "tesla-wall-connector-gen-3-vs-gen-4",
+    "publishedAt": "2026-10-24",
+    "updatedAt": "2026-11-20",
+    "title": "Tesla Wall Connector Gen 3 vs Gen 4 (Universal) : Le Point en France 2026",
+    "metaDescription": "Tesla Wall Connector Gen 3 ou Gen 4 en France en 2026 ? Différences réelles avec le modèle Universal US, norme NF C 15-100 obturateur T2S, délestage Linky TIC et prix posé.",
+    "h1": "Tesla Wall Connector Gen 3 vs Gen 4 : Faut-il Attendre en 2026 ?",
+    "entityA": {
+      "name": "Tesla Wall Connector Gen 3 (Europe)",
+      "type": "Borne",
+      "slug": "tesla-wall-connector-gen-3",
+      "priceEst": "535 € matériel / 1 150 € – 1 550 € posé",
+      "pros": [
+        "Commercialisé officiellement en France en connectique Type 2 native",
+        "Bouton d'ouverture de trappe Tesla intégré + protection fuite DC 6 mA",
+        "Compatible monophasé 7,4 kW et triphasé 11/22 kW (puissance ajustable)"
+      ],
+      "cons": [
+        "Câble attaché de 7,3 m dépourvu d'obturateurs NF C 15-100 (T2S)",
+        "Pas de port Linky TIC natif (nécessite passerelle Neurio W2 pour délestage)"
+      ],
+      "targetAudience": "Propriétaires de Tesla cherchant le design officiel et le bouton pistolet à moindre coût matériel."
+    },
+    "entityB": {
+      "name": "Tesla Universal / Gen 4 & Alternatives NF",
+      "type": "Borne",
+      "slug": "schneider-charge",
+      "priceEst": "700 € – 1 650 € posé (borne NF TIC)",
+      "pros": [
+        "Le modèle Universal US sert uniquement au marché NACS/J1772 nord-américain",
+        "En France, une borne NF TIC (Schneider Charge / Hager Witty) garantit 100 % la norme T2S",
+        "Crédit d'impôt de 500 € validé sans discussion grâce au délestage Linky TIC natif"
+      ],
+      "cons": [
+        "Pas de bouton radio d'ouverture de trappe intégré au connecteur Type 2",
+        "Câble Type 2 à brancher manuellement sur le socle T2S (ou laisser à demeure)"
+      ],
+      "targetAudience": "Propriétaires de Tesla Model 3 / Y exigeant 100 % conformité NF C 15-100, Consuel, syndic et crédit d'impôt 500 €."
+    },
+    "directAnswerSummary": "En France en 2026, le Tesla Wall Connector Gen 3 Type 2 (535 € hors pose) reste la version officielle européenne : l'appellation « Gen 4 / Universal » circulant en ligne désigne surtout le chargeur bi-prise nord-américain NACS/J1772, sans intérêt sur le réseau Type 2 européen. Pour garantir la norme NF C 15-100 (prise T2S), le Linky TIC et les 500 € de crédit d'impôt, comparez-le toujours à une borne française certifiée NF (Schneider Charge ou Hager Witty).",
+    "comparisonTable": [
+      {
+        "criteria": "Disponibilité officielle en France (2026)",
+        "entityAValue": "Oui — Shop Tesla France (Type 2)",
+        "entityBValue": "Universal US inutile en Europe / Bornes NF en stock",
+        "winner": "A"
+      },
+      {
+        "criteria": "Connecteur & Norme NF C 15-100 (T2S)",
+        "entityAValue": "Câble attaché 7,3 m (sans obturateur T2S)",
+        "entityBValue": "Prise T2S à obturateurs 100 % NF (altern. française)",
+        "winner": "B"
+      },
+      {
+        "criteria": "Délestage dynamique Linky TIC",
+        "entityAValue": "Passerelle externe (Neurio) requise (+250 €)",
+        "entityBValue": "Bornier TIC natif sur Schneider / Hager (+0 €)",
+        "winner": "B"
+      },
+      {
+        "criteria": "Ergonomie Tesla (ouverture trappe)",
+        "entityAValue": "Bouton sur poignée pistolet",
+        "entityBValue": "Ouverture via appli Tesla ou pression trappe",
+        "winner": "A"
+      },
+      {
+        "criteria": "Sécurité Crédit d'Impôt 500 €",
+        "entityAValue": "Dépend du pilotage énergétique & facture pose pro",
+        "entityBValue": "100 % garanti sur facture unique fourniture + pose IRVE",
+        "winner": "B"
+      }
+    ],
+    "decisionMatrix": {
+      "chooseAIf": [
+        "Vous voulez le bouton Tesla sur le pistolet et avez déjà un abonnement électrique large sans besoin de TIC",
+        "Vous avez trouvé un électricien Qualifelec IRVE qui valide et pose le Wall Connector Gen 3",
+        "Vous êtes en maison individuelle sans exigence de syndic sur les obturateurs T2S"
+      ],
+      "chooseBIf": [
+        "Vous attendiez un hypothétique « Wall Connector Gen 4 » européen qui n'apporte pas de changement en Type 2",
+        "Vous devez présenter un dossier irréprochable au Consuel, au syndic ou au fisc (500 € crédit d'impôt)",
+        "Vous avez besoin du délestage dynamique Linky TIC sur abonnement 9–12 kVA"
+      ]
+    },
+    "arbitrageCtaTitle": "Comparez 3 Devis Installateurs Tesla IRVE (Gen 3 ou Borne NF)",
+    "arbitrageCtaText": "Ne perdez ni la TVA 5,5 % ni le crédit d'impôt de 500 € en achetant votre borne seul sur internet : comparez 3 devis complets fourniture + pose d'électriciens IRVE.",
+    "relatedDuelSlugs": [
+      "tesla-wall-connector-vs-wallbox-pulsar-plus",
+      "schneider-charge-vs-hager-witty",
+      "prise-green-up-vs-borne-7kw"
+    ],
+    "faq": [
+      {
+        "question": "Existe-t-il un Tesla Wall Connector Gen 4 compatible en France en 2026 ?",
+        "answer": "Sur le shop officiel Tesla France, la référence proposée reste le Wall Connector Gen 3 en prise Type 2. Le modèle souvent surnommé Gen 4 ou Universal sur les forums américains intègre un double adaptateur J1772/NACS propre à l'Amérique du Nord, inutile en Europe où la prise Type 2 est obligatoire."
+      },
+      {
+        "question": "Le Tesla Wall Connector Gen 3 respecte-t-il la norme NF C 15-100 en copropriété ?",
+        "answer": "Son câble attaché sans obturateur mécanique (T2S) pose régulièrement question face aux cahiers des charges de syndics et bureaux de contrôle en copropriété. Une borne à socle T2S (Hager Witty, Schneider Charge) évite tout refus technique."
+      },
+      {
+        "question": "Quel est le coût total posé d'une borne pour Tesla Model 3 ou Model Y en 2026 ?",
+        "answer": "Comptez entre 1 250 € et 1 650 € TTC avant aides (protections 40A Type F/A-EV et pose IRVE incluses), soit 750 € à 1 150 € net après déduction du crédit d'impôt de 500 € sur une borne pilotable."
+      }
+    ]
+  },
+  {
+    "slug": "yespark-vs-zeplug",
+    "publishedAt": "2026-11-01",
+    "updatedAt": "2026-11-20",
+    "title": "Yespark Recharge vs Zeplug (Copropriété) : Avis, Prix & Arbitrage 2026",
+    "metaDescription": "Yespark Recharge ou Zeplug en copropriété ? Comparatif complet des abonnements, frais d'installation, droit à la prise et économie face à un installateur IRVE en direct.",
+    "h1": "Yespark vs Zeplug : Quelle Solution de Recharge en Copropriété en 2026 ?",
+    "entityA": {
+      "name": "Yespark (Borne / Location avec Recharge)",
+      "type": "Opérateur",
+      "slug": "yespark",
+      "priceEst": "Abonnement mensuel parking + recharge / forfait borne",
+      "pros": [
+        "Solution rapide pour locataires sans place attitrée via parkings partenaires",
+        "Option d'abonnement incluant place sécurisée + point de charge dans les grandes villes",
+        "Zéro démarche lourde d'Assemblée Générale si utilisation d'un parking Yespark"
+      ],
+      "cons": [
+        "Dépendance permanente à un bail mensuel (ne vous appartient pas)",
+        "Disponibilité de places électrifiées inégale selon les quartiers"
+      ],
+      "targetAudience": "Locataires urbains sans place de parking dans leur immeuble ou cherchant une place équipée immédiate."
+    },
+    "entityB": {
+      "name": "Zeplug (Infrastructure Copropriété)",
+      "type": "Opérateur",
+      "slug": "zeplug",
+      "priceEst": "490 € à 690 € (après Advenir) + ~29,90 € à 60 €/mois",
+      "pros": [
+        "Zéro coût d'infrastructure pour la copropriété (modèle tiers-investisseur)",
+        "Maintenance, dépannage et gestion comptable de l'électricité pris en charge",
+        "Compatible avec la prime Advenir sur l'installation"
+      ],
+      "cons": [
+        "Abonnement mensuel à vie même les mois où vous roulez peu",
+        "Sur 4 à 5 ans, le coût cumulé dépasse souvent celui d'une borne en propriété directe"
+      ],
+      "targetAudience": "Copropriétaires dont l'immeuble a déjà voté l'infrastructure collective Zeplug."
+    },
+    "directAnswerSummary": "Yespark s'adresse d'abord aux urbains qui louent une place de parking déjà équipée (ou une gestion dédiée sans passer par une longue AG), tandis que Zeplug installe une infrastructure collective dans votre propre copropriété sans frais pour le syndic mais avec un abonnement mensuel récurrent (~30–60 €/mois). Si vous possédez déjà votre place de parking et voulez éviter un abonnement à vie, installer votre propre borne via Droit à la Prise (Advenir 960 € + crédit d'impôt 500 €) reste jusqu'à 2 000 € moins cher sur 5 ans.",
+    "comparisonTable": [
+      {
+        "criteria": "Propriétaire de sa propre place en copro",
+        "entityAValue": "Peu adapté (orienté location de places)",
+        "entityBValue": "Adapté (modèle tiers-investisseur)",
+        "winner": "B"
+      },
+      {
+        "criteria": "Locataire sans place attitrée",
+        "entityAValue": "Solution immédiate (parking + borne inclus)",
+        "entityBValue": "Impossible sans accord / place dans l'immeuble",
+        "winner": "A"
+      },
+      {
+        "criteria": "Coût récurrent sur 5 ans (hors kWh)",
+        "entityAValue": "Loyer mensuel place + recharge",
+        "entityBValue": "~1 800 € à 3 200 € d'abonnement fixe cumulé",
+        "winner": "Égalité"
+      },
+      {
+        "criteria": "Alternative sans abonnement à vie",
+        "entityAValue": "Non (location mensuelle)",
+        "entityBValue": "Droit à la Prise artisan IRVE (~500 € net posé)",
+        "winner": "B"
+      }
+    ],
+    "decisionMatrix": {
+      "chooseAIf": [
+        "Vous n'avez aucune place de parking dans votre résidence actuelle et cherchez un box équipé immédiatement",
+        "Vous déménagez sous 6 à 12 mois et ne voulez pas lancer un dossier Droit à la Prise"
+      ],
+      "chooseBIf": [
+        "Vous avez votre place en copropriété et Zeplug est déjà voté en Assemblée Générale",
+        "Avant de signer l'abonnement à vie Zeplug, comparez avec un devis Droit à la Prise en direct (amortissement < 2 ans)"
+      ]
+    },
+    "arbitrageCtaTitle": "Comparez le Coût Direct Droit à la Prise vs Abonnement",
+    "arbitrageCtaText": "Recevez gratuitement 3 devis d'artisans Qualifelec IRVE pour installer votre propre borne en copropriété (Advenir 960 € + Crédit d'impôt 500 €) sans abonnement mensuel.",
+    "relatedDuelSlugs": [
+      "zeplug-vs-waat",
+      "yespark-vs-parknplug",
+      "zeplug-vs-bornes-solutions"
+    ],
+    "faq": [
+      {
+        "question": "Quel est notre avis sur Yespark Recharge pour voiture électrique ?",
+        "answer": "Yespark est une excellente porte de sortie pour les citadins dépourvus de place privative ou bloqués en attente de travaux syndicaux. En revanche, dès que vous disposez de votre propre place en parking souterrain, poser votre borne en direct est nettement plus économique sur la durée."
+      },
+      {
+        "question": "Peut-on installer sa propre borne IRVE sans passer par Zeplug dans une copropriété ?",
+        "answer": "Oui, grâce au Droit à la Prise (décret 2020-1720), tout copropriétaire ou locataire peut faire installer sa borne raccordée aux parties communes (ou au TGBT individuel) par l'électricien IRVE de son choix, sans payer de redevance mensuelle à un opérateur tiers."
+      },
+      {
+        "question": "Combien coûte une borne posée par un artisan en direct grâce à Advenir et au crédit d'impôt ?",
+        "answer": "Sur un devis standard autour de 1 700 € TTC, vous déduisez jusqu'à 960 € HT de prime Advenir (copropriété) et 500 € de crédit d'impôt : votre reste à charge final descend autour de 450 € à 750 €, sans aucun abonnement mensuel ensuite."
+      }
+    ]
+  },
+  {
+    "slug": "schneider-evlink-pro-ac-vs-schneider-charge",
+    "publishedAt": "2026-11-09",
+    "updatedAt": "2026-11-20",
+    "title": "Schneider EVlink Pro AC vs Schneider Charge : Comparatif Prix & Usage 2026",
+    "metaDescription": "EVlink Pro AC ou Schneider Charge 7,4 / 11 kW ? Différences techniques, bobine MNx, compteur MID, OCPP, usage maison vs copropriété/entreprise et prix posé 2026.",
+    "h1": "Schneider EVlink Pro AC vs Schneider Charge : Laquelle Choisir en 2026 ?",
+    "entityA": {
+      "name": "Schneider EVlink Pro AC",
+      "type": "Borne",
+      "slug": "schneider-charge",
+      "priceEst": "1 150 € – 1 650 € HT matériel / 1 950 € – 2 600 € posé",
+      "pros": [
+        "Déclencheur MNx et comptage certifié MID intégrés pour refacturation exacte",
+        "Architecture modulaire tertiaire OCPP 1.6J + lecteur badge RFID",
+        "Parfaite pour grappes de bornes en entreprise, ERP et parkings collectifs"
+      ],
+      "cons": [
+        "Surdimensionnée et plus coûteuse pour une simple maison individuelle",
+        "Installation IRVE P2 recommandée en architecture communicante multi-bornes"
+      ],
+      "targetAudience": "Entreprises, syndics de copropriété, hôtels et gestionnaires de flottes nécessitant MID et OCPP."
+    },
+    "entityB": {
+      "name": "Schneider Charge (ex-EVlink Home Smart)",
+      "type": "Borne",
+      "slug": "schneider-charge",
+      "priceEst": "680 € – 920 € matériel / 1 350 € – 1 650 € posé",
+      "pros": [
+        "Prise T2S à obturateurs 100 % NF C 15-100 + détection 6 mA DC intégrée",
+        "Bornier Linky TIC natif : délestage temps réel sans accessoire cher",
+        "Éligible au crédit d'impôt 500 € et TVA 5,5 % en maison et box privé"
+      ],
+      "cons": [
+        "Pas de compteur MID homologué pour la refacturation commerciale publique",
+        "Pilotage centré résidentiel (application Wiser / eSetup)"
+      ],
+      "targetAudience": "Particuliers en maison individuelle ou place privative souhaitant la robustesse Schneider au meilleur prix."
+    },
+    "directAnswerSummary": "La Schneider Charge (7,4 kW ou 11 kW, ~1 350 €–1 650 € posée avant crédit d'impôt de 500 €) est le modèle dédié à la maison individuelle avec TIC Linky natif et prise T2S NF. La Schneider EVlink Pro AC (~1 950 €–2 600 € posée) s'adresse aux entreprises, ERP et copropriétés grâce à son compteur certifié MID pour la refacturation, son lecteur RFID, son protocole OCPP complet et sa bobine de déclenchement MNx.",
+    "comparisonTable": [
+      {
+        "criteria": "Segment cible principal",
+        "entityAValue": "Entreprise, Flotte B2B, ERP, Copropriété",
+        "entityBValue": "Maison individuelle & Box privatif",
+        "winner": "Égalité"
+      },
+      {
+        "criteria": "Comptage certifié MID (refacturation kWh)",
+        "entityAValue": "Oui (MID intégré selon réf.)",
+        "entityBValue": "Non (suivi indicatif appli Wiser)",
+        "winner": "A"
+      },
+      {
+        "criteria": "Délestage Linky TIC en maison",
+        "entityAValue": "Via passerelle / EcoStruxure",
+        "entityBValue": "Natif TIC Linky 2 fils (coût réduit)",
+        "winner": "B"
+      },
+      {
+        "criteria": "Supervision OCPP 1.6J & Badge RFID",
+        "entityAValue": "Oui (standard B2B multi-utilisateurs)",
+        "entityBValue": "Limité / usage domestique",
+        "winner": "A"
+      },
+      {
+        "criteria": "Coût posé moyen 7,4 kW (avant aides)",
+        "entityAValue": "1 950 € – 2 600 €",
+        "entityBValue": "1 350 € – 1 650 € (850 € net après 500 €)",
+        "winner": "B"
+      }
+    ],
+    "decisionMatrix": {
+      "chooseAIf": [
+        "Vous équipez le parking d'une entreprise, d'un hôtel ou d'une copropriété multi-utilisateurs",
+        "Vous devez refacturer ou rembourser précisément des salariés au kWh certifié MID (attestation URSSAF)"
+      ],
+      "chooseBIf": [
+        "Vous êtes particulier en maison et voulez une borne Schneider 7,4 kW ou 11 kW fiable et conforme NF",
+        "Vous voulez brancher directement le délestage Linky TIC et obtenir le crédit d'impôt de 500 €"
+      ]
+    },
+    "arbitrageCtaTitle": "Devis Pose IRVE Schneider Charge ou EVlink Pro AC",
+    "arbitrageCtaText": "Nos électriciens partenaires Qualifelec P1/P2 posent la gamme complète Schneider Electric au prix direct artisan, sans marge d'opérateur.",
+    "relatedDuelSlugs": [
+      "schneider-charge-vs-hager-witty",
+      "legrand-green-up-one-vs-schneider-charge",
+      "prise-green-up-vs-borne-7kw"
+    ],
+    "faq": [
+      {
+        "question": "Peut-on installer une Schneider Charge 7,4 kW sur un parking d'entreprise ?",
+        "answer": "C'est déconseillé dès qu'il y a plusieurs conducteurs ou un besoin de suivi comptable par badge : l'EVlink Pro AC apporte le compteur MID, la bobine MNx, la gestion OCPP et la robustesse mécanique dédiée aux environnements tertiaires."
+      },
+      {
+        "question": "Quelle est la différence entre l'ancienne EVlink Home Smart et la Schneider Charge ?",
+        "answer": "La Schneider Charge est la génération actuelle succédant à l'EVlink Home / Home Smart en résidentiel, avec un design plus compact, une connectivité Wi-Fi/Wiser modernisée et le même haut niveau d'exigence sur le délestage TIC Linky."
+      },
+      {
+        "question": "Quel disjoncteur différentiel faut-il pour une Schneider Charge 7,4 kW ?",
+        "answer": "Grâce à son module de détection de courant continu 6 mA (RDC-DD) intégré, la Schneider Charge 7,4 kW se raccorde avec un disjoncteur courbe C 40A et un interrupteur différentiel 30 mA Type A-Si / Type F haute immunité conformes à la NF C 15-100."
+      }
+    ]
+  },
+  {
+    "slug": "legrand-green-up-vs-wallbox-pulsar-plus",
+    "publishedAt": "2026-11-16",
+    "updatedAt": "2026-11-20",
+    "title": "Legrand Green'up vs Wallbox Pulsar Plus : Prix, Vitesse & Aides 2026",
+    "metaDescription": "Prise renforcée Legrand Green'up Access (3,7 kW) ou Wallbox Pulsar Plus (7,4 kW) ? Comparatif temps de charge, crédit d'impôt 500 €, coût net réel et sécurité NF C 15-100.",
+    "h1": "Legrand Green'up vs Wallbox Pulsar Plus : Laquelle Rentabiliser en 2026 ?",
+    "entityA": {
+      "name": "Legrand Green'up Access (Prise Renforcée 3,7 kW)",
+      "type": "Prise",
+      "slug": "legrand-prise-green-up",
+      "priceEst": "450 € – 650 € TTC posée",
+      "pros": [
+        "Budget initial minimal sans abonnement Enedis à augmenter",
+        "Contacts traités argent évitant tout échauffement jusqu'à 16A (3,7 kW)",
+        "Pose simple sans obligation légale de qualification IRVE (< 3,7 kW)"
+      ],
+      "cons": [
+        "AUCUN crédit d'impôt de 500 € applicable (prise non pilotable)",
+        "2× à 3× plus lente : ~16 à 20 heures pour une batterie de 60 kWh"
+      ],
+      "targetAudience": "Véhicules hybrides rechargeables (PHEV) ou petits rouleurs citadins (< 35 km/jour)."
+    },
+    "entityB": {
+      "name": "Wallbox Pulsar Plus / Max (7,4 kW ou 11 kW)",
+      "type": "Borne",
+      "slug": "wallbox-pulsar-plus",
+      "priceEst": "1 250 € – 1 650 € TTC → 750 € – 1 150 € net après 500 €",
+      "pros": [
+        "Éligible au crédit d'impôt de 500 € et TVA 5,5 % (surcoût net réel faible vs Green'up)",
+        "Recharge 2× plus rapide : une batterie 60 kWh en une nuit Heures Creuses (~8h)",
+        "Format ultra-compact avec appli Wi-Fi/Bluetooth et délestage Power Boost"
+      ],
+      "cons": [
+        "Nécessite un module Power Boost (tore) pour le délestage dynamique",
+        "Version câble attaché à vérifier selon exigence syndic sur les obturateurs T2S"
+      ],
+      "targetAudience": "Tout propriétaire de voiture 100 % électrique (50 à 85 kWh) roulant régulièrement."
+    },
+    "directAnswerSummary": "La prise renforcée Legrand Green'up Access coûte ~550 € posée mais ne donne pas droit au crédit d'impôt de 500 € et plafonne à 3,7 kW (15 à 20 h pour recharger une électrique moderne). La Wallbox Pulsar Plus 7,4 kW coûte ~1 250 € à 1 550 € TTC avant aides, mais descend à 750 €–1 050 € net après déduction des 500 € d'impôt : pour ~250 € d'écart réel, vous divisez le temps de charge par deux et valorisez durablement votre maison.",
+    "comparisonTable": [
+      {
+        "criteria": "Puissance maximale réelle",
+        "entityAValue": "3,7 kW (16A — nécessite câble compatible Green'up)",
+        "entityBValue": "7,4 kW Mono (32A) ou 11/22 kW Triphasé",
+        "winner": "B"
+      },
+      {
+        "criteria": "Temps de charge 20→80 % (batterie 60 kWh)",
+        "entityAValue": "~10h30 (déborde souvent des Heures Creuses)",
+        "entityBValue": "~5h00 (100 % en Heures Creuses nocturnes)",
+        "winner": "B"
+      },
+      {
+        "criteria": "Crédit d'Impôt 500 € (2026)",
+        "entityAValue": "Non (0 €)",
+        "entityBValue": "Oui (-500 € avec pose IRVE & pilotage)",
+        "winner": "B"
+      },
+      {
+        "criteria": "Reste à charge NET en maison",
+        "entityAValue": "450 € – 650 € Net",
+        "entityBValue": "750 € – 1 150 € Net (après 500 €)",
+        "winner": "A"
+      },
+      {
+        "criteria": "Adaptée aux hybrides rechargeables (PHEV)",
+        "entityAValue": "Parfaitement suffisante (batteries 10–18 kWh)",
+        "entityBValue": "Souvent surdimensionnée (chargeurs PHEV 3,7–7,4 kW)",
+        "winner": "A"
+      }
+    ],
+    "decisionMatrix": {
+      "chooseAIf": [
+        "Vous roulez en hybride rechargeable (batterie < 20 kWh) ou faites moins de 35 km/jour en citadine",
+        "Votre tableau principal en immeuble ancien est totalement saturé à 3 kVA/6 kVA sans évolution possible"
+      ],
+      "chooseBIf": [
+        "Vous possédez une voiture 100 % électrique (e-208, Mégane, Model Y, MG4, ID.3) et chargez de nuit",
+        "Vous voulez profiter du crédit d'impôt de 500 € tant qu'il ramène l'écart réel avec une prise renforcée à ~250 €"
+      ]
+    },
+    "arbitrageCtaTitle": "Chiffrez les 2 Options Chez Vous Avec un Électricien IRVE",
+    "arbitrageCtaText": "Recevez 3 devis comparatifs incluant prise renforcée Legrand Green'up et wallbox 7,4 kW pilotable pour arbitrer au centime près selon votre tableau électrique.",
+    "relatedDuelSlugs": [
+      "prise-green-up-vs-borne-7kw",
+      "legrand-green-up-one-vs-schneider-charge",
+      "wallbox-pulsar-plus-vs-wallbox-pulsar-max"
+    ],
+    "faq": [
+      {
+        "question": "Pourquoi ma voiture charge-t-elle parfois à seulement 2,3 kW sur une Green'up ?",
+        "answer": "La Legrand Green'up contient un aimant interne détecté uniquement par certains câbles compatibles (fournis d'origine ou achetés en option). Un chargeur mobile standard sans détection magnétique se bride par sécurité à 8A ou 10A (1,8 à 2,3 kW) même sur une Green'up."
+      },
+      {
+        "question": "La Wallbox Pulsar Plus existe-t-elle avec prise T2S conforme en copropriété ?",
+        "answer": "En France, la Wallbox Pulsar Plus / Max est majoritairement diffusée avec câble attaché Type 2 (sans obturateur). En copropriété stricte exigeant une prise T2S avec obturateurs NF C 15-100, orientez-vous vers la Wallbox Copper SB, Schneider Charge ou Hager Witty."
+      },
+      {
+        "question": "Legrand propose-t-il aussi une vraie borne 7,4 kW éligible au crédit d'impôt ?",
+        "answer": "Oui : la Legrand Green'up One (wallbox 7,4 kW pilotable à ne pas confondre avec la prise renforcée Green'up Access) est éligible aux 500 € de crédit d'impôt."
+      }
+    ]
   }
 ];

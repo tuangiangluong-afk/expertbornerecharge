@@ -175,7 +175,7 @@ export default async function SuccessPage({ searchParams }: PageProps) {
                                     économiser jusqu&apos;à 960€.
                                 </p>
                                 <Link
-                                    href={`/${domain}/guides/subventions-bornes-recharge`}
+                                    href="/guides/aides-subventions-borne-recharge"
                                     className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all w-full"
                                 >
                                     <Download className="w-4 h-4" />

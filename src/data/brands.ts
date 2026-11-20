@@ -15,6 +15,13 @@ export interface BrandData {
     }
 }
 
+export const PRIORITY_CITY_BRAND_CITIES = new Set([
+    "paris", "lyon", "marseille", "bordeaux", "toulouse", "nantes",
+    "lille", "nice", "strasbourg", "rennes", "montpellier", "pays-de-gex",
+]);
+
+export const PRIORITY_CITY_BRAND_SLUGS = new Set(["tesla", "renault", "peugeot"]);
+
 export const brands: BrandData[] = [
     {
         slug: "tesla",

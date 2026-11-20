@@ -16,8 +16,8 @@ const fiscaliteOgImage = ogImageUrl({
 });
 
 export const metadata: Metadata = {
-    title: clampTitle("Fiscalité Borne de Recharge Entreprise 2026 | Guide"),
-    description: clampDescription("Tout savoir sur la fiscalité des bornes de recharge en entreprise : Amortissement, TVA, Crédit d'impôt et Aides Advenir. Optimisez votre flotte électrique."),
+    title: clampTitle("Borne de Recharge Entreprise 2026 : Fiscalité, Amortissement & TVA"),
+    description: clampDescription("Fiscalité borne de recharge entreprise 2026 : TVA 100 % récupérable, amortissement IS, exonération URSSAF Avantage en Nature et primes Advenir jusqu'à 9 000 €."),
     alternates: {
         canonical: "https://expertbornerecharge.com/fiscalite-entreprise-borne",
     },
@@ -139,6 +139,52 @@ export default function FiscalitePage() {
                         <div className="grid lg:grid-cols-3 gap-12">
                             {/* LEFT: CONTENT */}
                             <div className="lg:col-span-2 space-y-12">
+
+                                {/* AEO DIRECT ANSWER + SIMULATION TABLE */}
+                                <div className="bg-blue-950 text-white p-8 rounded-3xl shadow-md border border-blue-800">
+                                    <div className="text-xs font-bold uppercase tracking-wider text-yellow-300 mb-2">
+                                        Synthèse Fiscalité B2B 2026
+                                    </div>
+                                    <p className="text-blue-50 text-base leading-relaxed mb-6">
+                                        <strong>Réponse Directe :</strong> Une entreprise qui installe des bornes de recharge IRVE récupère <strong>100 % de la TVA</strong> sur les travaux et sur l&apos;électricité de ses véhicules électriques, déduit l&apos;investissement par <strong>amortissement</strong> sur son résultat imposable (IS), et profite d&apos;une <strong>exonération URSSAF totale d&apos;Avantage en Nature</strong> sur la recharge fournie sur le parking professionnel.
+                                    </p>
+                                    <div className="overflow-x-auto rounded-2xl bg-white text-slate-900">
+                                        <table className="w-full text-left text-sm">
+                                            <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                                                <tr>
+                                                    <th className="py-3 px-4">Simulation PME : 4 bornes 22 kW OCPP (TGBT existant)</th>
+                                                    <th className="py-3 px-4 text-right">Montant</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-slate-100">
+                                                <tr>
+                                                    <td className="py-3 px-4">Budget Brut (Matériel OCPP/MID + Câblage + Pose IRVE P2)</td>
+                                                    <td className="py-3 px-4 text-right font-semibold">9 000 € HT (10 800 € TTC)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="py-3 px-4">TVA déductible immédiatement (100 % récupérable)</td>
+                                                    <td className="py-3 px-4 text-right font-semibold text-emerald-700">- 1 800 €</td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="py-3 px-4">Économie d&apos;Impôt sur les Sociétés via amortissement (IS 25 %)</td>
+                                                    <td className="py-3 px-4 text-right font-semibold text-emerald-700">- 2 250 €</td>
+                                                </tr>
+                                                <tr className="bg-emerald-50 font-bold">
+                                                    <td className="py-3 px-4 text-emerald-950">Coût réel net entreprise (hors aide Advenir si parking public)</td>
+                                                    <td className="py-3 px-4 text-right text-emerald-800">6 750 € Net (1 687 €/point)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div className="mt-5 flex flex-wrap gap-4 text-sm">
+                                        <Link href="/guides/installation-borne-recharge-entreprise" className="text-yellow-300 hover:underline font-semibold flex items-center gap-1">
+                                            Guide Technique Entreprise &amp; Loi LOM <ArrowRight size={14} />
+                                        </Link>
+                                        <Link href="/blog/deduction-fiscale-borne-recharge-entreprise" className="text-blue-200 hover:underline font-semibold flex items-center gap-1">
+                                            Détail Déduction Fiscale &amp; Amortissement <ArrowRight size={14} />
+                                        </Link>
+                                    </div>
+                                </div>
 
                                 {/* 1. AMORTISSEMENT */}
                                 <div className="bg-white p-8 rounded-3xl shadow-sm border border-neutral-100">

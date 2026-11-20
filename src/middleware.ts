@@ -10,6 +10,8 @@ export const config = {
     ],
 };
 
+const FIRE_SAFETY_410_REGEX = /(?:incendie|extincteur|baes|baeh|desenfumage|colonne-seche|colonnes-seches|apsad|commission-de-securite|commission-de-s-curit|commission-securite-erp|registre-de-securite|registre-securite|fermeture-administrative-erp|mise-en-demeure-syndic-securite|mise-en-demeure-maire-erp|systeme-securite-incendie|systeme-serurite-incendie|systeme-ssi|alarme-incendie|securite-incendie|audit-incendie|normes-incendie|formation-incendie|devis-mise-aux-normes-restaurant|certificat-n4-q4|contrat-maintenance-securite|accompagnement-commission-securite|expertise-securite-incendie|refus-indemnisation-assurance-incendie|coupe-feu|extinction-automatique|avis-defavorable-securite|avis-d-favorable|delegation-de-pouvoir-securite)/i;
+
 export default async function middleware(req: NextRequest, event?: NextFetchEvent) {
     const url = req.nextUrl;
 
@@ -35,8 +37,12 @@ export default async function middleware(req: NextRequest, event?: NextFetchEven
         return res;
     };
 
-    // 0. EXPLICIT DEAD ROUTES (GSC Cleanup)
-    if (cleanPath.startsWith("/gare")) {
+    // 0. EXPLICIT DEAD & OFF-TOPIC ROUTES (GSC Cleanup)
+    if (
+        cleanPath.startsWith("/gare") ||
+        cleanPath.startsWith("/poi") ||
+        (cleanPath.startsWith("/blog/") && FIRE_SAFETY_410_REGEX.test(cleanPath))
+    ) {
         return applySecurityHeaders(new NextResponse(null, { status: 410, statusText: "Gone" }));
     }
 

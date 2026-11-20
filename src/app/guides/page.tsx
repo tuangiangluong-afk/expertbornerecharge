@@ -64,6 +64,7 @@ export default async function GuidesIndex() {
             category:blog_categories(name)
         `)
         .eq('status', 'published')
+        .contains('tags', ['borne'])
         .order('published_at', { ascending: false });
 
     // 3. Normalize & Merge

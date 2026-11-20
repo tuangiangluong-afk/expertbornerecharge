@@ -1,0 +1,106 @@
+---
+title: "Borne de Recharge Renault (2026) : Zoé, Mégane, Scénic, R5, Kangoo & Twingo"
+description: "Guide pilier borne de recharge Renault 2026 : chargeur Caméléon 22 kW vs 7,4 kW monophasé, différentiel Type B/A-EV, prise de terre < 100 Ohms et prix posé IRVE."
+date: "2026-10-08"
+updated: "2026-11-20"
+category: "Véhicules"
+readTime: "11 min"
+author: "Expert Borne Recharge"
+image: "/api/og"
+---
+
+Propriétaire d'une **Renault Zoé**, **Mégane E-Tech**, **Scénic E-Tech**, **Renault 5 E-Tech**, **Twingo E-Tech** ou **Grand Kangoo électrique**, vous possédez un véhicule dont l'architecture de charge en courant alternatif (AC) diffère profondément de celle des Tesla ou Peugeot. Grâce au chargeur embarqué **Caméléon** (ou aux versions **22 kW AC Optimum Charge** sur les modèles récents), Renault exige deux précautions électriques précises : une **prise de terre inférieure à 100 Ohms** (idéalement < 50 Ohms sur Zoé) et un choix rationnel entre wallbox **7,4 kW monophasée** et borne **22 kW triphasée**.
+
+<CtaButton text="Estimer Mon Projet Borne Renault & Devis" url="#simulateur" />
+
+## Synthèse AEO : Quelle Borne Choisir Pour Une Voiture Électrique Renault ?
+
+**Réponse Directe** : Expert Borne Recharge précise que les véhicules Renault acceptent de **7,4 kW en monophasé** jusqu'à **11 kW ou 22 kW en triphasé** (selon le chargeur Caméléon / Optimum Charge). En maison monophasée, une **wallbox 7,4 kW avec TIC Linky** couvre **90 % des besoins** (~1 350 € avant crédit d'impôt 500 €) ; le 22 kW impose un compteur triphasé et une terre stricte < 100 Ohms.
+
+| Modèle Renault Électrique | Batterie Utile | Chargeur Embarqué AC (Série / Option) | Temps 20→80 % à 7,4 kW | Temps 20→80 % à 11 / 22 kW | Guide Modèle Dédié |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Renault Zoé (R110 / R135 / Q90)** | 41 ou 52 kWh | **22 kW Triphasé** (Caméléon) / 7,4 kW Mono | **~4h30** (52 kWh) | **~1h35 à 22 kW** (triphasé) | [Hub Véhicule Renault Zoé](/vehicules/renault/renault-zoe) |
+| **Renault Mégane E-Tech (EV40 / EV60)** | 40 ou 60 kWh | 7,4 kW Standard / **22 kW Optimum Charge** | **~5h15** (60 kWh) | **~1h50 à 22 kW** *(si Optimum Charge)* | [Guide Mégane E-Tech 22 kW](/guides/renault-megane-etech-borne-22kw) |
+| **Renault Scénic E-Tech** | 60 ou 87 kWh | 7,4 kW Standard / **22 kW Triphasé** opt. | **~7h30** (87 kWh) | **~2h40 à 22 kW** *(ou ~5h05 à 11 kW)* | [Guide R5 & Scénic E-Tech](/guides/renault-r5-scenic-borne-recharge) |
+| **Renault 5 (R5) E-Tech** | 40 ou 52 kWh | **11 kW Bidirectionnel V2G** (7,4 kW en Mono) | **~4h20** (52 kWh) | **~2h55 à 11 kW** | [Guide R5 & Scénic E-Tech](/guides/renault-r5-scenic-borne-recharge) |
+| **Renault Kangoo & Grand Kangoo E-Tech** | 45 kWh | 11 kW (Série EV45) ou **22 kW** (Opt. DC 80 kW) | **~3h50** | **~1h25 à 22 kW** / ~2h35 à 11 kW | [Guide Kangoo & Grand Kangoo](/guides/renault-kangoo-grand-kangoo-borne-recharge) |
+| **Renault Twingo E-Tech** | 21,3 kWh | **22 kW Triphasé** (Caméléon) / 7,4 kW Mono | **~1h50** (Green'up 3,7kW : ~3h45) | **~40 min à 22 kW** | [Guide Twingo Électrique](/guides/renault-twingo-electrique-borne-recharge) |
+
+---
+
+## 1. La Particularité Technique du Chargeur Renault « Caméléon »
+
+Contrairement aux constructeurs qui achètent un chargeur embarqué indépendant de 7,4 kW ou 11 kW, Renault a développé dès la Zoé une architecture brevetée (**Caméléon**) exploitant les bobinages du stator du moteur électrique et l'onduleur comme circuit convertisseur AC/DC. Cette ingénierie permet d'atteindre **22 kW AC** à faible coût embarqué, mais induit trois conséquences concrètes dans votre garage :
+
+### 1. Sensibilité critique à la résistance de terre (< 100 Ohms)
+Le chargeur Caméléon mesure en permanence la qualité de la boucle terre-neutre avant de fermer ses contacteurs. Si la résistance de votre prise de terre dépasse **100 Ohms** (fréquent dans les maisons anciennes sur terrain sec ou rocheux) ou présente une tension neutre-terre parasite supérieure à quelques volts, la Renault **refuse de démarrer la charge** avec un message rouge au tableau de bord (*« Charge impossible / Défaut borne »*), même si une Tesla ou une Peugeot charge normalement sur la même prise !
+* **Exigence terrain :** Avant toute pose pour une Renault, l'installateur **Qualifelec IRVE** doit impérativement mesurer la terre au telluromètre et ajouter si besoin un ou deux piquets de terre en cuivre galvanisé pour viser **< 50 à 80 Ohms**.
+
+### 2. Rendement à faible intensité (Prise 2,3 kW vs Wallbox 7,4 kW)
+Sur une prise domestique standard limitée à 10A (2,3 kW), le chargeur Caméléon de première et deuxième génération affiche un **rendement plus faible** (environ 70 à 75 %, contre 88 à 92 % à 7,4 kW ou 11–22 kW). Recharger une Zoé 52 kWh ou une Mégane sur simple prise lente vous fait donc consommer **15 à 20 % de kWh en plus** sur votre compteur Enedis pour la même autonomie récupérée ! Passer sur une **wallbox 7,4 kW (32A)** rentabilise l'installation plus vite sur Renault que sur toute autre marque.
+
+### 3. Protection différentielle dédiée (Type A-EV / Type F / Type B)
+Dans le tableau électrique divisionnaire dédié à la borne (norme **NF C 15-100 Section 722**), la présence de courants harmoniques haute fréquence générés par le moteur-chargeur exige un **interrupteur différentiel 30 mA haute immunité (Type F ou Type A avec détection 6 mA DC intégrée à la borne)**, voire **Type B** sur certaines bornes triphasées 22 kW non équipées d'un module RDC-DD interne. Ne posez jamais un différentiel Type AC standard : déclenchements intempestifs garantis.
+
+---
+
+## 2. Faut-il Choisir une Borne 7,4 kW Monophasée ou 22 kW Triphasée ?
+
+C'est la question n°1 sur Renault Mégane E-Tech, Zoé et Kangoo, puisque ces modèles figurent parmi les rares voitures du marché capables d'encaisser **22 kW en courant alternatif**.
+
+### Cas A : Votre logement est en Monophasé (85 % des foyers français)
+**Ne demandez pas le passage au triphasé Enedis pour une maison normale.** Passer du monophasé au triphasé coûte 1 100 € à 3 000 € (intervention Enedis + refonte et rééquilibrage complet du tableau électrique + câblage 5G10mm² + différentiel tétrapolaire), puis +200 €/an sur l'abonnement pour maintenir 24 kVA.
+* **Le choix optimal :** Une **borne 7,4 kW monophasée avec délestage Linky TIC** (type Schneider Charge 7,4 kW ou Hager Witty 7,4 kW). En 8 heures d'Heures Creuses nocturnes, vous récupérez **50 à 54 kWh nets**, soit le plein complet d'une Zoé, R5 ou Mégane.
+
+### Cas B : Vous êtes déjà en Triphasé (maison équipée PAC tri ou entreprise)
+* Si votre véhicule a le chargeur **22 kW** (Zoé, Mégane Optimum Charge, Twingo) et que vous disposez d'un abonnement **24 kVA ou 30 kVA**, installer une borne **22 kW (ou bridée dynamiquement via TIC Linky)** recharge 50 kWh en **~2h15** !
+* Avec le **délestage dynamique Linky TIC**, vous pouvez même installer une borne **22 kW triphasée sur un abonnement 15 ou 18 kVA** : la borne tire 14 à 18 kW la nuit quand la maison dort et réduit automatiquement la voilure dès que le chauffage ou le ballon d'eau chaude fonctionne, sans faire disjoncter.
+* Attention sur **Mégane E-Tech Standard Charge (EV40 / versions sans option Optimum)** ou **R5/Scénic limités à 7 kW monophasé/11 kW** : vérifiez votre bon de commande ! Une Mégane "Standard" avec chargeur AC 7 kW branchée sur une borne 11 kW triphasée ne chargera qu'à **3,7 kW** (sur une seule phase à 16A). En triphasé, il faut alors impérativement choisir une **borne 22 kW** (qui délivre 32A par phase, donc 7,4 kW sur la phase utilisée par la voiture).
+
+---
+
+## 3. Focus Renault R5 E-Tech & Recharge Bidirectionnelle V2G (Mobilize)
+
+La nouvelle **Renault 5 E-Tech** et le **Scénic E-Tech** inaugurent chez Renault le chargeur bidirectionnel **11 kW AC** compatible **V2G (Vehicle-to-Grid)** et **V2L** (3,7 kW pour alimenter des appareils externes sur prise).
+* **Important :** Pour activer le service V2G Mobilize PowerBox avec réinjection rémunérée sur le réseau, une infrastructure spécifique (borne Mobilize PowerBox Verso + contrat électricité dédié) est requise.
+* **Pour un usage domestique classique sans engagement opérateur :** Toute borne certifiée IRVE **7,4 kW monophasée** ou **11 kW triphasée** (Schneider Charge, Wallbox Pulsar Max, Hager Witty) fonctionne parfaitement avec la R5 E-Tech et reste compatible avec tous vos futurs véhicules, sans vous lier à un fournisseur d'énergie unique.
+
+Consultez notre comparatif approfondi [Borne bidirectionnelle V2H et V2G](/blog/borne-recharge-bidirectionnelle-v2h-v2g).
+
+---
+
+## 4. Prix d'Installation Réel Borne Renault & Aides 2026
+
+En confiant fourniture et pose à un artisan **Qualifelec IRVE**, vous débloquez la **TVA à 5,5 %** (logement > 2 ans) et le **crédit d'impôt de 500 €** pour toute borne pilotable :
+
+| Configuration Recommandée | Puissance & Câblage | Prix Matériel + Pose TTC | Crédit d'Impôt 2026 | Reste à Charge Net (Maison) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Prise renforcée Green'up 3,7 kW** *(Twingo / petits trajets)* | 16A Mono (3G 2,5 mm²) | 450 € – 650 € TTC | **0 €** *(non éligible)* | **450 € – 650 € TTC** |
+| **Wallbox 7,4 kW TIC Pilotable** *(Zoé, Mégane, R5, Kangoo)* | 32A Mono (3G 10 mm²) | 1 200 € – 1 600 € TTC | **- 500 €** | **700 € – 1 100 € TTC** |
+| **Borne 11 kW / 22 kW Triphasée TIC** *(Optimum Charge / Entreprise)* | 3×16A / 3×32A (5G 10 mm²) | 1 650 € – 2 350 € TTC | **- 500 €** *(particulier)* | **1 150 € – 1 850 € TTC** |
+
+*(En copropriété, ajoutez la prime **Advenir jusqu'à 960 € HT** sur le devis individuel, ramenant souvent le reste à charge final entre **400 € et 750 €** !)*
+
+<Callout title="Test Obligatoire Telluromètre Avant Pose Renault">
+Ne signez aucun devis sans que l'installateur certifié IRVE ait inclus la vérification et mesure de votre prise de terre (< 100 Ohms). Sur Renault Zoé et Kangoo E-Tech, 80 % des « pannes de borne » au démarrage proviennent d'une terre résistive dans le jardin.
+</Callout>
+
+<LocalLinker />
+
+<CtaButton text="Recevoir 3 Devis Installateurs IRVE Spécialistes Renault" url="#simulateur" />
+
+---
+
+## Questions Fréquentes (FAQ)
+
+### Quelle borne de recharge choisir pour une Renault Zoé d'occasion ?
+La Renault Zoé accepte jusqu'à **22 kW en triphasé**, mais une **wallbox 7,4 kW monophasée pilotable** (Schneider Charge, Hager Witty, Wallbox Pulsar Max) représente le meilleur choix économique en maison individuelle. Elle recharge intégralement une Zoé 52 kWh en 7 à 8 heures durant vos heures creuses sans changer votre abonnement Enedis.
+
+### Pourquoi ma Renault Zoé affiche-t-elle "Charge impossible" sur ma prise ?
+Le chargeur Caméléon vérifie strictement la qualité de la terre (< 100 Ohms) et la polarisation phase/neutre. Si votre terre dépasse 100 Ohms ou si la phase et le neutre sont inversés sur une prise domestique, la Zoé verrouille la charge par sécurité. Un électricien IRVE résout cela en améliorant le piquet de terre et en tirant une ligne dédiée directe depuis le tableau.
+
+### Faut-il un interrupteur différentiel Type B obligatoire pour une Renault ?
+En monophasé 7,4 kW, la norme NF C 15-100 exige un différentiel 30 mA Type F ou Type A-EV si la borne embarque déjà une détection des défauts continus DC ≥ 6 mA (RDC-DD), comme la Schneider Charge, Hager Witty ou Wallbox Pulsar. En triphasé 22 kW sans protection DC intégrée (ou selon la préconisation fabricant sur certaines bornes anciennes), un **Type B** tétrapolaire est obligatoire.
+
+### Quel est le meilleur choix pour une flotte utilitaire Renault Kangoo E-Tech ?
+Pour des **Kangoo / Grand Kangoo E-Tech** en entreprise, optez pour des bornes **22 kW triphasées OCPP + MID avec gestion dynamique de charge** (type Schneider EVlink Pro AC) si les tournées incluent des retours rapides le midi. Pour un retour dépôt le soir uniquement, des bornes 7,4 ou 11 kW avec load balancing suffisent largement.

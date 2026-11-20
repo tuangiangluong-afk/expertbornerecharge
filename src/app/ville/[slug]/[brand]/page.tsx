@@ -1,6 +1,6 @@
 export const revalidate = 604800; // 7 days ISR cache
 import { getCityByCleanSlug, CITIES } from "@/lib/db";
-import { brands } from "@/data/brands";
+import { brands, PRIORITY_CITY_BRAND_CITIES, PRIORITY_CITY_BRAND_SLUGS } from "@/data/brands";
 import { slugify } from "@/lib/slugify";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -50,6 +50,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     const pseo = getPseoBrandContent(site.city, brandData, site);
     const canonicalUrl = `https://expertbornerecharge.com/ville/${slug}/${brandSlug}`;
 
+    const isPriority = PRIORITY_CITY_BRAND_CITIES.has(slug.toLowerCase()) && PRIORITY_CITY_BRAND_SLUGS.has(brandSlug.toLowerCase());
+
     return {
         title: pseo.meta_title,
         description: pseo.meta_description,
@@ -76,7 +78,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
                 }
             ]
         },
-        robots: { index: true, follow: true },
+        robots: { index: isPriority, follow: true },
     };
 }
 

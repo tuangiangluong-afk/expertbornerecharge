@@ -1,15 +1,19 @@
 import { MetadataRoute } from 'next';
 import { NATIONAL_TARGETS } from '@/config/national-targets';
 import { REDIRECTED_SERVICE_SLUGS, SEO_SERVICES } from '@/lib/seo-data';
-import { NATIONAL_CONFIG } from '@/config/national';
 import { slugify } from '@/lib/slugify';
-import { brands } from '@/data/brands';
+import { brands, PRIORITY_CITY_BRAND_CITIES, PRIORITY_CITY_BRAND_SLUGS } from '@/data/brands';
 import { getAllVehicles } from '@/data/vehicles';
 import { getAllGuides } from '@/lib/mdx';
 import { createClient } from '@supabase/supabase-js';
 import { OPERATORS } from '@/data/operators';
 import { HARDWARE_PRODUCTS } from '@/data/hardware';
 import { DUELS } from '@/data/comparatives';
+
+const CORE_LAST_MOD = new Date('2026-11-20');
+const CITY_LAST_MOD = new Date('2026-11-15');
+const VEHICLE_LAST_MOD = new Date('2026-11-12');
+const SERVICE_LAST_MOD = new Date('2026-10-15');
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://expertbornerecharge.com';
@@ -20,79 +24,79 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const coreRoutes: MetadataRoute.Sitemap = [
         {
             url: baseUrl,
-            lastModified: new Date(),
+            lastModified: CORE_LAST_MOD,
             changeFrequency: 'daily',
             priority: 1.0,
         },
         {
             url: `${baseUrl}/solutions/copropriete`,
-            lastModified: new Date(),
+            lastModified: CORE_LAST_MOD,
             changeFrequency: 'weekly',
             priority: 0.9,
         },
         {
             url: `${baseUrl}/solutions/maison`,
-            lastModified: new Date(),
+            lastModified: CORE_LAST_MOD,
             changeFrequency: 'weekly',
             priority: 0.9,
         },
         {
             url: `${baseUrl}/solutions/entreprise`,
-            lastModified: new Date(),
+            lastModified: CORE_LAST_MOD,
             changeFrequency: 'weekly',
             priority: 0.9,
         },
         {
             url: `${baseUrl}/operateurs`,
-            lastModified: new Date(),
+            lastModified: CORE_LAST_MOD,
             changeFrequency: 'weekly',
             priority: 0.9,
         },
         {
             url: `${baseUrl}/marques`,
-            lastModified: new Date(),
+            lastModified: CORE_LAST_MOD,
             changeFrequency: 'weekly',
             priority: 0.9,
         },
         {
             url: `${baseUrl}/comparatifs`,
-            lastModified: new Date(),
+            lastModified: CORE_LAST_MOD,
             changeFrequency: 'weekly',
             priority: 0.85,
         },
         {
             url: `${baseUrl}/guides`,
-            lastModified: new Date(),
+            lastModified: CORE_LAST_MOD,
             changeFrequency: 'weekly',
             priority: 0.8,
         },
         {
             url: `${baseUrl}/blog`,
-            lastModified: new Date(),
+            lastModified: CORE_LAST_MOD,
             changeFrequency: 'weekly',
             priority: 0.8,
         },
         {
             url: `${baseUrl}/vehicules`,
-            lastModified: new Date(),
+            lastModified: VEHICLE_LAST_MOD,
             changeFrequency: 'weekly',
             priority: 0.8,
         },
         {
             url: `${baseUrl}/fiscalite-entreprise-borne`,
-            lastModified: new Date(),
+            lastModified: CORE_LAST_MOD,
             changeFrequency: 'weekly',
             priority: 0.85,
         },
         {
             url: `${baseUrl}/outils/generateur-lettre-syndic`,
-            lastModified: new Date(),
+            lastModified: SERVICE_LAST_MOD,
             changeFrequency: 'monthly',
             priority: 0.75,
         },
         {
             url: `${baseUrl}/contact`,
-            lastModified: new Date(),
+            lastModified: SERVICE_LAST_MOD,
             changeFrequency: 'monthly',
             priority: 0.5,
         },
@@ -118,11 +122,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // ========================================
     const cityRoutes: MetadataRoute.Sitemap = validTargets.map((target) => ({
         url: `${baseUrl}/ville/${slugify(target.name)}`,
-        lastModified: new Date(),
+        lastModified: CITY_LAST_MOD,
         changeFrequency: 'weekly' as const,
-        priority: 0.9, // High priority - main money pages
+        priority: 0.9,
     }));
-
 
     // ========================================
     // 5. SERVICE PAGES
@@ -131,33 +134,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         .filter((service) => !REDIRECTED_SERVICE_SLUGS.includes(service.slug))
         .map((service) => ({
             url: `${baseUrl}/service/${service.slug}`,
-            lastModified: new Date(),
+            lastModified: SERVICE_LAST_MOD,
             changeFrequency: 'monthly' as const,
             priority: 0.7,
         }));
 
     // ========================================
-    // 6. GUIDE PAGES (POIs)
-    // ========================================
-    const allPois = [
-        ...NATIONAL_CONFIG.points_of_interest.hotels,
-        ...NATIONAL_CONFIG.points_of_interest.nightlife,
-        ...NATIONAL_CONFIG.points_of_interest.monuments
-    ];
-
-    const poiRoutes: MetadataRoute.Sitemap = allPois.map((poi) => ({
-        url: `${baseUrl}/poi/${slugify(poi)}`,
-        lastModified: new Date(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.6,
-    }));
-
-    // ========================================
-    // 7. INSTALLATION BRAND PAGES (NEW)
+    // 7. INSTALLATION BRAND PAGES
     // ========================================
     const installationRoutes: MetadataRoute.Sitemap = brands.map((brand) => ({
         url: `${baseUrl}/installation/${brand.slug}`,
-        lastModified: new Date(),
+        lastModified: VEHICLE_LAST_MOD,
         changeFrequency: 'weekly' as const,
         priority: 0.8,
     }));
@@ -166,19 +153,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 8. VEHICLE PAGES
     // ========================================
     const vehicles = getAllVehicles();
-    // slugify : « Citroën » doit sortir en /vehicules/citroen. La forme
-    // accentuée n'était pas routable et le sitemap annonçait alors un 301
-    // qui finissait en 404.
     const vehicleBrandRoutes: MetadataRoute.Sitemap = Array.from(new Set(vehicles.map((v) => slugify(v.brand)))).map((brand) => ({
         url: `${baseUrl}/vehicules/${brand}`,
-        lastModified: new Date(),
+        lastModified: CORE_LAST_MOD,
         changeFrequency: 'weekly' as const,
         priority: 0.8,
     }));
 
     const vehicleRoutes: MetadataRoute.Sitemap = vehicles.map((vehicle) => ({
         url: `${baseUrl}/vehicules/${slugify(vehicle.brand)}/${vehicle.id}`,
-        lastModified: new Date(),
+        lastModified: VEHICLE_LAST_MOD,
         changeFrequency: 'weekly' as const,
         priority: 0.7,
     }));
@@ -187,15 +171,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 9. BLOG GUIDES (MDX)
     // ========================================
     const guides = getAllGuides();
-    const guideRoutes: MetadataRoute.Sitemap = guides.map((guide) => ({
+    const guideRoutes: MetadataRoute.Sitemap = guides.map((guide: any) => ({
         url: `${baseUrl}/guides/${guide.slug}`,
-        lastModified: new Date(guide.date),
+        lastModified: new Date(guide.updated || guide.date),
         changeFrequency: 'weekly' as const,
-        priority: 0.8,
+        priority: 0.85,
     }));
 
     // ========================================
-    // 9b. BLOG POSTS (Supabase)
+    // 9b. BLOG POSTS (Supabase — strictly filtered to 'borne' tag)
     // ========================================
     let blogRoutes: MetadataRoute.Sitemap = [];
     try {
@@ -207,6 +191,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
                 .from('blog_posts')
                 .select('slug, published_at, updated_at')
                 .eq('status', 'published')
+                .contains('tags', ['borne'])
                 .order('published_at', { ascending: false });
 
             if (blogPosts) {
@@ -225,34 +210,35 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // ========================================
     // 11. B2B PSEO Routes (Copro + Entreprise per city)
     // ========================================
-    const b2bRoutes: MetadataRoute.Sitemap = validTargets.flatMap((target) => {
-        return [
-            {
-                url: `${baseUrl}/ville/${slugify(target.name)}/copropriete`,
-                lastModified: new Date(),
-                changeFrequency: 'weekly' as const,
-                priority: 0.95,
-            },
-            {
-                url: `${baseUrl}/ville/${slugify(target.name)}/entreprise`,
-                lastModified: new Date(),
-                changeFrequency: 'weekly' as const,
-                priority: 0.95,
-            },
-        ];
-    });
+    const b2bRoutes: MetadataRoute.Sitemap = validTargets.flatMap((target) => [
+        {
+            url: `${baseUrl}/ville/${slugify(target.name)}/copropriete`,
+            lastModified: CITY_LAST_MOD,
+            changeFrequency: 'weekly' as const,
+            priority: 0.95,
+        },
+        {
+            url: `${baseUrl}/ville/${slugify(target.name)}/entreprise`,
+            lastModified: CITY_LAST_MOD,
+            changeFrequency: 'weekly' as const,
+            priority: 0.95,
+        },
+    ]);
 
     // ========================================
-    // 12. Domination Longue Traîne: City x Brand (pSEO Matrix)
+    // 12. Priority City x Vehicle Brand Matrix (36 high-value URLs)
     // ========================================
-    const cityBrandRoutes: MetadataRoute.Sitemap = validTargets.flatMap((target) => {
-        return brands.map(brand => ({
-            url: `${baseUrl}/ville/${slugify(target.name)}/${brand.slug}`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly' as const,
-            priority: 0.85,
-        }));
-    });
+    const priorityBrands = brands.filter((b) => PRIORITY_CITY_BRAND_SLUGS.has(b.slug));
+    const cityBrandRoutes: MetadataRoute.Sitemap = validTargets
+        .filter((target) => PRIORITY_CITY_BRAND_CITIES.has(slugify(target.name)))
+        .flatMap((target) =>
+            priorityBrands.map((brand) => ({
+                url: `${baseUrl}/ville/${slugify(target.name)}/${brand.slug}`,
+                lastModified: CITY_LAST_MOD,
+                changeFrequency: 'weekly' as const,
+                priority: 0.85,
+            }))
+        );
 
     // ========================================
     // 13. OPERATEURS & RESEAUX NATIONAUX
@@ -288,7 +274,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ...coreRoutes,
         ...cityRoutes,
         ...serviceRoutes,
-        ...poiRoutes,
         ...installationRoutes,
         ...vehicleBrandRoutes,
         ...vehicleRoutes,
@@ -301,6 +286,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ...duelRoutes,
     ].map(item => ({
         ...item,
-        url: item.url.toLowerCase()
+        url: item.url.toLowerCase(),
     }));
 }

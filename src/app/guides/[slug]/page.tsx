@@ -97,6 +97,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         .select('seo_title, title, seo_description, excerpt')
         .eq('slug', resolvedParams.slug)
         .eq('status', 'published')
+        .contains('tags', ['borne'])
         .single();
     
     if (post) {
@@ -146,6 +147,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             .select('slug')
             .eq('slug', resolvedParams.slug)
             .eq('status', 'published')
+            .contains('tags', ['borne'])
             .single();
         
         if (post) {
@@ -184,7 +186,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         "description": guide.meta.description,
         "image": guide.meta.image ? `${siteUrl}${guide.meta.image}` : undefined,
         "datePublished": guide.meta.date,
-        "dateModified": new Date().toISOString(),
+        "dateModified": guide.meta.updated || guide.meta.date,
         "author": {
             "@type": "Organization",
             "name": guide.meta.author || "Expert Borne Recharge"

@@ -73,7 +73,8 @@ export async function generateStaticParams() {
         const { data } = await supabase
             .from('blog_posts')
             .select('slug')
-            .eq('status', 'published');
+            .eq('status', 'published')
+            .contains('tags', ['borne']);
         return (data || []).map((post: { slug: string }) => ({
             slug: post.slug,
         }));

@@ -98,6 +98,32 @@ export default async function VehiclePage({ params }: { params: Promise<{ brand:
     const timeWallbox11 = calculateChargeTime(vehicle.battery, Math.min(maxAC, 11));
     const timeWallbox22 = calculateChargeTime(vehicle.battery, Math.min(maxAC, 22));
 
+    const VEHICLE_PILLAR_GUIDES: Record<string, { label: string; href: string }> = {
+        "renault-zoe": { label: "Guide Pilier Renault : Zoé, Caméléon 22 kW & Terre", href: "/guides/borne-recharge-renault-guide-complet" },
+        "renault-megane-e-tech": { label: "Renault Mégane E-Tech : Le 22 kW vaut-il le triphasé ?", href: "/guides/renault-megane-etech-borne-22kw" },
+        "renault-5-e-tech": { label: "Renault R5 E-Tech & Scénic : Prix & Temps de Charge", href: "/guides/renault-r5-scenic-borne-recharge" },
+        "renault-scenic": { label: "Renault Scénic & R5 E-Tech : Prix & Temps de Charge", href: "/guides/renault-r5-scenic-borne-recharge" },
+        "renault-kangoo": { label: "Renault Kangoo & Grand Kangoo : Bornes Compatibles", href: "/guides/renault-kangoo-grand-kangoo-borne-recharge" },
+        "renault-twingo": { label: "Twingo Électrique : Prise Green'up ou Borne 7,4 kW ?", href: "/guides/renault-twingo-electrique-borne-recharge" },
+        "peugeot-e-208": { label: "Peugeot e-208 : Prix Posé, 7,4 vs 11 kW & Aides 2026", href: "/guides/peugeot-e208-borne-recharge-prix" },
+        "peugeot-e-2008": { label: "Peugeot e-2008 : Temps de Charge & Choix Wallbox", href: "/guides/peugeot-e2008-borne-recharge-prix" },
+        "peugeot-e-3008": { label: "Peugeot e-3008 & e-5008 : Guide Borne Domicile", href: "/guides/peugeot-e3008-e5008-borne-recharge" },
+        "tesla-model-y": { label: "Tesla Model Y : Monophasé 7,4 kW ou Triphasé 11 kW ?", href: "/guides/tesla-model-y-borne-recharge" },
+        "tesla-model-3": { label: "Tesla Model 3 : Wall Connector vs NF TIC & Prix Posé", href: "/guides/tesla-model-3-borne-domicile" },
+        "hyundai-ioniq-5": { label: "Hyundai Ioniq 5 & Ioniq 6 : 11 kW, V2L & Délestage", href: "/guides/hyundai-ioniq-5-ioniq-6-borne-recharge" },
+        "hyundai-ioniq-6": { label: "Hyundai Ioniq 5 & Ioniq 6 : 11 kW, V2L & Délestage", href: "/guides/hyundai-ioniq-5-ioniq-6-borne-recharge" },
+        "mini-cooper-se": { label: "Mini Cooper SE & BMW iX3 : Guide Borne Domicile", href: "/guides/mini-cooper-se-bmw-ix3-borne-recharge" },
+        "bmw-ix": { label: "Mini Cooper SE & BMW iX3 : Guide Borne Domicile", href: "/guides/mini-cooper-se-bmw-ix3-borne-recharge" },
+        "dacia-spring": { label: "Dacia Spring : Prise Green'up ou Borne 7,4 kW ?", href: "/guides/dacia-spring-borne-prise-renforcee" },
+        "volvo-ex30": { label: "Volvo EX30 : 7,4 kW, 11 kW ou 22 kW à Domicile ?", href: "/guides/volvo-ex30-borne-recharge" },
+        "mg-4": { label: "MG4 & MG ZS EV : Guide Électrique & Installation IRVE", href: "/guides/mg4-mg-zs-ev-borne-recharge" },
+        "mg-zs-ev": { label: "MG4 & MG ZS EV : Guide Électrique & Installation IRVE", href: "/guides/mg4-mg-zs-ev-borne-recharge" },
+        "kia-ev6": { label: "Kia EV3 & EV6 : V2L & Temps de Charge Domicile", href: "/guides/kia-ev3-ev6-borne-recharge" },
+        "kia-niro-ev": { label: "Kia e-Niro & EV6 : Prix & Installation IRVE 2026", href: "/guides/kia-e-niro-ev6-borne-recharge" },
+        "citroen-e-c4": { label: "Citroën ë-C3 & ë-C4 : Temps & Prix d'Installation", href: "/guides/citroen-ec3-borne-recharge" },
+    };
+    const matchingPillarGuide = VEHICLE_PILLAR_GUIDES[vehicle.id];
+
     // Calculs de temps de charge 20% à 80% (cycle quotidien standard = 60% de la batterie)
     const dailyBattery = vehicle.battery * 0.6;
     const timeDailyWallbox7 = calculateChargeTime(dailyBattery, Math.min(maxAC, 7.4));
@@ -674,6 +700,11 @@ export default async function VehiclePage({ params }: { params: Promise<{ brand:
                                 Guides Recommandés
                             </h4>
                             <div className="space-y-2 text-sm">
+                                {matchingPillarGuide && (
+                                    <Link href={matchingPillarGuide.href} className="block font-semibold text-blue-700 hover:text-blue-900 transition-colors">
+                                        ➔ {matchingPillarGuide.label}
+                                    </Link>
+                                )}
                                 <Link href="/guides/borne-copropriete-droit-a-la-prise-advenir-2026" className="block text-slate-600 hover:text-blue-600 transition-colors">
                                     ➔ Installer en copropriété (Droit à la prise 2026)
                                 </Link>
