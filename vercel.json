@@ -85,5 +85,6 @@
         }
       ]
     }
-  ]
+  ],
+  "ignoreCommand": "git diff HEAD^ HEAD --quiet -- . ':!scripts' ':!docs' ':!tests' ':!scratch' ':!*.md' ':!.github' && exit 0 || exit 1"
 }
