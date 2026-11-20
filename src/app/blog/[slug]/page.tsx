@@ -158,7 +158,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         "description": post.excerpt,
         "image": post.featured_image_url,
         "datePublished": post.published_at,
-        "dateModified": new Date().toISOString(),
+        "dateModified": post.updated_at || post.published_at,
         "author": {
             "@type": "Person",
             "name": post.author_name || "Expert Borne Recharge",
