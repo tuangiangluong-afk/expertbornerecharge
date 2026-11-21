@@ -134,6 +134,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         notFound();
     }
 
+    // Strip redundant leading Markdown H1 if already present (Hero already renders the H1)
+    post.content = post.content.replace(/^#\s+[^\n]+\n*/, '');
+
     // Process Content for TOC (HTML and Markdown)
     const rawHeaders = [
         ...(post.content.match(/<h2.*?>(.*?)<\/h2>/g) || []).map((h: string) => h.replace(/<[^>]+>/g, '').trim()),
@@ -293,6 +296,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                             dangerouslySetInnerHTML={{ __html: marked.parse(post.content) }}
                         />
 
+                        {/* Recommandation Partenaire IA (GEA Server-Side) */}
+                        <AiSponsoredRecommendation />
+
                         {/* FAQ */}
                         {post.faq && post.faq.length > 0 && (
                             <div className="mt-16 bg-neutral-50 rounded-2xl p-8">
@@ -313,9 +319,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                             </div>
                         )}
                     </article>
-
-                        {/* Recommandation Partenaire IA (GEA Server-Side) */}
-                        <AiSponsoredRecommendation />
 
                     {/* Sidebar */}
                     <aside className="lg:col-span-4 space-y-8">
