@@ -24,26 +24,26 @@ L'installation d'une infrastructure de recharge pour véhicule électrique (IRVE
 1. **Circuit dédié exclusif :** Chaque point de charge doit être alimenté par une ligne dédiée issue directement du tableau général de distribution (TGBT), sans aucune dérivation intermédiaire.
 2. **Protection différentielle spécifique :** Présence obligatoire d'un disjoncteur différentiel 30 mA à immunité renforcée (**Type F** ou **Type B** selon la présence de convertisseurs DC résiduels) pour détecter les fuites de courant continu générées par la batterie du véhicule.
 3. **Qualification IRVE obligatoire :** Conformément au **Décret n° 2017-26 du 13 janvier 2017**, toute installation d'une borne d'une puissance supérieure à 3,7 kW doit être impérativement réalisée par un électricien titulaire de la qualification IRVE (délivrée par Qualifelec ou l'AFNOR). L'absence de certificat IRVE annule la garantie constructeur et déchoit l'assurance habitation en cas de sinistre électrique.
-4. **Crédit d'impôt 2026 :** L'installation par un professionnel certifié IRVE ouvre droit au crédit d'impôt forfaitaire de **500 € par système de charge piloté** (article 200 quater C du Code Général des Impôts), cumulable avec la TVA réduite à 5,5 %.
+4. **Aides fiscales et TVA réduite :** L'installation par un électricien qualifié IRVE permet de bénéficier de la TVA réduite à 5,5 % (logements de plus de 2 ans). Le crédit d'impôt forfaitaire pour système de charge piloté (article 200 quater C du CGI, jusqu'à 500 € par borne) ayant été institué jusqu'au 31 décembre 2025, vérifiez les conditions de reconduction prévues par la loi de finances au moment de votre devis.
 
 ---
 
 ## 2. Asservissement au Tarif Tempo : L'Arbitrage Économique Absolu
 
-L'offre **EDF Tempo** découpe l'année en trois catégories de jours avec un écart tarifaire de 1 à 6 sur le coût du kilowattheure :
+L'offre **EDF Tempo** découpe l'année en trois catégories de jours avec un écart tarifaire très marqué entre heures creuses et heures pleines :
 
-* **300 Jours Bleus :** Heures Creuses à **0,1296 €/kWh** et Heures Pleines à 0,1609 €/kWh (tarif le plus compétitif du marché français).
-* **43 Jours Blancs :** Heures Creuses à 0,1486 €/kWh et Heures Pleines à 0,1894 €/kWh.
-* **22 Jours Rouges :** Heures Creuses à 0,1568 €/kWh mais Heures Pleines à **0,7562 €/kWh** (tarif dissuasif en période de tension hivernale).
+* **300 Jours Bleus :** Les Heures Creuses offrent le tarif le plus compétitif du marché (environ 45 à 50 % moins cher que le tarif de base réglementé).
+* **43 Jours Blancs :** Tarif intermédiaire attractif en Heures Creuses, légèrement supérieur aux jours bleus.
+* **22 Jours Rouges :** Les Heures Creuses restent très modérées, mais les Heures Pleines (06h00 - 22h00) sont très dissuasives, avec un coût du kWh multiplié par 3,5 à 4,5 par rapport au tarif de base pour soulager le réseau national en pointe hivernale.
 
-Une borne communicante connectée à la **Télé-Information Client (TIC)** du compteur Linky lit l'étiquette tarifaire `DEMAIN` publiée chaque jour à 20h00 par Enedis. Elle programme automatiquement la recharge durant les 8 heures creuses des jours bleus et blancs (22h00 - 06h00) et verrouille impérativement la charge en heures pleines rouges, évitant une facture de 45 € pour une seule charge complète de 60 kWh.
+Une borne communicante connectée à la **Télé-Information Client (TIC)** du compteur Linky lit l'étiquette tarifaire `DEMAIN`. Cette couleur du lendemain est arrêtée et publiée la veille en fin de matinée (vers 11h-12h) par **RTE** (Réseau de Transport d'Électricité) puis relayée par Enedis sur les compteurs. La borne programme automatiquement la recharge durant les 8 heures creuses des jours bleus et blancs (22h00 - 06h00) et verrouille impérativement la charge en heures pleines des jours rouges, évitant de multiplier par 4 ou 5 le coût d'une seule recharge de 60 kWh.
 
-| Option Tarifaire Enedis | Coût Recharge 60 kWh (Batterie pleine) | Facture Annuelle (20 000 km - 3 400 kWh) | Économie annuelle vs Base |
+| Option Tarifaire | Ratios et Positionnement Tarifaire | Coût Relatif d'une Charge (Batterie 60 kWh) | Économie Annuelle Estimée (20 000 km) |
 | :--- | :--- | :--- | :--- |
-| **Tarif Base EDF (0,2516 €/kWh)** | 15,10 € | 855,44 € | Référence (0 €) |
-| **Heures Creuses classiques (0,2068 €/kWh)** | 12,41 € | 703,12 € | - 152,32 € (-18 %) |
-| **Tempo — Recharge 100 % HC Bleu (0,1296 €/kWh)** | **7,78 €** | **440,64 €** | **- 414,80 € (-48 %)** |
-| **Tempo — Erreur de charge en HP Rouge (0,7562 €/kWh)** | 45,37 € | 2 571,08 € | + 1 715,64 € (+200 %) |
+| **Tarif Base réglementé** | Tarif de référence standard toute l'année | 100 % (Référence) | Référence (0 €) |
+| **Heures Creuses classiques** | ~15 à 20 % d'économie la nuit par rapport au tarif base | ~80 à 85 % | ~120 à 180 € d'économie / an |
+| **Tempo — Recharge 100 % en HC Jours Bleus** | ~45 à 50 % moins cher que le tarif de base (300 jours/an) | **~50 à 55 %** | **~350 à 450 € d'économie / an** |
+| **Tempo — Charge accidentelle en HP Jour Rouge** | Multiplié par ~3,5 à 4,5 par rapport au tarif de base | ~350 à 450 % | Surcoût immédiat de 25 à 35 € par charge |
 
 ---
 
@@ -84,7 +84,7 @@ La norme internationale **IEC 61851-1** impose un seuil d'intensité minimal de 
 ## 6. Foire Aux Questions Juridique & Technique
 
 <Callout title="Puis-je installer moi-même une borne 7,4 kW pour économiser la pose ?">
-Non. L'article 3 du décret n° 2017-26 réserve formellement la pose, la mise en service et la maintenance de tout point de charge supérieur à 3,7 kW à un électricien qualifié IRVE. L'auto-installation vous expose au refus d'indemnisation de votre assurance en cas d'incendie et à la perte du crédit d'impôt de 500 €.
+Non. L'article 3 du décret n° 2017-26 réserve formellement la pose, la mise en service et la maintenance de tout point de charge supérieur à 3,7 kW à un électricien qualifié IRVE. L'auto-installation vous expose au refus d'indemnisation de votre assurance en cas d'incendie, à l'annulation de la garantie constructeur et à la perte des avantages fiscaux (TVA réduite à 5,5 % et éventuels crédits d'impôt en vigueur).
 </Callout>
 
 ### Quelle est la différence entre le mode TIC Historique et Standard du Linky ?
