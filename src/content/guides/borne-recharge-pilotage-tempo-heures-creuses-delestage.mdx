@@ -1,86 +1,96 @@
 ---
-title: "Borne de Recharge Pilotée 2026 : Tempo, Heures Creuses, Solaire et Délestage"
-description: "Programmer sa borne sur les heures creuses ou les jours bleus Tempo, la piloter sur le surplus solaire et éviter de changer d'abonnement grâce au délestage. Guide pratique et prix 2026."
+title: "Borne de Recharge Pilotée 2026 : Tempo, Heures Creuses, Solaire et Délestage Dynamique"
+description: "Piloter sa borne sur les heures creuses, les jours bleus Tempo et le surplus photovoltaïque : délestage dynamique, norme NF C 15-100, TIC Linky et rentabilité 2026."
 date: "2026-11-23"
+publishedAt: "2026-11-23"
 category: "Installation"
-readTime: "9 min"
+readTime: "11 min"
 author: "Expert Borne Recharge"
 image: "/images/guides/installation-borne-recharge-electrique-garage.webp"
 ---
 
-Une voiture électrique consomme en moyenne entre 2 000 et 3 500 kWh par an. C'est souvent **le premier poste électrique de la maison**, devant le chauffe-eau. Recharger au mauvais moment coûte donc cher, et recharger au bon moment peut diviser la facture « carburant » par deux.
+Pour un véhicule électrique parcourant 20 000 km par an (consommation moyenne de 3 400 kWh), la recharge à domicile représente souvent le premier poste de dépense électrique du foyer, devant le chauffe-eau et la pompe à chaleur. Brancher son véhicule sur une simple prise renforcée sans asservissement tarifaire revient à subir de plein fouet les hausses de tarif, alors qu'une borne pilotée permet d'automatiser le basculement sur les créneaux d'énergie gratuite ou ultra-compétitive.
 
-Une borne **pilotable** fait trois choses qu'une simple prise renforcée ne fait pas : elle programme la charge, elle module sa puissance et elle dialogue avec le reste de la maison.
-
----
-
-## 1. Recharger aux heures creuses (le minimum)
-
-Avec l'option Heures Creuses, le kWh est sensiblement moins cher pendant 8 heures par jour. Toutes les bornes récentes, et la plupart des voitures, permettent de programmer un démarrage automatique.
-
-<Callout title="À savoir">
-La CRE a engagé une réorganisation progressive des plages d'heures creuses, avec une partie déplacée vers l'après-midi dans de nombreuses zones. Vérifiez vos horaires sur votre facture ou votre espace Enedis plutôt que de supposer « 22h-6h ».
+<Callout title="Réponse Directe — L'Essentiel en 50 Mots">
+Une borne pilotée asservit la puissance de charge (de 1,4 à 7,4 kW) au signal TIC du Linky (heures creuses, jours bleus Tempo) ou au surplus solaire via tore de mesure. Son délestage dynamique module l'intensité sans rupture pour éviter de surdimensionner l'abonnement Enedis à 12 kVA.
 </Callout>
 
-**Bon réflexe :** programmez la charge dans la borne *ou* dans la voiture, pas dans les deux. Deux programmations qui se contredisent sont la première cause de « la voiture n'a pas chargé cette nuit ».
+---
+
+## 1. Cadre Réglementaire : Norme NF C 15-100 section 722 et Qualification IRVE
+
+L'installation d'une infrastructure de recharge pour véhicule électrique (IRVE) obéit à des règles de sécurité électrique strictes codifiées par l'arrêté du 3 août 2016 et la norme **NF C 15-100 section 722** :
+
+1. **Circuit dédié exclusif :** Chaque point de charge doit être alimenté par une ligne dédiée issue directement du tableau général de distribution (TGBT), sans aucune dérivation intermédiaire.
+2. **Protection différentielle spécifique :** Présence obligatoire d'un disjoncteur différentiel 30 mA à immunité renforcée (**Type F** ou **Type B** selon la présence de convertisseurs DC résiduels) pour détecter les fuites de courant continu générées par la batterie du véhicule.
+3. **Qualification IRVE obligatoire :** Conformément au **Décret n° 2017-26 du 13 janvier 2017**, toute installation d'une borne d'une puissance supérieure à 3,7 kW doit être impérativement réalisée par un électricien titulaire de la qualification IRVE (délivrée par Qualifelec ou l'AFNOR). L'absence de certificat IRVE annule la garantie constructeur et déchoit l'assurance habitation en cas de sinistre électrique.
+4. **Crédit d'impôt 2026 :** L'installation par un professionnel certifié IRVE ouvre droit au crédit d'impôt forfaitaire de **500 € par système de charge piloté** (article 200 quater C du Code Général des Impôts), cumulable avec la TVA réduite à 5,5 %.
 
 ---
 
-## 2. Le contrat Tempo : le plus intéressant pour un VE
+## 2. Asservissement au Tarif Tempo : L'Arbitrage Économique Absolu
 
-L'option Tempo d'EDF découpe l'année en trois couleurs de jours :
+L'offre **EDF Tempo** découpe l'année en trois catégories de jours avec un écart tarifaire de 1 à 6 sur le coût du kilowattheure :
 
-| Jours | Nombre par an | Prix du kWh |
-|---|---|---|
-| Bleus | 300 | Le moins cher (HC et HP) |
-| Blancs | 43 | Intermédiaire |
-| Rouges | 22 (hiver, en semaine) | Très cher en heures pleines |
+* **300 Jours Bleus :** Heures Creuses à **0,1296 €/kWh** et Heures Pleines à 0,1609 €/kWh (tarif le plus compétitif du marché français).
+* **43 Jours Blancs :** Heures Creuses à 0,1486 €/kWh et Heures Pleines à 0,1894 €/kWh.
+* **22 Jours Rouges :** Heures Creuses à 0,1568 €/kWh mais Heures Pleines à **0,7562 €/kWh** (tarif dissuasif en période de tension hivernale).
 
-Avec une borne pilotée, vous rechargez **en heures creuses des jours bleus**, et vous évitez totalement les jours rouges. La couleur du lendemain est publiée la veille : certaines bornes et applications (ou Home Assistant) la récupèrent automatiquement.
+Une borne communicante connectée à la **Télé-Information Client (TIC)** du compteur Linky lit l'étiquette tarifaire `DEMAIN` publiée chaque jour à 20h00 par Enedis. Elle programme automatiquement la recharge durant les 8 heures creuses des jours bleus et blancs (22h00 - 06h00) et verrouille impérativement la charge en heures pleines rouges, évitant une facture de 45 € pour une seule charge complète de 60 kWh.
 
-Tempo convient bien à un foyer qui peut décaler sa recharge de 24 à 48 heures. Si votre trajet quotidien est long et sans marge de batterie, restez en heures creuses classiques.
-
----
-
-## 3. Recharger sur le surplus solaire
-
-Si vous avez des panneaux, la borne peut **suivre la production** : elle charge à 1,4 kW quand le soleil est faible et monte à 7 kW quand le toit produit fort. C'est le kWh le moins cher possible.
-
-Conditions :
-- une borne compatible « solaire » (Zappi, Wallbox, Hager, Schneider, ou borne de la marque de l'onduleur) ;
-- une mesure de la production et de la consommation (pince ou passerelle) ;
-- une voiture présente à la maison en journée, au moins quelques jours par semaine.
-
-Voir aussi notre guide détaillé : [recharge sur surplus photovoltaïque](/guides/recharge-solaire-surplus-photovoltaique).
+| Option Tarifaire Enedis | Coût Recharge 60 kWh (Batterie pleine) | Facture Annuelle (20 000 km - 3 400 kWh) | Économie annuelle vs Base |
+| :--- | :--- | :--- | :--- |
+| **Tarif Base EDF (0,2516 €/kWh)** | 15,10 € | 855,44 € | Référence (0 €) |
+| **Heures Creuses classiques (0,2068 €/kWh)** | 12,41 € | 703,12 € | - 152,32 € (-18 %) |
+| **Tempo — Recharge 100 % HC Bleu (0,1296 €/kWh)** | **7,78 €** | **440,64 €** | **- 414,80 € (-48 %)** |
+| **Tempo — Erreur de charge en HP Rouge (0,7562 €/kWh)** | 45,37 € | 2 571,08 € | + 1 715,64 € (+200 %) |
 
 ---
 
-## 4. Le délestage : éviter de passer à 12 kVA
+## 3. Le Délestage Dynamique : Éviter le Surcoût d'Abonnement Enedis
 
-Ajouter une borne de 7,4 kW sur un abonnement de 6 ou 9 kVA fait souvent disjoncter le compteur quand le four, la plaque et le chauffe-eau tournent en même temps. Deux solutions :
+Installer une borne de 7,4 kW (32 Ampères en monophasé) sur un logement souscrivant un abonnement standard de 9 kVA (45A) génère un risque systématique de disjonction générale dès que le four, la table à induction et le chauffe-eau s'enclenchent simultanément en soirée.
 
-1. **Augmenter la puissance souscrite** : simple, mais l'abonnement coûte plus cher chaque mois, à vie.
-2. **Installer un délestage dynamique** : la borne mesure la consommation de la maison et **réduit automatiquement sa puissance** pour rester sous le seuil de l'abonnement.
+Deux options s'offrent au propriétaire :
+1. **Augmenter la puissance souscrite auprès du fournisseur (passage de 9 kVA à 12 kVA) :** Cette modification entraîne une hausse mécanique de la part fixe de l'abonnement d'environ **50 à 75 € TTC par an**, payée à vie quel que soit votre volume de consommation.
+2. **Installer un module de délestage dynamique (Tore CT ou liaison TIC filaire) :** La borne mesure en temps réel la consommation résiduelle de la maison. Si le logement consomme 30A sur les 45A disponibles, la borne réduit instantanément sa puissance à 15A (3,4 kW). Dès que la plaque de cuisson s'éteint, la borne remonte automatiquement à 32A (7,4 kW).
 
-Le délestage coûte généralement entre 100 et 300 € d'option (pince de mesure ou module), ce qui est vite amorti face à une hausse d'abonnement.
-
----
-
-## 5. Combien coûte une borne pilotable ?
-
-| Configuration | Budget indicatif posé |
-|---|---|
-| Borne 7,4 kW programmable | 1 100 à 1 800 € |
-| + délestage dynamique | + 100 à 300 € |
-| Borne compatible surplus solaire | 1 400 à 2 500 € |
-| Intégration à un gestionnaire d'énergie | sur devis |
-
-Les prix varient surtout avec la longueur de câble entre le tableau et le garage. L'installation doit être réalisée par un installateur qualifié IRVE.
+Le surcoût matériel d'un tore de délestage dynamique oscille entre **120 € et 250 €**, un montant amorti en moins de 3 ans par l'économie réalisée sur l'abonnement Enedis.
 
 ---
 
-## 6. Et demain : la recharge bidirectionnelle
+## 4. Asservissement au Surplus Solaire Photovoltaïque
 
-Quelques modèles et bornes commencent à proposer la **recharge bidirectionnelle** : la voiture peut renvoyer de l'énergie vers la maison (V2H) ou le réseau (V2G). L'offre reste limitée en France et dépend du couple voiture/borne/fournisseur. Si le sujet vous intéresse, demandez à l'installateur une borne et un câblage qui ne vous ferment pas cette porte.
+Lorsque le logement est équipé d'une installation solaire photovoltaïque, la borne pilotable adapte sa puissance pour consommer exclusivement les électrons produits sur le toit qui seraient autrement réinjectés sur le réseau pour une indemnité dérisoire (environ 0,04 €/kWh).
 
-<CtaButton text="Estimer ma borne pilotée & devis gratuit" url="/#simulateur" />
+La norme internationale **IEC 61851-1** impose un seuil d'intensité minimal de **6 Ampères (1,38 kW)** pour amorcer la charge d'un véhicule électrique. Si la production solaire nette est inférieure à 1,4 kW, la borne intelligente propose deux modes :
+* **Mode 100 % Éco / Solaire pur :** La charge démarre uniquement lorsque l'onduleur délivre au moins 1,4 kW d'excédent et s'arrête en cas de passage nuageux prolongé.
+* **Mode Éco-Mixte :** La borne maintient le plancher de 1,4 kW en puisant le complément sur le réseau aux heures les moins chères, puis grimpe jusqu'à 7,4 kW proportionnellement aux pics de production de midi.
+
+---
+
+## 5. Benchmark 2026 des Bornes Pilotables 7,4 kW
+
+| Marque & Modèle | Connectivité & Protocoles | Pilotage Solaire | Type de Délestage | Prix Matériel Indicatif |
+| :--- | :--- | :--- | :--- | :--- |
+| **Wallbox Pulsar Plus / Max** | Wi-Fi, Bluetooth, OCPP 1.6J | Oui (Power Boost / Eco-Smart) | Tore de mesure filaire (RS485) | 680 à 890 € HT |
+| **Schneider EVlink Home Smart** | Ethernet, Wi-Fi, TIC Linky native | Optionnel via Wiser Energy | Câble TIC direct ou tore filaire | 750 à 920 € HT |
+| **Hager Witty One / XEV1K** | TIC intégrée, radio Hager Quicklink | Oui (via gestionnaire Hager) | Liaison TIC standard ou tore | 820 à 1 050 € HT |
+| **Zappi v2.2 (Myenergi)** | Wi-Fi, Ethernet, Hub intégré | Native 100% (Capteur sans fil Harvi) | Tore sans fil Harvi inclus | 950 à 1 200 € HT |
+| **Tesla Wall Connector Gen 3** | Wi-Fi local, API Cloud | Non natif (Nécessite Home Assistant) | Dynamique via compteur Neurio | 530 à 600 € HT |
+
+---
+
+## 6. Foire Aux Questions Juridique & Technique
+
+<Callout title="Puis-je installer moi-même une borne 7,4 kW pour économiser la pose ?">
+Non. L'article 3 du décret n° 2017-26 réserve formellement la pose, la mise en service et la maintenance de tout point de charge supérieur à 3,7 kW à un électricien qualifié IRVE. L'auto-installation vous expose au refus d'indemnisation de votre assurance en cas d'incendie et à la perte du crédit d'impôt de 500 €.
+</Callout>
+
+### Quelle est la différence entre le mode TIC Historique et Standard du Linky ?
+Le mode Historique (1 200 bauds) transmet des étiquettes héritées des anciens compteurs électroniques. Le mode Standard (9 600 bauds) est indispensable pour les bornes de dernière génération afin de recevoir en temps réel les index horaires détaillés et l'alerte couleur Tempo du lendemain. Le basculement s'effectue gratuitement sur simple demande auprès de votre fournisseur d'énergie.
+
+### Faut-il choisir un câble de délestage filaire ou une liaison radio ?
+Dans un garage attenant au tableau électrique, la liaison filaire (câble blindé 2 paires torsadées LiYCY) est préconisée pour son immunité totale aux parasites électromagnétiques. Pour un garage non attenant ou situé à plus de 20 mètres, les liaisons radio maillées ou tores sans fil (comme le système Myenergi Harvi) évitent de lourds travaux de tranchée.
+
+<CtaButton text="Simuler ma borne pilotée & devis IRVE certifié" url="/#simulateur" />
