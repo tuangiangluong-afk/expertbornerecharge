@@ -131,6 +131,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 import rehypeSlug from 'rehype-slug';
+import remarkGfm from 'remark-gfm';
 
 // ... (existing imports)
 
@@ -307,6 +308,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                                 components={components}
                                 options={{
                                     mdxOptions: {
+                                        remarkPlugins: [remarkGfm],
                                         rehypePlugins: [rehypeSlug]
                                     }
                                 }}

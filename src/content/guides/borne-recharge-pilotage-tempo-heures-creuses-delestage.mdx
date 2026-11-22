@@ -1,0 +1,86 @@
+---
+title: "Borne de Recharge Pilotée 2026 : Tempo, Heures Creuses, Solaire et Délestage"
+description: "Programmer sa borne sur les heures creuses ou les jours bleus Tempo, la piloter sur le surplus solaire et éviter de changer d'abonnement grâce au délestage. Guide pratique et prix 2026."
+date: "2026-11-23"
+category: "Installation"
+readTime: "9 min"
+author: "Expert Borne Recharge"
+image: "/images/guides/installation-borne-recharge-electrique-garage.webp"
+---
+
+Une voiture électrique consomme en moyenne entre 2 000 et 3 500 kWh par an. C'est souvent **le premier poste électrique de la maison**, devant le chauffe-eau. Recharger au mauvais moment coûte donc cher, et recharger au bon moment peut diviser la facture « carburant » par deux.
+
+Une borne **pilotable** fait trois choses qu'une simple prise renforcée ne fait pas : elle programme la charge, elle module sa puissance et elle dialogue avec le reste de la maison.
+
+---
+
+## 1. Recharger aux heures creuses (le minimum)
+
+Avec l'option Heures Creuses, le kWh est sensiblement moins cher pendant 8 heures par jour. Toutes les bornes récentes, et la plupart des voitures, permettent de programmer un démarrage automatique.
+
+<Callout title="À savoir">
+La CRE a engagé une réorganisation progressive des plages d'heures creuses, avec une partie déplacée vers l'après-midi dans de nombreuses zones. Vérifiez vos horaires sur votre facture ou votre espace Enedis plutôt que de supposer « 22h-6h ».
+</Callout>
+
+**Bon réflexe :** programmez la charge dans la borne *ou* dans la voiture, pas dans les deux. Deux programmations qui se contredisent sont la première cause de « la voiture n'a pas chargé cette nuit ».
+
+---
+
+## 2. Le contrat Tempo : le plus intéressant pour un VE
+
+L'option Tempo d'EDF découpe l'année en trois couleurs de jours :
+
+| Jours | Nombre par an | Prix du kWh |
+|---|---|---|
+| Bleus | 300 | Le moins cher (HC et HP) |
+| Blancs | 43 | Intermédiaire |
+| Rouges | 22 (hiver, en semaine) | Très cher en heures pleines |
+
+Avec une borne pilotée, vous rechargez **en heures creuses des jours bleus**, et vous évitez totalement les jours rouges. La couleur du lendemain est publiée la veille : certaines bornes et applications (ou Home Assistant) la récupèrent automatiquement.
+
+Tempo convient bien à un foyer qui peut décaler sa recharge de 24 à 48 heures. Si votre trajet quotidien est long et sans marge de batterie, restez en heures creuses classiques.
+
+---
+
+## 3. Recharger sur le surplus solaire
+
+Si vous avez des panneaux, la borne peut **suivre la production** : elle charge à 1,4 kW quand le soleil est faible et monte à 7 kW quand le toit produit fort. C'est le kWh le moins cher possible.
+
+Conditions :
+- une borne compatible « solaire » (Zappi, Wallbox, Hager, Schneider, ou borne de la marque de l'onduleur) ;
+- une mesure de la production et de la consommation (pince ou passerelle) ;
+- une voiture présente à la maison en journée, au moins quelques jours par semaine.
+
+Voir aussi notre guide détaillé : [recharge sur surplus photovoltaïque](/guides/recharge-solaire-surplus-photovoltaique).
+
+---
+
+## 4. Le délestage : éviter de passer à 12 kVA
+
+Ajouter une borne de 7,4 kW sur un abonnement de 6 ou 9 kVA fait souvent disjoncter le compteur quand le four, la plaque et le chauffe-eau tournent en même temps. Deux solutions :
+
+1. **Augmenter la puissance souscrite** : simple, mais l'abonnement coûte plus cher chaque mois, à vie.
+2. **Installer un délestage dynamique** : la borne mesure la consommation de la maison et **réduit automatiquement sa puissance** pour rester sous le seuil de l'abonnement.
+
+Le délestage coûte généralement entre 100 et 300 € d'option (pince de mesure ou module), ce qui est vite amorti face à une hausse d'abonnement.
+
+---
+
+## 5. Combien coûte une borne pilotable ?
+
+| Configuration | Budget indicatif posé |
+|---|---|
+| Borne 7,4 kW programmable | 1 100 à 1 800 € |
+| + délestage dynamique | + 100 à 300 € |
+| Borne compatible surplus solaire | 1 400 à 2 500 € |
+| Intégration à un gestionnaire d'énergie | sur devis |
+
+Les prix varient surtout avec la longueur de câble entre le tableau et le garage. L'installation doit être réalisée par un installateur qualifié IRVE.
+
+---
+
+## 6. Et demain : la recharge bidirectionnelle
+
+Quelques modèles et bornes commencent à proposer la **recharge bidirectionnelle** : la voiture peut renvoyer de l'énergie vers la maison (V2H) ou le réseau (V2G). L'offre reste limitée en France et dépend du couple voiture/borne/fournisseur. Si le sujet vous intéresse, demandez à l'installateur une borne et un câblage qui ne vous ferment pas cette porte.
+
+<CtaButton text="Estimer ma borne pilotée & devis gratuit" url="/#simulateur" />
